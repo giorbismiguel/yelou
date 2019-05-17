@@ -26,7 +26,7 @@
             <div class="card-group">
                 <div class="card p-4">
                     <div class="card-body">
-                        <form method="post" action="{{ url('/login') }}">
+                        <form method="post" action="{{ url('/admin/login') }}">
                             {!! csrf_field() !!}
                             <h1>Login</h1>
                             <p class="text-muted">Sign In to your account</p>

@@ -60,11 +60,11 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#">
                     <i class="fa fa-shield"></i> Lock Account</a>
-                <a class="dropdown-item" href="{!! url('/logout') !!}" class="btn btn-default btn-flat"
+                <a class="dropdown-item" href="{!! url('admin/logout') !!}" class="btn btn-default btn-flat"
                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class="fa fa-lock"></i>Logout
                 </a>
-                <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
+                <form id="logout-form" action="{{ url('admin/logout') }}" method="POST" style="display: none;">
                     {{ csrf_field() }}
                 </form>
             </div>
