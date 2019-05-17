@@ -14,3 +14,12 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::get('/admin', 'HomeController@index');
+
+Route::group(['prefix' => 'admin'], function () {
+    Auth::routes();
+
+    Route::resource('transportationStates', 'Admin\TransportationStatesController', ["as" => 'admin']);
+});
