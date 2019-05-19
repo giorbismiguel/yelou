@@ -26,8 +26,9 @@ Route::prefix('v1')->group(function () {
     Route::namespace('Auth')
         ->prefix('auth')
         ->group(function () {
-            Route::post('login', 'AuthController@login');
             Route::post('register', 'AuthController@register');
+            Route::post('login', 'AuthController@login');
+            Route::get('/sms/send/{to}', 'AuthController@send');
         });
 
     Route::namespace('Auth')
