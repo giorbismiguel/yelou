@@ -23,10 +23,41 @@ Route::prefix('v1')->group(function () {
     /*
      * Guest area
      */
-    Route::post('auth/login', 'AuthController@login');
-    Route::post('auth/register', 'AuthController@register');
-});
+    Route::namespace('Auth')
+        ->prefix('auth')
+        ->group(function () {
+            Route::post('login', 'AuthController@login');
+            Route::post('register', 'AuthController@register');
+        });
 
-Route::group(['prefix' => 'admin'], function () {
-    Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
+    Route::namespace('Auth')
+        ->middleware('api')
+        ->prefix('password')
+        ->group(function () {
+            Route::post('create', 'PasswordResetController@create');
+            Route::get('find/{token}', 'PasswordResetController@find');
+            Route::post('reset', 'PasswordResetController@reset');
+        });
+
+    /*
+     * Authenticated area
+     */
+    Route::middleware('auth:api')
+        ->group(function () {
+            /*
+             * Client Area
+             */
+
+            /*
+             * Transport Area
+             */
+
+            /*
+             * Admin Area
+             */
+            Route::group(['prefix' => 'admin'], function () {
+                Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
+            });
+        });
+
 });
