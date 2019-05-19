@@ -15,16 +15,25 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('user_name');
-            $table->string('password');
+            $table->string('name');
             $table->string('email')->unique();
-            $table->string('phone')->unique();
-            $table->string('name'); // Name or Social reason
+            $table->string('password');
+            $table->string('first_name'); // Name or Social reason
             $table->string('last_name');
+            $table->string('phone');
             $table->string('ruc');
-            $table->string('direction');
-            $table->string('postal_code');
-            $table->string('city');
+            $table->string('direction')->nullable()->default(null);
+
+            // Client
+            $table->string('city')->nullable()->default(null);
+            $table->string('postal_code')->nullable()->default(null);
+
+            // Transporter
+            $table->string('type_driver_license')->nullable()->default(null);
+            $table->string('photo')->nullable();
+            $table->string('image_driver_license')->nullable();
+            $table->string('image_permit_circulation')->nullable();
+            $table->string('image_certificate_background')->nullable()->default(null);
 
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();
