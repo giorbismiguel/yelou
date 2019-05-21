@@ -7,6 +7,7 @@ use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Lang;
 use Validator;
 
@@ -45,7 +46,7 @@ class AuthController extends Controller
             /** @var User $user */
             $user = $this->guard()->user();
 
-            return ['user' => $user, 'access_token' => $user->makeApiToken()];
+            return ['user' => $user];
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -204,5 +205,21 @@ class AuthController extends Controller
         }
 
         return $request->only($this->username(), 'password');
+    }
+
+    protected function send(\Nexmo\Client $nexmo, $to)
+    {
+        $message = $nexmo->message()->send([
+            'to'   => $to,
+            'from' => env('NEXMO_NUMBER'),
+            'text' => 'Sending SMS from Laravel. Woohoo!'
+        ]);
+
+        Log::info('sent message: '.$message['message-id']);
+
+        /** @var User $user */
+        $user = $this->guard()->user();
+
+        return ['access_token' => $user->makeApiToken()];
     }
 }
