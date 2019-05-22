@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Models\Admin\TransportationStates;
+use App\Models\LicenseTypes;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -29,7 +29,7 @@ class User extends Authenticatable
         'direction',
         'postal_code',
         'city',
-        'type_driver_license',
+        'license_types_id',
         'photo',
         'image_driver_license',
         'image_permit_circulation',
@@ -55,10 +55,21 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = [
+        'license',
+    ];
+
     /* ========================================================================= *\
      * Relations
     \* ========================================================================= */
 
+    /**
+     * @return HasOne
+     */
+    public function license(): HasOne
+    {
+        return $this->hasOne(LicenseTypes::class);
+    }
 
     /* ========================================================================= *\
      * Helpers

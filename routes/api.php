@@ -48,6 +48,7 @@ Route::prefix('v1')->group(function () {
              * Client Area
              */
             Route::resource('routes', 'RouteAPIController');
+
             /*
              * Transport Area
              */
@@ -59,4 +60,9 @@ Route::prefix('v1')->group(function () {
                 Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
             });
         });
+
+    /*
+     * Comun Area
+     */
+    Route::resource('license_types', 'LicenseTypesAPIController');
 });

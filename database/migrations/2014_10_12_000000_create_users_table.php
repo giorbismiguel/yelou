@@ -29,7 +29,7 @@ class CreateUsersTable extends Migration
             $table->string('postal_code')->nullable()->default(null);
 
             // Transporter
-            $table->string('type_driver_license')->nullable()->default(null);
+            $table->string('license_types_id')->nullable()->default(null);
             $table->string('photo')->nullable();
             $table->string('image_driver_license')->nullable();
             $table->string('image_permit_circulation')->nullable();
