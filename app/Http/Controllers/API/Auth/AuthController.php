@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Auth;
 
+use App\Exceptions\AuthenticationException;
 use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Auth\Events\Registered;
@@ -19,6 +20,10 @@ use Validator;
 class AuthController extends Controller
 {
     use AuthenticatesUsers;
+
+    const CLIENT = 1;
+
+    const TRANSPORTATION = 2;
 
     /**
      * @param Request $request
@@ -57,16 +62,19 @@ class AuthController extends Controller
     }
 
     /**
-     * Registration
-     *
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return array
+     * @param Request $request
+     * @return array|\Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function register(Request $request)
     {
-        $this->validator($request->all())->validate();
+        try {
+            $this->validator($request->all())->validate();
+        } catch (AuthenticationException $e) {
+            return response()->success($e->getMessage());
+        }
 
         $request = $this->getFile($request, 'photo');
         $request = $this->getFile($request, 'image_driver_license');
@@ -81,11 +89,16 @@ class AuthController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array $data
-     * @return \Illuminate\Contracts\Validation\Validator
+     * @param array $data
+     * @return \Illuminate\Validation\Validator
+     * @throws AuthenticationException
      */
     protected function validator(array $data)
     {
+        if (!request()->has('type')) {
+            throw new AuthenticationException('Debe especificar el tipo: 1 = Cliente o 2 = Transportista');
+        }
+
         $rules = [
             'name'       => 'required|max:191',
             'email'      => 'required|email|max:191|unique:users',
@@ -108,7 +121,7 @@ class AuthController extends Controller
             'direction'  => 'Dirección',
         ];
 
-        if (request()->get('postal_code') && request()->get('city')) {
+        if ((int) request()->get('type') === self::CLIENT) {
             $rules += [
                 'city'        => 'required|max:191',
                 'postal_code' => 'nullable|max:191',
@@ -118,15 +131,9 @@ class AuthController extends Controller
                 'city'        => 'Ciudad',
                 'postal_code' => 'Código Postal',
             ];
-        } elseif (
-            request()->get('type_driver_license') &&
-            request()->get('photo') &&
-            request()->get('image_driver_license') &&
-            request()->get('image_permit_circulation') &&
-            request()->get('image_certificate_background')
-        ) {
+        } elseif ((int) request()->has('type') === self::TRANSPORTATION) {
             $rules += [
-                'type_driver_license'          => 'required|integer',
+                'license_types_id'             => 'required|integer',
                 'photo'                        => 'required|image|max:100000',
                 'image_driver_license'         => 'required|image|max:100000',
                 'image_permit_circulation'     => 'required|image|max:100000',
@@ -134,7 +141,7 @@ class AuthController extends Controller
             ];
 
             $customAttributes += [
-                'type_driver_license'          => 'Tipo de licencia de conducir',
+                'license_types_id'             => 'Tipo de licencia de conducir',
                 'photo'                        => 'Foto',
                 'image_driver_license'         => 'Foto de la licencia de conducir',
                 'image_permit_circulation'     => 'Foto del Permiso de circulación',
@@ -164,7 +171,7 @@ class AuthController extends Controller
             'direction'                    => $data['direction'],
             'city'                         => $data['city'] ?? null,
             'postal_code'                  => $data['postal_code'] ?? null,
-            'type_driver_license'          => $data['type_driver_license'] ?? null,
+            'license_types_id'             => $data['license_types_id'] ?? null,
             'photo'                        => $data['photo_name'] ?? null,
             'image_driver_license'         => $data['image_driver_license_name'] ?? null,
             'image_permit_circulation'     => $data['image_permit_circulation_name'] ?? null,
