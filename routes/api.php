@@ -59,10 +59,10 @@ Route::prefix('v1')->group(function () {
             Route::prefix('admin')->group(function () {
                 Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
             });
-
-            /*
-             * Comun Area
-             */
-            Route::resource('license_types', 'LicenseTypesAPIController');
         });
+
+    /*
+     * Comun Area
+     */
+    Route::resource('license_types', 'LicenseTypesAPIController');
 });
