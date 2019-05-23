@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Models\LicenseTypes;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -19,6 +18,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
+        'type',
         'name',
         'email',
         'password',
@@ -64,11 +64,11 @@ class User extends Authenticatable
     \* ========================================================================= */
 
     /**
-     * @return HasOne
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function license(): HasOne
+    public function license(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->hasOne(LicenseTypes::class);
+        return $this->belongsTo(LicenseTypes::class);
     }
 
     /* ========================================================================= *\
