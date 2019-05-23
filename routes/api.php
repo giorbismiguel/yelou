@@ -50,8 +50,9 @@ Route::prefix('v1')->group(function () {
             Route::resource('routes', 'RouteAPIController');
 
             /*
-             * Transport Area
+             * Area
              */
+            Route::resource('users', 'UserAPIController');
 
             /*
              * Admin Area
