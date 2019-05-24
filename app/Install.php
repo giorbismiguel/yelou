@@ -14,6 +14,8 @@ class Install
             ->external('composer', 'install', '--no-dev', '--prefer-dist', '--optimize-autoloader')
             ->artisan('key:generate')
             ->artisan('migrate', ['--force' => true])
+            ->artisan('passport:keys')
+            ->artisan('passport:install')
             ->artisan('storage:link')
 //            ->dispatch(new MakeCronTask)
             ->external('npm', 'install', '--production')
