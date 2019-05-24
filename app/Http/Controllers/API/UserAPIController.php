@@ -59,7 +59,7 @@ class UserAPIController extends AppBaseController
             $request = get_file($request, 'image_certificate_background');
         }
 
-        $input = $request->all();
+        $input = $request->except(['password', 'password_confirmation']);
 
         $user = $this->userRepository->create($input);
 
@@ -90,7 +90,7 @@ class UserAPIController extends AppBaseController
      * Update the specified User in storage.
      * PUT/PATCH /users/{id}
      *
-     * @param int $id
+     * @param int                  $id
      * @param UpdateUserAPIRequest $request
      *
      * @return Response
@@ -102,7 +102,7 @@ class UserAPIController extends AppBaseController
         $request = get_file($request, 'image_permit_circulation');
         $request = get_file($request, 'image_certificate_background');
 
-        $input = $request->all();
+        $input = $request->except(['password', 'password_confirmation']);
 
         /** @var User $user */
         $user = $this->userRepository->find($id);
