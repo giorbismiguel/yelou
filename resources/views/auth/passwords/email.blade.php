@@ -31,7 +31,7 @@
                                 {{ session('status') }}
                             </div>
                         @endif
-                        <form method="post" action="{{ url('/password/email') }}">
+                        <form method="post" action="{{ url('admin/password/email') }}">
                             {!! csrf_field() !!}
                             <h1>Reset Your Password</h1>
                             <p class="text-muted">Enter Email to reset password</p>

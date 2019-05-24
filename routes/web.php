@@ -11,11 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 Route::get('/admin', 'HomeController@index');
 
 Route::group(['prefix' => 'admin'], function () {
@@ -23,3 +18,6 @@ Route::group(['prefix' => 'admin'], function () {
 
     Route::resource('transportationStates', 'Admin\TransportationStatesController', ["as" => 'admin']);
 });
+
+Route::get('/{any?}', 'SpaController')->where('any', '.*');
+
