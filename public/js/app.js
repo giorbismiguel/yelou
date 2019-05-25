@@ -1882,6 +1882,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar"
 });
@@ -38176,9 +38178,27 @@ var render = function() {
           "container d-flex flex-column flex-md-row justify-content-between"
       },
       [
-        _vm._m(0),
+        _c(
+          "a",
+          { staticClass: "navbar-brand", attrs: { href: "#" } },
+          [
+            _c(
+              "router-link",
+              { staticClass: "nav-link", attrs: { to: { name: "home" } } },
+              [
+                _c("img", {
+                  attrs: {
+                    src: "http://placehold.it/150x50?text=Logo",
+                    alt: "Logo"
+                  }
+                })
+              ]
+            )
+          ],
+          1
+        ),
         _vm._v(" "),
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c(
           "div",
@@ -38188,14 +38208,14 @@ var render = function() {
             attrs: { id: "navbarSupportedContent" }
           },
           [
-            _vm._m(2),
+            _vm._m(1),
             _vm._v(" "),
             _c("div", { staticClass: "app_font-family navbar-right" }, [
               _c(
                 "ul",
                 { staticClass: "navbar-nav d-flex justify-content-between" },
                 [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "li",
@@ -38244,16 +38264,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "navbar-brand", attrs: { href: "#" } }, [
-      _c("img", {
-        attrs: { src: "http://placehold.it/150x50?text=Logo", alt: "" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

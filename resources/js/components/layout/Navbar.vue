@@ -2,7 +2,9 @@
     <nav class="navbar navbar-expand-lg navbar-light ">
         <div class="container d-flex flex-column flex-md-row justify-content-between">
             <a class="navbar-brand" href="#">
-                <img src="http://placehold.it/150x50?text=Logo" alt="">
+                <router-link class="nav-link" :to="{ name: 'home' }">
+                    <img src="http://placehold.it/150x50?text=Logo" alt="Logo">
+                </router-link>
             </a>
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
