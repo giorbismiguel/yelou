@@ -25,6 +25,8 @@
     },
     "dependencies": {
         "@coreui/coreui": "^2.1.9",
+        "@fortawesome/fontawesome-free": "^5.8.2",
+        "vee-validate": "^2.2.8",
         "vue-router": "^3.0.6"
     }
 }

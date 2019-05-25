@@ -1,8 +1,53 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
-
+@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
 // Variables
 @import 'variables';
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+// Fortawesome
+$fa-font-path: "../webfonts";
+@import "@fortawesome/fontawesome-free/scss/solid.scss";
+@import "@fortawesome/fontawesome-free/scss/regular.scss";
+@import "@fortawesome/fontawesome-free/scss/brands.scss";
+@import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
+
+.app {
+  &_color {
+    color: rgb(248, 248, 248) !important;
+  }
+
+  &_font-family {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: normal;
+  }
+
+  &_font-family_sm {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+  }
+
+  &_btn-primary {
+    background: rgb(32, 137, 192);
+    width: 115px;
+    border-radius: 21.5px 21.5px 21.5px 21.5px;
+    padding: 8px;
+
+    span {
+      width: 83px;
+      height: 19px;
+      color: rgb(248, 248, 248);
+    }
+  }
+}
+
+// Bootstrap Overrides Styles
+.navbar-light .navbar-nav .nav-link {
+  color: rgb(248, 248, 248) !important;
+}
+
+a {
+  color: rgb(248, 248, 248);
+}
