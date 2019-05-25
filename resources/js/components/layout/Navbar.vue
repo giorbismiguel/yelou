@@ -1,6 +1,6 @@
 <template>
     <nav class="navbar navbar-expand-lg navbar-light ">
-        <div class="container d-flex flex-column flex-md-row justify-content-between">
+        <div class="container">
             <a class="navbar-brand" href="#">
                 <router-link class="nav-link" :to="{ name: 'home' }">
                     <img src="http://placehold.it/150x50?text=Logo" alt="Logo">
@@ -12,8 +12,8 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
-                <ul class="navbar-nav font-weight-bold">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav w-100 justify-content-center font-weight-bold">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Productos</a>
                     </li>
@@ -28,23 +28,21 @@
                     </li>
                 </ul>
 
-                <div class="app_font-family navbar-right">
-                    <ul class="navbar-nav d-flex justify-content-between">
-                        <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-globe"></i> Es</a>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="nav-link" :to="{ name: 'login' }"><i class="far fa-user-circle"></i>
-                                Iniciar sesión
-                            </router-link>
-                        </li>
-                        <li class="nav-item">
-                            <router-link class="btn my-2 my-sm-0 app_btn-primary app_font-family app_color"
-                                         :to="{ name: 'register' }">Registrarse
-                            </router-link>
-                        </li>
-                    </ul>
-                </div>
+                <ul class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-globe"></i> Es</a>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="nav-link" :to="{ name: 'login' }"><i class="far fa-user-circle"></i>
+                            Iniciar sesión
+                        </router-link>
+                    </li>
+                    <li class="nav-item">
+                        <router-link class="btn my-2 my-sm-0 app_btn-primary app_font-family app_color"
+                                     :to="{ name: 'register' }">Registrarse
+                        </router-link>
+                    </li>
+                </ul>
             </div>
         </div>
     </nav>

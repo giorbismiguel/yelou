@@ -1882,8 +1882,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar"
 });
@@ -38171,96 +38169,89 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("nav", { staticClass: "navbar navbar-expand-lg navbar-light " }, [
-    _c(
-      "div",
-      {
-        staticClass:
-          "container d-flex flex-column flex-md-row justify-content-between"
-      },
-      [
-        _c(
-          "a",
-          { staticClass: "navbar-brand", attrs: { href: "#" } },
-          [
-            _c(
-              "router-link",
-              { staticClass: "nav-link", attrs: { to: { name: "home" } } },
-              [
-                _c("img", {
-                  attrs: {
-                    src: "http://placehold.it/150x50?text=Logo",
-                    alt: "Logo"
-                  }
-                })
-              ]
-            )
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "collapse navbar-collapse d-flex justify-content-between",
-            attrs: { id: "navbarSupportedContent" }
-          },
-          [
-            _vm._m(1),
-            _vm._v(" "),
-            _c("div", { staticClass: "app_font-family navbar-right" }, [
+    _c("div", { staticClass: "container" }, [
+      _c(
+        "a",
+        { staticClass: "navbar-brand", attrs: { href: "#" } },
+        [
+          _c(
+            "router-link",
+            { staticClass: "nav-link", attrs: { to: { name: "home" } } },
+            [
+              _c("img", {
+                attrs: {
+                  src: "http://placehold.it/150x50?text=Logo",
+                  alt: "Logo"
+                }
+              })
+            ]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "collapse navbar-collapse",
+          attrs: { id: "navbarSupportedContent" }
+        },
+        [
+          _vm._m(1),
+          _vm._v(" "),
+          _c(
+            "ul",
+            {
+              staticClass:
+                "nav navbar-nav ml-auto w-100 justify-content-end app_font-family"
+            },
+            [
+              _vm._m(2),
+              _vm._v(" "),
               _c(
-                "ul",
-                { staticClass: "navbar-nav d-flex justify-content-between" },
+                "li",
+                { staticClass: "nav-item" },
                 [
-                  _vm._m(2),
-                  _vm._v(" "),
                   _c(
-                    "li",
-                    { staticClass: "nav-item" },
+                    "router-link",
+                    {
+                      staticClass: "nav-link",
+                      attrs: { to: { name: "login" } }
+                    },
                     [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "nav-link",
-                          attrs: { to: { name: "login" } }
-                        },
-                        [
-                          _c("i", { staticClass: "far fa-user-circle" }),
-                          _vm._v(
-                            "\n                            Iniciar sesión\n                        "
-                          )
-                        ]
+                      _c("i", { staticClass: "far fa-user-circle" }),
+                      _vm._v(
+                        "\n                        Iniciar sesión\n                    "
                       )
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "li",
-                    { staticClass: "nav-item" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass:
-                            "btn my-2 my-sm-0 app_btn-primary app_font-family app_color",
-                          attrs: { to: { name: "register" } }
-                        },
-                        [_vm._v("Registrarse\n                        ")]
-                      )
-                    ],
-                    1
+                    ]
                   )
-                ]
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "li",
+                { staticClass: "nav-item" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass:
+                        "btn my-2 my-sm-0 app_btn-primary app_font-family app_color",
+                      attrs: { to: { name: "register" } }
+                    },
+                    [_vm._v("Registrarse\n                    ")]
+                  )
+                ],
+                1
               )
-            ])
-          ]
-        )
-      ]
-    )
+            ]
+          )
+        ]
+      )
+    ])
   ])
 }
 var staticRenderFns = [
@@ -38288,31 +38279,37 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "navbar-nav font-weight-bold" }, [
-      _c("li", { staticClass: "nav-item active" }, [
-        _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-          _vm._v("Productos")
+    return _c(
+      "ul",
+      {
+        staticClass: "navbar-nav w-100 justify-content-center font-weight-bold"
+      },
+      [
+        _c("li", { staticClass: "nav-item active" }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+            _vm._v("Productos")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+            _vm._v("Empresa")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+            _vm._v("Seguridad")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("li", { staticClass: "nav-item" }, [
+          _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+            _vm._v("Ayuda")
+          ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "nav-item" }, [
-        _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-          _vm._v("Empresa")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "nav-item" }, [
-        _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-          _vm._v("Seguridad")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "nav-item" }, [
-        _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
-          _vm._v("Ayuda")
-        ])
-      ])
-    ])
+      ]
+    )
   },
   function() {
     var _vm = this
