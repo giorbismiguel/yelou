@@ -39,7 +39,7 @@
                     </li>
                     <li class="nav-item">
                         <router-link class="btn my-2 my-sm-0 app_btn-primary app_font-family app_color"
-                                     :to="{ name: 'register' }">Registrarse
+                                     :to="{ name: 'register_as' }">Registrarse
                         </router-link>
                     </li>
                 </ul>

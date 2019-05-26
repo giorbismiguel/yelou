@@ -4048,6 +4048,10 @@ input[type=button].btn-block {
   content: "Browse";
 }
 
+.custom-file-input:lang(es) ~ .custom-file-label::after {
+  content: "Elegir";
+}
+
 .custom-file-input ~ .custom-file-label[data-browse]::after {
   content: attr(data-browse);
 }
@@ -16443,6 +16447,10 @@ readers do not read off random characters that represent icons */
   color: #f8f8f8 !important;
 }
 
+.app_color_blue {
+  color: #f8f8f8 !important;
+}
+
 .app_font-family {
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
@@ -16466,6 +16474,10 @@ readers do not read off random characters that represent icons */
   width: 83px;
   height: 19px;
   color: #f8f8f8;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .navbar-light .navbar-nav .nav-link {

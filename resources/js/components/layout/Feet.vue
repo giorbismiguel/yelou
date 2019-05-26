@@ -1,5 +1,5 @@
 <template>
-    <footer class="d-flex">
+    <footer>
         <div class="container d-flex flex-column">
             <div>
                 Logo
@@ -38,7 +38,7 @@
     }
 
     .other_pages {
-        width: 302px
+        width: 302px;
     }
 
     .social_networks {
