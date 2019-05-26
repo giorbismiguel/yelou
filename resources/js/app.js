@@ -18,10 +18,10 @@ axios.interceptors.request.use(function (config) {
 
 // Show toast with message for non OK responses
 axios.interceptors.response.use(response => response, error => {
-    store.dispatch('addToastMessage', {
-        text: error.response.data.message || 'Request error status: ' + error.response.status,
-        type: 'danger'
-    })
+    // store.dispatch('addToastMessage', {
+    //     text: error.response.data.message || 'Request error status: ' + error.response.status,
+    //     type: 'danger'
+    // })
 
     return Promise.reject(error)
 })

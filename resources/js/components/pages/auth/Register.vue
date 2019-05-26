@@ -30,10 +30,12 @@
                                     <input v-model="form.email" v-validate="'required|email|max:191'"
                                            data-vv-as="Correo electrónico" id="email" name="email" type="email"
                                            class="form-control"
-                                           :class="{ 'is-invalid': submitted && (errors.has('email')) }"/>
+                                           :class="{ 'is-invalid': submitted && (errors.has('email') || serverErrors.email) }"/>
 
-                                    <div v-if="submitted && errors.has('email')" class="invalid-feedback">
+                                    <div v-if="submitted && (errors.has('email') || serverErrors.email)"
+                                         class="invalid-feedback">
                                         {{ errors.first('email') }}
+                                        <template v-for="error in serverErrors.email">{{ error }}</template>
                                     </div>
                                 </div>
                             </div>
@@ -105,11 +107,12 @@
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="Teléfono" id="phone"
                                            name="phone" type="text" class="form-control" v-model="form.phone"
-                                           :class="{ 'is-invalid': submitted && errors.has('phone') }">
+                                           :class="{ 'is-invalid': submitted && (errors.has('phone') || serverErrors.phone) }">
 
-                                    <div v-if="submitted && errors.has('phone')"
+                                    <div v-if="submitted && (errors.has('phone') || serverErrors.phone) "
                                          class="invalid-feedback">
                                         {{ errors.first('phone') }}
+                                        <template v-for="error in serverErrors.phone">{{ error }}</template>
                                     </div>
                                 </div>
                             </div>
@@ -142,7 +145,7 @@
                                 </div>
                             </div>
 
-                            <template v-if="form.type === 2">
+                            <template v-if="form.type === 1">
                                 <div class="form-group">
                                     <label for="city" class="col control-label">Ciudad</label>
                                     <div class="col">
@@ -364,26 +367,24 @@
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                     if (valid) {
-                        if (!this.isClient()) {
-                            let formData, key;
+                        let formData, key;
 
+                        if (!this.isClient()) {
                             formData = new FormData()
+                            for (key in this.form) {
+                                formData.append(key, this.form[key]);
+                            }
                             formData.append('photo', this.selectedPhoto, this.selectedPhoto.name)
                             formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense.name)
                             formData.append('image_permit_circulation', this.imagePermitCirculation, this.imagePermitCirculation.name)
                             formData.append('image_certificate_background', this.imageCertificateBackground, this.imageCertificateBackground ? this.imageCertificateBackground.name : '')
-
-                            for (key in this.form) {
-                                formData.append(key, this.form[key]);
-                            }
-
-                            this.form = formData;
                         }
 
                         this.serverErrors = {}
-                        this.register(this.form)
+                        this.register(formData ? formData : this.form)
                             .then(() => {
-                                this.$router.replace('/dashboard')
+                                //this.$router.replace('/dashboard')
+
                             })
                             .catch((data) => {
                                 this.serverErrors = data.errors || {}
@@ -409,12 +410,12 @@
             },
 
             isClient() {
-                return this.form.type === 2;
+                return this.form.type === 1;
             }
         },
 
         mounted() {
-            this.form.type = this.$route.params.type === 'cliente' ? 2 : 1;
+            this.form.type = this.$route.params.type === 'cliente' ? 1 : 2;
             this.nomenclators();
         }
 
