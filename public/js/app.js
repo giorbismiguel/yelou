@@ -2689,6 +2689,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Carousel"
 });
@@ -51818,31 +51835,92 @@ var staticRenderFns = [
       "div",
       {
         staticClass: "carousel slide",
-        attrs: { id: "carouselExampleSlidesOnly", "data-ride": "carousel" }
+        attrs: { id: "carouselExampleControls", "data-ride": "carousel" }
       },
       [
         _c("div", { staticClass: "carousel-inner" }, [
           _c("div", { staticClass: "carousel-item active" }, [
             _c("img", {
               staticClass: "d-block w-100",
-              attrs: { src: "", alt: "" }
+              attrs: { src: "/img/slider/slide_1.png", alt: "" }
             })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "carousel-item" }, [
             _c("img", {
               staticClass: "d-block w-100",
-              attrs: { src: "", alt: "" }
+              attrs: { src: "/img/slider/slide_2.png", alt: "" }
             })
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "carousel-item" }, [
             _c("img", {
               staticClass: "d-block w-100",
-              attrs: { src: "", alt: "." }
+              attrs: { src: "/img/slider/slide_3.png", alt: "." }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "carousel-item" }, [
+            _c("img", {
+              staticClass: "d-block w-100",
+              attrs: { src: "/img/slider/slide_4.png", alt: "." }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "carousel-item" }, [
+            _c("img", {
+              staticClass: "d-block w-100",
+              attrs: { src: "/img/slider/slide_5.png", alt: "." }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "carousel-item" }, [
+            _c("img", {
+              staticClass: "d-block w-100",
+              attrs: { src: "/img/slider/slide_6.png", alt: "." }
             })
           ])
-        ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "carousel-control-prev",
+            attrs: {
+              href: "#carouselExampleControls",
+              role: "button",
+              "data-slide": "prev"
+            }
+          },
+          [
+            _c("span", {
+              staticClass: "carousel-control-prev-icon",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "sr-only" }, [_vm._v("Anterior")])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "a",
+          {
+            staticClass: "carousel-control-next",
+            attrs: {
+              href: "#carouselExampleControls",
+              role: "button",
+              "data-slide": "next"
+            }
+          },
+          [
+            _c("span", {
+              staticClass: "carousel-control-next-icon",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" "),
+            _c("span", { staticClass: "sr-only" }, [_vm._v("Siguiente")])
+          ]
+        )
       ]
     )
   }
