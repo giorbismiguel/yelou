@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 // API Group Routes
 Route::prefix('v1')->group(function () {
 
@@ -26,17 +22,17 @@ Route::prefix('v1')->group(function () {
     Route::namespace('Auth')
         ->prefix('auth')
         ->group(function () {
-            Route::post('login', 'AuthController@login');
-            Route::post('register', 'AuthController@register');
+            Route::post('/login', 'AuthController@login');
+            Route::post('/register', 'AuthController@register');
+            Route::post('/active', 'AuthController@active');
         });
 
     Route::namespace('Auth')
-        ->middleware('api')
         ->prefix('password')
         ->group(function () {
-            Route::post('create', 'PasswordResetController@create');
-            Route::get('find/{token}', 'PasswordResetController@find');
-            Route::post('reset', 'PasswordResetController@reset');
+            Route::post('/create', 'PasswordResetController@create');
+            Route::get('/find/{token}', 'PasswordResetController@find');
+            Route::post('/reset', 'PasswordResetController@reset');
         });
 
     /*
@@ -66,4 +62,8 @@ Route::prefix('v1')->group(function () {
      * Comun Area
      */
     Route::resource('license_types', 'LicenseTypesAPIController');
+
+    Route::namespace('Lists')->group(function () {
+        Route::get('/nomenclators', 'ListsController');
+    });
 });
