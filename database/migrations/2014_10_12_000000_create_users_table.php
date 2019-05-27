@@ -35,8 +35,10 @@ class CreateUsersTable extends Migration
             $table->string('image_driver_license')->nullable();
             $table->string('image_permit_circulation')->nullable();
             $table->string('image_certificate_background')->nullable()->default(null);
+            $table->string('code_activation', 6)->nullable();
 
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('phone_verified_at')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

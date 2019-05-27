@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\LicenseTypes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -34,6 +35,7 @@ class User extends Authenticatable
         'image_driver_license',
         'image_permit_circulation',
         'image_certificate_background',
+        'phone_verified_at',
     ];
 
     /**
@@ -53,6 +55,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'phone_verified_at' => 'datetime',
     ];
 
     protected $with = [
@@ -81,5 +84,32 @@ class User extends Authenticatable
     public function makeApiToken()
     {
         return $this->createToken('API')->accessToken;
+    }
+
+    /* ========================================================================= *\
+     * Scopes
+    \* ========================================================================= */
+
+    /**
+     * @param Builder $query
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public function scopeEmailVerified(Builder $query)
+    {
+        return $query->whereNotNull('email_verified_at');
+    }
+
+    /**
+     * @param Builder $query
+     * @return Builder|\Illuminate\Database\Query\Builder
+     */
+    public function scopePhoneVerified(Builder $query)
+    {
+        return $query->whereNotNull('phone_verified_at');
+    }
+
+    public function setVerifiedAt()
+    {
+        return $this->update(['phone_verified_at' => today()]);
     }
 }

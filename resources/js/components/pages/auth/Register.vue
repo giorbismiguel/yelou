@@ -1,10 +1,423 @@
 <template>
-    <div>Register</div>
+    <div class="container">
+        <h3>Registrarse</h3>
+        <hr>
+
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <div class="card m-4">
+                    <div class="card-header">Registrarse</div>
+                    <div class="card-body">
+                        <form class="form-horizontal" id="register_form" role="form" autocomplete="off"
+                              @submit.prevent="onSubmit" novalidate>
+
+                            <div class="form-group">
+                                <label for="name" class="col control-label">Nombre de usuario</label>
+                                <div class="col">
+                                    <input v-model="form.name" v-validate="'required|max:191'"
+                                           data-vv-as="Nombre de usuario" id="name" name="name" type="text"
+                                           class="form-control"
+                                           :class="{ 'is-invalid': submitted && errors.has('name') }"/>
+                                    <div v-if="submitted && errors.has('name')" class="invalid-feedback">
+                                        {{ errors.first('name') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email" class="col control-label">Correo electrónico</label>
+                                <div class="col">
+                                    <input v-model="form.email" v-validate="'required|email|max:191'"
+                                           data-vv-as="Correo electrónico" id="email" name="email" type="email"
+                                           class="form-control"
+                                           :class="{ 'is-invalid': submitted && (errors.has('email') || serverErrors.email) }"/>
+
+                                    <div v-if="submitted && (errors.has('email') || serverErrors.email)"
+                                         class="invalid-feedback">
+                                        {{ errors.first('email') }}
+                                        <template v-for="error in serverErrors.email">{{ error }}</template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password" class="col control-label">Contraseña</label>
+                                <div class="col">
+                                    <input v-model="form.password" v-validate="'required|min:6|max:20'"
+                                           data-vv-as="Contraseña" id="password" type="password" name="password"
+                                           class="form-control" ref="password"
+                                           :class="{ 'is-invalid': submitted && errors.has('email') }">
+
+                                    <div v-if="submitted && errors.has('password')" class="invalid-feedback">
+                                        {{ errors.first('password') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password_confirmation" class="col control-label">
+                                    Confirmar Contraseña
+                                </label>
+                                <div class="col">
+                                    <input v-model="form.password_confirmation"
+                                           v-validate="'required|confirmed:password|min:6|max:20'"
+                                           data-vv-as="Confirmar Contraseña" id="password_confirmation"
+                                           name="password_confirmation" type="password"
+                                           class="form-control"
+                                           :class="{ 'is-invalid': submitted && errors.has('password_confirmation') }"/>
+
+                                    <div v-if="submitted && errors.has('password_confirmation')"
+                                         class="invalid-feedback">
+                                        {{ errors.first('password_confirmation') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="first_name" class="col control-label">Nombre o razon social</label>
+                                <div class="col">
+                                    <input v-validate="'required|max:191'" data-vv-as="Nombre o razon social"
+                                           id="first_name" name="first_name" type="text" class="form-control"
+                                           v-model="form.first_name"
+                                           :class="{ 'is-invalid': submitted && errors.has('first_name') }"/>
+
+                                    <div v-if="submitted && errors.has('first_name')"
+                                         class="invalid-feedback">
+                                        {{ errors.first('first_name') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="last_name" class="col control-label">Apellido(s)</label>
+                                <div class="col">
+                                    <input v-validate="'required|max:191'" data-vv-as="Apellido (s)" id="last_name"
+                                           name="last_name" type="text" class="form-control" v-model="form.last_name"
+                                           :class="{ 'is-invalid': submitted && errors.has('last_name') }">
+
+                                    <div v-if="submitted && errors.has('last_name')"
+                                         class="invalid-feedback">
+                                        {{ errors.first('last_name') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="col control-label">Teléfono</label>
+                                <div class="col">
+                                    <input v-validate="'required|max:191'" data-vv-as="Teléfono" id="phone"
+                                           name="phone" type="text" class="form-control" v-model="form.phone"
+                                           :class="{ 'is-invalid': submitted && (errors.has('phone') || serverErrors.phone) }">
+
+                                    <div v-if="submitted && (errors.has('phone') || serverErrors.phone) "
+                                         class="invalid-feedback">
+                                        {{ errors.first('phone') }}
+                                        <template v-for="error in serverErrors.phone">{{ error }}</template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ruc" class="col control-label">RUC</label>
+                                <div class="col">
+                                    <input v-validate="'required|max:191'" data-vv-as="RUC" id="ruc"
+                                           name="ruc" type="text" class="form-control" v-model="form.ruc"
+                                           :class="{ 'is-invalid': submitted && errors.has('ruc') }">
+
+                                    <div v-if="submitted && errors.has('ruc')"
+                                         class="invalid-feedback">
+                                        {{ errors.first('ruc') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="direction" class="col control-label">Dirección</label>
+                                <div class="col">
+                                    <input v-validate="'required|max:191'" data-vv-as="Dirección" id="direction"
+                                           name="direction" type="text" class="form-control" v-model="form.direction"
+                                           :class="{ 'is-invalid': submitted && errors.has('direction') }">
+
+                                    <div v-if="submitted && errors.has('direction')"
+                                         class="invalid-feedback">
+                                        {{ errors.first('direction') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <template v-if="form.type === 1">
+                                <div class="form-group">
+                                    <label for="city" class="col control-label">Ciudad</label>
+                                    <div class="col">
+                                        <input v-validate="'required|max:191'" data-vv-as="Ciudad" id="city"
+                                               name="city" type="text" class="form-control" v-model="form.city"
+                                               :class="{ 'is-invalid': submitted && errors.has('city') }">
+
+                                        <div v-if="submitted && errors.has('city')"
+                                             class="invalid-feedback">
+                                            {{ errors.first('city') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="postal_code" class="col control-label">Código Postal</label>
+                                    <div class="col">
+                                        <input v-validate="'required|max:191'" data-vv-as="Código Postal"
+                                               id="postal_code" name="postal_code" type="text" class="form-control"
+                                               v-model="form.postal_code"
+                                               :class="{ 'is-invalid': submitted && errors.has('postal_code') }">
+
+                                        <div v-if="submitted && errors.has('postal_code')"
+                                             class="invalid-feedback">
+                                            {{ errors.first('postal_code') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <template v-else>
+                                <div class="form-group">
+                                    <label for="license_types_id" class="col control-label">
+                                        Tipo de licencia de conducir
+                                    </label>
+                                    <div class="col">
+                                        <select v-validate="'required|max:191'"
+                                                data-vv-as="Tipo de licencia de conducir"
+                                                name="license_types_id" id="license_types_id" class="form-control"
+                                                v-model.number="form.license_types_id"
+                                                :class="{ 'is-invalid': submitted && errors.has('license_types_id') }">
+                                            <option v-for="(item, key, index) in lists.licenseTypes" :value="key">
+                                                {{ item }}
+                                            </option>
+                                        </select>
+
+                                        <div v-if="submitted && errors.has('license_types_id')"
+                                             class="invalid-feedback">
+                                            {{ errors.first('license_types_id') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col">
+                                        <div class="custom-file">
+                                            <input v-validate="'required|image'" data-vv-as="Foto"
+                                                   @change="onPhotoSelected" ref="Photo" type="file" name="photo"
+                                                   id="photo" class="custom-file-input"
+                                                   :class="{ 'is-invalid': submitted && errors.has('photo') }"/>
+                                            <label for="photo" class="custom-file-label">
+                                                {{ photoLabel }}
+                                            </label>
+                                        </div>
+
+                                        <div v-if="submitted && errors.has('photo')"
+                                             class="invalid-feedback">
+                                            {{ errors.first('photo') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col">
+                                        <div class="custom-file">
+                                            <input v-validate="'required|image'" data-vv-as="Foto"
+                                                   @change="onImageDriveLicenseSelected" ref="ImageDriveLicense"
+                                                   type="file" name="image_driver_license"
+                                                   id="image_driver_license" class="custom-file-input"
+                                                   :class="{ 'is-invalid': submitted && errors.has('image_driver_license') }"/>
+                                            <label for="image_driver_license" class="custom-file-label">
+                                                {{ imageDriveLicenseLabel }}
+                                            </label>
+                                        </div>
+
+                                        <div v-if="submitted && errors.has('image_driver_license')"
+                                             class="invalid-feedback">
+                                            {{ errors.first('image_driver_license') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col">
+                                        <div class="custom-file">
+                                            <input v-validate="'required|image'"
+                                                   data-vv-as="Imagen del Permiso de circulación"
+                                                   @change="onImagePermitCirculationSelected"
+                                                   ref="ImagePermitCirculation" type="file"
+                                                   name="image_permit_circulation"
+                                                   id="image_permit_circulation" class="custom-file-input"
+                                                   :class="{ 'is-invalid': submitted && errors.has('image_permit_circulation') }"/>
+                                            <label for="image_permit_circulation" class="custom-file-label">
+                                                {{ imagePermitCirculationLabel }}
+                                            </label>
+                                        </div>
+
+                                        <div v-if="submitted && errors.has('image_permit_circulation')"
+                                             class="invalid-feedback">
+                                            {{ errors.first('image_permit_circulation') }}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="col">
+                                        <div class="custom-file">
+                                            <input v-validate="'image'"
+                                                   data-vv-as="Imagen de Certificado de Antecedentes"
+                                                   @change="onImageCertificateBackgroundSelected"
+                                                   ref="ImageCertificateBackground" type="file"
+                                                   name="image_certificate_background"
+                                                   id="image_certificate_background" class="custom-file-input"
+                                                   :class="{ 'is-invalid': submitted && errors.has('image_certificate_background') }"/>
+                                            <label for="image_certificate_background" class="custom-file-label">
+                                                {{ imageCertificateBackgroundLabel }}
+                                            </label>
+                                        </div>
+
+                                        <div v-if="submitted && errors.has('image_certificate_background')"
+                                             class="invalid-feedback">
+                                            {{ errors.first('image_certificate_background') }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </template>
+
+                            <div class="form-group">
+                                <div class="col-md-6 col-md-offset-4">
+                                    <button type="submit" class="btn btn-primary">
+                                        Registrarse
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
+    import {mapState, mapActions} from 'vuex'
+
     export default {
-        name: "Register"
+
+        data() {
+            return {
+                form: {
+                    type: 1,
+                    name: null,
+                    email: null,
+                    password: null,
+                    password_confirmation: null,
+                    first_name: null,
+                    last_name: null,
+                    phone: null,
+                    ruc: null,
+                    direction: null,
+                    city: null,
+                    postal_code: null,
+                    license_types_id: null,
+                    photo: null,
+                    image_driver_license: null,
+                    image_permit_circulation: null,
+                    image_certificate_background: null,
+                },
+                selectedPhoto: null,
+                imageDriveLicense: null,
+                imagePermitCirculation: null,
+                imageCertificateBackground: null,
+                serverErrors: {},
+                submitted: false
+            }
+        },
+
+        computed: {
+            ...mapState({
+                lists: state => state.nomenclators.lists ? state.nomenclators.lists : {'licenseTypes': []},
+            }),
+
+            photoLabel() {
+                return this.selectedPhoto ? this.selectedPhoto.name : 'Foto'
+            },
+
+            imageDriveLicenseLabel() {
+                return this.imageDriveLicense ? this.imageDriveLicense.name : 'Imagen de la licencia de conducir'
+            },
+
+            imagePermitCirculationLabel() {
+                return this.imagePermitCirculation ? this.imagePermitCirculation.name : 'Imagen del Permiso de circulación'
+            },
+
+            imageCertificateBackgroundLabel() {
+                return this.imageCertificateBackground ? this.imageCertificateBackground.name : 'Imagen de Certificado de Antecedentes'
+            },
+        },
+
+        methods: {
+
+            ...mapActions([
+                'register',
+                'nomenclators',
+            ]),
+
+            onSubmit() {
+
+                this.submitted = true;
+                this.$validator.validate().then(valid => {
+                    if (valid) {
+                        let formData, key;
+
+                        if (!this.isClient()) {
+                            formData = new FormData()
+                            for (key in this.form) {
+                                formData.append(key, this.form[key]);
+                            }
+                            formData.append('photo', this.selectedPhoto, this.selectedPhoto.name)
+                            formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense.name)
+                            formData.append('image_permit_circulation', this.imagePermitCirculation, this.imagePermitCirculation.name)
+                            formData.append('image_certificate_background', this.imageCertificateBackground, this.imageCertificateBackground ? this.imageCertificateBackground.name : '')
+                        }
+
+                        this.serverErrors = {}
+                        this.register(formData ? formData : this.form)
+                            .then(() => {
+                                this.$router.replace('/entrar')
+                            })
+                            .catch((data) => {
+                                this.serverErrors = data.errors || {}
+                            })
+                    }
+                });
+            },
+
+            onPhotoSelected(event) {
+                this.selectedPhoto = event.target.files[0];
+            },
+
+            onImageDriveLicenseSelected(event) {
+                this.imageDriveLicense = event.target.files[0];
+            },
+
+            onImagePermitCirculationSelected(event) {
+                this.imagePermitCirculation = event.target.files[0];
+            },
+
+            onImageCertificateBackgroundSelected(event) {
+                this.imageCertificateBackground = event.target.files[0];
+            },
+
+            isClient() {
+                return this.form.type === 1;
+            }
+        },
+
+        mounted() {
+            this.form.type = this.$route.params.type === 'cliente' ? 1 : 2;
+            this.nomenclators();
+        }
+
     }
 </script>
 
