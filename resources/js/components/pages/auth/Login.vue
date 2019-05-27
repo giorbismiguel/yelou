@@ -52,7 +52,7 @@
                                     <button type="submit" class="btn btn-primary" :disabled="submitted">
                                         Login
                                     </button>
-                                    <spinner v-show="submitted"></spinner>
+                                    <spinner v-show="loading"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -76,6 +76,7 @@
                     password: null
                 },
                 submitted: false,
+                loading: false,
                 error: '',
                 serverErrors: {},
             }
@@ -98,9 +99,11 @@
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                     if (valid) {
+                        this.submitted = false
+                        this.loading = true
                         this.login(this.form)
                             .then(() => {
-                                this.submitted = false;
+                                this.loading = false
                                 if (!this.phone_verify) {
                                     this.$router.replace('/verificar/codigo')
 
@@ -110,7 +113,7 @@
                                 this.$router.replace('/')
                             })
                             .catch((data) => {
-                                this.submitted = false;
+                                this.loading = false
                                 this.error = data.message
                                 this.serverErrors = data.errors || {}
                             })

@@ -45,6 +45,7 @@
                                         Cancelar
                                     </button>
                                     <button type="submit" class="btn btn-primary ml-3">Activar</button>
+                                    <spinner v-show="loading"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -66,6 +67,7 @@
                     code_activation: '',
                 },
                 submitted: false,
+                loading: false,
                 error: '',
                 serverErrors: {},
             }
@@ -87,13 +89,16 @@
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                     if (valid) {
+                        this.loading = true
                         this.active_account(this.form)
                             .then(() => {
+                                this.loading = false
                                 if (this.active) {
                                     this.$router.replace('/login')
                                 }
                             })
                             .catch((data) => {
+                                this.loading = false
                                 this.error = data.message
                             })
                     }

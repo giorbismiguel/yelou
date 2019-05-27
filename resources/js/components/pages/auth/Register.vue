@@ -288,6 +288,7 @@
                                     <button type="submit" class="btn btn-primary">
                                         Registrarse
                                     </button>
+                                    <spinner v-show="loading"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -329,7 +330,8 @@
                 imagePermitCirculation: null,
                 imageCertificateBackground: null,
                 serverErrors: {},
-                submitted: false
+                submitted: false,
+                loading: false,
             }
         },
 
@@ -363,10 +365,10 @@
             ]),
 
             onSubmit() {
-
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                     if (valid) {
+                        this.loading = true
                         let formData, key;
 
                         if (!this.isClient()) {
@@ -383,9 +385,11 @@
                         this.serverErrors = {}
                         this.register(formData ? formData : this.form)
                             .then(() => {
+                                this.loading = false
                                 this.$router.replace('/entrar')
                             })
                             .catch((data) => {
+                                this.loading = false
                                 this.serverErrors = data.errors || {}
                             })
                     }

@@ -1,11 +1,13 @@
 <template>
-    <footer>
+    <footer class="d-flex align-items-center">
         <div class="container d-flex flex-column">
-            <div>
-                <img src="/img/logo.png" alt="Logo">
+            <div class="mb-5">
+                <router-link class="nav-link" :to="{ name: 'home' }">
+                    <img src="/img/logo.png" alt="Logo">
+                </router-link>
             </div>
 
-            <div class="d-flex justify-content-between">
+            <div class="d-flex justify-content-between mt-5" style="padding: 0 40px;">
                 <div class="app_font-family_sm app_color">© 2019 Yelou</div>
 
                 <div class="d-flex justify-content-between app_font-family_sm other_pages">

@@ -1845,6 +1845,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Feet"
 });
@@ -2087,6 +2089,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password: null
       },
       submitted: false,
+      loading: false,
       error: '',
       serverErrors: {}
     };
@@ -2106,8 +2109,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.submitted = true;
       this.$validator.validate().then(function (valid) {
         if (valid) {
+          _this.submitted = false;
+          _this.loading = true;
+
           _this.login(_this.form).then(function () {
-            _this.submitted = false;
+            _this.loading = false;
 
             if (!_this.phone_verify) {
               _this.$router.replace('/verificar/codigo');
@@ -2117,7 +2123,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             _this.$router.replace('/');
           })["catch"](function (data) {
-            _this.submitted = false;
+            _this.loading = false;
             _this.error = data.message;
             _this.serverErrors = data.errors || {};
           });
@@ -2446,6 +2452,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2474,7 +2481,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       imagePermitCirculation: null,
       imageCertificateBackground: null,
       serverErrors: {},
-      submitted: false
+      submitted: false,
+      loading: false
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -2504,6 +2512,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.submitted = true;
       this.$validator.validate().then(function (valid) {
         if (valid) {
+          _this.loading = true;
           var formData, key;
 
           if (!_this.isClient()) {
@@ -2522,8 +2531,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.serverErrors = {};
 
           _this.register(formData ? formData : _this.form).then(function () {
+            _this.loading = false;
+
             _this.$router.replace('/entrar');
           })["catch"](function (data) {
+            _this.loading = false;
             _this.serverErrors = data.errors || {};
           });
         }
@@ -2624,6 +2636,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2632,6 +2645,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         code_activation: ''
       },
       submitted: false,
+      loading: false,
       error: '',
       serverErrors: {}
     };
@@ -2648,11 +2662,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.submitted = true;
       this.$validator.validate().then(function (valid) {
         if (valid) {
+          _this.loading = true;
+
           _this.active_account(_this.form).then(function () {
+            _this.loading = false;
+
             if (_this.active) {
               _this.$router.replace('/login');
             }
           })["catch"](function (data) {
+            _this.loading = false;
             _this.error = data.message;
           });
         }
@@ -49889,67 +49908,83 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("footer", { staticClass: "d-flex align-items-center" }, [
+    _c("div", { staticClass: "container d-flex flex-column" }, [
+      _c(
+        "div",
+        { staticClass: "mb-5" },
+        [
+          _c(
+            "router-link",
+            { staticClass: "nav-link", attrs: { to: { name: "home" } } },
+            [_c("img", { attrs: { src: "/img/logo.png", alt: "Logo" } })]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("footer", [
-      _c("div", { staticClass: "container d-flex flex-column" }, [
-        _c("div", [
-          _c("img", { attrs: { src: "/img/logo.png", alt: "Logo" } })
+    return _c(
+      "div",
+      {
+        staticClass: "d-flex justify-content-between mt-5",
+        staticStyle: { padding: "0 40px" }
+      },
+      [
+        _c("div", { staticClass: "app_font-family_sm app_color" }, [
+          _vm._v("© 2019 Yelou")
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "d-flex justify-content-between" }, [
-          _c("div", { staticClass: "app_font-family_sm app_color" }, [
-            _vm._v("© 2019 Yelou")
-          ]),
-          _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass:
-                "d-flex justify-content-between app_font-family_sm other_pages"
-            },
-            [
-              _c("a", { attrs: { href: "" } }, [_vm._v("Privacidad")]),
-              _vm._v(" "),
-              _c("a", { attrs: { href: "" } }, [_vm._v("Accesibilidad")]),
-              _vm._v(" "),
-              _c("a", { attrs: { href: "" } }, [_vm._v("Condiciones")])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "d-flex justify-content-between social_networks" },
-            [
-              _c("a", { attrs: { href: "" } }, [
-                _c("i", { staticClass: "fab fa-facebook-f" })
-              ]),
-              _vm._v(" "),
-              _c("a", { attrs: { href: "" } }, [
-                _c("i", { staticClass: "fab fa-twitter" })
-              ]),
-              _vm._v(" "),
-              _c("a", { attrs: { href: "" } }, [
-                _c("i", { staticClass: "fab fa-youtube" })
-              ]),
-              _vm._v(" "),
-              _c("a", { attrs: { href: "" } }, [
-                _c("i", { staticClass: "fab fa-linkedin" })
-              ]),
-              _vm._v(" "),
-              _c("a", { attrs: { href: "" } }, [
-                _c("i", { staticClass: "fab fa-instagram" })
-              ])
-            ]
-          )
-        ])
-      ])
-    ])
+        _c(
+          "div",
+          {
+            staticClass:
+              "d-flex justify-content-between app_font-family_sm other_pages"
+          },
+          [
+            _c("a", { attrs: { href: "" } }, [_vm._v("Privacidad")]),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "" } }, [_vm._v("Accesibilidad")]),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "" } }, [_vm._v("Condiciones")])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "d-flex justify-content-between social_networks" },
+          [
+            _c("a", { attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-facebook-f" })
+            ]),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-twitter" })
+            ]),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-youtube" })
+            ]),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-linkedin" })
+            ]),
+            _vm._v(" "),
+            _c("a", { attrs: { href: "" } }, [
+              _c("i", { staticClass: "fab fa-instagram" })
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -50473,8 +50508,8 @@ var render = function() {
                           {
                             name: "show",
                             rawName: "v-show",
-                            value: _vm.submitted,
-                            expression: "submitted"
+                            value: _vm.loading,
+                            expression: "loading"
                           }
                         ]
                       })
@@ -51579,7 +51614,38 @@ var render = function() {
                       ])
                     ],
                 _vm._v(" "),
-                _vm._m(0)
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "div",
+                    { staticClass: "col-md-6 col-md-offset-4" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary",
+                          attrs: { type: "submit" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Registrarse\n                                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("spinner", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.loading,
+                            expression: "loading"
+                          }
+                        ]
+                      })
+                    ],
+                    1
+                  )
+                ])
               ],
               2
             )
@@ -51589,26 +51655,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("div", { staticClass: "col-md-6 col-md-offset-4" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [
-            _vm._v(
-              "\n                                    Registrarse\n                                "
-            )
-          ]
-        )
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -51769,30 +51816,46 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group mt-5" }, [
-                  _c("div", { staticClass: "col d-flex justify-content-end" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-light",
-                        attrs: { type: "submit" },
-                        on: { click: _vm.getNewActivationCode }
-                      },
-                      [
-                        _vm._v(
-                          "\n                                    Cancelar\n                                "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary ml-3",
-                        attrs: { type: "submit" }
-                      },
-                      [_vm._v("Activar")]
-                    )
-                  ])
+                  _c(
+                    "div",
+                    { staticClass: "col d-flex justify-content-end" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-light",
+                          attrs: { type: "submit" },
+                          on: { click: _vm.getNewActivationCode }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Cancelar\n                                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary ml-3",
+                          attrs: { type: "submit" }
+                        },
+                        [_vm._v("Activar")]
+                      ),
+                      _vm._v(" "),
+                      _c("spinner", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.loading,
+                            expression: "loading"
+                          }
+                        ]
+                      })
+                    ],
+                    1
+                  )
                 ])
               ]
             )
