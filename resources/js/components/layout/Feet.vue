@@ -2,8 +2,9 @@
     <footer>
         <div class="container d-flex flex-column">
             <div>
-                Logo
+                <img src="/img/logo.png" alt="Logo">
             </div>
+
             <div class="d-flex justify-content-between">
                 <div class="app_font-family_sm app_color">© 2019 Yelou</div>
 

@@ -46,7 +46,11 @@ class AuthController extends Controller
             /** @var User $user */
             $user = $this->guard()->user();
 
-            return ['user' => $user, 'access_token' => $user->makeApiToken()];
+            if (!$user->phoneVerified()->exists()) {
+                return ['user' => $user, 'phone_verify' => false, 'access_token' => null];
+            }
+
+            return ['user' => $user, 'access_token' => $user->makeApiToken(), 'phone_verify' => true];
         }
 
         // If the login attempt was unsuccessful we will increment the number of attempts
@@ -84,6 +88,25 @@ class AuthController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         return ['user' => $user];
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     * @throws AuthenticationException
+     */
+    public function active(Request $request)
+    {
+        $query = User::where('code_activation', '=', $request->code_activation);
+        if (!$query->exists()) {
+            throw new AuthenticationException('Código de activación inválido');
+        }
+
+        $user = $query->first();
+        /** @var User $user */
+        $user->setVerifiedAt();
+
+        return ['active' => true];
     }
 
     /**

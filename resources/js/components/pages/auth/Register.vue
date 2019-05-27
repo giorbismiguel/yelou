@@ -383,8 +383,7 @@
                         this.serverErrors = {}
                         this.register(formData ? formData : this.form)
                             .then(() => {
-                                //this.$router.replace('/dashboard')
-
+                                this.$router.replace('/entrar')
                             })
                             .catch((data) => {
                                 this.serverErrors = data.errors || {}

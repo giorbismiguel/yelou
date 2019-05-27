@@ -3,7 +3,7 @@
         <div class="container">
             <a class="navbar-brand" href="#">
                 <router-link class="nav-link" :to="{ name: 'home' }">
-                    <img src="http://placehold.it/150x50?text=Logo" alt="Logo">
+                    <img src="/img/logo.png" alt="Logo">
                 </router-link>
             </a>
 

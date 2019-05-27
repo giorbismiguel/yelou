@@ -7,6 +7,7 @@ import Home from './components/pages/Home'
 import Register from './components/pages/auth/Register'
 import RegisterAs from './components/layout/RegisterAs'
 import Login from './components/pages/auth/Login'
+import VerifyPhone from './components/pages/auth/VerifyPhone'
 import NotFound from './components/NotFound';
 
 const routes = [
@@ -29,6 +30,11 @@ const routes = [
         path: '/registrarse/:type',
         name: 'register',
         component: Register
+    },
+    {
+        path: '/verificar/codigo',
+        name: 'verify_phone',
+        component: VerifyPhone
     },
     {
         path: '*',

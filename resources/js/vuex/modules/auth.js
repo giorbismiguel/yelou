@@ -1,7 +1,9 @@
 import axios from 'axios'
 
 const state = {
-    me: null, // Logged in user
+    me: null, // Logged in user,
+    phone_verify: null, // Phone Verify,
+    active: null, // Active User,
 }
 
 const actions = {
@@ -36,17 +38,34 @@ const actions = {
         commit('LOGIN')
 
         return new Promise((resolve, reject) => {
-            axios.post('api/v1/auth/login', form)
-                .then(
-                    response => {
-                        const accessToken = response.data.access_token
+            axios.post('/api/v1/auth/login', form)
+                .then(({data}) => {
+                    if (data.access_token) {
+                        const accessToken = data.access_token
                         localStorage.setItem('access_token', accessToken)
+                    }
 
-                        commit('LOGIN_OK', response.data.user)
-                        resolve()
-                    })
+                    commit('LOGIN_OK', data)
+                    resolve()
+                })
                 .catch(error => {
                     commit('LOGIN_FAIL')
+                    reject(error.response.data)
+                })
+        })
+    },
+
+    active_account({commit, dispatch}, form) {
+        commit('ACTIVE_ACCOUNT')
+
+        return new Promise((resolve, reject) => {
+            axios.post('/api/v1/auth/active', form)
+                .then(({data}) => {
+                    commit('ACTIVE_ACCOUNT_OK', data.active)
+                    resolve()
+                })
+                .catch(error => {
+                    commit('ACTIVE_ACCOUNT_FAIL')
                     reject(error.response.data)
                 })
         })
@@ -103,8 +122,9 @@ const mutations = {
         state.me = user
     },
 
-    LOGIN_OK(state, user) {
-        state.me = user
+    LOGIN_OK(state, data) {
+        state.me = data.user
+        state.phone_verify = data.phone_verify
     },
 
     LOGOUT_OK(state) {
@@ -117,6 +137,18 @@ const mutations = {
 
     UPDATE_PROFILE_OK(state, user) {
         state.me = user
+    },
+
+    ACTIVE_ACCOUNT(state, user) {
+        state.me = user
+    },
+
+    ACTIVE_ACCOUNT_OK(state, active) {
+        state.active = active
+    },
+
+    ACTIVE_ACCOUNT_FAIL(state, user) {
+        state.active = false
     },
 
 }

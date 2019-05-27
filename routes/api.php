@@ -24,6 +24,7 @@ Route::prefix('v1')->group(function () {
         ->group(function () {
             Route::post('/login', 'AuthController@login');
             Route::post('/register', 'AuthController@register');
+            Route::post('/active', 'AuthController@active');
         });
 
     Route::namespace('Auth')
