@@ -2148,6 +2148,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2453,6 +2455,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2560,6 +2563,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     this.form.type = this.$route.params.type === 'cliente' ? 1 : 2;
     this.nomenclators();
+  },
+  components: {
+    Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a
   }
 });
 
@@ -2575,6 +2581,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2638,6 +2646,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2653,6 +2662,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
     me: function me(state) {
       return state.auth.me;
+    },
+    active: function active(state) {
+      return state.auth.phone_verify_active;
     }
   })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['active_account']), {
@@ -2668,7 +2680,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.loading = false;
 
             if (_this.active) {
-              _this.$router.replace('/login');
+              _this.$router.replace('/entrar');
             }
           })["catch"](function (data) {
             _this.loading = false;
@@ -2678,7 +2690,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     getNewActivationCode: function getNewActivationCode() {}
-  })
+  }),
+  components: {
+    Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a
+  }
 });
 
 /***/ }),
@@ -50488,12 +50503,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group" }, [
                   _c(
                     "div",
-                    { staticClass: "col d-flex" },
+                    { staticClass: "col d-flex justify-content-end" },
                     [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary",
+                          staticClass: "btn btn-primary ml-3",
                           attrs: { type: "submit", disabled: _vm.submitted }
                         },
                         [
@@ -51617,12 +51632,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group" }, [
                   _c(
                     "div",
-                    { staticClass: "col-md-6 col-md-offset-4" },
+                    { staticClass: "col d-flex justify-content-end" },
                     [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary",
+                          staticClass: "btn btn-primary ml-3",
                           attrs: { type: "submit" }
                         },
                         [
@@ -69642,7 +69657,7 @@ var state = {
   // Logged in user,
   phone_verify: null,
   // Phone Verify,
-  active: null // Active User,
+  phone_verify_active: null // Active User,
 
 };
 var actions = {
@@ -69695,7 +69710,7 @@ var actions = {
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/v1/auth/active', form).then(function (_ref5) {
         var data = _ref5.data;
-        commit('ACTIVE_ACCOUNT_OK', data.active);
+        commit('ACTIVE_ACCOUNT_OK', data);
         resolve();
       })["catch"](function (error) {
         commit('ACTIVE_ACCOUNT_FAIL');
@@ -69764,8 +69779,8 @@ var mutations = {
   ACTIVE_ACCOUNT: function ACTIVE_ACCOUNT(state, user) {
     state.me = user;
   },
-  ACTIVE_ACCOUNT_OK: function ACTIVE_ACCOUNT_OK(state, active) {
-    state.active = active;
+  ACTIVE_ACCOUNT_OK: function ACTIVE_ACCOUNT_OK(state, data) {
+    state.phone_verify_active = data.active;
   },
   ACTIVE_ACCOUNT_FAIL: function ACTIVE_ACCOUNT_FAIL(state, user) {
     state.active = false;

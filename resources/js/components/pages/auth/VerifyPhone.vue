@@ -58,6 +58,7 @@
 
 <script>
     import {mapState, mapActions} from 'vuex'
+    import Spinner from 'vue-simple-spinner'
 
     export default {
 
@@ -76,6 +77,7 @@
         computed: {
             ...mapState({
                 me: state => state.auth.me,
+                active: state => state.auth.phone_verify_active,
             })
         },
 
@@ -94,7 +96,7 @@
                             .then(() => {
                                 this.loading = false
                                 if (this.active) {
-                                    this.$router.replace('/login')
+                                    this.$router.replace('/entrar')
                                 }
                             })
                             .catch((data) => {
@@ -108,6 +110,10 @@
             getNewActivationCode() {
 
             }
+        },
+
+        components: {
+            Spinner
         }
     }
 </script>

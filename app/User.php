@@ -36,6 +36,7 @@ class User extends Authenticatable
         'image_permit_circulation',
         'image_certificate_background',
         'phone_verified_at',
+        'code_activation',
     ];
 
     /**

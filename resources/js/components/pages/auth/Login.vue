@@ -48,8 +48,8 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col d-flex">
-                                    <button type="submit" class="btn btn-primary" :disabled="submitted">
+                                <div class="col d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary ml-3" :disabled="submitted">
                                         Login
                                     </button>
                                     <spinner v-show="loading"></spinner>
