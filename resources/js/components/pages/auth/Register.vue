@@ -284,8 +284,8 @@
                             </template>
 
                             <div class="form-group">
-                                <div class="col-md-6 col-md-offset-4">
-                                    <button type="submit" class="btn btn-primary">
+                                <div class="col d-flex justify-content-end">
+                                    <button type="submit" class="btn btn-primary ml-3">
                                         Registrarse
                                     </button>
                                     <spinner v-show="loading"></spinner>
@@ -301,6 +301,7 @@
 
 <script>
     import {mapState, mapActions} from 'vuex'
+    import Spinner from 'vue-simple-spinner'
 
     export default {
 
@@ -420,6 +421,10 @@
         mounted() {
             this.form.type = this.$route.params.type === 'cliente' ? 1 : 2;
             this.nomenclators();
+        },
+
+        components: {
+            Spinner
         }
 
     }

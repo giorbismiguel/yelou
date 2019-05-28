@@ -9,6 +9,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Lang;
+use Nexmo\Laravel\Facade\Nexmo;
 use Validator;
 
 /**
@@ -85,7 +86,15 @@ class AuthController extends Controller
         $request = get_file($request, 'image_permit_circulation');
         $request = get_file($request, 'image_certificate_background');
 
+        $codeActivation = generate_code();
+        $request = $request->merge(['code_activation' => $codeActivation]);
         event(new Registered($user = $this->create($request->all())));
+
+        Nexmo::message()->send([
+            'to'   => $request->get('phone'),
+            'from' => 'YElOU',
+            'text' => __('app.message_code_activation', ['code' => $codeActivation])
+        ]);
 
         return ['user' => $user];
     }
@@ -137,7 +146,7 @@ class AuthController extends Controller
             'direction'  => 'Dirección',
         ];
 
-        if ((int)request()->get('type') === \UserTypes::CLIENT) {
+        if ((int) request()->get('type') === \UserTypes::CLIENT) {
             $rules += [
                 'city'        => 'required|max:191',
                 'postal_code' => 'nullable|max:191',
@@ -147,7 +156,7 @@ class AuthController extends Controller
                 'city'        => 'Ciudad',
                 'postal_code' => 'Código Postal',
             ];
-        } elseif ((int)request()->get('type') === \UserTypes::TRANSPORTATION) {
+        } elseif ((int) request()->get('type') === \UserTypes::TRANSPORTATION) {
             $rules += [
                 'license_types_id'             => 'required|integer',
                 'photo'                        => 'required|image|max:100000',
@@ -186,6 +195,7 @@ class AuthController extends Controller
             'phone'                        => $data['phone'],
             'ruc'                          => $data['ruc'],
             'direction'                    => $data['direction'],
+            'code_activation'              => $data['code_activation'] ?? null,
             'city'                         => $data['city'] ?? null,
             'postal_code'                  => $data['postal_code'] ?? null,
             'license_types_id'             => $data['license_types_id'] ?? null,

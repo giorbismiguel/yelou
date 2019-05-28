@@ -3,7 +3,7 @@ import axios from 'axios'
 const state = {
     me: null, // Logged in user,
     phone_verify: null, // Phone Verify,
-    active: null, // Active User,
+    phone_verify_active: null, // Active User,
 }
 
 const actions = {
@@ -61,7 +61,7 @@ const actions = {
         return new Promise((resolve, reject) => {
             axios.post('/api/v1/auth/active', form)
                 .then(({data}) => {
-                    commit('ACTIVE_ACCOUNT_OK', data.active)
+                    commit('ACTIVE_ACCOUNT_OK', data)
                     resolve()
                 })
                 .catch(error => {
@@ -143,8 +143,8 @@ const mutations = {
         state.me = user
     },
 
-    ACTIVE_ACCOUNT_OK(state, active) {
-        state.active = active
+    ACTIVE_ACCOUNT_OK(state, data) {
+        state.phone_verify_active = data.active
     },
 
     ACTIVE_ACCOUNT_FAIL(state, user) {
