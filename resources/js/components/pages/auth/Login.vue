@@ -52,7 +52,7 @@
                                     <button type="submit" class="btn btn-primary ml-3" :disabled="submitted">
                                         Login
                                     </button>
-                                    <spinner v-show="loading"></spinner>
+                                    <spinner v-show="loading" size="medium"></spinner>
                                 </div>
                             </div>
                         </form>

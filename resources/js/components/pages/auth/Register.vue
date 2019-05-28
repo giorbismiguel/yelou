@@ -285,10 +285,10 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-primary ml-3">
+                                    <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
                                         Registrarse
                                     </button>
-                                    <spinner v-show="loading"></spinner>
+                                    <spinner v-show="loading" size="medium"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -302,6 +302,7 @@
 <script>
     import {mapState, mapActions} from 'vuex'
     import Spinner from 'vue-simple-spinner'
+    import Swal from 'sweetalert2'
 
     export default {
 
@@ -387,7 +388,15 @@
                         this.register(formData ? formData : this.form)
                             .then(() => {
                                 this.loading = false
-                                this.$router.replace('/entrar')
+
+                                Swal.fire({
+                                    text: 'Para la activación  de su cuenta se enviará un código al correo y número de celular, por favor verifique los datos para registrarse.',
+                                    type: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'Aceptar',
+                                }).then(() => {
+                                    this.$router.replace('/entrar')
+                                })
                             })
                             .catch((data) => {
                                 this.loading = false

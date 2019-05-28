@@ -2659,20 +2659,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.serverErrors = {};
 
           _this.register(formData ? formData : _this.form).then(function () {
+            _this.loading = false;
             sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
               text: 'Para la activación  de su cuenta se enviará un código al correo y número de celular, por favor verifique los datos para registrarse.',
               type: 'success',
               showCancelButton: false,
               confirmButtonText: 'Aceptar'
-            }).then(function (result) {
-              if (result.value) {
-                sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire('Deleted!', 'Your imaginary file has been deleted.', 'success'); // For more information about handling dismissals please visit
-                // https://sweetalert2.github.io/#handling-dismissals
-              }
+            }).then(function () {
+              _this.$router.replace('/entrar');
             });
-            _this.loading = false;
-
-            _this.$router.replace('/entrar');
           })["catch"](function (data) {
             _this.loading = false;
             _this.serverErrors = data.errors || {};
@@ -53464,7 +53459,8 @@ var render = function() {
                             value: _vm.loading,
                             expression: "loading"
                           }
-                        ]
+                        ],
+                        attrs: { size: "medium" }
                       })
                     ],
                     1
@@ -53631,7 +53627,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-primary",
-                          attrs: { type: "submit" }
+                          attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
                           _vm._v(
@@ -53648,7 +53644,8 @@ var render = function() {
                             value: _vm.loadingCode,
                             expression: "loadingCode"
                           }
-                        ]
+                        ],
+                        attrs: { size: "medium" }
                       })
                     ],
                     1
@@ -54759,8 +54756,8 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-3",
-                          attrs: { type: "submit" }
+                          staticClass: "btn btn-primary ml-4",
+                          attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
                           _vm._v(
@@ -54777,7 +54774,8 @@ var render = function() {
                             value: _vm.loading,
                             expression: "loading"
                           }
-                        ]
+                        ],
+                        attrs: { size: "medium" }
                       })
                     ],
                     1
@@ -54978,7 +54976,7 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-primary ml-3",
-                          attrs: { type: "submit" }
+                          attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [_vm._v("Activar")]
                       ),
@@ -54991,7 +54989,8 @@ var render = function() {
                             value: _vm.loading,
                             expression: "loading"
                           }
-                        ]
+                        ],
+                        attrs: { size: "medium" }
                       })
                     ],
                     1

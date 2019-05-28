@@ -42,8 +42,8 @@
                                     <button type="button" class="btn btn-light">
                                         Cancelar
                                     </button>
-                                    <button type="submit" class="btn btn-primary ml-3">Activar</button>
-                                    <spinner v-show="loading"></spinner>
+                                    <button type="submit" class="btn btn-primary ml-3" :disabled="loading">Activar</button>
+                                    <spinner v-show="loading" size="medium"></spinner>
                                 </div>
                             </div>
                         </form>

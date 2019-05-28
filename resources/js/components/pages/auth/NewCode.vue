@@ -36,10 +36,10 @@
 
                             <div class="form-group mb-2">
                                 <div class="col text-center">
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary" :disabled="loading">
                                         Solicitar Nuevo código
                                     </button>
-                                    <spinner v-show="loadingCode"></spinner>
+                                    <spinner v-show="loadingCode" size="medium"></spinner>
                                 </div>
                             </div>
                         </form>
