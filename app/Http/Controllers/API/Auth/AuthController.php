@@ -48,7 +48,7 @@ class AuthController extends Controller
             $user = $this->guard()->user();
 
             if (!$user->phoneVerified()->exists()) {
-                return ['user' => $user, 'phone_verify' => false, 'access_token' => null];
+                return ['user' => $user, 'access_token' => null, 'phone_verify' => false];
             }
 
             return ['user' => $user, 'access_token' => $user->makeApiToken(), 'phone_verify' => true];
@@ -106,7 +106,9 @@ class AuthController extends Controller
      */
     public function active(Request $request)
     {
-        $query = User::where('code_activation', '=', $request->code_activation);
+        $query = User::where('code_activation', '=', $request->code_activation)
+            ->where('phone', '=', $request->phone);
+
         if (!$query->exists()) {
             throw new AuthenticationException('Código de activación inválido');
         }
@@ -116,6 +118,27 @@ class AuthController extends Controller
         $user->setVerifiedAt();
 
         return ['active' => true];
+    }
+
+    public function newActivationCode(Request $request)
+    {
+        $query = User::where('phone', '=', $request->phone);
+
+        if (!$query->exists()) {
+            throw new AuthenticationException('Número de teléfono inexistente');
+        }
+
+        $codeActivation = generate_code();
+        $user = $query->first();
+        $user->update(['code_activation' => $codeActivation]);
+
+        Nexmo::message()->send([
+            'to'   => $request->get('phone'),
+            'from' => 'YElOU',
+            'text' => __('app.message_code_activation', ['code' => $codeActivation])
+        ]);
+
+        return ['message_send' => true];
     }
 
     /**

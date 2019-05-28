@@ -8,37 +8,31 @@ import Register from './components/pages/auth/Register'
 import RegisterAs from './components/layout/RegisterAs'
 import Login from './components/pages/auth/Login'
 import VerifyPhone from './components/pages/auth/VerifyPhone'
+import NewCode from './components/pages/auth/NewCode'
+
 import NotFound from './components/NotFound';
 
 const routes = [
     {
-        path: '/',
-        name: 'home',
-        component: Home
+        path: '/', name: 'home', component: Home
     },
     {
-        path: '/entrar',
-        name: 'login',
-        component: Login
+        path: '/entrar', name: 'login', component: Login
     },
     {
-        path: '/registrarse',
-        name: 'register_as',
-        component: RegisterAs
+        path: '/registrarse', name: 'register_as', component: RegisterAs
     },
     {
-        path: '/registrarse/:type',
-        name: 'register',
-        component: Register
+        path: '/registrarse/:type', name: 'register', component: Register
     },
     {
-        path: '/verificar/codigo',
-        name: 'verify_phone',
-        component: VerifyPhone
+        path: '/verificar/codigo', name: 'verify_phone', component: VerifyPhone
     },
     {
-        path: '*',
-        component: NotFound
+        path: '/codigo/nuevo', name: 'new_code', component: NewCode
+    },
+    {
+        path: '*', component: NotFound
     }
 ]
 

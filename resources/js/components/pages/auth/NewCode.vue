@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <h3>Activar Cuenta</h3>
+        <h3>Obtener Nuevo código</h3>
         <hr>
 
         <div class="row justify-content-center">
             <div class="col-6">
                 <div class="card m-4">
-                    <div class="card-header">Activar Cuenta</div>
+                    <div class="card-header">Obtener Nuevo código</div>
                     <div class="card-body">
 
                         <div class="alert alert-danger text-center" v-if="error">
@@ -17,33 +17,29 @@
                               autocomplete="off">
 
                             <div class="form-group">
-                                <label for="code_activation" class="col control-label">
-                                    Ingrese el código de activación
+                                <label for="phone" class="col control-label">
+                                    Ingrese el Teléfono
                                 </label>
                                 <div class="col">
-                                    <input id="code_activation" type="text" name="code_activation"
-                                           v-validate="'required|length:6'" data-vv-as="Código de activación"
-                                           class="form-control" v-model.trim="form.code_activation"
-                                           :class="{ 'is-invalid': submitted && (errors.has('code_activation') || serverErrors.code_activation) }">
+                                    <input id="phone" type="text" name="phone"
+                                           v-validate="'required'" data-vv-as="Teléfono"
+                                           class="form-control" v-model.trim="form.phone"
+                                           :class="{ 'is-invalid': submitted && (errors.has('phone') || serverErrors.phone) }">
 
-                                    <div v-if="submitted && (errors.has('code_activation') || serverErrors.code_activation)"
+                                    <div v-if="submitted && (errors.has('phone') || serverErrors.phone)"
                                          class="invalid-feedback">
-                                        {{ errors.first('code_activation') }}
-                                        <template v-for="error in serverErrors.code_activation">{{ error }}</template>
+                                        {{ errors.first('phone') }}
+                                        <template v-for="error in serverErrors.phone">{{ error }}</template>
                                     </div>
                                 </div>
-                                <router-link class="nav-link" :to="{ name: 'new_code' }">
-                                    Solicitar Nuevo Código
-                                </router-link>
                             </div>
 
-                            <div class="form-group mt-5">
-                                <div class="col d-flex justify-content-end">
-                                    <button type="button" class="btn btn-light">
-                                        Cancelar
+                            <div class="form-group mb-2">
+                                <div class="col text-center">
+                                    <button type="submit" class="btn btn-primary">
+                                        Solicitar Nuevo código
                                     </button>
-                                    <button type="submit" class="btn btn-primary ml-3">Activar</button>
-                                    <spinner v-show="loading"></spinner>
+                                    <spinner v-show="loadingCode"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -63,10 +59,8 @@
         data() {
             return {
                 form: {
-                    code_activation: '',
                     phone: null
                 },
-                phone: null,
                 submitted: false,
                 submittedCode: false,
                 loading: false,
@@ -79,14 +73,13 @@
         computed: {
             ...mapState({
                 me: state => state.auth.me,
-                active: state => state.auth.phone_verify_active,
+                code_activation: state => state.auth.code_activation,
             })
         },
 
         methods: {
 
             ...mapActions([
-                'active_account',
                 'new_activation_code',
             ]),
 
@@ -94,13 +87,12 @@
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                     if (valid) {
-                        this.form.phone = this.me ? this.me.phone : null
                         this.loading = true
-                        this.active_account(this.form)
+                        this.new_activation_code(this.form)
                             .then(() => {
                                 this.loading = false
-                                if (this.active) {
-                                    this.$router.replace('/entrar')
+                                if (this.code_activation) {
+                                    this.$router.replace('/verificar/codigo')
                                 }
                             })
                             .catch((data) => {

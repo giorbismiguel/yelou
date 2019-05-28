@@ -4,6 +4,7 @@ const state = {
     me: null, // Logged in user,
     phone_verify: null, // Phone Verify,
     phone_verify_active: null, // Active User,
+    code_activation: null,
 }
 
 const actions = {
@@ -66,6 +67,22 @@ const actions = {
                 })
                 .catch(error => {
                     commit('ACTIVE_ACCOUNT_FAIL')
+                    reject(error.response.data)
+                })
+        })
+    },
+
+    new_activation_code({commit, dispatch}, form) {
+        commit('ACTIVATION_CODE')
+
+        return new Promise((resolve, reject) => {
+            axios.post('/api/v1/auth/new_activation_code', form)
+                .then(({data}) => {
+                    commit('ACTIVATION_CODE_OK', data)
+                    resolve()
+                })
+                .catch(error => {
+                    commit('ACTIVATION_CODE_FAIL')
                     reject(error.response.data)
                 })
         })
@@ -151,6 +168,17 @@ const mutations = {
         state.active = false
     },
 
+    ACTIVATION_CODE(state, user) {
+        state.me = user
+    },
+
+    ACTIVATION_CODE_OK(state, data) {
+        state.code_activation = data.code_activation
+    },
+
+    ACTIVATION_CODE_FAIL(state, user) {
+        state.active = false
+    },
 }
 
 export default {
