@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Auth;
 
 use App\Exceptions\AuthenticationException;
 use App\Http\Controllers\Controller;
+use App\Notifications\UserRegistered;
 use App\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -89,6 +90,8 @@ class AuthController extends Controller
         $codeActivation = generate_code();
         $request = $request->merge(['code_activation' => $codeActivation]);
         event(new Registered($user = $this->create($request->all())));
+
+        $user->notify(new UserRegistered($codeActivation));
 
         Nexmo::message()->send([
             'to'   => $request->get('phone'),
