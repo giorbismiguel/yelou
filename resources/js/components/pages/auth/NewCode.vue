@@ -36,6 +36,9 @@
 
                             <div class="form-group mb-2">
                                 <div class="col text-center">
+                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
+                                        Cancelar
+                                    </router-link>
                                     <button type="submit" class="btn btn-primary" :disabled="loading">
                                         Solicitar Nuevo código
                                     </button>

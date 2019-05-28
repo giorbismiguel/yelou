@@ -2206,6 +2206,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2718,6 +2721,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -53624,6 +53629,19 @@ var render = function() {
                     { staticClass: "col text-center" },
                     [
                       _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-light",
+                          attrs: { to: { name: "home" }, tag: "button" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Cancelar\n                                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
                         "button",
                         {
                           staticClass: "btn btn-primary",
@@ -54960,10 +54978,10 @@ var render = function() {
                     { staticClass: "col d-flex justify-content-end" },
                     [
                       _c(
-                        "button",
+                        "router-link",
                         {
                           staticClass: "btn btn-light",
-                          attrs: { type: "button" }
+                          attrs: { to: { name: "home" }, tag: "button" }
                         },
                         [
                           _vm._v(
@@ -54978,7 +54996,11 @@ var render = function() {
                           staticClass: "btn btn-primary ml-3",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
-                        [_vm._v("Activar")]
+                        [
+                          _vm._v(
+                            "\n                                    Activar\n                                "
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c("spinner", {

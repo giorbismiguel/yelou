@@ -39,10 +39,12 @@
 
                             <div class="form-group mt-5">
                                 <div class="col d-flex justify-content-end">
-                                    <button type="button" class="btn btn-light">
+                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
                                         Cancelar
+                                    </router-link>
+                                    <button type="submit" class="btn btn-primary ml-3" :disabled="loading">
+                                        Activar
                                     </button>
-                                    <button type="submit" class="btn btn-primary ml-3" :disabled="loading">Activar</button>
                                     <spinner v-show="loading" size="medium"></spinner>
                                 </div>
                             </div>
