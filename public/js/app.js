@@ -2724,6 +2724,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
 /* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2797,10 +2799,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2808,7 +2807,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     return {
       form: {
         email: null,
-        password: null
+        password: null,
+        password_confirmation: null,
+        token: null
       },
       submitted: false,
       loading: false,
@@ -2821,11 +2822,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     me: function me(state) {
       return state.auth.me;
     },
-    phone_verify: function phone_verify(state) {
-      return state.auth.phone_verify;
+    find_token_data: function find_token_data(state) {
+      return state.auth.find_token_data;
+    },
+    password_reset_data: function password_reset_data(state) {
+      return state.auth.password_reset_data;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['find_token']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['find_token', 'password_reset']), {
     onSubmit: function onSubmit() {
       var _this = this;
 
@@ -2834,17 +2838,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (valid) {
           _this.submitted = false;
           _this.loading = true;
+          _this.form.token = _this.find_token_data.token;
+          _this.form.email = _this.find_token_data.email;
 
-          _this.login(_this.form).then(function () {
+          _this.password_reset(_this.form).then(function () {
             _this.loading = false;
 
-            if (!_this.phone_verify) {
-              _this.$router.replace('/verificar/codigo');
-
+            if (_this.password_reset_data.token) {
+              sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+                text: 'Su contraseña ha sido restablecida',
+                type: 'success',
+                showCancelButton: false,
+                confirmButtonText: 'Aceptar'
+              }).then(function () {
+                _this.$router.replace('/entrar');
+              });
               return;
             }
 
-            _this.$router.replace('/');
+            sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
+              text: 'La contraseña no ha sido ha sido restablecida, intentelo de nuevo',
+              type: 'success',
+              showCancelButton: false,
+              confirmButtonText: 'Aceptar'
+            }).then(function () {
+              _this.$router.replace('/entrar');
+            });
           })["catch"](function (data) {
             _this.loading = false;
             _this.error = data.message;
@@ -2862,6 +2881,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.find_token(this.$route.params.token).then(function () {
         _this2.disabledResetButton = true;
         _this2.loading = false;
+        _this2.form.token;
       })["catch"](function (data) {
         _this2.loading = false;
         _this2.error = data.message;
@@ -55148,14 +55168,16 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h3", [_vm._v("Autenticarse")]),
+    _c("h3", [_vm._v("Resetear contraseña")]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-5" }, [
         _c("div", { staticClass: "card m-4" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Autenticarse")]),
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v("Resetear contraseña")
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _vm.error
@@ -55186,87 +55208,9 @@ var render = function() {
                     "label",
                     {
                       staticClass: "col control-label",
-                      attrs: { for: "email" }
-                    },
-                    [_vm._v("Correo electrónico o Teléfono")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required|email|max:191",
-                          expression: "'required|email|max:191'"
-                        },
-                        {
-                          name: "model",
-                          rawName: "v-model.trim",
-                          value: _vm.form.email,
-                          expression: "form.email",
-                          modifiers: { trim: true }
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: {
-                        "is-invalid":
-                          _vm.submitted &&
-                          (_vm.errors.has("email") || _vm.serverErrors.email)
-                      },
-                      attrs: {
-                        id: "email",
-                        type: "email",
-                        name: "email",
-                        "data-vv-as": "Correo electronico o Teléfono"
-                      },
-                      domProps: { value: _vm.form.email },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(
-                            _vm.form,
-                            "email",
-                            $event.target.value.trim()
-                          )
-                        },
-                        blur: function($event) {
-                          return _vm.$forceUpdate()
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.submitted &&
-                    (_vm.errors.has("email") || _vm.serverErrors.email)
-                      ? _c(
-                          "div",
-                          { staticClass: "invalid-feedback" },
-                          [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.errors.first("email")) +
-                                "\n                                    "
-                            ),
-                            _vm._l(_vm.serverErrors.email, function(error) {
-                              return [_vm._v(_vm._s(error))]
-                            })
-                          ],
-                          2
-                        )
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
                       attrs: { for: "password" }
                     },
-                    [_vm._v("Contraseña")]
+                    [_vm._v("Nueva Contraseña")]
                   ),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
@@ -55286,6 +55230,7 @@ var render = function() {
                           modifiers: { trim: true }
                         }
                       ],
+                      ref: "password",
                       staticClass: "form-control",
                       class: {
                         "is-invalid":
@@ -55340,17 +55285,109 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _c(
+                    "label",
+                    {
+                      staticClass: "col control-label",
+                      attrs: { for: "password_confirmation" }
+                    },
+                    [
+                      _vm._v(
+                        "Confirmar\n                                Contraseña"
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "validate",
+                          rawName: "v-validate",
+                          value: "required|confirmed:password|min:6|max:20",
+                          expression:
+                            "'required|confirmed:password|min:6|max:20'"
+                        },
+                        {
+                          name: "model",
+                          rawName: "v-model.trim",
+                          value: _vm.form.password_confirmation,
+                          expression: "form.password_confirmation",
+                          modifiers: { trim: true }
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid":
+                          _vm.submitted &&
+                          (_vm.errors.has("password_confirmation") ||
+                            _vm.serverErrors.password_confirmation)
+                      },
+                      attrs: {
+                        id: "password_confirmation",
+                        type: "password",
+                        name: "password_confirmation",
+                        "data-vv-as": "Confirmar Contraseña"
+                      },
+                      domProps: { value: _vm.form.password_confirmation },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(
+                            _vm.form,
+                            "password_confirmation",
+                            $event.target.value.trim()
+                          )
+                        },
+                        blur: function($event) {
+                          return _vm.$forceUpdate()
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _vm.submitted &&
+                    (_vm.errors.has("password_confirmation") ||
+                      _vm.serverErrors.password_confirmation)
+                      ? _c(
+                          "div",
+                          { staticClass: "invalid-feedback" },
+                          [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(
+                                  _vm.errors.first("password_confirmation")
+                                ) +
+                                "\n                                    "
+                            ),
+                            _vm._l(
+                              _vm.serverErrors.password_confirmation,
+                              function(error) {
+                                return [
+                                  _vm._v(
+                                    _vm._s(error) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              }
+                            )
+                          ],
+                          2
+                        )
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
                     "div",
                     { staticClass: "col d-flex justify-content-center" },
                     [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-3 btn-",
-                          attrs: {
-                            type: "submit",
-                            disabled: _vm.disabledResetButton
-                          }
+                          staticClass: "btn btn-primary ml-3",
+                          attrs: { type: "submit" }
                         },
                         [
                           _vm._v(
@@ -55370,28 +55407,6 @@ var render = function() {
                         ],
                         attrs: { size: "medium" }
                       })
-                    ],
-                    1
-                  )
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col text-center" },
-                    [
-                      _c(
-                        "router-link",
-                        {
-                          staticClass: "btn btn-link px-0",
-                          attrs: { to: { name: "login" } }
-                        },
-                        [
-                          _vm._v(
-                            "\n                                    ¿Olvidó su contraseña?\n                                "
-                          )
-                        ]
-                      )
                     ],
                     1
                   )
@@ -73826,7 +73841,8 @@ var state = {
   // Active User,
   code_activation: null,
   send_email: null,
-  find_token_data: null
+  find_token_data: null,
+  password_reset_data: null
 };
 var actions = {
   checkLogin: function checkLogin(_ref) {
@@ -73914,11 +73930,25 @@ var actions = {
       });
     });
   },
-  find_token: function find_token(_ref9, token) {
+  password_reset: function password_reset(_ref9, form) {
     var commit = _ref9.commit,
         dispatch = _ref9.dispatch;
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.password.find_token', token)).then(function (data) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.password.reset'), form).then(function () {
+        commit('PASSWORD_RESET_OK');
+        resolve();
+      })["catch"](function (error) {
+        commit('PASSWORD_RESET_FAIL');
+        reject(error.response.data);
+      });
+    });
+  },
+  find_token: function find_token(_ref10, token) {
+    var commit = _ref10.commit,
+        dispatch = _ref10.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.password.find_token', token)).then(function (_ref11) {
+        var data = _ref11.data;
         commit('FIND_TOKEN_OK', data);
         resolve();
       })["catch"](function (error) {
@@ -73927,15 +73957,15 @@ var actions = {
       });
     });
   },
-  logout: function logout(_ref10) {
-    var commit = _ref10.commit,
-        dispatch = _ref10.dispatch;
+  logout: function logout(_ref12) {
+    var commit = _ref12.commit,
+        dispatch = _ref12.dispatch;
     commit('LOGOUT_OK');
     localStorage.removeItem('access_token');
   },
-  register: function register(_ref11, form) {
-    var commit = _ref11.commit,
-        dispatch = _ref11.dispatch;
+  register: function register(_ref13, form) {
+    var commit = _ref13.commit,
+        dispatch = _ref13.dispatch;
     commit('REGISTER');
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/api/v1/auth/register', form).then(function (response) {
@@ -73949,11 +73979,11 @@ var actions = {
       });
     });
   },
-  updateProfile: function updateProfile(_ref12, _ref13) {
-    var commit = _ref12.commit,
-        dispatch = _ref12.dispatch;
-    var id = _ref13.id,
-        form = _ref13.form;
+  updateProfile: function updateProfile(_ref14, _ref15) {
+    var commit = _ref14.commit,
+        dispatch = _ref14.dispatch;
+    var id = _ref15.id,
+        form = _ref15.form;
     commit('UPDATE_PROFILE');
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(Config.apiPath + 'user/' + id, _objectSpread({
@@ -74010,10 +74040,16 @@ var mutations = {
     state.send_email = false;
   },
   FIND_TOKEN_OK: function FIND_TOKEN_OK(state, data) {
-    state.send_email = data;
+    state.find_token_data = data;
   },
   FIND_TOKEN_FAIL: function FIND_TOKEN_FAIL(state) {
     state.find_token_data = false;
+  },
+  PASSWORD_RESET_OK: function PASSWORD_RESET_OK(state, data) {
+    state.password_reset_data = data;
+  },
+  PASSWORD_RESET_FAIL: function PASSWORD_RESET_FAIL(state) {
+    state.password_reset_data = false;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({

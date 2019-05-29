@@ -1,12 +1,12 @@
 <template>
     <div class="container">
-        <h3>Autenticarse</h3>
+        <h3>Resetear contraseña</h3>
         <hr>
 
         <div class="row justify-content-center">
             <div class="col-5">
                 <div class="card m-4">
-                    <div class="card-header">Autenticarse</div>
+                    <div class="card-header">Resetear contraseña</div>
                     <div class="card-body">
                         <div class="alert alert-danger text-center" v-if="error">
                             {{ error }}
@@ -16,27 +16,12 @@
                               autocomplete="off">
 
                             <div class="form-group">
-                                <label for="email" class="col control-label">Correo electrónico o Teléfono</label>
-                                <div class="col">
-                                    <input id="email" type="email" name="email" v-validate="'required|email|max:191'"
-                                           data-vv-as="Correo electronico o Teléfono" class="form-control"
-                                           v-model.trim="form.email"
-                                           :class="{ 'is-invalid': submitted && (errors.has('email') || serverErrors.email) }">
-
-                                    <div v-if="submitted && (errors.has('email') || serverErrors.email)"
-                                         class="invalid-feedback">
-                                        {{ errors.first('email') }}
-                                        <template v-for="error in serverErrors.email">{{ error }}</template>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password" class="col control-label">Contraseña</label>
+                                <label for="password" class="col control-label">Nueva Contraseña</label>
                                 <div class="col">
                                     <input id="password" type="password" name="password"
                                            v-validate="'required|min:6|max:20'"
-                                           data-vv-as="Contraseña" class="form-control" v-model.trim="form.password"
+                                           data-vv-as="Contraseña" class="form-control"
+                                           v-model.trim="form.password" ref="password"
                                            :class="{ 'is-invalid': submitted && (errors.has('password') || serverErrors.password) }">
 
                                     <div v-if="submitted && (errors.has('password') || serverErrors.password)"
@@ -48,19 +33,30 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="password_confirmation" class="col control-label">Confirmar
+                                    Contraseña</label>
+                                <div class="col">
+                                    <input id="password_confirmation" type="password" name="password_confirmation"
+                                           v-validate="'required|confirmed:password|min:6|max:20'"
+                                           data-vv-as="Confirmar Contraseña" class="form-control"
+                                           v-model.trim="form.password_confirmation"
+                                           :class="{ 'is-invalid': submitted && (errors.has('password_confirmation') || serverErrors.password_confirmation) }">
+
+                                    <div v-if="submitted && (errors.has('password_confirmation') || serverErrors.password_confirmation)"
+                                         class="invalid-feedback">
+                                        {{ errors.first('password_confirmation') }}
+                                        <template v-for="error in serverErrors.password_confirmation">{{ error }}
+                                        </template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary ml-3 btn-"
-                                            :disabled="disabledResetButton">
+                                    <button type="submit" class="btn btn-primary ml-3">
                                         Restablecer
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col text-center">
-                                    <router-link class="btn btn-link px-0" :to="{ name: 'login'}">
-                                        ¿Olvidó su contraseña?
-                                    </router-link>
                                 </div>
                             </div>
                         </form>
@@ -74,6 +70,7 @@
 <script>
     import {mapState, mapActions} from 'vuex'
     import Spinner from 'vue-simple-spinner'
+    import Swal from 'sweetalert2'
 
     export default {
 
@@ -81,7 +78,9 @@
             return {
                 form: {
                     email: null,
-                    password: null
+                    password: null,
+                    password_confirmation: null,
+                    token: null
                 },
                 submitted: false,
                 loading: false,
@@ -94,7 +93,8 @@
         computed: {
             ...mapState({
                 me: state => state.auth.me,
-                phone_verify: state => state.auth.phone_verify,
+                find_token_data: state => state.auth.find_token_data,
+                password_reset_data: state => state.auth.password_reset_data,
             })
         },
 
@@ -102,6 +102,7 @@
 
             ...mapActions([
                 'find_token',
+                'password_reset',
             ]),
 
             onSubmit() {
@@ -110,16 +111,32 @@
                     if (valid) {
                         this.submitted = false
                         this.loading = true
-                        this.login(this.form)
+                        this.form.token = this.find_token_data.token
+                        this.form.email = this.find_token_data.email
+                        this.password_reset(this.form)
                             .then(() => {
                                 this.loading = false
-                                if (!this.phone_verify) {
-                                    this.$router.replace('/verificar/codigo')
+                                if (this.password_reset_data.token) {
+                                    Swal.fire({
+                                        text: 'Su contraseña ha sido restablecida',
+                                        type: 'success',
+                                        showCancelButton: false,
+                                        confirmButtonText: 'Aceptar',
+                                    }).then(() => {
+                                        this.$router.replace('/entrar')
+                                    })
 
                                     return;
                                 }
 
-                                this.$router.replace('/')
+                                Swal.fire({
+                                    text: 'La contraseña no ha sido ha sido restablecida, intentelo de nuevo',
+                                    type: 'success',
+                                    showCancelButton: false,
+                                    confirmButtonText: 'Aceptar',
+                                }).then(() => {
+                                    this.$router.replace('/entrar')
+                                })
                             })
                             .catch((data) => {
                                 this.loading = false
@@ -138,6 +155,7 @@
                     .then(() => {
                         this.disabledResetButton = true;
                         this.loading = false
+                        this.form.token
                     })
                     .catch((data) => {
                         this.loading = false

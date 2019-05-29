@@ -7,6 +7,7 @@ const state = {
     code_activation: null,
     send_email: null,
     find_token_data: null,
+    password_reset_data: null,
 }
 
 const actions = {
@@ -104,10 +105,24 @@ const actions = {
         })
     },
 
+    password_reset({commit, dispatch}, form) {
+        return new Promise((resolve, reject) => {
+            axios.post(route('api.password.reset'), form)
+                .then(() => {
+                    commit('PASSWORD_RESET_OK')
+                    resolve()
+                })
+                .catch(error => {
+                    commit('PASSWORD_RESET_FAIL')
+                    reject(error.response.data)
+                })
+        })
+    },
+
     find_token({commit, dispatch}, token) {
         return new Promise((resolve, reject) => {
             axios.get(route('api.password.find_token', token))
-                .then((data) => {
+                .then(({data}) => {
                     commit('FIND_TOKEN_OK', data)
                     resolve()
                 })
@@ -219,11 +234,19 @@ const mutations = {
     },
 
     FIND_TOKEN_OK(state, data) {
-        state.send_email = data
+        state.find_token_data = data
     },
 
     FIND_TOKEN_FAIL(state) {
         state.find_token_data = false
+    },
+
+    PASSWORD_RESET_OK(state, data) {
+        state.password_reset_data = data
+    },
+
+    PASSWORD_RESET_FAIL(state) {
+        state.password_reset_data = false
     },
 }
 
