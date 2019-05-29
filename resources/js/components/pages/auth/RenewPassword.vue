@@ -49,15 +49,16 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary ml-3 btn-" :disabled="submitted">
-                                        Ingresar
+                                    <button type="submit" class="btn btn-primary ml-3 btn-"
+                                            :disabled="disabledResetButton">
+                                        Restablecer
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col text-center">
-                                    <router-link class="btn btn-link px-0" :to="{ name: 'restabler_clave'}">
+                                    <router-link class="btn btn-link px-0" :to="{ name: 'login'}">
                                         ¿Olvidó su contraseña?
                                     </router-link>
                                 </div>
@@ -84,6 +85,7 @@
                 },
                 submitted: false,
                 loading: false,
+                disabledResetButton: false,
                 error: '',
                 serverErrors: {},
             }
@@ -99,7 +101,7 @@
         methods: {
 
             ...mapActions([
-                'login',
+                'find_token',
             ]),
 
             onSubmit() {
@@ -129,7 +131,21 @@
             },
 
         },
-
+        mounted() {
+            if (this.$route.params.token) {
+                this.disabledResetButton = false;
+                this.find_token(this.$route.params.token)
+                    .then(() => {
+                        this.disabledResetButton = true;
+                        this.loading = false
+                    })
+                    .catch((data) => {
+                        this.loading = false
+                        this.error = data.message
+                        this.serverErrors = data.errors || {}
+                    })
+            }
+        },
         components: {
             Spinner
         }

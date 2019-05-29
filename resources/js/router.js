@@ -4,9 +4,12 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 import Home from './components/pages/Home'
+
 import Register from './components/pages/auth/Register'
-import RegisterAs from './components/layout/RegisterAs'
+import RegisterAs from './components/pages/auth/RegisterAs'
 import Login from './components/pages/auth/Login'
+import ResetPassword from './components/pages/auth/RenewPassword'
+import ResetPasswordCreate from './components/pages/auth/ResetPasswordCreate'
 import VerifyPhone from './components/pages/auth/VerifyPhone'
 import NewCode from './components/pages/auth/NewCode'
 
@@ -18,6 +21,12 @@ const routes = [
     },
     {
         path: '/entrar', name: 'login', component: Login
+    },
+    {
+        path: '/restabler/clave', name: 'restabler_clave', component: ResetPasswordCreate
+    },
+    {
+        path: '/actualizar/clave/:token', name: 'actualizar_clave', component: ResetPassword
     },
     {
         path: '/registrarse', name: 'register_as', component: RegisterAs

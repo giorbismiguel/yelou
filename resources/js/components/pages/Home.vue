@@ -8,7 +8,7 @@
 
 <script>
     import Carousel from './dashboard/Carousel'
-    import RegisterAs from "../layout/RegisterAs";
+    import RegisterAs from "../pages/auth/RegisterAs";
 
     export default {
         name: "Home",

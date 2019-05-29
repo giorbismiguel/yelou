@@ -21,19 +21,33 @@ Route::prefix('v1')->group(function () {
      */
     Route::namespace('Auth')
         ->prefix('auth')
+        ->name('auth.')
         ->group(function () {
-            Route::post('/login', 'AuthController@login');
-            Route::post('/register', 'AuthController@register');
-            Route::post('/active', 'AuthController@active');
-            Route::post('/new_activation_code', 'AuthController@newActivationCode');
+            Route::post('/login', 'AuthController@login')
+                ->name('login');
+
+            Route::post('/register', 'AuthController@register')
+                ->name('register');
+
+            Route::post('/active', 'AuthController@active')
+                ->name('active');
+
+            Route::post('/new_activation_code', 'AuthController@newActivationCode')
+                ->name('new_activation_code');
         });
 
     Route::namespace('Auth')
         ->prefix('password')
+        ->name('password.')
         ->group(function () {
-            Route::post('/create', 'PasswordResetController@create');
-            Route::get('/find/{token}', 'PasswordResetController@find');
-            Route::post('/reset', 'PasswordResetController@reset');
+            Route::post('/create', 'PasswordResetController@create')
+                ->name('create');
+
+            Route::get('/find/{token}', 'PasswordResetController@find')
+                ->name('find_token');
+
+            Route::post('/reset', 'PasswordResetController@reset')
+                ->name('reset');
         });
 
     /*
@@ -54,7 +68,8 @@ Route::prefix('v1')->group(function () {
             /*
              * Admin Area
              */
-            Route::prefix('admin')->group(function () {
+            Route::prefix('admin')
+                ->group(function () {
                 Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
             });
         });
@@ -64,7 +79,11 @@ Route::prefix('v1')->group(function () {
      */
     Route::resource('license_types', 'LicenseTypesAPIController');
 
-    Route::namespace('Lists')->group(function () {
-        Route::get('/nomenclators', 'ListsController');
-    });
+    Route::namespace('Lists')
+        ->name('lists.')
+        ->prefix('lists')
+        ->group(function () {
+            Route::get('/nomenclators', 'ListsController')
+                ->name('get');
+        });
 });

@@ -5,6 +5,8 @@ const state = {
     phone_verify: null, // Phone Verify,
     phone_verify_active: null, // Active User,
     code_activation: null,
+    send_email: null,
+    find_token_data: null,
 }
 
 const actions = {
@@ -88,6 +90,34 @@ const actions = {
         })
     },
 
+    send_email({commit, dispatch}, form) {
+        return new Promise((resolve, reject) => {
+            axios.post(route('api.password.create'), form)
+                .then(() => {
+                    commit('SEND_EMAIL_OK')
+                    resolve()
+                })
+                .catch(error => {
+                    commit('SEND_EMAIL_FAIL')
+                    reject(error.response.data)
+                })
+        })
+    },
+
+    find_token({commit, dispatch}, token) {
+        return new Promise((resolve, reject) => {
+            axios.get(route('api.password.find_token', token))
+                .then((data) => {
+                    commit('FIND_TOKEN_OK', data)
+                    resolve()
+                })
+                .catch(error => {
+                    commit('FIND_TOKEN_FAIL')
+                    reject(error.response.data)
+                })
+        })
+    },
+
     logout({commit, dispatch}) {
         commit('LOGOUT_OK')
 
@@ -164,7 +194,7 @@ const mutations = {
         state.phone_verify_active = data.active
     },
 
-    ACTIVE_ACCOUNT_FAIL(state, user) {
+    ACTIVE_ACCOUNT_FAIL(state) {
         state.active = false
     },
 
@@ -176,8 +206,24 @@ const mutations = {
         state.code_activation = data.code_activation
     },
 
-    ACTIVATION_CODE_FAIL(state, user) {
+    ACTIVATION_CODE_FAIL(state) {
         state.active = false
+    },
+
+    SEND_EMAIL_OK(state) {
+        state.send_email = true
+    },
+
+    SEND_EMAIL_FAIL(state) {
+        state.send_email = false
+    },
+
+    FIND_TOKEN_OK(state, data) {
+        state.send_email = data
+    },
+
+    FIND_TOKEN_FAIL(state) {
+        state.find_token_data = false
     },
 }
 
