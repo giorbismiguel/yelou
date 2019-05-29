@@ -26,18 +26,20 @@ class PasswordResetController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if (!$user)
+        if (!$user) {
             return response()->json([
                 'message' => __('passwords.user')
             ], 404);
+        }
 
         $passwordReset = PasswordReset::updateOrCreate(['email' => $user->email], [
             'email' => $user->email,
             'token' => str_random(60)
         ]);
 
-        if ($user && $passwordReset)
+        if ($user && $passwordReset) {
             $user->notify(new PasswordResetRequest($passwordReset->token));
+        }
 
         return response()->json([
             'message' => __('passwords.sent')
@@ -55,10 +57,11 @@ class PasswordResetController extends Controller
     {
         $passwordReset = PasswordReset::where('token', $token)->first();
 
-        if (!$passwordReset)
+        if (!$passwordReset) {
             return response()->json([
                 'message' => __('passwords.token')
             ], 404);
+        }
 
         if (Carbon::parse($passwordReset->updated_at)->addMinutes(720)->isPast()) {
             $passwordReset->delete();
@@ -83,9 +86,9 @@ class PasswordResetController extends Controller
     public function reset(Request $request)
     {
         $request->validate([
-            'email' => 'required|string|email',
+            'email'    => 'required|string|email',
             'password' => 'required|string|confirmed',
-            'token' => 'required|string'
+            'token'    => 'required|string'
         ]);
 
         $passwordReset = PasswordReset::where([
@@ -93,24 +96,26 @@ class PasswordResetController extends Controller
             ['email', $request->email]
         ])->first();
 
-        if (!$passwordReset)
+        if (!$passwordReset) {
             return response()->json([
                 'message' => __('passwords.token')
             ], 404);
+        }
 
         $user = User::where('email', $passwordReset->email)->first();
 
-        if (!$user)
+        if (!$user) {
             return response()->json([
                 'message' => __('passwords.user')
             ], 404);
+        }
 
         $user->password = bcrypt($request->password);
         $user->save();
 
         $passwordReset->delete();
 
-//        $user->notify(new PasswordResetSuccess($passwordReset));
+        $user->notify(new PasswordResetSuccess($passwordReset));
 
         return response()->json($user);
     }

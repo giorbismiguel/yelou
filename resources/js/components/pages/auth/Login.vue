@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <div class="col text-center">
                                     <router-link class="btn btn-link px-0" :to="{ name: 'restabler_clave'}">
-                                        ¿Olvidó su contraseña?
+                                        ¿Ha olvidado su contraseña?
                                     </router-link>
                                 </div>
                             </div>

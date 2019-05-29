@@ -1,15 +1,18 @@
 <template>
     <div class="container">
-        <h3>Resetear contraseña</h3>
+        <h3>Recuperar contraseña</h3>
         <hr>
 
         <div class="row justify-content-center">
             <div class="col-5">
                 <div class="card m-4">
-                    <div class="card-header">Resetear contraseña</div>
+                    <div class="card-header">Recuperar contraseña</div>
                     <div class="card-body">
                         <div class="alert alert-danger text-center" v-if="error">
                             {{ error }}
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Cerrar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
 
                         <form id="login_form" class="form-horizontal" role="form" @submit.prevent="onSubmit"
@@ -53,8 +56,8 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary ml-3">
-                                        Restablecer
+                                    <button type="submit" class="btn btn-primary ml-2" :disabled="loading">
+                                        Recuperar
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>
                                 </div>
@@ -85,7 +88,7 @@
                 submitted: false,
                 loading: false,
                 disabledResetButton: false,
-                error: '',
+                error: null,
                 serverErrors: {},
             }
         },
@@ -106,24 +109,33 @@
             ]),
 
             onSubmit() {
+                if(!this.find_token_data){
+                    this.error = 'Error inesperado al recuperar la contraseña, por favor vuelva a intentarlo.'
+
+                    return
+                }
+
                 this.submitted = true;
+                this.loading = true;
+                this.error = null
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         this.submitted = false
-                        this.loading = true
+                        this.loading = false
                         this.form.token = this.find_token_data.token
                         this.form.email = this.find_token_data.email
+
                         this.password_reset(this.form)
                             .then(() => {
                                 this.loading = false
-                                if (this.password_reset_data.token) {
+                                if (this.me) {
                                     Swal.fire({
                                         text: 'Su contraseña ha sido restablecida',
                                         type: 'success',
                                         showCancelButton: false,
                                         confirmButtonText: 'Aceptar',
                                     }).then(() => {
-                                        this.$router.replace('/entrar')
+                                        this.$router.replace('/')
                                     })
 
                                     return;
@@ -140,6 +152,7 @@
                             })
                             .catch((data) => {
                                 this.loading = false
+                                this.submitted = false
                                 this.error = data.message
                                 this.serverErrors = data.errors || {}
                             })

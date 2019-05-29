@@ -108,8 +108,8 @@ const actions = {
     password_reset({commit, dispatch}, form) {
         return new Promise((resolve, reject) => {
             axios.post(route('api.password.reset'), form)
-                .then(() => {
-                    commit('PASSWORD_RESET_OK')
+                .then((data) => {
+                    commit('PASSWORD_RESET_OK', data)
                     resolve()
                 })
                 .catch(error => {
@@ -242,7 +242,7 @@ const mutations = {
     },
 
     PASSWORD_RESET_OK(state, data) {
-        state.password_reset_data = data
+        state.me = data
     },
 
     PASSWORD_RESET_FAIL(state) {

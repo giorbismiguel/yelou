@@ -2799,6 +2799,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -2814,7 +2817,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       submitted: false,
       loading: false,
       disabledResetButton: false,
-      error: '',
+      error: null,
       serverErrors: {}
     };
   },
@@ -2833,25 +2836,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onSubmit: function onSubmit() {
       var _this = this;
 
+      if (!this.find_token_data) {
+        this.error = 'Error inesperado al recuperar la contraseña, por favor vuelva a intentarlo.';
+        return;
+      }
+
       this.submitted = true;
+      this.loading = true;
+      this.error = null;
       this.$validator.validate().then(function (valid) {
         if (valid) {
           _this.submitted = false;
-          _this.loading = true;
+          _this.loading = false;
           _this.form.token = _this.find_token_data.token;
           _this.form.email = _this.find_token_data.email;
 
           _this.password_reset(_this.form).then(function () {
             _this.loading = false;
 
-            if (_this.password_reset_data.token) {
+            if (_this.me) {
               sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
                 text: 'Su contraseña ha sido restablecida',
                 type: 'success',
                 showCancelButton: false,
                 confirmButtonText: 'Aceptar'
               }).then(function () {
-                _this.$router.replace('/entrar');
+                _this.$router.replace('/');
               });
               return;
             }
@@ -2866,6 +2876,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             });
           })["catch"](function (data) {
             _this.loading = false;
+            _this.submitted = false;
             _this.error = data.message;
             _this.serverErrors = data.errors || {};
           });
@@ -2996,17 +3007,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$validator.validate().then(function (valid) {
         if (valid) {
           _this.loading = true;
+          _this.loadingCode = true;
 
           _this.send_email(_this.form).then(function () {
+            _this.loadingCode = false;
             _this.loading = false;
             sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
-              text: 'Se le ha enviado un correo electrónico a su correo para restablercer la contraseña.',
+              text: 'Se ha enviado un correo electrónico para restablecer la contraseña.',
               type: 'success',
               showCancelButton: false,
               confirmButtonText: 'Aceptar'
             });
           })["catch"](function (data) {
             _this.loading = false;
+            _this.loadingCode = false;
             _this.error = data.message;
           });
         }
@@ -53707,7 +53721,7 @@ var render = function() {
                         },
                         [
                           _vm._v(
-                            "\n                                    ¿Olvidó su contraseña?\n                                "
+                            "\n                                    ¿Ha olvidado su contraseña?\n                                "
                           )
                         ]
                       )
@@ -55168,7 +55182,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h3", [_vm._v("Resetear contraseña")]),
+    _c("h3", [_vm._v("Recuperar contraseña")]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
@@ -55176,7 +55190,7 @@ var render = function() {
       _c("div", { staticClass: "col-5" }, [
         _c("div", { staticClass: "card m-4" }, [
           _c("div", { staticClass: "card-header" }, [
-            _vm._v("Resetear contraseña")
+            _vm._v("Recuperar contraseña")
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
@@ -55185,8 +55199,9 @@ var render = function() {
                   _vm._v(
                     "\n                        " +
                       _vm._s(_vm.error) +
-                      "\n                    "
-                  )
+                      "\n                        "
+                  ),
+                  _vm._m(0)
                 ])
               : _vm._e(),
             _vm._v(" "),
@@ -55386,12 +55401,12 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-3",
-                          attrs: { type: "submit" }
+                          staticClass: "btn btn-primary ml-2",
+                          attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
                           _vm._v(
-                            "\n                                    Restablecer\n                                "
+                            "\n                                    Recuperar\n                                "
                           )
                         ]
                       ),
@@ -55419,7 +55434,25 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "alert",
+          "aria-label": "Cerrar"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -55566,7 +55599,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group mb-2" }, [
                   _c(
                     "div",
-                    { staticClass: "col text-center" },
+                    { staticClass: "col d-flex justify-content-center" },
                     [
                       _c(
                         "router-link",
@@ -55584,7 +55617,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary",
+                          staticClass: "btn btn-primary mr-2",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -73934,8 +73967,8 @@ var actions = {
     var commit = _ref9.commit,
         dispatch = _ref9.dispatch;
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.password.reset'), form).then(function () {
-        commit('PASSWORD_RESET_OK');
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.password.reset'), form).then(function (data) {
+        commit('PASSWORD_RESET_OK', data);
         resolve();
       })["catch"](function (error) {
         commit('PASSWORD_RESET_FAIL');
@@ -74046,7 +74079,7 @@ var mutations = {
     state.find_token_data = false;
   },
   PASSWORD_RESET_OK: function PASSWORD_RESET_OK(state, data) {
-    state.password_reset_data = data;
+    state.me = data;
   },
   PASSWORD_RESET_FAIL: function PASSWORD_RESET_FAIL(state) {
     state.password_reset_data = false;

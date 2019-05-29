@@ -35,12 +35,12 @@
                             </div>
 
                             <div class="form-group mb-2">
-                                <div class="col text-center">
+                                <div class="col d-flex justify-content-center">
                                     <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light">
                                         Cancelar
                                     </router-link>
 
-                                    <button type="submit" class="btn btn-primary" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
                                         Restablecer
                                     </button>
 
@@ -86,11 +86,13 @@
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         this.loading = true
+                        this.loadingCode = true
                         this.send_email(this.form)
                             .then(() => {
+                                this.loadingCode = false
                                 this.loading = false
                                 Swal.fire({
-                                    text: 'Se le ha enviado un correo electrónico a su correo para restablercer la contraseña.',
+                                    text: 'Se ha enviado un correo electrónico para restablecer la contraseña.',
                                     type: 'success',
                                     showCancelButton: false,
                                     confirmButtonText: 'Aceptar',
@@ -98,6 +100,7 @@
                             })
                             .catch((data) => {
                                 this.loading = false
+                                this.loadingCode = false
                                 this.error = data.message
                             })
                     }
