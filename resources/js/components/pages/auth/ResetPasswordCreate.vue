@@ -18,7 +18,7 @@
 
                             <div class="form-group">
                                 <label for="email" class="col control-label">
-                                    Ingrese el Correo electrónico
+                                    Ingrese el Correo electrónico <span class="text-danger">*</span>
                                 </label>
                                 <div class="col">
                                     <input id="email" type="text" name="email"
@@ -35,8 +35,8 @@
                             </div>
 
                             <div class="form-group mb-2">
-                                <div class="col d-flex justify-content-center">
-                                    <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light">
+                                <div class="col d-flex justify-content-end">
+                                    <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light mr-3">
                                         Cancelar
                                     </router-link>
 

@@ -19,7 +19,9 @@
                               autocomplete="off">
 
                             <div class="form-group">
-                                <label for="password" class="col control-label">Nueva Contraseña</label>
+                                <label for="password" class="col control-label">
+                                    Nueva Contraseña <span class="text-danger">*</span>
+                                </label>
                                 <div class="col">
                                     <input id="password" type="password" name="password"
                                            v-validate="'required|min:6|max:20'"
@@ -36,8 +38,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password_confirmation" class="col control-label">Confirmar
-                                    Contraseña</label>
+                                <label for="password_confirmation" class="col control-label">
+                                    Confirmar Contraseña <span class="text-danger">*</span>
+                                </label>
                                 <div class="col">
                                     <input id="password_confirmation" type="password" name="password_confirmation"
                                            v-validate="'required|confirmed:password|min:6|max:20'"
@@ -56,7 +59,7 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary ml-2" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary ml-3" :disabled="loading">
                                         Recuperar
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>

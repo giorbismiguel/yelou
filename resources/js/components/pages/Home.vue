@@ -2,7 +2,7 @@
     <section>
         <carousel></carousel>
 
-        <register-as v-if="me"></register-as>
+        <register-as v-if="!me"></register-as>
     </section>
 </template>
 

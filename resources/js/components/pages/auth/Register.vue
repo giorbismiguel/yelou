@@ -12,7 +12,7 @@
                               @submit.prevent="onSubmit" novalidate>
 
                             <div class="form-group">
-                                <label for="name" class="col control-label">Nombre de usuario</label>
+                                <label for="name" class="col control-label">Nombre de usuario <span class="text-danger">*</span></label>
                                 <div class="col">
                                     <input v-model="form.name" v-validate="'required|max:191'"
                                            data-vv-as="Nombre de usuario" id="name" name="name" type="text"
@@ -25,7 +25,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="email" class="col control-label">Correo electrónico</label>
+                                <label for="email" class="col control-label">Correo electrónico <span class="text-danger">*</span></label>
                                 <div class="col">
                                     <input v-model="form.email" v-validate="'required|email|max:191'"
                                            data-vv-as="Correo electrónico" id="email" name="email" type="email"
@@ -41,7 +41,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password" class="col control-label">Contraseña</label>
+                                <label for="password" class="col control-label">Contraseña <span class="text-danger">*</span></label>
                                 <div class="col">
                                     <input v-model="form.password" v-validate="'required|min:6|max:20'"
                                            data-vv-as="Contraseña" id="password" type="password" name="password"
@@ -56,7 +56,7 @@
 
                             <div class="form-group">
                                 <label for="password_confirmation" class="col control-label">
-                                    Confirmar Contraseña
+                                    Confirmar Contraseña <span class="text-danger">*</span>
                                 </label>
                                 <div class="col">
                                     <input v-model="form.password_confirmation"
@@ -74,7 +74,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="first_name" class="col control-label">Nombre o razon social</label>
+                                <label for="first_name" class="col control-label">
+                                    Nombre o razon social <span class="text-danger">*</span>
+                                </label>
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="Nombre o razon social"
                                            id="first_name" name="first_name" type="text" class="form-control"
@@ -89,7 +91,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="last_name" class="col control-label">Apellido(s)</label>
+                                <label for="last_name" class="col control-label">
+                                    Apellido(s) <span class="text-danger">*</span>
+                                </label>
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="Apellido (s)" id="last_name"
                                            name="last_name" type="text" class="form-control" v-model="form.last_name"
@@ -103,7 +107,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="phone" class="col control-label">Teléfono</label>
+                                <label for="phone" class="col control-label">
+                                    Teléfono <span class="text-danger">*</span>
+                                </label>
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="Teléfono" id="phone"
                                            name="phone" type="text" class="form-control" v-model="form.phone"
@@ -118,7 +124,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="ruc" class="col control-label">RUC</label>
+                                <label for="ruc" class="col control-label">
+                                    RUC <span class="text-danger">*</span>
+                                </label>
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="RUC" id="ruc"
                                            name="ruc" type="text" class="form-control" v-model="form.ruc"
@@ -134,7 +142,7 @@
                             <div class="form-group">
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
-                                    <input v-validate="'required|max:191'" data-vv-as="Dirección" id="direction"
+                                    <input v-validate="'max:191'" data-vv-as="Dirección" id="direction"
                                            name="direction" type="text" class="form-control" v-model="form.direction"
                                            :class="{ 'is-invalid': submitted && errors.has('direction') }">
 
@@ -147,7 +155,9 @@
 
                             <template v-if="form.type === 1">
                                 <div class="form-group">
-                                    <label for="city" class="col control-label">Ciudad</label>
+                                    <label for="city" class="col control-label">
+                                        Ciudad <span class="text-danger">*</span>
+                                    </label>
                                     <div class="col">
                                         <input v-validate="'required|max:191'" data-vv-as="Ciudad" id="city"
                                                name="city" type="text" class="form-control" v-model="form.city"
@@ -163,7 +173,7 @@
                                 <div class="form-group">
                                     <label for="postal_code" class="col control-label">Código Postal</label>
                                     <div class="col">
-                                        <input v-validate="'required|max:191'" data-vv-as="Código Postal"
+                                        <input v-validate="'max:191'" data-vv-as="Código Postal"
                                                id="postal_code" name="postal_code" type="text" class="form-control"
                                                v-model="form.postal_code"
                                                :class="{ 'is-invalid': submitted && errors.has('postal_code') }">
@@ -179,7 +189,7 @@
                             <template v-else>
                                 <div class="form-group">
                                     <label for="license_types_id" class="col control-label">
-                                        Tipo de licencia de conducir
+                                        Tipo de licencia de conducir <span class="text-danger">*</span>
                                     </label>
                                     <div class="col">
                                         <select v-validate="'required|max:191'"
@@ -207,7 +217,7 @@
                                                    id="photo" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('photo') }"/>
                                             <label for="photo" class="custom-file-label">
-                                                {{ photoLabel }}
+                                                {{ photoLabel }} <span class="text-danger">*</span>
                                             </label>
                                         </div>
 
@@ -227,7 +237,7 @@
                                                    id="image_driver_license" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('image_driver_license') }"/>
                                             <label for="image_driver_license" class="custom-file-label">
-                                                {{ imageDriveLicenseLabel }}
+                                                {{ imageDriveLicenseLabel }} <span class="text-danger">*</span>
                                             </label>
                                         </div>
 
@@ -249,7 +259,7 @@
                                                    id="image_permit_circulation" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('image_permit_circulation') }"/>
                                             <label for="image_permit_circulation" class="custom-file-label">
-                                                {{ imagePermitCirculationLabel }}
+                                                {{ imagePermitCirculationLabel }} <span class="text-danger">*</span>
                                             </label>
                                         </div>
 
@@ -271,7 +281,7 @@
                                                    id="image_certificate_background" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('image_certificate_background') }"/>
                                             <label for="image_certificate_background" class="custom-file-label">
-                                                {{ imageCertificateBackgroundLabel }}
+                                                {{ imageCertificateBackgroundLabel }} <span class="text-danger">*</span>
                                             </label>
                                         </div>
 
@@ -285,6 +295,9 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
+                                    <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light">
+                                        Cancelar
+                                    </router-link>
                                     <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
                                         Registrarse
                                     </button>

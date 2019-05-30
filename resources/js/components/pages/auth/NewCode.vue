@@ -35,7 +35,7 @@
                             </div>
 
                             <div class="form-group mb-2">
-                                <div class="col text-center">
+                                <div class="col d-flex justify-content-center">
                                     <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
                                         Cancelar
                                     </router-link>

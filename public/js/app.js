@@ -2590,6 +2590,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2780,6 +2793,9 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
+//
 //
 //
 //
@@ -53671,7 +53687,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    [_c("carousel"), _vm._v(" "), _vm.me ? _c("register-as") : _vm._e()],
+    [_c("carousel"), _vm._v(" "), !_vm.me ? _c("register-as") : _vm._e()],
     1
   )
 }
@@ -54098,7 +54114,7 @@ var render = function() {
                 _c("div", { staticClass: "form-group mb-2" }, [
                   _c(
                     "div",
-                    { staticClass: "col text-center" },
+                    { staticClass: "col d-flex justify-content-center" },
                     [
                       _c(
                         "router-link",
@@ -54201,14 +54217,7 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "name" }
-                    },
-                    [_vm._v("Nombre de usuario")]
-                  ),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54260,14 +54269,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "email" }
-                    },
-                    [_vm._v("Correo electrónico")]
-                  ),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54330,14 +54332,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "password" }
-                    },
-                    [_vm._v("Contraseña")]
-                  ),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54390,18 +54385,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "password_confirmation" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                Confirmar Contraseña\n                            "
-                      )
-                    ]
-                  ),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54462,14 +54446,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "first_name" }
-                    },
-                    [_vm._v("Nombre o razon social")]
-                  ),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54522,14 +54499,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "last_name" }
-                    },
-                    [_vm._v("Apellido(s)")]
-                  ),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54582,14 +54552,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "phone" }
-                    },
-                    [_vm._v("Teléfono")]
-                  ),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54652,11 +54615,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    { staticClass: "col control-label", attrs: { for: "ruc" } },
-                    [_vm._v("RUC")]
-                  ),
+                  _vm._m(7),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -54723,8 +54682,8 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required|max:191",
-                          expression: "'required|max:191'"
+                          value: "max:191",
+                          expression: "'max:191'"
                         },
                         {
                           name: "model",
@@ -54770,14 +54729,7 @@ var render = function() {
                 _vm.form.type === 1
                   ? [
                       _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col control-label",
-                            attrs: { for: "city" }
-                          },
-                          [_vm._v("Ciudad")]
-                        ),
+                        _vm._m(8),
                         _vm._v(" "),
                         _c("div", { staticClass: "col" }, [
                           _c("input", {
@@ -54845,8 +54797,8 @@ var render = function() {
                               {
                                 name: "validate",
                                 rawName: "v-validate",
-                                value: "required|max:191",
-                                expression: "'required|max:191'"
+                                value: "max:191",
+                                expression: "'max:191'"
                               },
                               {
                                 name: "model",
@@ -54895,18 +54847,7 @@ var render = function() {
                     ]
                   : [
                       _c("div", { staticClass: "form-group" }, [
-                        _c(
-                          "label",
-                          {
-                            staticClass: "col control-label",
-                            attrs: { for: "license_types_id" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                                    Tipo de licencia de conducir\n                                "
-                            )
-                          ]
-                        ),
+                        _vm._m(9),
                         _vm._v(" "),
                         _c("div", { staticClass: "col" }, [
                           _c(
@@ -55030,8 +54971,11 @@ var render = function() {
                                 _vm._v(
                                   "\n                                            " +
                                     _vm._s(_vm.photoLabel) +
-                                    "\n                                        "
-                                )
+                                    " "
+                                ),
+                                _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v("*")
+                                ])
                               ]
                             )
                           ]),
@@ -55086,8 +55030,11 @@ var render = function() {
                                 _vm._v(
                                   "\n                                            " +
                                     _vm._s(_vm.imageDriveLicenseLabel) +
-                                    "\n                                        "
-                                )
+                                    " "
+                                ),
+                                _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v("*")
+                                ])
                               ]
                             )
                           ]),
@@ -55148,8 +55095,11 @@ var render = function() {
                                 _vm._v(
                                   "\n                                            " +
                                     _vm._s(_vm.imagePermitCirculationLabel) +
-                                    "\n                                        "
-                                )
+                                    " "
+                                ),
+                                _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v("*")
+                                ])
                               ]
                             )
                           ]),
@@ -55214,8 +55164,11 @@ var render = function() {
                                     _vm._s(
                                       _vm.imageCertificateBackgroundLabel
                                     ) +
-                                    "\n                                        "
-                                )
+                                    " "
+                                ),
+                                _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v("*")
+                                ])
                               ]
                             )
                           ]),
@@ -55243,6 +55196,19 @@ var render = function() {
                     "div",
                     { staticClass: "col d-flex justify-content-end" },
                     [
+                      _c(
+                        "router-link",
+                        {
+                          staticClass: "btn btn-light",
+                          attrs: { to: { name: "login" }, tag: "button" }
+                        },
+                        [
+                          _vm._v(
+                            "\n                                    Cancelar\n                                "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
                       _c(
                         "button",
                         {
@@ -55280,7 +55246,143 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "name" } },
+      [
+        _vm._v("Nombre de usuario "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "email" } },
+      [
+        _vm._v("Correo electrónico "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "password" } },
+      [
+        _vm._v("Contraseña "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col control-label",
+        attrs: { for: "password_confirmation" }
+      },
+      [
+        _vm._v("\n                                Confirmar Contraseña "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "first_name" } },
+      [
+        _vm._v("\n                                Nombre o razon social "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "last_name" } },
+      [
+        _vm._v("\n                                Apellido(s) "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "phone" } },
+      [
+        _vm._v("\n                                Teléfono "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "ruc" } },
+      [
+        _vm._v("\n                                RUC "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "city" } },
+      [
+        _vm._v("\n                                    Ciudad "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "license_types_id" } },
+      [
+        _vm._v(
+          "\n                                    Tipo de licencia de conducir "
+        ),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -55433,14 +55535,7 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "password" }
-                    },
-                    [_vm._v("Nueva Contraseña")]
-                  ),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -55513,18 +55608,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "password_confirmation" }
-                    },
-                    [
-                      _vm._v(
-                        "Confirmar\n                                Contraseña"
-                      )
-                    ]
-                  ),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -55615,7 +55699,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-2",
+                          staticClass: "btn btn-primary ml-3",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -55664,6 +55748,35 @@ var staticRenderFns = [
         }
       },
       [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "password" } },
+      [
+        _vm._v("\n                                Nueva Contraseña "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      {
+        staticClass: "col control-label",
+        attrs: { for: "password_confirmation" }
+      },
+      [
+        _vm._v("\n                                Confirmar Contraseña "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
     )
   }
 ]
@@ -55729,18 +55842,7 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "label",
-                    {
-                      staticClass: "col control-label",
-                      attrs: { for: "email" }
-                    },
-                    [
-                      _vm._v(
-                        "\n                                Ingrese el Correo electrónico\n                            "
-                      )
-                    ]
-                  ),
+                  _vm._m(0),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -55813,12 +55915,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group mb-2" }, [
                   _c(
                     "div",
-                    { staticClass: "col d-flex justify-content-center" },
+                    { staticClass: "col d-flex justify-content-end" },
                     [
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-light",
+                          staticClass: "btn btn-light mr-3",
                           attrs: { to: { name: "login" }, tag: "button" }
                         },
                         [
@@ -55864,7 +55966,23 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "email" } },
+      [
+        _vm._v(
+          "\n                                Ingrese el Correo electrónico "
+        ),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
