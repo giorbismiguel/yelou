@@ -1,7 +1,8 @@
 require('./bootstrap');
 
 import Vue from 'vue';
-import VeeValidate from 'vee-validate';
+import es from 'vee-validate/dist/locale/es';
+import VeeValidate, { Validator } from 'vee-validate'
 
 import store from './vuex/store' // vuex store instance
 import router from './router' // vue-router instance
@@ -34,6 +35,7 @@ import App from './components/App'
 
 // Vue plugins
 Vue.use(VeeValidate);
+Validator.localize('es', es);
 
 /**
  * Application
