@@ -1964,8 +1964,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _dashboard_Carousel__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./dashboard/Carousel */ "./resources/js/components/pages/dashboard/Carousel.vue");
-/* harmony import */ var _pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../pages/auth/RegisterAs */ "./resources/js/components/pages/auth/RegisterAs.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _dashboard_Services__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./dashboard/Services */ "./resources/js/components/pages/dashboard/Services.vue");
+/* harmony import */ var _dashboard_Professional__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard/Professional */ "./resources/js/components/pages/dashboard/Professional.vue");
+/* harmony import */ var _pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../pages/auth/RegisterAs */ "./resources/js/components/pages/auth/RegisterAs.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -1978,6 +1980,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
+
 
 
 
@@ -1985,9 +1995,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "Home",
   components: {
     Carousel: _dashboard_Carousel__WEBPACK_IMPORTED_MODULE_0__["default"],
-    RegisterAs: _pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_1__["default"]
+    Services: _dashboard_Services__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Professional: _dashboard_Professional__WEBPACK_IMPORTED_MODULE_2__["default"],
+    RegisterAs: _pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_4__["mapState"])({
     me: function me(state) {
       return state.auth.me;
     }
@@ -53693,7 +53705,15 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "section",
-    [_c("carousel"), _vm._v(" "), !_vm.me ? _c("register-as") : _vm._e()],
+    [
+      _c("carousel"),
+      _vm._v(" "),
+      _c("services"),
+      _vm._v(" "),
+      _c("professional"),
+      _vm._v(" "),
+      !_vm.me ? _c("register-as") : _vm._e()
+    ],
     1
   )
 }
@@ -74108,6 +74128,28 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Carousel_vue_vue_type_template_id_1b5dcf11_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/dashboard/Professional.vue":
+/*!******************************************************************!*\
+  !*** ./resources/js/components/pages/dashboard/Professional.vue ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\Giorbis\\Code\\yelou\\resources\\js\\components\\pages\\dashboard\\Professional.vue'");
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/dashboard/Services.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/pages/dashboard/Services.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\Users\\Giorbis\\Code\\yelou\\resources\\js\\components\\pages\\dashboard\\Services.vue'");
 
 /***/ }),
 
