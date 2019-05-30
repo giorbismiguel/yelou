@@ -54,8 +54,6 @@ new Vue({
 store
     .dispatch('checkLogin')
     .then(() => {
-        router.replace('/dashboard')
+        router.replace('/')
     })
-    .catch(() => {
-
-    })
+    .catch(() => {})

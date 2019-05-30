@@ -1948,9 +1948,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
     me: function me(state) {
       return state.auth.me;
-    },
-    phone_verify: function phone_verify(state) {
-      return state.auth.phone_verify;
     }
   }))
 });
@@ -2129,7 +2126,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return;
             }
 
-            _this.$router.replace('/profile');
+            _this.$router.replace('/administracion');
           })["catch"](function (data) {
             _this.loading = false;
             _this.error = data.message;
@@ -53450,8 +53447,7 @@ var render = function() {
                     _c(
                       "div",
                       {
-                        staticClass:
-                          "dropdown-menu dropdown-menu-right shadow mt-2"
+                        staticClass: "dropdown-menu dropdown-menu-right shadow"
                       },
                       [
                         _c("a", { staticClass: "dropdown-item" }, [
@@ -53614,7 +53610,17 @@ var staticRenderFns = [
           "aria-expanded": "false"
         }
       },
-      [_c("img", { staticClass: "img-avatar mx-1", attrs: { src: "" } })]
+      [
+        _c("img", {
+          staticClass: "img-avatar",
+          attrs: {
+            width: "80",
+            height: "50",
+            src: "/img/person-icon-1680.png",
+            alt: "Avatar"
+          }
+        })
+      ]
     )
   },
   function() {
@@ -73091,7 +73097,7 @@ new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 }); // Check user login status
 
 _vuex_store__WEBPACK_IMPORTED_MODULE_3__["default"].dispatch('checkLogin').then(function () {
-  _router__WEBPACK_IMPORTED_MODULE_4__["default"].replace('/dashboard');
+  _router__WEBPACK_IMPORTED_MODULE_4__["default"].replace('/');
 })["catch"](function () {});
 
 /***/ }),
@@ -74186,16 +74192,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var _components_pages_Home__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/pages/Home */ "./resources/js/components/pages/Home.vue");
-/* harmony import */ var _components_pages_auth_Register__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/auth/Register */ "./resources/js/components/pages/auth/Register.vue");
-/* harmony import */ var _components_pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/pages/auth/RegisterAs */ "./resources/js/components/pages/auth/RegisterAs.vue");
-/* harmony import */ var _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/auth/Login */ "./resources/js/components/pages/auth/Login.vue");
-/* harmony import */ var _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/auth/RenewPassword */ "./resources/js/components/pages/auth/RenewPassword.vue");
-/* harmony import */ var _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/auth/ResetPasswordCreate */ "./resources/js/components/pages/auth/ResetPasswordCreate.vue");
-/* harmony import */ var _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/auth/VerifyPhone */ "./resources/js/components/pages/auth/VerifyPhone.vue");
-/* harmony import */ var _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/auth/NewCode */ "./resources/js/components/pages/auth/NewCode.vue");
-/* harmony import */ var _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/profile/Profile */ "./resources/js/components/pages/profile/Profile.vue");
-/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _vuex_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vuex/store */ "./resources/js/vuex/store.js");
+/* harmony import */ var _components_pages_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/Home */ "./resources/js/components/pages/Home.vue");
+/* harmony import */ var _components_pages_auth_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/pages/auth/Register */ "./resources/js/components/pages/auth/Register.vue");
+/* harmony import */ var _components_pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/auth/RegisterAs */ "./resources/js/components/pages/auth/RegisterAs.vue");
+/* harmony import */ var _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/auth/Login */ "./resources/js/components/pages/auth/Login.vue");
+/* harmony import */ var _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/auth/RenewPassword */ "./resources/js/components/pages/auth/RenewPassword.vue");
+/* harmony import */ var _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/auth/ResetPasswordCreate */ "./resources/js/components/pages/auth/ResetPasswordCreate.vue");
+/* harmony import */ var _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/auth/VerifyPhone */ "./resources/js/components/pages/auth/VerifyPhone.vue");
+/* harmony import */ var _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/auth/NewCode */ "./resources/js/components/pages/auth/NewCode.vue");
+/* harmony import */ var _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/pages/profile/Profile */ "./resources/js/components/pages/profile/Profile.vue");
+/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
@@ -74212,46 +74220,63 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODU
 var routes = [{
   path: '/',
   name: 'home',
-  component: _components_pages_Home__WEBPACK_IMPORTED_MODULE_2__["default"]
+  component: _components_pages_Home__WEBPACK_IMPORTED_MODULE_3__["default"]
 }, {
   path: '/entrar',
   name: 'login',
-  component: _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   path: '/restabler/clave',
   name: 'restabler_clave',
-  component: _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: '/actualizar/clave/:token',
   name: 'actualizar_clave',
-  component: _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
   path: '/registrarse',
   name: 'register_as',
-  component: _components_pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _components_pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/registrarse/:type',
   name: 'register',
-  component: _components_pages_auth_Register__WEBPACK_IMPORTED_MODULE_3__["default"]
+  component: _components_pages_auth_Register__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, {
   path: '/verificar/codigo',
   name: 'verify_phone',
-  component: _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: '/codigo/nuevo',
   name: 'new_code',
-  component: _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
-  path: '/profile',
-  name: 'profile',
-  component: _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_10__["default"]
+  path: '/administracion',
+  name: 'administracion',
+  component: _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_11__["default"],
+  meta: {
+    requiresAuth: true
+  }
 }, {
   path: '*',
-  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_12__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
-  mode: 'history',
-  routes: routes
+  routes: routes,
+  mode: false
+});
+/**
+ * Authenticated routes
+ */
+
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function (record) {
+    return record.meta.requiresAuth;
+  }) && !_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.me) {
+    // if route requires auth and user isn't authenticated
+    next('/login');
+  } else {
+    next();
+  }
 });
 /* harmony default export */ __webpack_exports__["default"] = (router);
 
@@ -74324,7 +74349,7 @@ var actions = {
         return reject(new Error('No access token stored'));
       }
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(Config.apiPath + 'user/me').then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.me')).then(function (response) {
         commit('CHECK_LOGIN_OK', response.data);
         resolve();
       })["catch"](function (error) {

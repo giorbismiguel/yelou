@@ -23,7 +23,7 @@ const actions = {
                 return reject(new Error('No access token stored'))
             }
 
-            axios.get(Config.apiPath + 'user/me')
+            axios.get(route('api.me'))
                 .then(
                     response => {
                         commit('CHECK_LOGIN_OK', response.data)

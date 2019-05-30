@@ -31,9 +31,9 @@
                 <ul v-if="me" class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                            <img class="img-avatar mx-1" src="">
+                            <img class="img-avatar" width="80" height="50" src="/img/person-icon-1680.png" alt="Avatar">
                         </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow mt-2">
+                        <div class="dropdown-menu dropdown-menu-right shadow">
                             <a class="dropdown-item">
                                 {{ me.name }}<br>
                                 <small class="text-muted">email</small>
@@ -82,7 +82,6 @@
         computed: {
             ...mapState({
                 me: state => state.auth.me,
-                phone_verify: state => state.auth.phone_verify,
             })
         },
     }

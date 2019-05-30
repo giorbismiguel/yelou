@@ -116,7 +116,7 @@
                                     return;
                                 }
 
-                                this.$router.replace('/profile')
+                                this.$router.replace('/administracion')
                             })
                             .catch((data) => {
                                 this.loading = false

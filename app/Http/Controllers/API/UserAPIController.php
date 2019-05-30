@@ -139,4 +139,17 @@ class UserAPIController extends AppBaseController
 
         return $this->sendResponse($id, 'El usuario fue eliminado exitosamente');
     }
+
+    /**
+     * Сurrent authenticated user
+     *
+     * Return current authenticated user data
+     *
+     * @param Request $request
+     * @return mixed
+     */
+    public function me(Request $request)
+    {
+        return $request->user();
+    }
 }

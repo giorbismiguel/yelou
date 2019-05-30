@@ -63,6 +63,7 @@ Route::prefix('v1')->group(function () {
             /*
              * Area
              */
+            Route::get('user/me', 'UserAPIController@me')->name('me');
             Route::resource('users', 'UserAPIController');
 
             /*

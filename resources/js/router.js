@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from './vuex/store'
 
 Vue.use(VueRouter)
 
@@ -41,7 +42,7 @@ const routes = [
         path: '/codigo/nuevo', name: 'new_code', component: NewCode
     },
     {
-        path: '/profile', name: 'profile', component: Profile
+        path: '/administracion', name: 'administracion', component: Profile, meta: {requiresAuth: true}
     },
     {
         path: '*', component: NotFound
@@ -49,8 +50,20 @@ const routes = [
 ]
 
 const router = new VueRouter({
-    mode: 'history',
-    routes
+    routes,
+    mode: false,
+})
+
+/**
+ * Authenticated routes
+ */
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth) && !store.state.auth.me) {
+        // if route requires auth and user isn't authenticated
+        next('/login')
+    } else {
+        next()
+    }
 })
 
 export default router
