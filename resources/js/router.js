@@ -12,7 +12,7 @@ import ResetPassword from './components/pages/auth/RenewPassword'
 import ResetPasswordCreate from './components/pages/auth/ResetPasswordCreate'
 import VerifyPhone from './components/pages/auth/VerifyPhone'
 import NewCode from './components/pages/auth/NewCode'
-
+import Profile from './components/pages/profile/Profile'
 import NotFound from './components/NotFound';
 
 const routes = [
@@ -39,6 +39,9 @@ const routes = [
     },
     {
         path: '/codigo/nuevo', name: 'new_code', component: NewCode
+    },
+    {
+        path: '/profile', name: 'profile', component: Profile
     },
     {
         path: '*', component: NotFound

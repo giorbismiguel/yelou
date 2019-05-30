@@ -13,7 +13,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav w-100 justify-content-center font-weight-bold">
+                <ul v-if="!me" class="navbar-nav w-100 justify-content-center font-weight-bold">
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Productos</a>
                     </li>
@@ -28,7 +28,32 @@
                     </li>
                 </ul>
 
-                <ul class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
+                <ul v-if="me" class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                            <img class="img-avatar mx-1" src="">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right shadow mt-2">
+                            <a class="dropdown-item">
+                                {{ me.name }}<br>
+                                <small class="text-muted">email</small>
+                            </a>
+                            <a class="dropdown-item" href="/profile">
+                                <i class="fas fa-user"></i> Perfil
+                            </a>
+                            <div class="divider"></div>
+                            <a class="dropdown-item" href="/password">
+                                <i class="fas fa-key"></i> Cambiar contraseña
+                            </a>
+                            <div class="divider"></div>
+                            <a class="dropdown-item" href="">
+                                <i class="fas fa-sign-out-alt"></i> Cerrar sesión
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+
+                <ul v-if="!me" class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="fas fa-globe"></i> Es</a>
                     </li>
@@ -49,8 +74,17 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+
     export default {
-        name: "Navbar"
+        name: "Navbar",
+
+        computed: {
+            ...mapState({
+                me: state => state.auth.me,
+                phone_verify: state => state.auth.phone_verify,
+            })
+        },
     }
 </script>
 

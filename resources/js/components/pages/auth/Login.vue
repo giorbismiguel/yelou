@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary ml-3 btn-" :disabled="submitted">
+                                    <button type="submit" class="btn btn-primary mr-2" :disabled="submitted">
                                         Ingresar
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>
@@ -97,7 +97,6 @@
         },
 
         methods: {
-
             ...mapActions([
                 'login',
             ]),
@@ -117,7 +116,7 @@
                                     return;
                                 }
 
-                                this.$router.replace('/')
+                                this.$router.replace('/profile')
                             })
                             .catch((data) => {
                                 this.loading = false
