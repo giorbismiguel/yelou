@@ -30,23 +30,24 @@
 
                 <ul v-if="me" class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                           aria-haspopup="true" aria-expanded="false">
                             <img class="img-avatar" width="80" height="50" src="/img/person-icon-1680.png" alt="Avatar">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow">
                             <a class="dropdown-item">
-                                {{ me.name }}<br>
-                                <small class="text-muted">email</small>
+                                {{ me.name }}
                             </a>
-                            <a class="dropdown-item" href="/profile">
+
+                            <router-link :to="{ name: 'login' }" class="dropdown-item">
                                 <i class="fas fa-user"></i> Perfil
-                            </a>
-                            <div class="divider"></div>
-                            <a class="dropdown-item" href="/password">
+                            </router-link>
+
+                            <router-link :to="{ name: 'login' }" class="dropdown-item">
                                 <i class="fas fa-key"></i> Cambiar contraseña
-                            </a>
-                            <div class="divider"></div>
-                            <a class="dropdown-item" href="">
+                            </router-link>
+
+                            <a class="dropdown-item" href="#"  @click.prevent="closeSession">
                                 <i class="fas fa-sign-out-alt"></i> Cerrar sesión
                             </a>
                         </div>
@@ -74,7 +75,7 @@
 </template>
 
 <script>
-    import {mapState} from 'vuex'
+    import {mapState, mapActions} from 'vuex'
 
     export default {
         name: "Navbar",
@@ -84,6 +85,21 @@
                 me: state => state.auth.me,
             })
         },
+
+        methods: {
+            ...mapActions([
+                'logout',
+            ]),
+
+            closeSession() {
+                this.logout(this.form)
+                    .then(() => {
+                        this.$router.replace('/')
+                    })
+                    .catch((data) => {
+                    })
+            }
+        }
     }
 </script>
 

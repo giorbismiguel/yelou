@@ -1942,6 +1942,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Navbar",
@@ -1949,7 +1950,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     me: function me(state) {
       return state.auth.me;
     }
-  }))
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['logout']), {
+    closeSession: function closeSession() {
+      var _this = this;
+
+      this.logout(this.form).then(function () {
+        _this.$router.replace('/');
+      })["catch"](function (data) {});
+    }
+  })
 });
 
 /***/ }),
@@ -53605,25 +53615,56 @@ var render = function() {
                         _c("a", { staticClass: "dropdown-item" }, [
                           _vm._v(
                             "\n                            " +
-                              _vm._s(_vm.me.name)
-                          ),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("small", { staticClass: "text-muted" }, [
-                            _vm._v("email")
-                          ])
+                              _vm._s(_vm.me.name) +
+                              "\n                        "
+                          )
                         ]),
                         _vm._v(" "),
-                        _vm._m(6),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "login" } }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-user" }),
+                            _vm._v(" Perfil\n                        ")
+                          ]
+                        ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "divider" }),
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { to: { name: "login" } }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-key" }),
+                            _vm._v(
+                              " Cambiar contraseña\n                        "
+                            )
+                          ]
+                        ),
                         _vm._v(" "),
-                        _vm._m(7),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "divider" }),
-                        _vm._v(" "),
-                        _vm._m(8)
-                      ]
+                        _c(
+                          "a",
+                          {
+                            staticClass: "dropdown-item",
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.closeSession($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fas fa-sign-out-alt" }),
+                            _vm._v(" Cerrar sesión\n                        ")
+                          ]
+                        )
+                      ],
+                      1
                     )
                   ])
                 ]
@@ -53638,7 +53679,7 @@ var render = function() {
                     "nav navbar-nav ml-auto w-100 justify-content-end app_font-family"
                 },
                 [
-                  _vm._m(9),
+                  _vm._m(6),
                   _vm._v(" "),
                   _c(
                     "li",
@@ -53774,41 +53815,6 @@ var staticRenderFns = [
         })
       ]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "dropdown-item", attrs: { href: "/profile" } },
-      [
-        _c("i", { staticClass: "fas fa-user" }),
-        _vm._v(" Perfil\n                        ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      { staticClass: "dropdown-item", attrs: { href: "/password" } },
-      [
-        _c("i", { staticClass: "fas fa-key" }),
-        _vm._v(" Cambiar contraseña\n                        ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("a", { staticClass: "dropdown-item", attrs: { href: "" } }, [
-      _c("i", { staticClass: "fas fa-sign-out-alt" }),
-      _vm._v(" Cerrar sesión\n                        ")
-    ])
   },
   function() {
     var _vm = this
