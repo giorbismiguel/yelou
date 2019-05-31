@@ -42,7 +42,7 @@ const routes = [
         path: '/codigo/nuevo', name: 'new_code', component: NewCode
     },
     {
-        path: '/cuenta', name: 'cuenta', component: Profile, meta: {requiresAuth: true}
+        path: '/cuenta', name: 'account', component: Profile, meta: {requiresAuth: true}
     },
     {
         path: '*', component: NotFound
@@ -51,7 +51,8 @@ const routes = [
 
 const router = new VueRouter({
     routes,
-    mode: false,
+    mode: 'history',
+    history: false,
 })
 
 /**

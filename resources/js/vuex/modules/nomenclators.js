@@ -9,7 +9,7 @@ const actions = {
     nomenclators({commit, dispatch}) {
         return new Promise((resolve, reject) => {
             axios
-                .get('/api/v1/nomenclators')
+                .get(route('api.lists.get'))
                 .then(({data: {data}}) => {
                     commit('GET_NOMENCLATORS_OK', data)
                     resolve()

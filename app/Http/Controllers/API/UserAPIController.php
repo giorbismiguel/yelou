@@ -113,7 +113,7 @@ class UserAPIController extends AppBaseController
 
         $user = $this->userRepository->update($input, $id);
 
-        return $this->sendResponse(get_type_user($user->toArray()), 'Usuario actualizado exitosamente');
+        return $this->sendResponse(['user' => get_type_user($user->toArray())], 'Usuario actualizado exitosamente');
     }
 
     /**

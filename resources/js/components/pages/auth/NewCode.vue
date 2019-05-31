@@ -39,7 +39,7 @@
                                     <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary mr-4" :disabled="loading">
                                         Solicitar Nuevo código
                                     </button>
                                     <spinner v-show="loadingCode" size="medium"></spinner>

@@ -37,7 +37,6 @@ const actions = {
         })
     },
 
-
     login({commit, dispatch}, form) {
         commit('LOGIN')
 
@@ -159,18 +158,17 @@ const actions = {
         })
     },
 
-    updateProfile({commit, dispatch}, {id, form}) {
-        commit('UPDATE_PROFILE')
+    updateProfile({commit, dispatch}, form) {
+        //commit('UPDATE_PROFILE')
 
         return new Promise((resolve, reject) => {
-            axios.post(Config.apiPath + 'user/' + id, {_method: 'PUT', ...form})
-                .then(
-                    response => {
-                        commit('UPDATE_PROFILE_OK', response.data.user)
-                        resolve()
-                    })
+            axios.put(route('api.users.update', form.id), form)
+                .then(({data: {data}}) => {
+                    commit('UPDATE_PROFILE_OK', data)
+                    resolve()
+                })
                 .catch(error => {
-                    commit('UPDATE_PROFILE_FAIL')
+                    //commit('UPDATE_PROFILE_FAIL')
                     reject(error.response.data)
                 })
         })
@@ -197,8 +195,8 @@ const mutations = {
         state.me = user
     },
 
-    UPDATE_PROFILE_OK(state, user) {
-        state.me = user
+    UPDATE_PROFILE_OK(state, data) {
+        state.me = data.user
     },
 
     ACTIVE_ACCOUNT(state, user) {
@@ -248,6 +246,7 @@ const mutations = {
     PASSWORD_RESET_FAIL(state) {
         state.password_reset_data = false
     },
+
 }
 
 export default {
