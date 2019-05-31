@@ -39,7 +39,7 @@
                                 {{ me.name }}
                             </a>
 
-                            <router-link :to="{ name: 'login' }" class="dropdown-item">
+                            <router-link :to="{ name: 'cuenta' }" class="dropdown-item">
                                 <i class="fas fa-user"></i> Perfil
                             </router-link>
 

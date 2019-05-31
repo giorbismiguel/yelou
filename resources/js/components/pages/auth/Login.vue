@@ -116,7 +116,7 @@
                                     return;
                                 }
 
-                                this.$router.replace('/administracion')
+                                this.$router.replace('/cuenta')
                             })
                             .catch((data) => {
                                 this.loading = false

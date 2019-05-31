@@ -2148,7 +2148,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               return;
             }
 
-            _this.$router.replace('/administracion');
+            _this.$router.replace('/cuenta');
           })["catch"](function (data) {
             _this.loading = false;
             _this.error = data.message;
@@ -53624,7 +53624,7 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "dropdown-item",
-                            attrs: { to: { name: "login" } }
+                            attrs: { to: { name: "cuenta" } }
                           },
                           [
                             _c("i", { staticClass: "fas fa-user" }),
@@ -74638,8 +74638,8 @@ var routes = [{
   name: 'new_code',
   component: _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
-  path: '/administracion',
-  name: 'administracion',
+  path: '/cuenta',
+  name: 'cuenta',
   component: _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_11__["default"],
   meta: {
     requiresAuth: true

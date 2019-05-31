@@ -42,7 +42,7 @@ const routes = [
         path: '/codigo/nuevo', name: 'new_code', component: NewCode
     },
     {
-        path: '/administracion', name: 'administracion', component: Profile, meta: {requiresAuth: true}
+        path: '/cuenta', name: 'cuenta', component: Profile, meta: {requiresAuth: true}
     },
     {
         path: '*', component: NotFound
