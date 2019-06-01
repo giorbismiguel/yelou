@@ -3526,9 +3526,434 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/profile/Profile.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\Giorbis\\Code\\yelou\\resources\\js\\components\\pages\\profile\\Profile.vue: Unexpected token (380:27)\n\n\u001b[0m \u001b[90m 378 | \u001b[39m                                text\u001b[33m:\u001b[39m \u001b[32m'La contraseña ha sido actualizada'\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 379 | \u001b[39m                            })\u001b[33m;\u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 380 | \u001b[39m                        })[]\u001b[0m\n\u001b[0m \u001b[90m     | \u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 381 | \u001b[39m                        \u001b[33m.\u001b[39m\u001b[36mcatch\u001b[39m((data) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 382 | \u001b[39m                            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mloading \u001b[33m=\u001b[39m \u001b[36mfalse\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 383 | \u001b[39m                            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m$notify({\u001b[0m\n    at Parser.raise (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:6322:17)\n    at Parser.unexpected (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:7638:16)\n    at Parser.parseExprAtom (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8799:20)\n    at Parser.parseExprSubscripts (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8385:23)\n    at Parser.parseMaybeUnary (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8365:21)\n    at Parser.parseExprOps (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8252:23)\n    at Parser.parseMaybeConditional (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8225:23)\n    at Parser.parseMaybeAssign (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8172:21)\n    at Parser.parseExpression (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8120:23)\n    at Parser.parseSubscript (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8465:28)\n    at Parser.parseSubscripts (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8406:19)\n    at Parser.parseExprSubscripts (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8395:17)\n    at Parser.parseMaybeUnary (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8365:21)\n    at Parser.parseExprOps (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8252:23)\n    at Parser.parseMaybeConditional (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8225:23)\n    at Parser.parseMaybeAssign (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8172:21)\n    at Parser.parseExpression (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8120:23)\n    at Parser.parseStatementContent (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9892:23)\n    at Parser.parseStatement (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9763:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:10340:25)\n    at Parser.parseBlockBody (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:10327:10)\n    at Parser.parseBlock (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:10311:10)\n    at Parser.parseStatementContent (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9839:21)\n    at Parser.parseStatement (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9763:17)\n    at Parser.parseIfStatement (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:10117:28)\n    at Parser.parseStatementContent (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9808:21)\n    at Parser.parseStatement (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9763:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:10340:25)\n    at Parser.parseBlockBody (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:10327:10)\n    at Parser.parseBlock (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:10311:10)\n    at Parser.parseFunctionBody (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9382:24)\n    at Parser.parseArrowExpression (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:9323:10)\n    at Parser.parseExprAtom (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8684:18)\n    at Parser.parseExprSubscripts (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8385:23)\n    at Parser.parseMaybeUnary (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8365:21)\n    at Parser.parseExprOps (C:\\Users\\Giorbis\\Code\\yelou\\node_modules\\@babel\\parser\\lib\\index.js:8252:23)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      form: {
+        type: 1,
+        name: null,
+        email: null,
+        password: null,
+        password_confirmation: null,
+        first_name: null,
+        last_name: null,
+        phone: null,
+        ruc: null,
+        direction: null,
+        city: null,
+        postal_code: null,
+        license_types_id: null,
+        photo: null,
+        image_driver_license: null,
+        image_permit_circulation: null,
+        image_certificate_background: null
+      },
+      selectedPhoto: null,
+      imageDriveLicense: null,
+      imagePermitCirculation: null,
+      imageCertificateBackground: null,
+      serverErrors: {},
+      submitted: false,
+      loading: false
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    lists: function lists(state) {
+      return state.nomenclators.lists ? state.nomenclators.lists : {
+        'licenseTypes': []
+      };
+    },
+    me: function me(state) {
+      return state.auth.me;
+    }
+  }), {
+    photoLabel: function photoLabel() {
+      return this.selectedPhoto ? this.selectedPhoto.name : 'Foto';
+    },
+    imageDriveLicenseLabel: function imageDriveLicenseLabel() {
+      return this.imageDriveLicense ? this.imageDriveLicense.name : 'Imagen de la licencia de conducir';
+    },
+    imagePermitCirculationLabel: function imagePermitCirculationLabel() {
+      return this.imagePermitCirculation ? this.imagePermitCirculation.name : 'Imagen del Permiso de circulación';
+    },
+    imageCertificateBackgroundLabel: function imageCertificateBackgroundLabel() {
+      return this.imageCertificateBackground ? this.imageCertificateBackground.name : 'Imagen de Certificado de Antecedentes';
+    }
+  }),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateProfile', 'nomenclators']), {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      this.submitted = true;
+      this.$validator.validate().then(function (valid) {
+        if (valid) {
+          _this.loading = true;
+          var formData, key;
+
+          if (!_this.isClient()) {
+            formData = new FormData();
+
+            for (key in _this.form) {
+              formData.append(key, _this.form[key]);
+            }
+
+            formData.append('photo', _this.selectedPhoto, _this.selectedPhoto ? _this.selectedPhoto.name : null);
+            formData.append('image_driver_license', _this.imageDriveLicense, _this.imageDriveLicense ? _this.imageDriveLicense.name : null);
+            formData.append('image_permit_circulation', _this.imagePermitCirculation, _this.imagePermitCirculation ? _this.imagePermitCirculation.name : null);
+            formData.append('image_certificate_background', _this.imageCertificateBackground, _this.imageCertificateBackground ? _this.imageCertificateBackground.name : null);
+          }
+
+          _this.serverErrors = {};
+
+          _this.updateProfile(formData ? formData : _this.form).then(function () {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'success',
+              group: 'update_profile',
+              title: 'Contraseña',
+              text: 'La contraseña ha sido actualizada'
+            });
+          })["catch"](function (data) {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'error',
+              group: 'update_profile',
+              title: 'Perfil',
+              text: 'Ha ocurrido un error al actualizar el perfil'
+            });
+
+            _this.serverErrors = data.errors || {};
+          });
+        }
+      });
+    },
+    onPhotoSelected: function onPhotoSelected(event) {
+      this.selectedPhoto = event.target.files[0];
+    },
+    onImageDriveLicenseSelected: function onImageDriveLicenseSelected(event) {
+      this.imageDriveLicense = event.target.files[0];
+    },
+    onImagePermitCirculationSelected: function onImagePermitCirculationSelected(event) {
+      this.imagePermitCirculation = event.target.files[0];
+    },
+    onImageCertificateBackgroundSelected: function onImageCertificateBackgroundSelected(event) {
+      this.imageCertificateBackground = event.target.files[0];
+    },
+    isClient: function isClient() {
+      return this.form.type === 1;
+    }
+  }),
+  created: function created() {
+    this.form = this.me;
+  },
+  mounted: function mounted() {
+    this.nomenclators();
+  },
+  components: {
+    Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a
+  }
+});
 
 /***/ }),
 

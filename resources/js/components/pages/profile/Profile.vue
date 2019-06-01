@@ -377,7 +377,7 @@
                                     title: 'Contraseña',
                                     text: 'La contraseña ha sido actualizada'
                                 });
-                            })[]
+                            })
                             .catch((data) => {
                                 this.loading = false
                                 this.$notify({
