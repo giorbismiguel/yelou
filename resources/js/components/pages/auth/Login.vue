@@ -4,7 +4,7 @@
         <hr>
 
         <div class="row justify-content-center">
-            <div class="col-5">
+            <div class="col-6">
                 <div class="card m-4">
                     <div class="card-header">Autenticarse</div>
                     <div class="card-body">
@@ -18,7 +18,7 @@
                             <div class="form-group">
                                 <label for="email" class="col control-label">Correo electrónico o Teléfono</label>
                                 <div class="col">
-                                    <input id="email" type="email" name="email" v-validate="'required|email|max:191'"
+                                    <input id="email" type="text" name="email" v-validate="'required|max:191'"
                                            data-vv-as="Correo electronico o Teléfono" class="form-control"
                                            v-model.trim="form.email"
                                            :class="{ 'is-invalid': submitted && (errors.has('email') || serverErrors.email) }">
@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary mr-2" :disabled="submitted">
+                                    <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
                                         Ingresar
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>

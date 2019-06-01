@@ -118,6 +118,20 @@ const actions = {
         })
     },
 
+    password_update({commit, dispatch}, form) {
+        return new Promise((resolve, reject) => {
+            axios.post(route('api.update_password'), form)
+                .then(() => {
+                    commit('PASSWORD_UPDATE_OK')
+                    resolve()
+                })
+                .catch(error => {
+                    commit('PASSWORD_UPDATE_FAIL')
+                    reject(error.response.data)
+                })
+        })
+    },
+
     find_token({commit, dispatch}, token) {
         return new Promise((resolve, reject) => {
             axios.get(route('api.password.find_token', token))
@@ -245,6 +259,14 @@ const mutations = {
 
     PASSWORD_RESET_FAIL(state) {
         state.password_reset_data = false
+    },
+
+    PASSWORD_UPDATE_OK(state) {
+        state.password_update = false
+    },
+
+    PASSWORD_UPDATE_FAIL(state) {
+        state.password_update = false
     },
 
 }

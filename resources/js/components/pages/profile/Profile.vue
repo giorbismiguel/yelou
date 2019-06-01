@@ -263,7 +263,7 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
+                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light mr-3">
                                         Cancelar
                                     </router-link>
                                     <button type="submit" class="btn btn-primary mr-3" :disabled="loading">
@@ -277,6 +277,7 @@
                 </div>
             </div>
         </div>
+        <notifications group="update_profile"/>
     </div>
 </template>
 
@@ -368,18 +369,23 @@
 
                         this.serverErrors = {}
                         this.updateProfile(formData ? formData : this.form)
-                            .then((data) => {
-                                console.log(data)
+                            .then(() => {
                                 this.loading = false
-                                Swal.fire({
-                                    text: 'Se ha actualizado su perfil',
+                                this.$notify({
                                     type: 'success',
-                                    showCancelButton: false,
-                                    confirmButtonText: 'Aceptar',
-                                })
-                            })
+                                    group: 'update_profile',
+                                    title: 'Contraseña',
+                                    text: 'La contraseña ha sido actualizada'
+                                });
+                            })[]
                             .catch((data) => {
                                 this.loading = false
+                                this.$notify({
+                                    type: 'error',
+                                    group: 'update_profile',
+                                    title: 'Perfil',
+                                    text: 'Ha ocurrido un error al actualizar el perfil'
+                                });
                                 this.serverErrors = data.errors || {}
                             })
                     }

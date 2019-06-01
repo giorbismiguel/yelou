@@ -8,6 +8,8 @@ use App\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Response;
 
 /**
@@ -151,5 +153,35 @@ class UserAPIController extends AppBaseController
     public function me(Request $request)
     {
         return $request->user();
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function updatePassword(Request $request)
+    {
+        $this->validate($request, [
+            'current'               => 'required|string',
+            'password'              => 'required|string|confirmed',
+            'password_confirmation' => 'required|string'
+        ]);
+
+        $user = User::find(Auth::id());
+
+        if (!Hash::check($request->current, $user->password)) {
+            return response()->json(['errors' => ['current' => ['El campo Contraseña actual no coincide']]], 422);
+        }
+
+        if (\Hash::check($request->password, $user->password)) {
+            return response()->json(['errors' => ['password' => ['La nueva contraseña no debe ser igual a la anterior']]],
+                422);
+        }
+
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        return $user;
     }
 }

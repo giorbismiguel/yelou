@@ -43,7 +43,7 @@
                                 <i class="fas fa-user"></i> Perfil
                             </router-link>
 
-                            <router-link :to="{ name: 'login' }" class="dropdown-item">
+                            <router-link :to="{ name: 'reset_password' }" class="dropdown-item">
                                 <i class="fas fa-key"></i> Cambiar contraseña
                             </router-link>
 

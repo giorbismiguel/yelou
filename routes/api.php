@@ -64,6 +64,7 @@ Route::prefix('v1')->group(function () {
              * Area
              */
             Route::get('user/me', 'UserAPIController@me')->name('me');
+            Route::post('/update/password', 'UserAPIController@updatePassword')->name('update_password');
             Route::resource('users', 'UserAPIController');
 
             /*
@@ -71,8 +72,8 @@ Route::prefix('v1')->group(function () {
              */
             Route::prefix('admin')
                 ->group(function () {
-                Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
-            });
+                    Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
+                });
         });
 
     /*

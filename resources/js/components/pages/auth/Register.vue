@@ -46,7 +46,7 @@
                                     <input v-model="form.password" v-validate="'required|min:6|max:20'"
                                            data-vv-as="Contraseña" id="password" type="password" name="password"
                                            class="form-control" ref="password"
-                                           :class="{ 'is-invalid': submitted && errors.has('email') }">
+                                           :class="{ 'is-invalid': submitted && errors.has('password') }">
 
                                     <div v-if="submitted && errors.has('password')" class="invalid-feedback">
                                         {{ errors.first('password') }}

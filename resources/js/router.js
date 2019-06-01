@@ -11,6 +11,7 @@ import RegisterAs from './components/pages/auth/RegisterAs'
 import Login from './components/pages/auth/Login'
 import ResetPassword from './components/pages/auth/RenewPassword'
 import ResetPasswordCreate from './components/pages/auth/ResetPasswordCreate'
+import ResetPassowrd from './components/pages/auth/ResetPassword'
 import VerifyPhone from './components/pages/auth/VerifyPhone'
 import NewCode from './components/pages/auth/NewCode'
 import Profile from './components/pages/profile/Profile'
@@ -43,6 +44,9 @@ const routes = [
     },
     {
         path: '/cuenta', name: 'account', component: Profile, meta: {requiresAuth: true}
+    },
+    {
+        path: '/cuenta/clave', name: 'reset_password', component: ResetPassowrd, meta: {requiresAuth: true}
     },
     {
         path: '*', component: NotFound
