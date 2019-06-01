@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <box-user>
         <h3>Actualizar contraseña</h3>
         <hr>
 
@@ -87,12 +87,13 @@
         </div>
 
         <notifications group="reset_password"/>
-    </div>
+    </box-user>
 </template>
 
 <script>
     import {mapState, mapActions} from 'vuex'
     import Spinner from 'vue-simple-spinner'
+    import BoxUser from '../../layout/BoxUser'
 
     export default {
 
@@ -163,7 +164,8 @@
         },
 
         components: {
-            Spinner
+            Spinner,
+            BoxUser
         }
     }
 </script>

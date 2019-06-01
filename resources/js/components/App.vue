@@ -2,9 +2,7 @@
     <div>
         <navbar></navbar>
 
-        <div class="container">
-            <router-view></router-view>
-        </div>
+        <router-view></router-view>
 
         <feet></feet>
     </div>

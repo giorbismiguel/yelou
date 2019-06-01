@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <box-user>
         <h3>Perfil</h3>
         <hr>
 
@@ -12,7 +12,8 @@
                               @submit.prevent="onSubmit">
 
                             <div class="form-group">
-                                <label for="name" class="col control-label">Nombre de usuario <span class="text-danger">*</span></label>
+                                <label for="name" class="col control-label">Nombre de usuario <span
+                                        class="text-danger">*</span></label>
                                 <div class="col">
                                     <input v-model="form.name" v-validate="'required|max:191'"
                                            data-vv-as="Nombre de usuario" id="name" name="name" type="text"
@@ -64,7 +65,8 @@
                                 </label>
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="Apellido (s)" id="last_name"
-                                           name="last_name" type="text" class="form-control" v-model="form.last_name"
+                                           name="last_name" type="text" class="form-control"
+                                           v-model="form.last_name"
                                            :class="{ 'is-invalid': submitted && errors.has('last_name') }">
 
                                     <div v-if="submitted && errors.has('last_name')"
@@ -111,7 +113,8 @@
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
                                     <input v-validate="'max:191'" data-vv-as="Dirección" id="direction"
-                                           name="direction" type="text" class="form-control" v-model="form.direction"
+                                           name="direction" type="text" class="form-control"
+                                           v-model="form.direction"
                                            :class="{ 'is-invalid': submitted && errors.has('direction') }">
 
                                     <div v-if="submitted && errors.has('direction')"
@@ -249,7 +252,8 @@
                                                    id="image_certificate_background" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('image_certificate_background') }"/>
                                             <label for="image_certificate_background" class="custom-file-label">
-                                                {{ imageCertificateBackgroundLabel }} <span class="text-danger">*</span>
+                                                {{ imageCertificateBackgroundLabel }} <span
+                                                    class="text-danger">*</span>
                                             </label>
                                         </div>
 
@@ -277,14 +281,15 @@
                 </div>
             </div>
         </div>
+
         <notifications group="update_profile"/>
-    </div>
+    </box-user>
 </template>
 
 <script>
     import {mapState, mapActions} from 'vuex'
     import Spinner from 'vue-simple-spinner'
-    import Swal from 'sweetalert2'
+    import BoxUser from '../../layout/BoxUser'
 
     export default {
 
@@ -422,7 +427,8 @@
         },
 
         components: {
-            Spinner
+            Spinner,
+            BoxUser
         }
 
     }

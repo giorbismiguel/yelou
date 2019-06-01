@@ -31,6 +31,7 @@ axios.interceptors.response.use(response => response, error => {
 // Global Vue Components
 Vue.component('navbar', require('./components/layout/Navbar.vue').default)
 Vue.component('feet', require('./components/layout/Feet.vue').default)
+Vue.component('sidebar', require('./components/layout/Sidebar').default)
 
 import App from './components/App'
 
