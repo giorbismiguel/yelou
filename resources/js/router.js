@@ -9,12 +9,17 @@ import Home from './components/pages/Home'
 import Register from './components/pages/auth/Register'
 import RegisterAs from './components/pages/auth/RegisterAs'
 import Login from './components/pages/auth/Login'
-import ResetPassword from './components/pages/auth/RenewPassword'
+import RenewPassword from './components/pages/auth/RenewPassword'
 import ResetPasswordCreate from './components/pages/auth/ResetPasswordCreate'
-import ResetPassowrd from './components/pages/auth/ResetPassword'
 import VerifyPhone from './components/pages/auth/VerifyPhone'
 import NewCode from './components/pages/auth/NewCode'
+
+import ResetPassword from './components/pages/auth/ResetPassword'
 import Profile from './components/pages/profile/Profile'
+import Administration from './components/pages/administration/Index'
+import Services from './components/pages/administration/Services'
+import Routes from './components/pages/administration/Routes'
+
 import NotFound from './components/NotFound';
 
 const routes = [
@@ -28,7 +33,7 @@ const routes = [
         path: '/restabler/clave', name: 'restabler_clave', component: ResetPasswordCreate
     },
     {
-        path: '/actualizar/clave/:token', name: 'actualizar_clave', component: ResetPassword
+        path: '/actualizar/clave/:token', name: 'actualizar_clave', component: RenewPassword
     },
     {
         path: '/registrarse', name: 'register_as', component: RegisterAs
@@ -46,7 +51,16 @@ const routes = [
         path: '/cuenta', name: 'account', component: Profile, meta: {requiresAuth: true}
     },
     {
-        path: '/cuenta/clave', name: 'reset_password', component: ResetPassowrd, meta: {requiresAuth: true}
+        path: '/cuenta/clave', name: 'reset_password', component: ResetPassword, meta: {requiresAuth: true}
+    },
+    {
+        path: '/administracion', name: 'administration', component: Administration, meta: {requiresAuth: true}
+    },
+    {
+        path: '/servicios', name: 'services', component: Services, meta: {requiresAuth: true}
+    },
+    {
+        path: '/rutas', name: 'routes', component: Routes, meta: {requiresAuth: true}
     },
     {
         path: '*', component: NotFound

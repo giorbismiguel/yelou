@@ -35,12 +35,12 @@
                             <img class="img-avatar" width="80" height="50" src="/img/person-icon-1680.png" alt="Avatar">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right shadow">
-                            <a class="dropdown-item">
-                                {{ me.name }}
-                            </a>
+                            <router-link :to="{ name: 'administration' }" class="dropdown-item">
+                                <i class="fas fa-chart-bar"></i> Administración
+                            </router-link>
 
                             <router-link :to="{ name: 'account' }" class="dropdown-item">
-                                <i class="fas fa-user"></i> Perfil
+                                <i class="fas fa-user"></i> Su perfil {{ me.name }}
                             </router-link>
 
                             <router-link :to="{ name: 'reset_password' }" class="dropdown-item">

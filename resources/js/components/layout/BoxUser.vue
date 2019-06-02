@@ -4,15 +4,15 @@
         <!-- Sidebar -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3>Administración</h3>
+                <h3><router-link :to="{ name: 'administration' }">Administracion</router-link></h3>
             </div>
 
             <ul class="list-unstyled components">
                 <li>
-                    <a href="#">Servicios</a>
+                    <router-link :to="{ name: 'services' }">Servicios</router-link>
                 </li>
                 <li>
-                    <a href="#">Rutas</a>
+                    <router-link :to="{ name: 'routes' }">Rutas</router-link>
                 </li>
             </ul>
         </nav>
@@ -87,6 +87,7 @@
         font-size: 1.1em;
         display: block;
     }
+
     #sidebar ul li a:hover {
         color: #7386D5;
         background: #fff;
