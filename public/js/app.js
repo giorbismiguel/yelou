@@ -3220,9 +3220,9 @@ __webpack_require__.r(__webpack_exports__);
         description: null,
         return_serial_number: null
       },
-      columns: ['sale_order_item.sale_order.number', 'sale_order_item.sale_order.customer.name', 'sale_order_item.inventory_master.part_number', 'sale_order_item.inventory_master.description', 'return_serial_number', 'sale_order_item.qty', 'days_due', 'returned', 'received_by', 'actions'],
+      columns: ['sale_order_item.sale_order.number', 'sale_order_item.sale_order.customer.name', 'sale_order_item.inventory_master.part_number', 'sale_order_item.inventory_master.description', 'actions'],
       options: {
-        sortable: ['sale_order_item.sale_order.number', 'sale_order_item.sale_order.customer.name', 'sale_order_item.inventory_master.part_number', 'sale_order_item.inventory_master.description', 'return_serial_number', 'sale_order_item.qty', 'days_due', 'returned'],
+        sortable: ['sale_order_item.sale_order.number'],
         columnsClasses: {
           'actions': 'action-col'
         },
@@ -3231,12 +3231,7 @@ __webpack_require__.r(__webpack_exports__);
           'sale_order_item.sale_order.customer.name': 'Customer Name',
           'sale_order_item.inventory_master.part_number': 'PN',
           'sale_order_item.inventory_master.description': 'Description',
-          'return_serial_number': 'SN',
-          'sale_order_item.qty': 'Qty',
-          'days_due': 'Days Due',
-          'returned': 'Returned',
-          'received_by': 'Received By',
-          'actions': ''
+          'actions': 'Acciones'
         }
       },
       defaultFilters: {}
@@ -4587,6 +4582,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/SelectRegister.vue?vue&type=script&lang=js&":
+/*!************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/auth/SelectRegister.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _RegisterAs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./RegisterAs */ "./resources/js/components/pages/auth/RegisterAs.vue");
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "SelectRegister",
+  components: {
+    RegisterAs: _RegisterAs__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/VerifyPhone.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/auth/VerifyPhone.vue?vue&type=script&lang=js& ***!
@@ -4694,6 +4715,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.submitted = true;
       this.$validator.validate().then(function (valid) {
         if (valid) {
+          _this.loading = true;
           _this.form.phone = _this.me ? _this.me.phone : null;
           _this.loading = true;
 
@@ -61654,7 +61676,7 @@ var render = function() {
           },
           [
             _vm._t("pre-header-per-page", [
-              _c("label", [_vm._v("Show")]),
+              _c("label", [_vm._v("Mostrar")]),
               _vm._v(" "),
               _c(
                 "select",
@@ -61693,7 +61715,7 @@ var render = function() {
                 0
               ),
               _vm._v(" "),
-              _c("label", [_vm._v("entries")])
+              _c("label", [_vm._v("rutas")])
             ])
           ],
           2
@@ -61777,7 +61799,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n                        Filters\n                    "
+                              "\n                        Filtros\n                    "
                             )
                           ]
                         )
@@ -63816,7 +63838,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-light",
+                          staticClass: "btn btn-light mr-4",
                           attrs: { to: { name: "login" }, tag: "button" }
                         },
                         [
@@ -63829,7 +63851,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-4",
+                          staticClass: "btn btn-primary mr-2",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -64955,6 +64977,30 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true&":
+/*!****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/auth/SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true& ***!
+  \****************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [_c("register-as")], 1)
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/VerifyPhone.vue?vue&type=template&id=740dd8e4&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/auth/VerifyPhone.vue?vue&type=template&id=740dd8e4&scoped=true& ***!
@@ -65120,7 +65166,7 @@ var render = function() {
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-light",
+                          staticClass: "btn btn-light mr-4",
                           attrs: { to: { name: "home" }, tag: "button" }
                         },
                         [
@@ -65133,7 +65179,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-3",
+                          staticClass: "btn btn-primary mr-2",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -86002,6 +86048,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/auth/SelectRegister.vue":
+/*!***************************************************************!*\
+  !*** ./resources/js/components/pages/auth/SelectRegister.vue ***!
+  \***************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _SelectRegister_vue_vue_type_template_id_486fd9c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true& */ "./resources/js/components/pages/auth/SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true&");
+/* harmony import */ var _SelectRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./SelectRegister.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/auth/SelectRegister.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _SelectRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _SelectRegister_vue_vue_type_template_id_486fd9c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _SelectRegister_vue_vue_type_template_id_486fd9c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "486fd9c0",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/auth/SelectRegister.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/auth/SelectRegister.vue?vue&type=script&lang=js&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/pages/auth/SelectRegister.vue?vue&type=script&lang=js& ***!
+  \****************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SelectRegister.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/SelectRegister.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectRegister_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/auth/SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true&":
+/*!**********************************************************************************************************!*\
+  !*** ./resources/js/components/pages/auth/SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true& ***!
+  \**********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectRegister_vue_vue_type_template_id_486fd9c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/SelectRegister.vue?vue&type=template&id=486fd9c0&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectRegister_vue_vue_type_template_id_486fd9c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_SelectRegister_vue_vue_type_template_id_486fd9c0_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/auth/VerifyPhone.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/pages/auth/VerifyPhone.vue ***!
@@ -86398,7 +86513,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vuex_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vuex/store */ "./resources/js/vuex/store.js");
 /* harmony import */ var _components_pages_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/Home */ "./resources/js/components/pages/Home.vue");
 /* harmony import */ var _components_pages_auth_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/pages/auth/Register */ "./resources/js/components/pages/auth/Register.vue");
-/* harmony import */ var _components_pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/auth/RegisterAs */ "./resources/js/components/pages/auth/RegisterAs.vue");
+/* harmony import */ var _components_pages_auth_SelectRegister__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/auth/SelectRegister */ "./resources/js/components/pages/auth/SelectRegister.vue");
 /* harmony import */ var _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/auth/Login */ "./resources/js/components/pages/auth/Login.vue");
 /* harmony import */ var _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/auth/RenewPassword */ "./resources/js/components/pages/auth/RenewPassword.vue");
 /* harmony import */ var _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/auth/ResetPasswordCreate */ "./resources/js/components/pages/auth/ResetPasswordCreate.vue");
@@ -86447,7 +86562,7 @@ var routes = [{
 }, {
   path: '/registrarse',
   name: 'register_as',
-  component: _components_pages_auth_RegisterAs__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_pages_auth_SelectRegister__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/registrarse/:type',
   name: 'register',
@@ -86872,7 +86987,9 @@ var actions = {
 
 var mutations = _objectSpread({}, Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['CHECK_LOGIN'], function (state) {
   state.generalLoading = true;
-}), Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['CHECK_LOGIN_OK', 'CHECK_LOGIN_FAIL'], function (state) {
+}), Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['LOGIN', 'REGISTER'], function (state) {
+  state.loading = true;
+}), Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['STOP_LOADING', 'CHECK_LOGIN_OK', 'CHECK_LOGIN_FAIL', 'LOGIN_OK', 'LOGIN_FAIL', 'REGISTER_OK', 'REGISTER_FAIL'], function (state) {
   state.generalLoading = false;
 }), {
   LOAD_DASHBOARD_OK: function LOAD_DASHBOARD_OK(state, dashboard) {

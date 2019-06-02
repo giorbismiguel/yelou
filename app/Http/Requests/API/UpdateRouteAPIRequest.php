@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\Route;
+use App\Route;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateRouteAPIRequest extends APIRequest

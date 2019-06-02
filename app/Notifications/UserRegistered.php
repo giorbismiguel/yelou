@@ -42,10 +42,10 @@ class UserRegistered extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/login');
+        $url = url('/entrar');
 
         return (new MailMessage)
-            ->subject(__('message_code_activation_subject'))
+            ->subject(__('app.message_code_activation_subject'))
             ->line(__('app.message_code_activation', ['code' => $this->code]))
             ->action(__('app.message_code_activation_action'), $url)
             ->line(__('app.message_code_activation_line2'));

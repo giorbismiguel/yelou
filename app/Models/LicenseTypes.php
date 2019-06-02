@@ -49,5 +49,4 @@ class LicenseTypes extends Model
         'description' => 'required|max:191'
     ];
 
-    
 }

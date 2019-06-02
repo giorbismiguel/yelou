@@ -55,24 +55,12 @@
                     'sale_order_item.sale_order.customer.name',
                     'sale_order_item.inventory_master.part_number',
                     'sale_order_item.inventory_master.description',
-                    'return_serial_number',
-                    'sale_order_item.qty',
-                    'days_due',
-                    'returned',
-                    'received_by',
                     'actions',
                 ],
 
                 options: {
                     sortable: [
                         'sale_order_item.sale_order.number',
-                        'sale_order_item.sale_order.customer.name',
-                        'sale_order_item.inventory_master.part_number',
-                        'sale_order_item.inventory_master.description',
-                        'return_serial_number',
-                        'sale_order_item.qty',
-                        'days_due',
-                        'returned',
                     ],
                     columnsClasses: {
                         'actions': 'action-col'
@@ -82,12 +70,7 @@
                         'sale_order_item.sale_order.customer.name': 'Customer Name',
                         'sale_order_item.inventory_master.part_number': 'PN',
                         'sale_order_item.inventory_master.description': 'Description',
-                        'return_serial_number': 'SN',
-                        'sale_order_item.qty': 'Qty',
-                        'days_due': 'Days Due',
-                        'returned': 'Returned',
-                        'received_by': 'Received By',
-                        'actions': ''
+                        'actions': 'Acciones'
                     }
                 },
 

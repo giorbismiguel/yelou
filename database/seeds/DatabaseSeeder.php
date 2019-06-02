@@ -21,6 +21,10 @@ class DatabaseSeeder extends Seeder
 
         $this->call(LicenseTypesSeeder::class);
 
+        if ($originalEnv !== 'production') {
+            $this->call(RouteSeeder::class);
+        }
+
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
         Model::reguard();
 

@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\Route;
+use App\Route;
 use App\Repositories\BaseRepository;
 
 /**

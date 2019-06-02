@@ -1,6 +1,6 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\Route;
+use App\Route;
 use App\Repositories\RouteRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

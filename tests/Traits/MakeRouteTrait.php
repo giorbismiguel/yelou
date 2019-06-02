@@ -1,7 +1,7 @@
 <?php namespace Tests\Traits;
 
 use Faker\Factory as Faker;
-use App\Models\Route;
+use App\Route;
 use App\Repositories\RouteRepository;
 
 trait MakeRouteTrait

@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 import Home from './components/pages/Home'
 
 import Register from './components/pages/auth/Register'
-import RegisterAs from './components/pages/auth/RegisterAs'
+import SelectRegister from './components/pages/auth/SelectRegister'
 import Login from './components/pages/auth/Login'
 import RenewPassword from './components/pages/auth/RenewPassword'
 import ResetPasswordCreate from './components/pages/auth/ResetPasswordCreate'
@@ -36,7 +36,7 @@ const routes = [
         path: '/actualizar/clave/:token', name: 'actualizar_clave', component: RenewPassword
     },
     {
-        path: '/registrarse', name: 'register_as', component: RegisterAs
+        path: '/registrarse', name: 'register_as', component: SelectRegister
     },
     {
         path: '/registrarse/:type', name: 'register', component: Register

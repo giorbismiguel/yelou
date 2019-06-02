@@ -295,10 +295,10 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light">
+                                    <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light mr-4">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
                                         Registrarse
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>

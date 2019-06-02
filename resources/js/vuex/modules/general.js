@@ -53,7 +53,6 @@ const actions = {
 }
 
 const mutations = {
-
     ...makeMutations([
         'CHECK_LOGIN',
     ], (state) => {
@@ -61,8 +60,20 @@ const mutations = {
     }),
 
     ...makeMutations([
+        'LOGIN',
+        'REGISTER'
+    ], (state) => {
+        state.loading = true
+    }),
+
+    ...makeMutations([
+        'STOP_LOADING',
         'CHECK_LOGIN_OK',
         'CHECK_LOGIN_FAIL',
+        'LOGIN_OK',
+        'LOGIN_FAIL',
+        'REGISTER_OK',
+        'REGISTER_FAIL'
     ], (state) => {
         state.generalLoading = false
     }),

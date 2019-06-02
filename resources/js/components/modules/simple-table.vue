@@ -3,11 +3,11 @@
         <div class="row simple-table__before-header no-padding">
             <div class="col-sm-12 col-md-4 simple-table__before-header__per-page">
                 <slot name="pre-header-per-page">
-                    <label>Show</label>
+                    <label>Mostrar</label>
                     <select v-model="localPerPage" class="custom-select custom-select-sm" :disabled="rows.length === 0">
                         <option v-for="perPageItem in perPageList" :value="perPageItem">{{ perPageItem }}</option>
                     </select>
-                    <label>entries</label>
+                    <label>rutas</label>
                 </slot>
             </div>
             <div class="col-sm-12 col-md-8 text-right" style="padding-top: 4px;">
@@ -30,7 +30,7 @@
                 <div class="simple-table__filters" v-if="hasFiltersSlot" v-show="showFilters">
                     <div class="row simple-table__filters__header">
                         <div class="col simple-table__filters__header__title">
-                            Filters
+                            Filtros
                         </div>
                     </div>
                 </div>

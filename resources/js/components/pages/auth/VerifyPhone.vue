@@ -39,10 +39,10 @@
 
                             <div class="form-group mt-5">
                                 <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
+                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light mr-4">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary ml-3" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
                                         Activar
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>
@@ -96,6 +96,7 @@
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                     if (valid) {
+                        this.loading = true
                         this.form.phone = this.me ? this.me.phone : null
                         this.loading = true
                         this.active_account(this.form)

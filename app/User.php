@@ -72,7 +72,7 @@ class User extends Authenticatable
      */
     public function license(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
-        return $this->belongsTo(LicenseTypes::class);
+        return $this->belongsTo(LicenseTypes::class, 'license_types_id');
     }
 
     /* ========================================================================= *\

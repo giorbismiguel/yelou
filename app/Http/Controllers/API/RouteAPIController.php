@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateRouteAPIRequest;
 use App\Http\Requests\API\UpdateRouteAPIRequest;
-use App\Models\Route;
+use App\Route;
 use App\Repositories\RouteRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;

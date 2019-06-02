@@ -44,5 +44,6 @@ class AppClear extends Command
         }
         $this->call('cache:clear');
         $this->call('route:clear');
+        $this->call('passport:install');
     }
 }
