@@ -2,7 +2,7 @@ require('./bootstrap');
 
 import Vue from 'vue';
 import es from 'vee-validate/dist/locale/es';
-import VeeValidate, { Validator } from 'vee-validate'
+import VeeValidate, {Validator} from 'vee-validate'
 import Notifications from 'vue-notification'
 
 import store from './vuex/store' // vuex store instance
@@ -32,6 +32,8 @@ axios.interceptors.response.use(response => response, error => {
 Vue.component('navbar', require('./components/layout/Navbar.vue').default)
 Vue.component('feet', require('./components/layout/Feet.vue').default)
 Vue.component('sidebar', require('./components/layout/Sidebar').default)
+Vue.component('ye-actions', require('./components/modules/Actions').default);
+Vue.component('ye-table', require('./components/modules/simple-table').default);
 
 import App from './components/App'
 
@@ -59,4 +61,5 @@ store
     .then(() => {
         router.replace('/')
     })
-    .catch(() => {})
+    .catch(() => {
+    })

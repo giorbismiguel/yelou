@@ -19,5 +19,9 @@ module.exports = {
             .map(key => {
                 return encodeURIComponent(`${param}[${key}]`) + '=' + encodeURIComponent(object[key])
             }).join('&')
+    },
+
+    cloneDeep(value) {
+        return JSON.parse(JSON.stringify(value))
     }
 }

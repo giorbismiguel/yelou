@@ -20,14 +20,6 @@
                     <slot name="table-title"></slot>
                 </div>
                 <div class="col simple-table__buttons text-right">
-                    <slot name="table-buttons">
-                        <pdf-button :filters="filters" :export-fields="pdfFields" :sorting-data="sortingData"
-                                    :export-route="pdfExportRoute" v-if="pdfFields && canExport"
-                                    :openModalPDf = "openModalPDf" :disabled="!this.localData.length"></pdf-button>
-                        <excel-button :filters="filters" :export-fields="excelFields" :disabled="!this.localData.length"
-                                      :sorting-data="sortingData" :fix-column="exportFixColumn"
-                                      :export-route="excelExportRoute" v-if="excelFields && canExport"></excel-button>
-                    </slot>
                     <button class="btn font-bold no-padding-right --btn-filters --icon-right" v-if="hasFiltersSlot"
                             @click="toggleFilters()" data-test="toggle_filters">
                         {{ showFilters ? 'Hide' : 'Open' }} Filters <i class="far fa-sliders-h"></i>
@@ -132,7 +124,7 @@
     import Paginate from './av-paginate'
     import Spinner from 'vue-simple-spinner'
     import SimpleTableRow from './simple-table-row'
-    import queryStringify from '../utils/query-string'
+    import queryStringify from './query-string'
 
     export default {
         name: 'SimpleTable',
@@ -494,8 +486,6 @@
 
         components: {
             SimpleTableRow,
-            ExcelButton,
-            PdfButton,
             Paginate,
             Spinner
         }
