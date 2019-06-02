@@ -1763,6 +1763,13 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1773,8 +1780,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "App"
+  name: "App",
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    generalLoading: function generalLoading(state) {
+      return state.general.generalLoading;
+    }
+  })),
+  components: {
+    Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_0___default.a
+  }
 });
 
 /***/ }),
@@ -54233,9 +54254,24 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c(
-    "div",
-    [_c("navbar"), _vm._v(" "), _c("router-view"), _vm._v(" "), _c("feet")],
-    1
+    "section",
+    [
+      _vm.generalLoading
+        ? _c(
+            "div",
+            { staticClass: "d-flex justify-content-center mt-5" },
+            [_c("spinner", { attrs: { size: "large" } })],
+            1
+          )
+        : [
+            _c("navbar"),
+            _vm._v(" "),
+            _c("router-view"),
+            _vm._v(" "),
+            _c("feet")
+          ]
+    ],
+    2
   )
 }
 var staticRenderFns = []
@@ -79110,7 +79146,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 var state = {
-  loading: false,
+  generalLoading: false,
   dashboard: {},
   admin_dashboard: {
     fastest_run: {
@@ -79139,16 +79175,34 @@ var actions = {
         reject(error.response.data);
       });
     });
+  },
+  loadAdminDashboard: function loadAdminDashboard(_ref3) {
+    var commit = _ref3.commit,
+        dispatch = _ref3.dispatch;
+    commit('LOAD_ADMIN_DASHBOARD');
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(Config.apiPath + 'dashboard/admin-data').then(function (response) {
+        commit('LOAD_ADMIN_DASHBOARD_OK', response.data);
+        resolve();
+      })["catch"](function (error) {
+        commit('LOAD_ADMIN_DASHBOARD_FAIL');
+        reject(error.response.data);
+      });
+    });
   }
 };
 
-var mutations = _objectSpread({}, Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['CHECK_LOGIN', 'LOGIN', 'REGISTER'], function (state) {
-  state.loading = true;
-}), Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['STOP_LOADING', 'CHECK_LOGIN_OK', 'CHECK_LOGIN_FAIL', 'LOGIN_OK', 'LOGIN_FAIL', 'REGISTER_OK', 'REGISTER_FAIL'], function (state) {
-  state.loading = false;
+var mutations = _objectSpread({}, Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['CHECK_LOGIN'], function (state) {
+  state.generalLoading = true;
+}), Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["makeMutations"])(['CHECK_LOGIN_OK', 'CHECK_LOGIN_FAIL'], function (state) {
+  state.generalLoading = false;
 }), {
   LOAD_DASHBOARD_OK: function LOAD_DASHBOARD_OK(state, dashboard) {
     state.dashboard = dashboard;
+    state.loading = false;
+  },
+  LOAD_ADMIN_DASHBOARD_OK: function LOAD_ADMIN_DASHBOARD_OK(state, dashboard) {
+    state.admin_dashboard = dashboard;
     state.loading = false;
   }
 });
