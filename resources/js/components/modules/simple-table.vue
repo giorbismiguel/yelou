@@ -54,9 +54,9 @@
                                 </span>
                                 <span v-if="isSorteable(column)"
                                       class="simple-table__sort-icon --no-select float-right">
-                                    <i class="far fa-long-arrow-alt-up"
+                                    <i class="fas fa-long-arrow-alt-up"
                                        :class="{'active': isOrderAndSortBy(column, 'asc')}"></i>
-                                    <i class="far fa-long-arrow-alt-down"
+                                    <i class="fas fa-long-arrow-alt-down"
                                        :class="{'active': isOrderAndSortBy(column, 'desc')}"></i>
                                 </span>
                             </th>
@@ -156,7 +156,7 @@
             },
             perPage: {
                 type: Number,
-                default: 25
+                default: 10
             },
             currentPage: {
                 type: Number,

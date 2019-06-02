@@ -2,7 +2,7 @@
     <div class="btn-group dropleft fg">
         <div data-toggle="dropdown" class="dropdown-link" @click="clickHandler"
              @mouseenter="mouseEnter" v-show="visible">
-            <i class="far fa-ellipsis-v"></i>
+            <i class="fas fa-ellipsis-v"></i>
         </div>
         <div class="dropdown-menu">
             <slot></slot>

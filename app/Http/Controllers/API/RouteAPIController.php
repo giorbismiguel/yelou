@@ -14,7 +14,6 @@ use Response;
  * Class RouteController
  * @package App\Http\Controllers\API
  */
-
 class RouteAPIController extends AppBaseController
 {
     /** @var  RouteRepository */
@@ -34,13 +33,18 @@ class RouteAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $routes = $this->routeRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
+        $routes = $request->merge(['user_id' => \Auth::id()])->except(['page', 'per_page', 'order_by', 'sort_by']);
+
+        $routes = $this->routeRepository->allPagination(
+            $routes,
+            $request->get('page'),
+            $request->get('per_page'),
+            ['id', 'name', 'formatted_address'],
+            $request->get('order_by'),
+            $request->get('sort_by')
         );
 
-        return $this->sendResponse($routes->toArray(), 'Rutas obtenidas satisfactoriamente');
+        return $this->sendResponsePagination($routes->toArray());
     }
 
     /**
@@ -84,7 +88,7 @@ class RouteAPIController extends AppBaseController
      * Update the specified Route in storage.
      * PUT/PATCH /routes/{id}
      *
-     * @param int $id
+     * @param int                   $id
      * @param UpdateRouteAPIRequest $request
      *
      * @return Response

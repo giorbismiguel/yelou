@@ -20,7 +20,7 @@ class CreateRoutesTable extends Migration
             $table->decimal('lng');
             $table->string('formatted_address');
 
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')

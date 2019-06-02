@@ -64,7 +64,7 @@ abstract class BaseRepository
     /**
      * Paginate records for scaffold.
      *
-     * @param int $perPage
+     * @param int   $perPage
      * @param array $columns
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
@@ -78,7 +78,7 @@ abstract class BaseRepository
     /**
      * Build a query for retrieving all records.
      *
-     * @param array $search
+     * @param array    $search
      * @param int|null $skip
      * @param int|null $limit
      * @return \Illuminate\Database\Eloquent\Builder
@@ -88,7 +88,7 @@ abstract class BaseRepository
         $query = $this->model->newQuery();
 
         if (count($search)) {
-            foreach($search as $key => $value) {
+            foreach ($search as $key => $value) {
                 if (in_array($key, $this->getFieldsSearchable())) {
                     $query->where($key, $value);
                 }
@@ -107,20 +107,46 @@ abstract class BaseRepository
     }
 
     /**
-     * Retrieve all records with given filter criteria
-     *
      * @param array $search
-     * @param int|null $skip
-     * @param int|null $limit
+     * @param null  $skip
+     * @param null  $limit
      * @param array $columns
-     *
-     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
+     * @param null  $orderBy
+     * @param null  $sortBy
+     * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
-    public function all($search = [], $skip = null, $limit = null, $columns = ['*'])
+    public function all($search = [], $skip = null, $limit = null, $columns = ['*'], $orderBy = null, $sortBy = null)
     {
+        /**@var $query \Illuminate\Database\Eloquent\Builder */
         $query = $this->allQuery($search, $skip, $limit);
 
+        if ($orderBy) {
+            $query->orderBy($orderBy, $sortBy);
+        } else {
+            $query->latest();
+        }
+
         return $query->get($columns);
+    }
+
+    public function allPagination(
+        $search = [],
+        $page = null,
+        $perPage = null,
+        $columns = ['*'],
+        $orderBy = null,
+        $sortBy = null
+    ) {
+        /**@var $query \Illuminate\Database\Eloquent\Builder */
+        $query = $this->allQuery($search);
+
+        if ($orderBy) {
+            $query->orderBy($orderBy, $sortBy);
+        } else {
+            $query->latest();
+        }
+
+        return $query->paginate((int) $perPage, $columns, 'Rutas', (int) $page);
     }
 
     /**
@@ -142,7 +168,7 @@ abstract class BaseRepository
     /**
      * Find model record for given id
      *
-     * @param int $id
+     * @param int   $id
      * @param array $columns
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model|null
@@ -158,7 +184,7 @@ abstract class BaseRepository
      * Update model record for given id
      *
      * @param array $input
-     * @param int $id
+     * @param int   $id
      *
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection|Model
      */

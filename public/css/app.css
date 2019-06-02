@@ -16484,6 +16484,14 @@ readers do not read off random characters that represent icons */
   color: #f8f8f8 !important;
 }
 
+.simple-table thead tr th {
+  background-color: #12518F;
+  color: #fff;
+  vertical-align: middle;
+  padding-top: 11px;
+  padding-bottom: 11px;
+}
+
 footer a {
   color: #f8f8f8;
 }

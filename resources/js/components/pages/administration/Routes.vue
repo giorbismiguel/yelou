@@ -22,6 +22,12 @@
                         </router-link>
                     </ye-actions>
 
+                    <template slot="pre-header-buttons">
+                        <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'login'}">
+                            Nueva Ruta
+                        </router-link>
+                    </template>
+
                     <template slot="filters-form">
 
                     </template>
@@ -58,7 +64,8 @@
 
                 options: {
                     sortable: [
-                        'sale_order_item.sale_order.number',
+                        'name',
+                        'formatted_address',
                     ],
                     columnsClasses: {
                         'actions': 'action-col'

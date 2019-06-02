@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('first_name'); // Name or Social reason
             $table->string('last_name');
-            $table->string('phone');
+            $table->string('phone')->unique();
             $table->string('ruc');
             $table->string('direction')->nullable()->default(null);
 

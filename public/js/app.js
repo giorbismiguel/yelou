@@ -2766,7 +2766,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     perPage: {
       type: Number,
-      "default": 25
+      "default": 10
     },
     currentPage: {
       type: Number,
@@ -3206,6 +3206,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3222,7 +3228,7 @@ __webpack_require__.r(__webpack_exports__);
       },
       columns: ['name', 'formatted_address', 'actions'],
       options: {
-        sortable: ['sale_order_item.sale_order.number'],
+        sortable: ['name', 'formatted_address'],
         columnsClasses: {
           'actions': 'action-col'
         },
@@ -61056,7 +61062,7 @@ var render = function() {
         attrs: { "data-toggle": "dropdown" },
         on: { click: _vm.clickHandler, mouseenter: _vm.mouseEnter }
       },
-      [_c("i", { staticClass: "far fa-ellipsis-v" })]
+      [_c("i", { staticClass: "fas fa-ellipsis-v" })]
     ),
     _vm._v(" "),
     _c("div", { staticClass: "dropdown-menu" }, [_vm._t("default")], 2)
@@ -61876,7 +61882,7 @@ var render = function() {
                                     },
                                     [
                                       _c("i", {
-                                        staticClass: "far fa-long-arrow-alt-up",
+                                        staticClass: "fas fa-long-arrow-alt-up",
                                         class: {
                                           active: _vm.isOrderAndSortBy(
                                             column,
@@ -61887,7 +61893,7 @@ var render = function() {
                                       _vm._v(" "),
                                       _c("i", {
                                         staticClass:
-                                          "far fa-long-arrow-alt-down",
+                                          "fas fa-long-arrow-alt-down",
                                         class: {
                                           active: _vm.isOrderAndSortBy(
                                             column,
@@ -62283,6 +62289,26 @@ var render = function() {
                 _vm._v("Todas las rutas disponibles")
               ]),
               _vm._v(" "),
+              _vm._v(" "),
+              _c(
+                "template",
+                { slot: "pre-header-buttons" },
+                [
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-success btn-sm --uppercase",
+                      attrs: { to: { name: "login" } }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        Nueva Ruta\n                    "
+                      )
+                    ]
+                  )
+                ],
+                1
+              ),
               _vm._v(" "),
               _c("template", { slot: "filters-form" })
             ],
@@ -86625,7 +86651,7 @@ router.beforeEach(function (to, from, next) {
     return record.meta.requiresAuth;
   }) && !_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.me) {
     // if route requires auth and user isn't authenticated
-    next('/login');
+    next('/entrar');
   } else {
     next();
   }

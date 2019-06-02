@@ -9,8 +9,7 @@ use App\Repositories\BaseRepository;
  * Class RouteRepository
  * @package App\Repositories
  * @version May 21, 2019, 8:52 pm UTC
-*/
-
+ */
 class RouteRepository extends BaseRepository
 {
     /**
@@ -20,7 +19,8 @@ class RouteRepository extends BaseRepository
         'name',
         'lat',
         'lng',
-        'formatted_address'
+        'formatted_address',
+        'user_id',
     ];
 
     /**

@@ -27,4 +27,11 @@ class AppBaseController extends Controller
     {
         return Response::json(ResponseUtil::makeError($error), $code);
     }
+
+    public function sendResponsePagination($data = [], $status = 200)
+    {
+        return Response::json([
+                'success' => true,
+            ] + $data, (int) $status ? $status : 200);
+    }
 }

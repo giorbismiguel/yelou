@@ -79,7 +79,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth) && !store.state.auth.me) {
         // if route requires auth and user isn't authenticated
-        next('/login')
+        next('/entrar')
     } else {
         next()
     }
