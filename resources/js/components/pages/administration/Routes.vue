@@ -13,7 +13,7 @@
                           :filters="filters"
                           @clearFilters="clearFilter">
 
-                    <template slot="table-title">All exchanges due that you have available</template>
+                    <template slot="table-title">Todas las rutas disponibles</template>
 
                     <ye-actions slot="actions" slot-scope="{row}" class="text-center">
                         <router-link :to="'/exchange-due/receive/' + row.id" class="dropdown-item" title="Receive">
@@ -51,10 +51,8 @@
                 },
 
                 columns: [
-                    'sale_order_item.sale_order.number',
-                    'sale_order_item.sale_order.customer.name',
-                    'sale_order_item.inventory_master.part_number',
-                    'sale_order_item.inventory_master.description',
+                    'name',
+                    'formatted_address',
                     'actions',
                 ],
 
@@ -66,10 +64,8 @@
                         'actions': 'action-col'
                     },
                     headings: {
-                        'sale_order_item.sale_order.number': 'SO#',
-                        'sale_order_item.sale_order.customer.name': 'Customer Name',
-                        'sale_order_item.inventory_master.part_number': 'PN',
-                        'sale_order_item.inventory_master.description': 'Description',
+                        'name': 'Nombre',
+                        'formatted_address': 'Dirección',
                         'actions': 'Acciones'
                     }
                 },

@@ -49,7 +49,7 @@ class AuthController extends Controller
             $user = $this->guard()->user();
 
             if (!$user->phoneVerified()->exists()) {
-                return ['user' => $user, 'access_token' => null, 'phone_verify' => false];
+                return ['user' => null, 'access_token' => null, 'phone_verify' => false, 'phone' => $user->phone];
             }
 
             return ['user' => $user, 'access_token' => $user->makeApiToken(), 'phone_verify' => true];

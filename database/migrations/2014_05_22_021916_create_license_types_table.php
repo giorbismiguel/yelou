@@ -14,7 +14,7 @@ class CreateLicenseTypesTable extends Migration
     public function up()
     {
         Schema::create('license_types', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('type');
             $table->text('description');
             $table->timestamps();

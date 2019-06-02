@@ -3220,17 +3220,15 @@ __webpack_require__.r(__webpack_exports__);
         description: null,
         return_serial_number: null
       },
-      columns: ['sale_order_item.sale_order.number', 'sale_order_item.sale_order.customer.name', 'sale_order_item.inventory_master.part_number', 'sale_order_item.inventory_master.description', 'actions'],
+      columns: ['name', 'formatted_address', 'actions'],
       options: {
         sortable: ['sale_order_item.sale_order.number'],
         columnsClasses: {
           'actions': 'action-col'
         },
         headings: {
-          'sale_order_item.sale_order.number': 'SO#',
-          'sale_order_item.sale_order.customer.name': 'Customer Name',
-          'sale_order_item.inventory_master.part_number': 'PN',
-          'sale_order_item.inventory_master.description': 'Description',
+          'name': 'Nombre',
+          'formatted_address': 'Dirección',
           'actions': 'Acciones'
         }
       },
@@ -4691,7 +4689,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         code_activation: '',
         phone: null
       },
-      phone: null,
       submitted: false,
       submittedCode: false,
       loading: false,
@@ -4701,11 +4698,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
-    me: function me(state) {
-      return state.auth.me;
+    phone: function phone(state) {
+      return state.auth.phone;
     },
-    active: function active(state) {
-      return state.auth.phone_verify_active;
+    phone_has_been_actived: function phone_has_been_actived(state) {
+      return state.auth.phone_has_been_actived;
     }
   })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['active_account', 'new_activation_code']), {
@@ -4716,13 +4713,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$validator.validate().then(function (valid) {
         if (valid) {
           _this.loading = true;
-          _this.form.phone = _this.me ? _this.me.phone : null;
+          _this.form.phone = _this.phone;
           _this.loading = true;
 
           _this.active_account(_this.form).then(function () {
             _this.loading = false;
 
-            if (_this.active) {
+            if (_this.phone_has_been_actived) {
               _this.$router.replace('/entrar');
             }
           })["catch"](function (data) {
@@ -62283,7 +62280,7 @@ var render = function() {
             },
             [
               _c("template", { slot: "table-title" }, [
-                _vm._v("All exchanges due that you have available")
+                _vm._v("Todas las rutas disponibles")
               ]),
               _vm._v(" "),
               _vm._v(" "),
@@ -65082,10 +65079,10 @@ var render = function() {
                           },
                           {
                             name: "model",
-                            rawName: "v-model.trim",
+                            rawName: "v-model.number",
                             value: _vm.form.code_activation,
                             expression: "form.code_activation",
-                            modifiers: { trim: true }
+                            modifiers: { number: true }
                           }
                         ],
                         staticClass: "form-control",
@@ -65110,7 +65107,7 @@ var render = function() {
                             _vm.$set(
                               _vm.form,
                               "code_activation",
-                              $event.target.value.trim()
+                              _vm._n($event.target.value)
                             )
                           },
                           blur: function($event) {
@@ -86678,11 +86675,13 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   me: null,
-  // Logged in user,
+  // Logged in user
   phone_verify: null,
-  // Phone Verify,
-  phone_verify_active: null,
-  // Active User,
+  // Phone Verify
+  phone: null,
+  // Phone
+  phone_has_been_actived: false,
+  // Active User
   code_activation: null,
   send_email: null,
   find_token_data: null,
@@ -86857,8 +86856,14 @@ var mutations = {
     state.me = user;
   },
   LOGIN_OK: function LOGIN_OK(state, data) {
-    state.me = data.user;
     state.phone_verify = data.phone_verify;
+
+    if (data.user) {
+      state.me = data.user;
+      return;
+    }
+
+    state.phone = data.phone;
   },
   LOGOUT_OK: function LOGOUT_OK(state) {
     state.me = null;
@@ -86873,7 +86878,7 @@ var mutations = {
     state.me = user;
   },
   ACTIVE_ACCOUNT_OK: function ACTIVE_ACCOUNT_OK(state, data) {
-    state.phone_verify_active = data.active;
+    state.phone_has_been_actived = data.active;
   },
   ACTIVE_ACCOUNT_FAIL: function ACTIVE_ACCOUNT_FAIL(state) {
     state.active = false;

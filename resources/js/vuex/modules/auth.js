@@ -1,9 +1,10 @@
 import axios from 'axios'
 
 const state = {
-    me: null, // Logged in user,
-    phone_verify: null, // Phone Verify,
-    phone_verify_active: null, // Active User,
+    me: null, // Logged in user
+    phone_verify: null, // Phone Verify
+    phone: null, // Phone
+    phone_has_been_actived: false, // Active User
     code_activation: null,
     send_email: null,
     find_token_data: null,
@@ -197,8 +198,14 @@ const mutations = {
     },
 
     LOGIN_OK(state, data) {
-        state.me = data.user
         state.phone_verify = data.phone_verify
+        if (data.user) {
+            state.me = data.user
+
+            return;
+        }
+
+        state.phone = data.phone
     },
 
     LOGOUT_OK(state) {
@@ -218,7 +225,7 @@ const mutations = {
     },
 
     ACTIVE_ACCOUNT_OK(state, data) {
-        state.phone_verify_active = data.active
+        state.phone_has_been_actived = data.active
     },
 
     ACTIVE_ACCOUNT_FAIL(state) {

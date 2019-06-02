@@ -14,11 +14,19 @@ class CreateRoutesTable extends Migration
     public function up()
     {
         Schema::create('routes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->decimal('lat');
             $table->decimal('lng');
             $table->string('formatted_address');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
             $table->timestamps();
             $table->softDeletes();
         });

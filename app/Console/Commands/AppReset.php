@@ -45,5 +45,7 @@ class AppReset extends Command
         $this->call('migrate:fresh');
 
         $this->call('db:seed');
+
+        $this->call('passport:install');
     }
 }

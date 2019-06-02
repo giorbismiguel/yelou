@@ -14,7 +14,7 @@ class CreateTransportationStatesTable extends Migration
     public function up()
     {
         Schema::create('transportation_states', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name', 25);
             $table->text('description');
             $table->timestamps();

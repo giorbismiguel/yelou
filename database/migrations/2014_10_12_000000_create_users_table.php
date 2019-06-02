@@ -30,7 +30,13 @@ class CreateUsersTable extends Migration
             $table->string('postal_code')->nullable()->default(null);
 
             // Transporter
-            $table->string('license_types_id')->nullable()->default(null);
+            $table->unsignedBigInteger('license_types_id')->nullable()->default(null);
+            $table->foreign('license_types_id')
+                ->references('id')
+                ->on('license_types')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
             $table->string('photo')->nullable();
             $table->string('image_driver_license')->nullable();
             $table->string('image_permit_circulation')->nullable();
@@ -39,6 +45,7 @@ class CreateUsersTable extends Migration
 
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();
+
             $table->rememberToken();
             $table->timestamps();
         });

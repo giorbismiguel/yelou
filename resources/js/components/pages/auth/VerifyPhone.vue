@@ -23,7 +23,7 @@
                                 <div class="col">
                                     <input id="code_activation" type="text" name="code_activation"
                                            v-validate="'required|length:6'" data-vv-as="Código de activación"
-                                           class="form-control" v-model.trim="form.code_activation"
+                                           class="form-control" v-model.number="form.code_activation"
                                            :class="{ 'is-invalid': submitted && (errors.has('code_activation') || serverErrors.code_activation) }">
 
                                     <div v-if="submitted && (errors.has('code_activation') || serverErrors.code_activation)"
@@ -66,9 +66,8 @@
             return {
                 form: {
                     code_activation: '',
-                    phone: null
+                    phone: null,
                 },
-                phone: null,
                 submitted: false,
                 submittedCode: false,
                 loading: false,
@@ -80,8 +79,8 @@
 
         computed: {
             ...mapState({
-                me: state => state.auth.me,
-                active: state => state.auth.phone_verify_active,
+                phone: state => state.auth.phone,
+                phone_has_been_actived: state => state.auth.phone_has_been_actived,
             })
         },
 
@@ -97,12 +96,12 @@
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         this.loading = true
-                        this.form.phone = this.me ? this.me.phone : null
+                        this.form.phone = this.phone
                         this.loading = true
                         this.active_account(this.form)
                             .then(() => {
                                 this.loading = false
-                                if (this.active) {
+                                if (this.phone_has_been_actived) {
                                     this.$router.replace('/entrar')
                                 }
                             })
