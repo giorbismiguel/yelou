@@ -17,8 +17,8 @@ import NewCode from './components/pages/auth/NewCode'
 import ResetPassword from './components/pages/auth/ResetPassword'
 import Profile from './components/pages/profile/Profile'
 import Administration from './components/pages/administration/Index'
-import Services from './components/pages/administration/Services'
-import Routes from './components/pages/administration/Routes'
+import Services from './components/pages/administration/services/Index'
+import Routes from './components/pages/administration/routes/Index'
 
 import NotFound from './components/NotFound';
 

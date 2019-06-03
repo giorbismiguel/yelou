@@ -4,15 +4,17 @@
         <!-- Sidebar -->
         <nav id="sidebar">
             <div class="sidebar-header">
-                <h3><router-link :to="{ name: 'administration' }">Administracion</router-link></h3>
+                <h3>
+                    <router-link :to="{ name: 'administration' }">Administración</router-link>
+                </h3>
             </div>
 
             <ul class="list-unstyled components">
                 <li>
-                    <router-link :to="{ name: 'services' }">Servicios</router-link>
-                </li>
-                <li>
                     <router-link :to="{ name: 'routes' }">Rutas</router-link>
+                </li>
+                <li v-if="false">
+                    <router-link :to="{ name: 'services' }">Servicios</router-link>
                 </li>
             </ul>
         </nav>

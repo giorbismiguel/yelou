@@ -16,15 +16,20 @@
                     <template slot="table-title">Todas las rutas disponibles</template>
 
                     <ye-actions slot="actions" slot-scope="{row}" class="text-center">
-                        <router-link :to="'/exchange-due/receive/' + row.id" class="dropdown-item" title="Receive">
-                            <i class="fal fa-list-alt"></i>
-                            Receive
+                        <router-link :to="''" class="dropdown-item" title="Edit">
+                            <i class="fas fa-pen-square"></i>
+                            In progress Editar
                         </router-link>
+
+                        <li class="dropdown-item" title="Eliminar">
+                            <i class="fas fa-trash-alt"></i>
+                            In progress Eliminar
+                        </li>
                     </ye-actions>
 
                     <template slot="pre-header-buttons">
-                        <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'login'}">
-                            Nueva Ruta
+                        <router-link class="btn btn-success btn-sm --uppercase" :to="{name: ''}">
+                            In progress Nueva Ruta
                         </router-link>
                     </template>
 
@@ -39,8 +44,8 @@
 </template>
 
 <script>
-    import BoxUser from '../../layout/BoxUser'
-    import { cloneDeep } from '../../modules/query-string'
+    import BoxUser from '../../../layout/BoxUser'
+    import {cloneDeep} from '../../../modules/query-string'
 
     export default {
         data() {

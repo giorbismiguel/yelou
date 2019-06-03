@@ -93,11 +93,11 @@ class AuthController extends Controller
 
         $user->notify(new UserRegistered($codeActivation));
 
-        Nexmo::message()->send([
-            'to'   => $request->get('phone'),
-            'from' => 'YElOU',
-            'text' => __('app.message_code_activation', ['code' => $codeActivation])
-        ]);
+//        Nexmo::message()->send([
+//            'to'   => $request->get('phone'),
+//            'from' => 'YElOU',
+//            'text' => __('app.message_code_activation', ['code' => $codeActivation])
+//        ]);
 
         return ['user' => $user];
     }

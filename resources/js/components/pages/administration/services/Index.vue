@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import BoxUser from '../../layout/BoxUser'
+    import BoxUser from '../../../layout/BoxUser'
 
     export default {
         name: "Services",
