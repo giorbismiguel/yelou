@@ -48,7 +48,7 @@ class AuthController extends Controller
             /** @var User $user */
             $user = $this->guard()->user();
 
-            if (!$user->phoneVerified()->exists()) {
+            if (!$user->phoneVerified()->where('id', '=', $user->id)->exists()) {
                 return ['user' => null, 'access_token' => null, 'phone_verify' => false, 'phone' => $user->phone];
             }
 
@@ -99,7 +99,7 @@ class AuthController extends Controller
 //            'text' => __('app.message_code_activation', ['code' => $codeActivation])
 //        ]);
 
-        return ['user' => $user];
+        return ['user' => null];
     }
 
     /**
