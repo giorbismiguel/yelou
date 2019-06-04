@@ -65,6 +65,7 @@ Route::prefix('v1')->group(function () {
              */
             Route::get('user/me', 'UserAPIController@me')->name('me');
             Route::post('/update/password', 'UserAPIController@updatePassword')->name('update_password');
+            Route::post('users/{user}', 'UserAPIController@update');
             Route::resource('users', 'UserAPIController');
 
             /*

@@ -59,10 +59,10 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary ml-3" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary" :disabled="loading">
                                         Recuperar
                                     </button>
-                                    <spinner v-show="loading" size="medium"></spinner>
+                                    <spinner v-show="loading" size="medium" class="ml-3"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -119,12 +119,11 @@
                 }
 
                 this.submitted = true;
-                this.loading = true;
                 this.error = null
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         this.submitted = false
-                        this.loading = false
+                        this.loading = true
                         this.form.token = this.find_token_data.token
                         this.form.email = this.find_token_data.email
 

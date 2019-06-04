@@ -166,7 +166,7 @@
                                         <select v-validate="'max:191'"
                                                 data-vv-as="Tipo de licencia de conducir"
                                                 name="license_types_id" id="license_types_id" class="form-control"
-                                                v-model.number="form.license_types_id"
+                                                v-model="form.license_types_id"
                                                 :class="{ 'is-invalid': submitted && errors.has('license_types_id') }">
                                             <option v-for="(item, key, index) in lists.licenseTypes" :value="key">
                                                 {{ item }}
@@ -267,13 +267,13 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light mr-3">
+                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary mr-3" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
                                         Actualizar
                                     </button>
-                                    <spinner v-show="loading" size="medium"></spinner>
+                                    <spinner v-show="loading" size="medium" class="ml-2"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -359,27 +359,33 @@
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         this.loading = true
-                        let formData, key;
+
+                        let formData = new FormData(), key
+                        for (key in this.form) {
+                            formData.append(key, this.form[key]);
+                        }
 
                         if (!this.isClient()) {
-                            formData = new FormData()
-                            for (key in this.form) {
-                                formData.append(key, this.form[key]);
-                            }
                             formData.append('photo', this.selectedPhoto, this.selectedPhoto ? this.selectedPhoto.name : null)
                             formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense ? this.imageDriveLicense.name : null)
                             formData.append('image_permit_circulation', this.imagePermitCirculation, this.imagePermitCirculation ? this.imagePermitCirculation.name : null)
                             formData.append('image_certificate_background', this.imageCertificateBackground, this.imageCertificateBackground ? this.imageCertificateBackground.name : null)
+                        } else {
+                            formData.delete('license_types_id')
+                            formData.delete('photo')
+                            formData.delete('image_driver_license')
+                            formData.delete('image_permit_circulation')
+                            formData.delete('image_certificate_background')
                         }
 
                         this.serverErrors = {}
-                        this.updateProfile(formData ? formData : this.form)
+                        this.updateProfile(formData)
                             .then(() => {
                                 this.loading = false
                                 this.$notify({
                                     type: 'success',
                                     group: 'update_profile',
-                                    title: 'Contraseña',
+                                    title: 'Perfil',
                                     text: 'Su perfil ha sido actualizado'
                                 });
                             })

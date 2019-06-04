@@ -177,12 +177,13 @@ const actions = {
         //commit('UPDATE_PROFILE')
 
         return new Promise((resolve, reject) => {
-            axios.put(route('api.users.update', form.id), form)
+            axios.post(route('api.users.update', form.get('id')), form)
                 .then(({data: {data}}) => {
                     commit('UPDATE_PROFILE_OK', data)
                     resolve()
                 })
                 .catch(error => {
+                    console.log(error)
                     //commit('UPDATE_PROFILE_FAIL')
                     reject(error.response.data)
                 })

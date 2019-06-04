@@ -4217,12 +4217,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       this.submitted = true;
-      this.loading = true;
       this.error = null;
       this.$validator.validate().then(function (valid) {
         if (valid) {
           _this.submitted = false;
-          _this.loading = false;
+          _this.loading = true;
           _this.form.token = _this.find_token_data.token;
           _this.form.email = _this.find_token_data.email;
 
@@ -5210,30 +5209,35 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$validator.validate().then(function (valid) {
         if (valid) {
           _this.loading = true;
-          var formData, key;
+          var formData = new FormData(),
+              key;
+
+          for (key in _this.form) {
+            formData.append(key, _this.form[key]);
+          }
 
           if (!_this.isClient()) {
-            formData = new FormData();
-
-            for (key in _this.form) {
-              formData.append(key, _this.form[key]);
-            }
-
             formData.append('photo', _this.selectedPhoto, _this.selectedPhoto ? _this.selectedPhoto.name : null);
             formData.append('image_driver_license', _this.imageDriveLicense, _this.imageDriveLicense ? _this.imageDriveLicense.name : null);
             formData.append('image_permit_circulation', _this.imagePermitCirculation, _this.imagePermitCirculation ? _this.imagePermitCirculation.name : null);
             formData.append('image_certificate_background', _this.imageCertificateBackground, _this.imageCertificateBackground ? _this.imageCertificateBackground.name : null);
+          } else {
+            formData["delete"]('license_types_id');
+            formData["delete"]('photo');
+            formData["delete"]('image_driver_license');
+            formData["delete"]('image_permit_circulation');
+            formData["delete"]('image_certificate_background');
           }
 
           _this.serverErrors = {};
 
-          _this.updateProfile(formData ? formData : _this.form).then(function () {
+          _this.updateProfile(formData).then(function () {
             _this.loading = false;
 
             _this.$notify({
               type: 'success',
               group: 'update_profile',
-              title: 'Contraseña',
+              title: 'Perfil',
               text: 'Su perfil ha sido actualizado'
             });
           })["catch"](function (data) {
@@ -64450,7 +64454,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-3",
+                          staticClass: "btn btn-primary",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -64469,6 +64473,7 @@ var render = function() {
                             expression: "loading"
                           }
                         ],
+                        staticClass: "ml-3",
                         attrs: { size: "medium" }
                       })
                     ],
@@ -66199,10 +66204,9 @@ var render = function() {
                                   },
                                   {
                                     name: "model",
-                                    rawName: "v-model.number",
+                                    rawName: "v-model",
                                     value: _vm.form.license_types_id,
-                                    expression: "form.license_types_id",
-                                    modifiers: { number: true }
+                                    expression: "form.license_types_id"
                                   }
                                 ],
                                 staticClass: "form-control",
@@ -66225,7 +66229,7 @@ var render = function() {
                                       .map(function(o) {
                                         var val =
                                           "_value" in o ? o._value : o.value
-                                        return _vm._n(val)
+                                        return val
                                       })
                                     _vm.$set(
                                       _vm.form,
@@ -66539,7 +66543,7 @@ var render = function() {
                         _c(
                           "router-link",
                           {
-                            staticClass: "btn btn-light mr-3",
+                            staticClass: "btn btn-light",
                             attrs: { to: { name: "home" }, tag: "button" }
                           },
                           [
@@ -66552,7 +66556,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-primary mr-3",
+                            staticClass: "btn btn-primary ml-4",
                             attrs: { type: "submit", disabled: _vm.loading }
                           },
                           [
@@ -66571,6 +66575,7 @@ var render = function() {
                               expression: "loading"
                             }
                           ],
+                          staticClass: "ml-2",
                           attrs: { size: "medium" }
                         })
                       ],
@@ -86991,12 +86996,13 @@ var actions = {
         dispatch = _ref15.dispatch;
     //commit('UPDATE_PROFILE')
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(route('api.users.update', form.id), form).then(function (_ref16) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.users.update', form.get('id')), form).then(function (_ref16) {
         var data = _ref16.data.data;
         commit('UPDATE_PROFILE_OK', data);
         resolve();
       })["catch"](function (error) {
-        //commit('UPDATE_PROFILE_FAIL')
+        console.log(error); //commit('UPDATE_PROFILE_FAIL')
+
         reject(error.response.data);
       });
     });
