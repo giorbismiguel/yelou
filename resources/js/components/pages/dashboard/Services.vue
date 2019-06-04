@@ -1,6 +1,6 @@
 <template>
     <section>
-        Services
+        <div class="ilustration"></div>
     </section>
 </template>
 
@@ -16,5 +16,10 @@
         height: 406px;
         background: rgb(245, 252, 255);
         border-radius: 0px 0px 0px 0px;
+    }
+
+    section div.ilustration {
+        background-image: url("../../../../img/illustration.png");
+        background-repeat: repeat-y;
     }
 </style>

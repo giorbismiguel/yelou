@@ -380,7 +380,7 @@
                                     type: 'success',
                                     group: 'update_profile',
                                     title: 'Contraseña',
-                                    text: 'La contraseña ha sido actualizada'
+                                    text: 'Su perfil ha sido actualizado'
                                 });
                             })
                             .catch((data) => {

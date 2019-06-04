@@ -38,5 +38,7 @@
 </script>
 
 <style scoped>
-
+    #carouselExampleControls {
+        height: 428px;
+    }
 </style>
