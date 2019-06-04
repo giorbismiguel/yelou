@@ -5144,6 +5144,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -66330,7 +66334,16 @@ var render = function() {
                                   )
                                 ])
                               : _vm._e()
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "rounded float-right mt-2 mb-2",
+                            staticStyle: { width: "200px", height: "200px" },
+                            attrs: {
+                              src: "/storage/" + _vm.form.photo,
+                              alt: "Foto"
+                            }
+                          })
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -66353,7 +66366,8 @@ var render = function() {
                                     _vm.errors.has("image_driver_license")
                                 },
                                 attrs: {
-                                  "data-vv-as": "Foto",
+                                  "data-vv-as":
+                                    "Imagen de la licencia de conducir",
                                   type: "file",
                                   name: "image_driver_license",
                                   id: "image_driver_license"
@@ -66392,7 +66406,16 @@ var render = function() {
                                   )
                                 ])
                               : _vm._e()
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "rounded float-right mt-2 mb-2",
+                            staticStyle: { width: "200px", height: "200px" },
+                            attrs: {
+                              src: "/storage/" + _vm.form.image_driver_license,
+                              alt: "Foto"
+                            }
+                          })
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -66459,7 +66482,17 @@ var render = function() {
                                   )
                                 ])
                               : _vm._e()
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "rounded float-right mt-2 mb-2",
+                            staticStyle: { width: "200px", height: "200px" },
+                            attrs: {
+                              src:
+                                "/storage/" + _vm.form.image_permit_circulation,
+                              alt: "Foto"
+                            }
+                          })
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -66531,7 +66564,18 @@ var render = function() {
                                   )
                                 ])
                               : _vm._e()
-                          ])
+                          ]),
+                          _vm._v(" "),
+                          _c("img", {
+                            staticClass: "rounded float-right mt-2 mb-2",
+                            staticStyle: { width: "200px", height: "200px" },
+                            attrs: {
+                              src:
+                                "/storage/" +
+                                _vm.form.image_certificate_background,
+                              alt: "Foto"
+                            }
+                          })
                         ])
                       ],
                   _vm._v(" "),

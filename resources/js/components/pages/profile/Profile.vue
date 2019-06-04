@@ -197,12 +197,13 @@
                                             {{ errors.first('photo') }}
                                         </div>
                                     </div>
+                                    <img :src="'/storage/' + form.photo" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
                                     <div class="col">
                                         <div class="custom-file">
-                                            <input v-validate="'image'" data-vv-as="Foto"
+                                            <input v-validate="'image'" data-vv-as="Imagen de la licencia de conducir"
                                                    @change="onImageDriveLicenseSelected" ref="ImageDriveLicense"
                                                    type="file" name="image_driver_license"
                                                    id="image_driver_license" class="custom-file-input"
@@ -217,6 +218,7 @@
                                             {{ errors.first('image_driver_license') }}
                                         </div>
                                     </div>
+                                    <img :src="'/storage/' + form.image_driver_license" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -239,6 +241,7 @@
                                             {{ errors.first('image_permit_circulation') }}
                                         </div>
                                     </div>
+                                    <img :src="'/storage/' + form.image_permit_circulation" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -262,6 +265,7 @@
                                             {{ errors.first('image_certificate_background') }}
                                         </div>
                                     </div>
+                                    <img :src="'/storage/' + form.image_certificate_background" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
                                 </div>
                             </template>
 

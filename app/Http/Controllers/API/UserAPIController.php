@@ -113,6 +113,10 @@ class UserAPIController extends AppBaseController
             return $this->sendError('Usuario no encontrado');
         }
 
+        $input['photo'] = $input['photo_name'] ?? null;
+        $input['image_driver_license'] = $input['image_driver_license_name'] ?? null;
+        $input['image_permit_circulation'] = $input['image_permit_circulation_name'] ?? null;
+        $input['image_certificate_background'] = $input['image_certificate_background_name'] ?? null;
         $user = $this->userRepository->update($input, $id);
 
         return $this->sendResponse(['user' => get_type_user($user->toArray())], 'Usuario actualizado exitosamente');

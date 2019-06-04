@@ -58,7 +58,7 @@ class UpdateUserAPIRequest extends APIRequest
             $rules += [
                 'license_types_id'             => 'required|integer',
                 'photo'                        => 'nullable|image|max:100000',
-                'image_driver_license'         => 'nullable|mage|max:100000',
+                'image_driver_license'         => 'nullable|image|max:100000',
                 'image_permit_circulation'     => 'nullable|image|max:100000',
                 'image_certificate_background' => 'nullable|image|max:100000',
             ];
