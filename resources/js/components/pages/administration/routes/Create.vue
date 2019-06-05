@@ -101,7 +101,7 @@
 
         methods: {
             ...mapActions([
-                'create',
+                'createRoute',
             ]),
 
             onSubmit() {

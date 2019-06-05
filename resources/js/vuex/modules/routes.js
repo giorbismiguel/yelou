@@ -5,11 +5,11 @@ const state = {
 }
 
 const actions = {
-    create({commit, dispatch}, form) {
+    createRoute({commit, dispatch}, form) {
         commit('CREATE_ROUTE')
 
         return new Promise((resolve, reject) => {
-            axios.post(route(''), form)
+            axios.post(route('api.routes.create'), form)
                 .then(({data}) => {
                     commit('CREATE_ROUTE_OK', data)
                     resolve()
@@ -23,16 +23,16 @@ const actions = {
 }
 
 const mutations = {
-    CREATE_ROUTE(state, user) {
-        state.me = user
+    CREATE_ROUTE(state, route) {
+        state.route = route
     },
 
-    CREATE_ROUTE_OK(state, user) {
-        state.me = user
+    CREATE_ROUTE_OK(state, route) {
+        state.route = route
     },
 
-    CREATE_ROUTE_FAIL(state, user) {
-        state.me = user
+    CREATE_ROUTE_FAIL(state, route) {
+        state.route = route
     }
 }
 

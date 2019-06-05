@@ -3275,7 +3275,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.auth.me;
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['create']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['createRoute']), {
     onSubmit: function onSubmit() {
       var _this = this;
 
@@ -87769,7 +87769,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__, {
   load: {
-    key: 'AIzaSyA5JkYoSriQ0gQrdmbI_TlBfZJ-0qBTv3s',
+    key: 'AIzaSyB4Co4ej2FGIeZKd6NFAq3kHT1u7Ho3gcY',
     libraries: 'places'
   }
 });
@@ -90650,12 +90650,12 @@ var state = {
   route: null
 };
 var actions = {
-  create: function create(_ref, form) {
+  createRoute: function createRoute(_ref, form) {
     var commit = _ref.commit,
         dispatch = _ref.dispatch;
     commit('CREATE_ROUTE');
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route(''), form).then(function (_ref2) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.routes.create'), form).then(function (_ref2) {
         var data = _ref2.data;
         commit('CREATE_ROUTE_OK', data);
         resolve();
@@ -90667,14 +90667,14 @@ var actions = {
   }
 };
 var mutations = {
-  CREATE_ROUTE: function CREATE_ROUTE(state, user) {
-    state.me = user;
+  CREATE_ROUTE: function CREATE_ROUTE(state, route) {
+    state.route = route;
   },
-  CREATE_ROUTE_OK: function CREATE_ROUTE_OK(state, user) {
-    state.me = user;
+  CREATE_ROUTE_OK: function CREATE_ROUTE_OK(state, route) {
+    state.route = route;
   },
-  CREATE_ROUTE_FAIL: function CREATE_ROUTE_FAIL(state, user) {
-    state.me = user;
+  CREATE_ROUTE_FAIL: function CREATE_ROUTE_FAIL(state, route) {
+    state.route = route;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
