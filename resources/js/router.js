@@ -19,6 +19,7 @@ import Profile from './components/pages/profile/Profile'
 import Administration from './components/pages/administration/Index'
 import Services from './components/pages/administration/services/Index'
 import Routes from './components/pages/administration/routes/Index'
+import CreateRoute from './components/pages/administration/routes/Create'
 
 import NotFound from './components/NotFound';
 
@@ -61,6 +62,9 @@ const routes = [
     },
     {
         path: '/rutas', name: 'routes', component: Routes, meta: {requiresAuth: true}
+    },
+    {
+        path: '/rutas/crear', name: 'routes_create', component: CreateRoute, meta: {requiresAuth: true}
     },
     {
         path: '*', component: NotFound

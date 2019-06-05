@@ -28,8 +28,8 @@
                     </ye-actions>
 
                     <template slot="pre-header-buttons">
-                        <router-link class="btn btn-success btn-sm --uppercase" :to="{name: ''}">
-                            In progress Nueva Ruta
+                        <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'routes_create'}">
+                            Nueva Ruta
                         </router-link>
                     </template>
 

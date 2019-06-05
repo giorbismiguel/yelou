@@ -4,6 +4,14 @@ import Vue from 'vue';
 import es from 'vee-validate/dist/locale/es';
 import VeeValidate, {Validator} from 'vee-validate'
 import Notifications from 'vue-notification'
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+Vue.use(VueGoogleMaps, {
+    load: {
+        key: 'AIzaSyA5JkYoSriQ0gQrdmbI_TlBfZJ-0qBTv3s',
+        libraries: 'places',
+    }
+})
 
 import store from './vuex/store' // vuex store instance
 import router from './router' // vue-router instance

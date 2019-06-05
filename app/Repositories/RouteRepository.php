@@ -17,9 +17,9 @@ class RouteRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'name',
-        'lat',
-        'lng',
-        'formatted_address',
+        'lat_start',
+        'lng_start',
+        'formatted_address_start',
         'user_id',
     ];
 

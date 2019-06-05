@@ -4,6 +4,7 @@ import createLogger from 'vuex/dist/logger'
 import auth from './modules/auth'
 import nomenclators from './modules/nomenclators'
 import general from './modules/general'
+import routes from './modules/routes'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     modules: {
         auth,
         nomenclators,
-        general
+        general,
+        routes
     }
 })
