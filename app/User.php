@@ -111,6 +111,9 @@ class User extends Authenticatable
 
     public function setVerifiedAt()
     {
-        return $this->update(['phone_verified_at' => today()]);
+        return $this->update([
+            'phone_verified_at' => today(),
+            'code_activation'   => null,
+        ]);
     }
 }

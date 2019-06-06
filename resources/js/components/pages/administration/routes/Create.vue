@@ -16,12 +16,11 @@
                                     Nombre de ruta
                                     <span class="text-danger">*</span>
                                 </label>
-                                <input v-model="form.name" v-validate="'required|max:191'"
-                                       data-vv-as="Nombre de ruta" id="name" name="name" type="text"
-                                       class="form-control"
-                                       :class="{ 'is-invalid': submitted && errors.has('name') }"/>
-                                <div v-if="submitted && errors.has('name')" class="invalid-feedback">
-                                    {{ errors.first('name') }}
+                                <input v-model="form.name" id="name" name="name" type="text"
+                                       class="form-control" :class="{ 'is-invalid': submitted && serverErrors.name }"/>
+                                <div v-if="submitted && serverErrors.name"
+                                     class="invalid-feedback">
+                                    <template v-for="error in serverErrors.name">{{ error }}</template>
                                 </div>
                             </div>
 
@@ -29,14 +28,25 @@
                                 <div class="form-group col-md-6">
                                     <label for="place_origen">Origen<span class="text-danger">*</span></label>
                                     <gmap-autocomplete class="form-control" id="place_origen" name="place_origen"
-                                                       @place_changed="setPlaceOrigin">
+                                                       @place_changed="setPlaceOrigin"
+                                                       :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                     </gmap-autocomplete>
+
+                                    <div v-if="submitted && (serverErrors.lat_start || serverErrors.lng_start)"
+                                         class="invalid-feedback">
+                                        <template v-for="error in serverErrors.lat_start">{{ error }}</template>
+                                    </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="place_destination">Destino<span class="text-danger">*</span></label>
                                     <gmap-autocomplete class="form-control" id="place_destination"
-                                                       name="place_destination" @place_changed="setPlaceDestination">
+                                                       name="place_destination" @place_changed="setPlaceDestination"
+                                                       :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                     </gmap-autocomplete>
+                                    <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
+                                         class="invalid-feedback">
+                                        <template v-for="error in serverErrors.lat_end">{{ error }}</template>
+                                    </div>
                                 </div>
                             </div>
 
@@ -84,6 +94,7 @@
                 loading: false,
                 placeOrigin: null,
                 placeDestination: null,
+                serverErrors: {}
             }
         },
 
@@ -105,13 +116,17 @@
                         this.loading = true
                         this.serverErrors = {}
 
-                        this.form.lat_start = this.placeOrigin.geometry.location.lat()
-                        this.form.lng_start = this.placeOrigin.geometry.location.lng()
-                        this.form.formatted_address_start = this.placeOrigin.formatted_address
+                        if (this.placeOrigin) {
+                            this.form.lat_start = this.placeOrigin.geometry.location.lat()
+                            this.form.lng_start = this.placeOrigin.geometry.location.lng()
+                            this.form.formatted_address_start = this.placeOrigin.formatted_address
+                        }
 
-                        this.form.lat_end = this.placeDestination.geometry.location.lat()
-                        this.form.lng_end = this.placeDestination.geometry.location.lng()
-                        this.form.formatted_address_end = this.placeDestination.formatted_address
+                        if (this.placeDestination) {
+                            this.form.lat_end = this.placeDestination.geometry.location.lat()
+                            this.form.lng_end = this.placeDestination.geometry.location.lng()
+                            this.form.formatted_address_end = this.placeDestination.formatted_address
+                        }
 
                         this.createRoute(this.form)
                             .then(() => {

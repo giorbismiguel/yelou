@@ -44,11 +44,11 @@ class Route extends Model
     protected $casts = [
         'id'                      => 'integer',
         'name'                    => 'string',
-        'lat_start'               => 'float',
-        'lng_start'               => 'float',
+        'lat_start'               => 'double',
+        'lng_start'               => 'double',
         'formatted_address_start' => 'string',
-        'lat_end'                 => 'float',
-        'lng_end'                 => 'float',
+        'lat_end'                 => 'double',
+        'lng_end'                 => 'double',
         'formatted_address_end'   => 'string'
     ];
 
@@ -59,7 +59,11 @@ class Route extends Model
      */
     public static $rules = [
         'name'                    => 'required|max:191|min:1',
+        'lat_start'               => 'required|numeric',
+        'lng_start'               => 'required|numeric',
         'formatted_address_start' => 'required|max:191|min:1',
+        'lat_end'                 => 'required|numeric',
+        'lng_end'                 => 'required|numeric',
         'formatted_address_end'   => 'required|max:191|min:1'
     ];
 

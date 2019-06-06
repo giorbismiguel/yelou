@@ -3242,6 +3242,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3261,7 +3271,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       submitted: false,
       loading: false,
       placeOrigin: null,
-      placeDestination: null
+      placeDestination: null,
+      serverErrors: {}
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -3278,12 +3289,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (valid) {
           _this.loading = true;
           _this.serverErrors = {};
-          _this.form.lat_start = _this.placeOrigin.geometry.location.lat();
-          _this.form.lng_start = _this.placeOrigin.geometry.location.lng();
-          _this.form.formatted_address_start = _this.placeOrigin.formatted_address;
-          _this.form.lat_end = _this.placeDestination.geometry.location.lat();
-          _this.form.lng_end = _this.placeDestination.geometry.location.lng();
-          _this.form.formatted_address_end = _this.placeDestination.formatted_address;
+
+          if (_this.placeOrigin) {
+            _this.form.lat_start = _this.placeOrigin.geometry.location.lat();
+            _this.form.lng_start = _this.placeOrigin.geometry.location.lng();
+            _this.form.formatted_address_start = _this.placeOrigin.formatted_address;
+          }
+
+          if (_this.placeDestination) {
+            _this.form.lat_end = _this.placeDestination.geometry.location.lat();
+            _this.form.lng_end = _this.placeDestination.geometry.location.lng();
+            _this.form.formatted_address_end = _this.placeDestination.formatted_address;
+          }
 
           _this.createRoute(_this.form).then(function () {
             _this.loading = false;
@@ -63122,24 +63139,13 @@ var render = function() {
                           rawName: "v-model",
                           value: _vm.form.name,
                           expression: "form.name"
-                        },
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "required|max:191",
-                          expression: "'required|max:191'"
                         }
                       ],
                       staticClass: "form-control",
                       class: {
-                        "is-invalid": _vm.submitted && _vm.errors.has("name")
+                        "is-invalid": _vm.submitted && _vm.serverErrors.name
                       },
-                      attrs: {
-                        "data-vv-as": "Nombre de ruta",
-                        id: "name",
-                        name: "name",
-                        type: "text"
-                      },
+                      attrs: { id: "name", name: "name", type: "text" },
                       domProps: { value: _vm.form.name },
                       on: {
                         input: function($event) {
@@ -63151,14 +63157,17 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.submitted && _vm.errors.has("name")
-                      ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(
-                            "\n                                " +
-                              _vm._s(_vm.errors.first("name")) +
-                              "\n                            "
-                          )
-                        ])
+                    _vm.submitted && _vm.serverErrors.name
+                      ? _c(
+                          "div",
+                          { staticClass: "invalid-feedback" },
+                          [
+                            _vm._l(_vm.serverErrors.name, function(error) {
+                              return [_vm._v(_vm._s(error))]
+                            })
+                          ],
+                          2
+                        )
                       : _vm._e()
                   ]),
                   _vm._v(" "),
@@ -63176,9 +63185,32 @@ var render = function() {
                         _vm._v(" "),
                         _c("gmap-autocomplete", {
                           staticClass: "form-control",
+                          class: {
+                            "is-invalid":
+                              _vm.submitted &&
+                              (_vm.serverErrors.lat_start ||
+                                _vm.serverErrors.lng_start)
+                          },
                           attrs: { id: "place_origen", name: "place_origen" },
                           on: { place_changed: _vm.setPlaceOrigin }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.submitted &&
+                        (_vm.serverErrors.lat_start ||
+                          _vm.serverErrors.lng_start)
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback" },
+                              [
+                                _vm._l(_vm.serverErrors.lat_start, function(
+                                  error
+                                ) {
+                                  return [_vm._v(_vm._s(error))]
+                                })
+                              ],
+                              2
+                            )
+                          : _vm._e()
                       ],
                       1
                     ),
@@ -63196,12 +63228,34 @@ var render = function() {
                         _vm._v(" "),
                         _c("gmap-autocomplete", {
                           staticClass: "form-control",
+                          class: {
+                            "is-invalid":
+                              _vm.submitted &&
+                              (_vm.serverErrors.lat_end ||
+                                _vm.serverErrors.lng_end)
+                          },
                           attrs: {
                             id: "place_destination",
                             name: "place_destination"
                           },
                           on: { place_changed: _vm.setPlaceDestination }
-                        })
+                        }),
+                        _vm._v(" "),
+                        _vm.submitted &&
+                        (_vm.serverErrors.lat_end || _vm.serverErrors.lng_end)
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback" },
+                              [
+                                _vm._l(_vm.serverErrors.lat_end, function(
+                                  error
+                                ) {
+                                  return [_vm._v(_vm._s(error))]
+                                })
+                              ],
+                              2
+                            )
+                          : _vm._e()
                       ],
                       1
                     )
