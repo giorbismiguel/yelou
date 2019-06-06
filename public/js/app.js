@@ -2954,7 +2954,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     applyFiltersAndFetchData: function applyFiltersAndFetchData() {
       this.manualCurPage = this.curPage !== 1;
-      this.appliedFilters = cloneDeep(this.filters);
+      this.appliedFilters = _query_string__WEBPACK_IMPORTED_MODULE_8___default.a.cloneDeep(this.filters);
       this.curPage = 1;
       this.fetchData();
     },
@@ -3048,7 +3048,7 @@ __webpack_require__.r(__webpack_exports__);
       return attrs;
     },
     applyFiltersAndReload: function applyFiltersAndReload() {
-      this.appliedFilters = cloneDeep(this.filters);
+      this.appliedFilters = _query_string__WEBPACK_IMPORTED_MODULE_8___default.a.cloneDeep(this.filters);
       return this.reload();
     },
     reload: function reload() {
@@ -3242,12 +3242,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
 
 
 
@@ -3288,10 +3282,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.form.lng_start = _this.placeOrigin.geometry.location.lng();
           _this.form.formatted_address_start = _this.placeOrigin.formatted_address;
           _this.form.lat_end = _this.placeDestination.geometry.location.lat();
-          form.lng_end = _this.placeDestination.geometry.location.lng();
-          form.formatted_address_end = _this.placeOrigin.formatted_address;
+          _this.form.lng_end = _this.placeDestination.geometry.location.lng();
+          _this.form.formatted_address_end = _this.placeDestination.formatted_address;
 
-          _this.create(_this.form).then(function () {
+          _this.createRoute(_this.form).then(function () {
             _this.loading = false;
 
             _this.$notify({
@@ -3300,6 +3294,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               title: 'Ruta',
               text: 'Se ha adicionado la ruta correctamente'
             });
+
+            _this.$router.replace('/rutas');
           })["catch"](function (data) {
             _this.loading = false;
 
@@ -3330,6 +3326,201 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/routes/Edit.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/administration/routes/Edit.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
+/* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Edit",
+  data: function data() {
+    return {
+      form: {
+        id: null,
+        name: null,
+        lat_start: null,
+        lng_start: null,
+        formatted_address_start: null,
+        lat_end: null,
+        lng_end: null,
+        formatted_address_end: null
+      },
+      submitted: false,
+      loading: false,
+      loadingToShow: true,
+      placeOrigin: null,
+      placeDestination: null
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    me: function me(state) {
+      return state.auth.me;
+    },
+    route: function route(state) {
+      return state.routes.route;
+    }
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['getRoute', 'updateRoute']), {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      this.submitted = true;
+      this.$validator.validate().then(function (valid) {
+        if (valid) {
+          _this.loading = true;
+          _this.serverErrors = {};
+
+          if (_this.placeOrigin) {
+            _this.form.lat_start = _this.placeOrigin.geometry.location.lat();
+            _this.form.lng_start = _this.placeOrigin.geometry.location.lng();
+            _this.form.formatted_address_start = _this.placeOrigin.formatted_address;
+          }
+
+          if (_this.placeDestination) {
+            _this.form.lat_end = _this.placeDestination.geometry.location.lat();
+            _this.form.lng_end = _this.placeDestination.geometry.location.lng();
+            _this.form.formatted_address_end = _this.placeDestination.formatted_address;
+          }
+
+          _this.updateRoute(_this.form).then(function () {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'success',
+              group: 'edit_route',
+              title: 'Ruta',
+              text: 'Se ha modificado la ruta correctamente'
+            });
+
+            _this.$router.replace('/rutas');
+          })["catch"](function (data) {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'error',
+              group: 'edit_route',
+              title: 'Ruta',
+              text: 'Ha ocurrido un error al modificar la ruta.'
+            });
+
+            _this.serverErrors = data.errors || {};
+          });
+        }
+      });
+    },
+    setPlaceOrigin: function setPlaceOrigin(place) {
+      this.placeOrigin = place;
+      this.form.formatted_address_start = place.formatted_address;
+    },
+    setPlaceDestination: function setPlaceDestination(place) {
+      this.placeDestination = place;
+      this.form.formatted_address_end = place.formatted_address;
+    }
+  }),
+  created: function created() {
+    var _this2 = this;
+
+    this.getRoute(this.$route.params.id).then(function () {
+      _this2.loadingToShow = false;
+      _this2.form = _this2.route;
+    })["catch"](function (data) {
+      _this2.loadingToShow = false;
+      _this2.serverErrors = data.errors || {};
+    });
+  },
+  components: {
+    Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a,
+    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/routes/Index.vue?vue&type=script&lang=js&":
 /*!********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/administration/routes/Index.vue?vue&type=script&lang=js& ***!
@@ -3342,6 +3533,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
 /* harmony import */ var _modules_query_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../modules/query-string */ "./resources/js/components/modules/query-string.js");
 /* harmony import */ var _modules_query_string__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -3387,44 +3585,90 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      request: {},
       filters: {
-        sale_order_number: null,
-        customer_name: null,
-        returned: null,
-        part_number: null,
-        description: null,
-        return_serial_number: null
+        name: null,
+        formatted_address_start: null,
+        formatted_address_end: null
       },
-      columns: ['name', 'formatted_address', 'actions'],
+      columns: ['name', 'formatted_address_start', 'formatted_address_end', 'actions'],
       options: {
-        sortable: ['name', 'formatted_address'],
+        sortable: ['name', 'formatted_address_start', 'formatted_address_end'],
         columnsClasses: {
           'actions': 'action-col'
         },
         headings: {
           'name': 'Nombre',
-          'formatted_address': 'Dirección',
+          'formatted_address_start': 'Origen',
+          'formatted_address_end': 'Destino',
           'actions': 'Acciones'
         }
       },
       defaultFilters: {}
     };
   },
-  computed: {
-    apiURL: function apiURL() {
-      return route('api.routes.index', this.filters);
-    },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
+    me: function me(state) {
+      return state.auth.me;
+    }
+  }), {
     apiEndpoint: function apiEndpoint() {
       return route('api.routes.index');
     }
-  },
-  methods: {
+  }),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRoute']), {
+    onDelete: function onDelete(id) {
+      var _this = this;
+
+      this.serverErrors = {};
+      sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
+        title: 'Esta seguro que desea eliminar la ruta?',
+        text: 'Puedes cancelar la operación',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(function (result) {
+        if (result.value) {
+          _this.deleteRoute(id).then(function () {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'success',
+              group: 'index_route',
+              title: 'Ruta',
+              text: 'Se ha eliminado la ruta correctamente'
+            });
+
+            _this.reloadTable();
+          })["catch"](function (data) {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'error',
+              group: 'index_route',
+              title: 'Ruta',
+              text: 'Ha ocurrido un error al eliminar la ruta.'
+            });
+
+            _this.serverErrors = data.errors || {};
+          });
+        }
+      });
+    },
     clearFilter: function clearFilter() {
       this.filters = Object(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.defaultFilters);
       this.$nextTick(this.reloadTable);
@@ -3432,7 +3676,7 @@ __webpack_require__.r(__webpack_exports__);
     reloadTable: function reloadTable() {
       return this.$refs['table'].applyFiltersAndReload();
     }
-  },
+  }),
   mounted: function mounted() {
     this.defaultFilters = Object(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.filters);
   },
@@ -4162,7 +4406,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.register(formData ? formData : _this.form).then(function () {
             _this.loading = false;
             sweetalert2__WEBPACK_IMPORTED_MODULE_2___default.a.fire({
-              text: 'Para la activación  de su cuenta se enviará un código al correo y número de celular, por favor verifique los datos para registrarse.',
+              text: 'Para la activación  de su cuenta se enviará un código al celular, por favor verifique los datos para registrarse.',
               type: 'success',
               showCancelButton: false,
               confirmButtonText: 'Aceptar'
@@ -62480,11 +62724,12 @@ var render = function() {
                                     "span",
                                     {
                                       staticClass:
-                                        "simple-table__sort-icon --no-select float-right"
+                                        "simple-table__sort-icon --no-select float-right d-flex"
                                     },
                                     [
                                       _c("i", {
-                                        staticClass: "fas fa-long-arrow-alt-up",
+                                        staticClass:
+                                          "fas fa-long-arrow-alt-up mr-1",
                                         class: {
                                           active: _vm.isOrderAndSortBy(
                                             column,
@@ -62840,7 +63085,7 @@ var render = function() {
       _c("hr"),
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-8" }, [
+        _c("div", { staticClass: "col-10" }, [
           _c("div", { staticClass: "card m-4" }, [
             _c("div", { staticClass: "card-header" }, [_vm._v("Nueva Ruta")]),
             _vm._v(" "),
@@ -62933,17 +63178,7 @@ var render = function() {
                           staticClass: "form-control",
                           attrs: { id: "place_origen", name: "place_origen" },
                           on: { place_changed: _vm.setPlaceOrigin }
-                        }),
-                        _vm._v(" "),
-                        _vm.submitted && _vm.errors.has("name")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(_vm.errors.first("name")) +
-                                  "\n                                "
-                              )
-                            ])
-                          : _vm._e()
+                        })
                       ],
                       1
                     ),
@@ -62966,17 +63201,7 @@ var render = function() {
                             name: "place_destination"
                           },
                           on: { place_changed: _vm.setPlaceDestination }
-                        }),
-                        _vm._v(" "),
-                        _vm.submitted && _vm.errors.has("name")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(_vm.errors.first("name")) +
-                                  "\n                                "
-                              )
-                            ])
-                          : _vm._e()
+                        })
                       ],
                       1
                     )
@@ -62991,10 +63216,7 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "btn btn-light",
-                            attrs: {
-                              to: { name: "administration" },
-                              tag: "button"
-                            }
+                            attrs: { to: { name: "routes" }, tag: "button" }
                           },
                           [
                             _vm._v(
@@ -63051,6 +63273,243 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/routes/Edit.vue?vue&type=template&id=f84f62d8&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/administration/routes/Edit.vue?vue&type=template&id=f84f62d8&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("box-user", [
+    _c("h3", [_vm._v("Ruta")]),
+    _vm._v(" "),
+    _c("hr"),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c(
+        "div",
+        { staticClass: "col-10" },
+        [
+          _vm.loadingToShow
+            ? _c("spinner", { attrs: { size: "medium" } })
+            : [
+                _c("div", { staticClass: "card m-4" }, [
+                  _c("div", { staticClass: "card-header" }, [
+                    _vm._v("Actualizar Ruta")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c(
+                      "form",
+                      {
+                        staticClass: "form-horizontal",
+                        attrs: {
+                          id: "new_route_form",
+                          role: "form",
+                          autocomplete: "off"
+                        },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.onSubmit($event)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "form-row form-group" }, [
+                          _c("label", { attrs: { for: "name" } }, [
+                            _vm._v(
+                              "\n                                    Nombre de ruta\n                                    "
+                            ),
+                            _c("span", { staticClass: "text-danger" }, [
+                              _vm._v("*")
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.name,
+                                expression: "form.name"
+                              },
+                              {
+                                name: "validate",
+                                rawName: "v-validate",
+                                value: "required|max:191",
+                                expression: "'required|max:191'"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid":
+                                _vm.submitted && _vm.errors.has("name")
+                            },
+                            attrs: {
+                              "data-vv-as": "Nombre de ruta",
+                              id: "name",
+                              name: "name",
+                              type: "text"
+                            },
+                            domProps: { value: _vm.form.name },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "name", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.submitted && _vm.errors.has("name")
+                            ? _c("div", { staticClass: "invalid-feedback" }, [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(_vm.errors.first("name")) +
+                                    "\n                                "
+                                )
+                              ])
+                            : _vm._e()
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-row form-group" }, [
+                          _c(
+                            "div",
+                            { staticClass: "form-group col-md-6" },
+                            [
+                              _c("label", { attrs: { for: "place_origen" } }, [
+                                _vm._v("Origen"),
+                                _c("span", { staticClass: "text-danger" }, [
+                                  _vm._v("*")
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("gmap-autocomplete", {
+                                ref: "origin",
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "place_origen",
+                                  value: _vm.form.formatted_address_start,
+                                  name: "place_origen"
+                                },
+                                on: { place_changed: _vm.setPlaceOrigin }
+                              })
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "form-group col-md-6" },
+                            [
+                              _c(
+                                "label",
+                                { attrs: { for: "place_destination" } },
+                                [
+                                  _vm._v("Destino"),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v("*")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("gmap-autocomplete", {
+                                staticClass: "form-control",
+                                attrs: {
+                                  id: "place_destination",
+                                  value: _vm.form.formatted_address_end,
+                                  name: "place_destination"
+                                },
+                                on: { place_changed: _vm.setPlaceDestination }
+                              })
+                            ],
+                            1
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "form-group" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col d-flex justify-content-end" },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass: "btn btn-light",
+                                  attrs: {
+                                    to: { name: "routes" },
+                                    tag: "button"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Cancelar\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass: "btn btn-primary ml-4",
+                                  attrs: {
+                                    type: "submit",
+                                    disabled: _vm.loading
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Actualizar\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("spinner", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.loading,
+                                    expression: "loading"
+                                  }
+                                ],
+                                staticClass: "ml-2",
+                                attrs: { size: "medium" }
+                              })
+                            ],
+                            1
+                          )
+                        ])
+                      ]
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("notifications", { attrs: { group: "edit_route" } })
+              ]
+        ],
+        2
+      )
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/routes/Index.vue?vue&type=template&id=38e93db8&scoped=true&":
 /*!************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/administration/routes/Index.vue?vue&type=template&id=38e93db8&scoped=true& ***!
@@ -63066,106 +63525,126 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("box-user", [
-    _c("h3", [_vm._v("Rutas")]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c(
-        "div",
-        { staticClass: "col" },
-        [
-          _c(
-            "ye-table",
-            {
-              ref: "table",
-              attrs: {
-                id: "table_routes",
-                columns: _vm.columns,
-                options: _vm.options,
-                url: _vm.apiEndpoint,
-                filters: _vm.filters
-              },
-              on: { clearFilters: _vm.clearFilter },
-              scopedSlots: _vm._u([
-                {
-                  key: "actions",
-                  fn: function(ref) {
-                    var row = ref.row
-                    return _c(
-                      "ye-actions",
-                      { staticClass: "text-center" },
-                      [
-                        _c(
-                          "router-link",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { to: "", title: "Edit" }
-                          },
-                          [
-                            _c("i", { staticClass: "fas fa-pen-square" }),
-                            _vm._v(
-                              "\n                        In progress Editar\n                    "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
+  return _c(
+    "box-user",
+    [
+      _c("h3", [_vm._v("Rutas")]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c(
+          "div",
+          { staticClass: "col" },
+          [
+            _c(
+              "ye-table",
+              {
+                ref: "table",
+                attrs: {
+                  id: "table_routes",
+                  columns: _vm.columns,
+                  options: _vm.options,
+                  url: _vm.apiEndpoint,
+                  filters: _vm.filters
+                },
+                on: { clearFilters: _vm.clearFilter },
+                scopedSlots: _vm._u([
+                  {
+                    key: "actions",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return _c("ye-actions", { staticClass: "text-center" }, [
                         _c(
                           "li",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { title: "Eliminar" }
-                          },
                           [
-                            _c("i", { staticClass: "fas fa-trash-alt" }),
-                            _vm._v(
-                              "\n                        In progress Eliminar\n                    "
+                            _c(
+                              "router-link",
+                              {
+                                staticClass: "dropdown-item",
+                                attrs: {
+                                  to: {
+                                    name: "routes_edit",
+                                    params: { id: row.id }
+                                  },
+                                  title: "Edit"
+                                }
+                              },
+                              [
+                                _c("i", { staticClass: "fas fa-pen-square" }),
+                                _vm._v(
+                                  "\n                            Editar\n                        "
+                                )
+                              ]
                             )
-                          ]
-                        )
-                      ],
-                      1
-                    )
+                          ],
+                          1
+                        ),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", title: "Eliminar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.onDelete(row.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-trash-alt" }),
+                              _vm._v(
+                                "\n                            Eliminar\n                        "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }
                   }
-                }
-              ])
-            },
-            [
-              _c("template", { slot: "table-title" }, [
-                _vm._v("Todas las rutas disponibles")
-              ]),
-              _vm._v(" "),
-              _vm._v(" "),
-              _c(
-                "template",
-                { slot: "pre-header-buttons" },
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-success btn-sm --uppercase",
-                      attrs: { to: { name: "routes_create" } }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Nueva Ruta\n                    "
-                      )
-                    ]
-                  )
-                ],
-                1
-              ),
-              _vm._v(" "),
-              _c("template", { slot: "filters-form" })
-            ],
-            2
-          )
-        ],
-        1
-      )
-    ])
-  ])
+                ])
+              },
+              [
+                _c("template", { slot: "table-title" }, [
+                  _vm._v("Todas las rutas disponibles")
+                ]),
+                _vm._v(" "),
+                _vm._v(" "),
+                _c(
+                  "template",
+                  { slot: "pre-header-buttons" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-success btn-sm --uppercase",
+                        attrs: { to: { name: "routes_create" } }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Adicionar\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("template", { slot: "filters-form" })
+              ],
+              2
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("notifications", { attrs: { group: "index_route" } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -65953,10 +66432,10 @@ var render = function() {
                           },
                           {
                             name: "model",
-                            rawName: "v-model.number",
+                            rawName: "v-model.trim",
                             value: _vm.form.code_activation,
                             expression: "form.code_activation",
-                            modifiers: { number: true }
+                            modifiers: { trim: true }
                           }
                         ],
                         staticClass: "form-control",
@@ -65981,7 +66460,7 @@ var render = function() {
                             _vm.$set(
                               _vm.form,
                               "code_activation",
-                              _vm._n($event.target.value)
+                              $event.target.value.trim()
                             )
                           },
                           blur: function($event) {
@@ -87769,7 +88248,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue2_google_maps__WEBPACK_IMPORTED_MODULE_4__, {
   load: {
-    key: 'AIzaSyB4Co4ej2FGIeZKd6NFAq3kHT1u7Ho3gcY',
+    key: 'AIzaSyBfGvG2NXZMhrMULA6pwDWYDA819GySyXs',
     libraries: 'places'
   }
 });
@@ -88950,6 +89429,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/administration/routes/Edit.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/pages/administration/routes/Edit.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Edit_vue_vue_type_template_id_f84f62d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Edit.vue?vue&type=template&id=f84f62d8&scoped=true& */ "./resources/js/components/pages/administration/routes/Edit.vue?vue&type=template&id=f84f62d8&scoped=true&");
+/* harmony import */ var _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Edit.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/administration/routes/Edit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Edit_vue_vue_type_template_id_f84f62d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Edit_vue_vue_type_template_id_f84f62d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "f84f62d8",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/administration/routes/Edit.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/administration/routes/Edit.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/pages/administration/routes/Edit.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Edit.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/routes/Edit.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/administration/routes/Edit.vue?vue&type=template&id=f84f62d8&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/pages/administration/routes/Edit.vue?vue&type=template&id=f84f62d8&scoped=true& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_f84f62d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Edit.vue?vue&type=template&id=f84f62d8&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/routes/Edit.vue?vue&type=template&id=f84f62d8&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_f84f62d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Edit_vue_vue_type_template_id_f84f62d8_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/administration/routes/Index.vue":
 /*!***********************************************************************!*\
   !*** ./resources/js/components/pages/administration/routes/Index.vue ***!
@@ -90084,11 +90632,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_administration_services_Index__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/pages/administration/services/Index */ "./resources/js/components/pages/administration/services/Index.vue");
 /* harmony import */ var _components_pages_administration_routes_Index__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/pages/administration/routes/Index */ "./resources/js/components/pages/administration/routes/Index.vue");
 /* harmony import */ var _components_pages_administration_routes_Create__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/pages/administration/routes/Create */ "./resources/js/components/pages/administration/routes/Create.vue");
-/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _components_pages_administration_routes_Edit__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/pages/administration/routes/Edit */ "./resources/js/components/pages/administration/routes/Edit.vue");
+/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -90172,15 +90722,22 @@ var routes = [{
     requiresAuth: true
   }
 }, {
-  path: '/rutas/crear',
+  path: '/rutas/adicionar',
   name: 'routes_create',
   component: _components_pages_administration_routes_Create__WEBPACK_IMPORTED_MODULE_16__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
+  path: '/rutas/modificar/:id',
+  name: 'routes_edit',
+  component: _components_pages_administration_routes_Edit__WEBPACK_IMPORTED_MODULE_17__["default"],
+  meta: {
+    requiresAuth: true
+  }
+}, {
   path: '*',
-  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_17__["default"]
+  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_18__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes,
@@ -90653,9 +91210,8 @@ var actions = {
   createRoute: function createRoute(_ref, form) {
     var commit = _ref.commit,
         dispatch = _ref.dispatch;
-    commit('CREATE_ROUTE');
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.routes.create'), form).then(function (_ref2) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.routes.store'), form).then(function (_ref2) {
         var data = _ref2.data;
         commit('CREATE_ROUTE_OK', data);
         resolve();
@@ -90664,16 +91220,72 @@ var actions = {
         reject(error.response.data);
       });
     });
+  },
+  updateRoute: function updateRoute(_ref3, form) {
+    var commit = _ref3.commit,
+        dispatch = _ref3.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put(route('api.routes.update', form.id), form).then(function (_ref4) {
+        var data = _ref4.data;
+        commit('EDIT_ROUTE_OK', data);
+        resolve();
+      })["catch"](function (error) {
+        commit('EDIT_ROUTE_FAIL');
+        reject(error.response.data);
+      });
+    });
+  },
+  getRoute: function getRoute(_ref5, id) {
+    var commit = _ref5.commit,
+        dispatch = _ref5.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.routes.show', id)).then(function (_ref6) {
+        var data = _ref6.data.data;
+        commit('GET_ROUTE_OK', data);
+        resolve();
+      })["catch"](function (error) {
+        commit('GET_ROUTE_FAIL');
+        reject(error.response.data);
+      });
+    });
+  },
+  deleteRoute: function deleteRoute(_ref7, id) {
+    var commit = _ref7.commit,
+        dispatch = _ref7.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route('api.routes.destroy', id)).then(function (data) {
+        commit('DELETE_ROUTE_OK', data);
+        resolve();
+      })["catch"](function (error) {
+        commit('DELETE_ROUTE_FAIL');
+        reject(error.response.data);
+      });
+    });
   }
 };
 var mutations = {
-  CREATE_ROUTE: function CREATE_ROUTE(state, route) {
-    state.route = route;
-  },
   CREATE_ROUTE_OK: function CREATE_ROUTE_OK(state, route) {
-    state.route = route;
+    state.route = route.data;
   },
   CREATE_ROUTE_FAIL: function CREATE_ROUTE_FAIL(state, route) {
+    state.route = route;
+  },
+  GET_ROUTE_OK: function GET_ROUTE_OK(state, route) {
+    state.route = route;
+  },
+  GET_ROUTE_FAIL: function GET_ROUTE_FAIL(state) {
+    state.route = null;
+  },
+  EDIT_ROUTE_OK: function EDIT_ROUTE_OK(state, route) {
+    state.route = route;
+  },
+  EDIT_ROUTE_FAIL: function EDIT_ROUTE_FAIL(state, route) {
+    state.route = route;
+  },
+  DELETE_ROUTE_OK: function DELETE_ROUTE_OK(state, route) {
+    state.route = route;
+  },
+  DELETE_ROUTE_FAIL: function DELETE_ROUTE_FAIL(state, route) {
     state.route = route;
   }
 };

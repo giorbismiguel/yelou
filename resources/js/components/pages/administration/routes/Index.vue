@@ -16,20 +16,24 @@
                     <template slot="table-title">Todas las rutas disponibles</template>
 
                     <ye-actions slot="actions" slot-scope="{row}" class="text-center">
-                        <router-link :to="''" class="dropdown-item" title="Edit">
-                            <i class="fas fa-pen-square"></i>
-                            In progress Editar
-                        </router-link>
-
-                        <li class="dropdown-item" title="Eliminar">
-                            <i class="fas fa-trash-alt"></i>
-                            In progress Eliminar
+                        <li>
+                            <router-link :to="{name: 'routes_edit', params: { id: row.id } }" class="dropdown-item"
+                                         title="Edit">
+                                <i class="fas fa-pen-square"></i>
+                                Editar
+                            </router-link>
+                        </li>
+                        <li>
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)">
+                                <i class="fas fa-trash-alt"></i>
+                                Eliminar
+                            </a>
                         </li>
                     </ye-actions>
 
                     <template slot="pre-header-buttons">
                         <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'routes_create'}">
-                            Nueva Ruta
+                            Adicionar
                         </router-link>
                     </template>
 
@@ -40,44 +44,45 @@
             </div>
         </div>
 
+        <notifications group="index_route"/>
     </box-user>
 </template>
 
 <script>
     import BoxUser from '../../../layout/BoxUser'
     import {cloneDeep} from '../../../modules/query-string'
+    import {mapState, mapActions} from 'vuex'
+    import Swal from 'sweetalert2'
 
     export default {
         data() {
             return {
-                request: {},
-
                 filters: {
-                    sale_order_number: null,
-                    customer_name: null,
-                    returned: null,
-                    part_number: null,
-                    description: null,
-                    return_serial_number: null,
+                    name: null,
+                    formatted_address_start: null,
+                    formatted_address_end: null,
                 },
 
                 columns: [
                     'name',
-                    'formatted_address',
+                    'formatted_address_start',
+                    'formatted_address_end',
                     'actions',
                 ],
 
                 options: {
                     sortable: [
                         'name',
-                        'formatted_address',
+                        'formatted_address_start',
+                        'formatted_address_end',
                     ],
                     columnsClasses: {
                         'actions': 'action-col'
                     },
                     headings: {
                         'name': 'Nombre',
-                        'formatted_address': 'Dirección',
+                        'formatted_address_start': 'Origen',
+                        'formatted_address_end': 'Destino',
                         'actions': 'Acciones'
                     }
                 },
@@ -87,9 +92,9 @@
         },
 
         computed: {
-            apiURL() {
-                return route('api.routes.index', this.filters);
-            },
+            ...mapState({
+                me: state => state.auth.me,
+            }),
 
             apiEndpoint() {
                 return route('api.routes.index');
@@ -97,6 +102,49 @@
         },
 
         methods: {
+            ...mapActions([
+                'deleteRoute',
+            ]),
+
+            onDelete(id) {
+                this.serverErrors = {}
+                Swal.fire({
+                    title: 'Esta seguro que desea eliminar la ruta?',
+                    text: 'Puedes cancelar la operación',
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar',
+                    showCloseButton: true,
+                    showLoaderOnConfirm: true
+                }).then((result) => {
+                    if (result.value) {
+                        this.deleteRoute(id)
+                            .then(() => {
+                                this.loading = false
+                                this.$notify({
+                                    type: 'success',
+                                    group: 'index_route',
+                                    title: 'Ruta',
+                                    text: 'Se ha eliminado la ruta correctamente'
+                                });
+
+                                this.reloadTable()
+                            })
+                            .catch((data) => {
+                                this.loading = false
+                                this.$notify({
+                                    type: 'error',
+                                    group: 'index_route',
+                                    title: 'Ruta',
+                                    text: 'Ha ocurrido un error al eliminar la ruta.'
+                                });
+                                this.serverErrors = data.errors || {}
+                            })
+                    }
+                })
+            },
+
             clearFilter() {
                 this.filters = cloneDeep(this.defaultFilters)
                 this.$nextTick(this.reloadTable)

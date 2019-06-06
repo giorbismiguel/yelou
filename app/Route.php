@@ -11,8 +11,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @version May 21, 2019, 8:52 pm UTC
  *
  * @property string name
- * @property float lat
- * @property float lng
+ * @property float  lat
+ * @property float  lng
  * @property string formatted_address
  */
 class Route extends Model
@@ -20,16 +20,20 @@ class Route extends Model
     use SoftDeletes;
 
     public $table = 'routes';
-    
+
 
     protected $dates = ['deleted_at'];
 
 
     public $fillable = [
         'name',
-        'lat',
-        'lng',
-        'formatted_address'
+        'lat_start',
+        'lng_start',
+        'formatted_address_start',
+        'lat_end',
+        'lng_end',
+        'formatted_address_end',
+        'user_id',
     ];
 
     /**
@@ -38,11 +42,14 @@ class Route extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'name' => 'string',
-        'lat' => 'float',
-        'lng' => 'float',
-        'formatted_address' => 'string'
+        'id'                      => 'integer',
+        'name'                    => 'string',
+        'lat_start'               => 'float',
+        'lng_start'               => 'float',
+        'formatted_address_start' => 'string',
+        'lat_end'                 => 'float',
+        'lng_end'                 => 'float',
+        'formatted_address_end'   => 'string'
     ];
 
     /**
@@ -51,10 +58,9 @@ class Route extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|max:191|min:1',
-        'lat' => 'required|numeric',
-        'lng' => 'required|numeric'
+        'name'                    => 'required|max:191|min:1',
+        'formatted_address_start' => 'required|max:191|min:1',
+        'formatted_address_end'   => 'required|max:191|min:1'
     ];
 
-    
 }

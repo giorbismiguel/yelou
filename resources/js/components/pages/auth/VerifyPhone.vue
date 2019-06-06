@@ -23,7 +23,7 @@
                                 <div class="col">
                                     <input id="code_activation" type="text" name="code_activation"
                                            v-validate="'required|length:6'" data-vv-as="Código de activación"
-                                           class="form-control" v-model.number="form.code_activation"
+                                           class="form-control" v-model.trim="form.code_activation"
                                            :class="{ 'is-invalid': submitted && (errors.has('code_activation') || serverErrors.code_activation) }">
 
                                     <div v-if="submitted && (errors.has('code_activation') || serverErrors.code_activation)"

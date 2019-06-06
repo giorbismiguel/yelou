@@ -20,6 +20,9 @@ class RouteRepository extends BaseRepository
         'lat_start',
         'lng_start',
         'formatted_address_start',
+        'lat_end',
+        'lng_end',
+        'formatted_address_end',
         'user_id',
     ];
 

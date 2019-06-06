@@ -53,8 +53,8 @@
                                     </slot>
                                 </span>
                                 <span v-if="isSorteable(column)"
-                                      class="simple-table__sort-icon --no-select float-right">
-                                    <i class="fas fa-long-arrow-alt-up"
+                                      class="simple-table__sort-icon --no-select float-right d-flex">
+                                    <i class="fas fa-long-arrow-alt-up mr-1"
                                        :class="{'active': isOrderAndSortBy(column, 'asc')}"></i>
                                     <i class="fas fa-long-arrow-alt-down"
                                        :class="{'active': isOrderAndSortBy(column, 'desc')}"></i>
@@ -355,7 +355,7 @@
 
             applyFiltersAndFetchData() {
                 this.manualCurPage = this.curPage !== 1;
-                this.appliedFilters = cloneDeep(this.filters);
+                this.appliedFilters = queryStringify.cloneDeep(this.filters);
                 this.curPage = 1;
                 this.fetchData();
             },
@@ -460,7 +460,7 @@
             },
 
             applyFiltersAndReload() {
-                this.appliedFilters = cloneDeep(this.filters)
+                this.appliedFilters = queryStringify.cloneDeep(this.filters)
                 return this.reload()
             },
 

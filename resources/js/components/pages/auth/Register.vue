@@ -403,7 +403,7 @@
                                 this.loading = false
 
                                 Swal.fire({
-                                    text: 'Para la activación  de su cuenta se enviará un código al correo y número de celular, por favor verifique los datos para registrarse.',
+                                    text: 'Para la activación  de su cuenta se enviará un código al celular, por favor verifique los datos para registrarse.',
                                     type: 'success',
                                     showCancelButton: false,
                                     confirmButtonText: 'Aceptar',

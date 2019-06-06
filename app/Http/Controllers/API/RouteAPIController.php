@@ -39,7 +39,7 @@ class RouteAPIController extends AppBaseController
             $routes,
             $request->get('page'),
             $request->get('per_page'),
-            ['id', 'name', 'formatted_address'],
+            ['id', 'name', 'formatted_address_start', 'formatted_address_end'],
             $request->get('order_by'),
             $request->get('sort_by')
         );
@@ -58,10 +58,11 @@ class RouteAPIController extends AppBaseController
     public function store(CreateRouteAPIRequest $request)
     {
         $input = $request->all();
+        $input['user_id'] = \Auth::id();
 
         $route = $this->routeRepository->create($input);
 
-        return $this->sendResponse($route->toArray(), 'La ruta ha sido actualizada');
+        return $this->sendResponse($route->toArray(), 'La ruta ha sido creada');
     }
 
     /**

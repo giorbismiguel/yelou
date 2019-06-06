@@ -4,7 +4,7 @@
         <hr>
 
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-10">
                 <div class="card m-4">
                     <div class="card-header">Nueva Ruta</div>
                     <div class="card-body">
@@ -31,24 +31,18 @@
                                     <gmap-autocomplete class="form-control" id="place_origen" name="place_origen"
                                                        @place_changed="setPlaceOrigin">
                                     </gmap-autocomplete>
-                                    <div v-if="submitted && errors.has('name')" class="invalid-feedback">
-                                        {{ errors.first('name') }}
-                                    </div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="place_destination">Destino<span class="text-danger">*</span></label>
                                     <gmap-autocomplete class="form-control" id="place_destination"
                                                        name="place_destination" @place_changed="setPlaceDestination">
                                     </gmap-autocomplete>
-                                    <div v-if="submitted && errors.has('name')" class="invalid-feedback">
-                                        {{ errors.first('name') }}
-                                    </div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'administration' }" tag="button" class="btn btn-light">
+                                    <router-link :to="{ name: 'routes' }" tag="button" class="btn btn-light">
                                         Cancelar
                                     </router-link>
                                     <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
@@ -110,15 +104,16 @@
                     if (valid) {
                         this.loading = true
                         this.serverErrors = {}
+
                         this.form.lat_start = this.placeOrigin.geometry.location.lat()
                         this.form.lng_start = this.placeOrigin.geometry.location.lng()
                         this.form.formatted_address_start = this.placeOrigin.formatted_address
 
                         this.form.lat_end = this.placeDestination.geometry.location.lat()
-                        form.lng_end = this.placeDestination.geometry.location.lng()
-                        form.formatted_address_end = this.placeOrigin.formatted_address
+                        this.form.lng_end = this.placeDestination.geometry.location.lng()
+                        this.form.formatted_address_end = this.placeDestination.formatted_address
 
-                        this.create(this.form)
+                        this.createRoute(this.form)
                             .then(() => {
                                 this.loading = false
                                 this.$notify({
@@ -127,6 +122,8 @@
                                     title: 'Ruta',
                                     text: 'Se ha adicionado la ruta correctamente'
                                 });
+
+                                this.$router.replace('/rutas')
                             })
                             .catch((data) => {
                                 this.loading = false
