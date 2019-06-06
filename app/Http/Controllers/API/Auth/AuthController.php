@@ -99,7 +99,10 @@ class AuthController extends Controller
 //            'text' => __('app.message_code_activation', ['code' => $codeActivation])
 //        ]);
 
-        return ['user' => null];
+        return [
+            'success' => true,
+            'message' => 'Para la activación  de su cuenta se enviará un código al celular, por favor verifique los datos para registrarse.',
+        ];
     }
 
     /**
@@ -120,7 +123,10 @@ class AuthController extends Controller
         /** @var User $user */
         $user->setVerifiedAt();
 
-        return ['active' => true];
+        return [
+            'success' => true,
+            'active'  => true,
+        ];
     }
 
     public function newActivationCode(Request $request)
@@ -141,7 +147,10 @@ class AuthController extends Controller
             'text' => __('app.message_code_activation', ['code' => $codeActivation])
         ]);
 
-        return ['message_send' => true];
+        return [
+            'success'      => true,
+            'message_send' => true
+        ];
     }
 
     /**
