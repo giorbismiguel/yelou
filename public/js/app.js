@@ -4343,6 +4343,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4374,7 +4377,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       imageCertificateBackground: null,
       serverErrors: {},
       submitted: false,
-      loading: false
+      loading: false,
+      direction: {}
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -4438,6 +4442,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           });
         }
       });
+    },
+    setDirection: function setDirection(place) {
+      var that = this;
+      this.form.city = null;
+      this.form.city = null;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var address = _step.value;
+          Object.keys(address).forEach(function (prop) {
+            if (prop === 'types') {
+              address['types'].forEach(function (propType) {
+                if (propType === 'locality') {
+                  that.form.city = address.long_name;
+                }
+
+                if (propType === 'postal_code') {
+                  that.form.postal_code = address.long_name;
+                }
+              });
+            }
+          });
+        };
+
+        for (var _iterator = place.address_components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
     },
     onPhotoSelected: function onPhotoSelected(event) {
       this.selectedPhoto = event.target.files[0];
@@ -64730,54 +64778,38 @@ var render = function() {
                     [_vm._v("Dirección")]
                   ),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "validate",
-                          rawName: "v-validate",
-                          value: "max:191",
-                          expression: "'max:191'"
+                  _c(
+                    "div",
+                    { staticClass: "col" },
+                    [
+                      _c("gmap-autocomplete", {
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid":
+                            _vm.submitted && _vm.serverErrors.direction
                         },
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.form.direction,
-                          expression: "form.direction"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      class: {
-                        "is-invalid":
-                          _vm.submitted && _vm.errors.has("direction")
-                      },
-                      attrs: {
-                        "data-vv-as": "Dirección",
-                        id: "direction",
-                        name: "direction",
-                        type: "text"
-                      },
-                      domProps: { value: _vm.form.direction },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.$set(_vm.form, "direction", $event.target.value)
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _vm.submitted && _vm.errors.has("direction")
-                      ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.errors.first("direction")) +
-                              "\n                                "
+                        attrs: { id: "direction", name: "direction" },
+                        on: { place_changed: _vm.setDirection }
+                      }),
+                      _vm._v(" "),
+                      _vm.submitted &&
+                      (_vm.serverErrors.direction || _vm.serverErrors.direction)
+                        ? _c(
+                            "div",
+                            { staticClass: "invalid-feedback" },
+                            [
+                              _vm._l(_vm.serverErrors.direction, function(
+                                error
+                              ) {
+                                return [_vm._v(_vm._s(error))]
+                              })
+                            ],
+                            2
                           )
-                        ])
-                      : _vm._e()
-                  ])
+                        : _vm._e()
+                    ],
+                    1
+                  )
                 ]),
                 _vm._v(" "),
                 _vm.form.type === 1

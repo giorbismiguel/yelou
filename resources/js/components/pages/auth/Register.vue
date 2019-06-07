@@ -25,7 +25,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="email" class="col control-label">Correo electrónico <span class="text-danger">*</span></label>
+                                <label for="email" class="col control-label">Correo electrónico <span
+                                        class="text-danger">*</span></label>
                                 <div class="col">
                                     <input v-model="form.email" v-validate="'required|email|max:191'"
                                            data-vv-as="Correo electrónico" id="email" name="email" type="email"
@@ -41,7 +42,8 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="password" class="col control-label">Contraseña <span class="text-danger">*</span></label>
+                                <label for="password" class="col control-label">Contraseña <span
+                                        class="text-danger">*</span></label>
                                 <div class="col">
                                     <input v-model="form.password" v-validate="'required|min:6|max:20'"
                                            data-vv-as="Contraseña" id="password" type="password" name="password"
@@ -142,13 +144,14 @@
                             <div class="form-group">
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
-                                    <input v-validate="'max:191'" data-vv-as="Dirección" id="direction"
-                                           name="direction" type="text" class="form-control" v-model="form.direction"
-                                           :class="{ 'is-invalid': submitted && errors.has('direction') }">
+                                    <gmap-autocomplete class="form-control" id="direction" name="direction"
+                                                       @place_changed="setDirection"
+                                                       :class="{ 'is-invalid': submitted && serverErrors.direction }">
+                                    </gmap-autocomplete>
 
-                                    <div v-if="submitted && errors.has('direction')"
+                                    <div v-if="submitted && (serverErrors.direction || serverErrors.direction)"
                                          class="invalid-feedback">
-                                        {{ errors.first('direction') }}
+                                        <template v-for="error in serverErrors.direction">{{ error }}</template>
                                     </div>
                                 </div>
                             </div>
@@ -347,6 +350,7 @@
                 serverErrors: {},
                 submitted: false,
                 loading: false,
+                direction: {},
             }
         },
 
@@ -417,6 +421,28 @@
                             })
                     }
                 });
+            },
+
+            setDirection(place) {
+                let that = this
+                this.form.city = null
+                this.form.city = null
+
+                for (let address  of place.address_components) {
+                    Object.keys(address).forEach(function (prop) {
+                        if (prop === 'types') {
+                            address['types'].forEach(function (propType) {
+                                if (propType === 'locality') {
+                                    that.form.city = address.long_name
+                                }
+
+                                if (propType === 'postal_code') {
+                                    that.form.postal_code = address.long_name
+                                }
+                            })
+                        }
+                    })
+                }
             },
 
             onPhotoSelected(event) {
