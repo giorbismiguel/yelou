@@ -6,7 +6,9 @@
 
         <template v-else v-cloak>
             <navbar></navbar>
+
             <router-view></router-view>
+
             <feet></feet>
         </template>
     </section>

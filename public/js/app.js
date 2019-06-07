@@ -1784,6 +1784,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5235,6 +5237,16 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -10384,7 +10396,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\nsection[data-v-abf9c850] {\n    width: 1116px;\n    height: 428px;\n}\n", ""]);
+exports.push([module.i, "\nsection[data-v-abf9c850] {\n    width: 100%;\n    height: 428px;\n}\n.thumbnail[data-v-abf9c850] {\n    position: relative;\n}\n.caption[data-v-abf9c850] {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n.caption h3[data-v-abf9c850] {\n    color: rgb(255, 255, 255);\n    font-family: Montserrat-Bold;\n    font-size: 2em;\n    font-weight: bold;\n    height: 78px;\n    text-align: center;\n    width: 453px;\n}\n.caption p[data-v-abf9c850] {\n    width: 356px;\n    height: 76px;\n    color: rgb(255, 255, 255);\n    font-size: 1em;\n    font-family: Montserrat-Regular;\n    font-weight: normal;\n    text-align: center;\n    margin-left: .5em;\n}\n", ""]);
 
 // exports
 
@@ -66760,9 +66772,36 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("section", [_vm._v("\n    Professional\n")])
+  return _vm._m(0)
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("section", [
+      _c("div", { staticClass: "thumbnail" }, [
+        _c("img", {
+          staticClass: "img-fluid",
+          attrs: {
+            src: "/img/slide_inferior.png",
+            alt: "La profesionalidad es nuestra maxima a diario"
+          }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "caption" }, [
+          _c("h3", [_vm._v("La profesionalidad es nuestra maxima a diario")]),
+          _vm._v(" "),
+          _c("p", { staticClass: "ml-5" }, [
+            _vm._v(
+              "\n                La seguridad de nuestros clientes es el principal objetivo de nuestra empresa.\n                Ellos lo agradecen confiando en la calidad del servicio.\n            "
+            )
+          ])
+        ])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
