@@ -13,7 +13,7 @@
 
 Route::get('/admin', 'HomeController@index');
 
-Route::group(['prefix' => 'admin'], function () {
+Route::prefix('admin')->group(function () {
     Auth::routes();
 
     Route::resource('transportationStates', 'Admin\TransportationStatesController', ["as" => 'admin']);

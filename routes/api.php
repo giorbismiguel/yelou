@@ -56,17 +56,22 @@ Route::prefix('v1')->group(function () {
     Route::middleware('auth:api')
         ->group(function () {
             /*
+             * User Area
+             */
+            Route::get('user/me', 'UserAPIController@me')->name('me');
+            Route::post('/update/password', 'UserAPIController@updatePassword')->name('update_password');
+            Route::post('users/{user}', 'UserAPIController@update')->name('users.update.post');
+            Route::resource('users', 'UserAPIController');
+
+            /*
              * Client Area
              */
             Route::resource('routes', 'RouteAPIController');
 
             /*
-             * Area
+             * Transportation Area
              */
-            Route::get('user/me', 'UserAPIController@me')->name('me');
-            Route::post('/update/password', 'UserAPIController@updatePassword')->name('update_password');
-            Route::post('users/{user}', 'UserAPIController@update');
-            Route::resource('users', 'UserAPIController');
+            Route::resource('transportation_availables', 'TransportationAvailableAPIController');
 
             /*
              * Admin Area
