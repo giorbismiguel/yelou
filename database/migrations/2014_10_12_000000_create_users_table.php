@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->string('ruc');
             $table->string('direction')->nullable()->default(null);
 
-            $table->boolean('type')->default(null); // 1- Client 2- Transportation
+            $table->boolean('type')->default(null); // 1- Client 2- Transportation 3- Admin
 
             // Client
             $table->string('city')->nullable()->default(null);

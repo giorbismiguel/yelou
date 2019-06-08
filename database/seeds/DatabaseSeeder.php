@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Seeder;
 
@@ -21,8 +22,16 @@ class DatabaseSeeder extends Seeder
 
         $this->call(LicenseTypesSeeder::class);
 
+        factory(User::class)->state('administrator')->create([
+            'name'              => 'Super Administrador',
+            'email'             => 'super_administrator@yelou.com',
+            'password'          => bcrypt('Yelou20*-+/19'),
+            'first_name'        => 'Super Administrador',
+            'phone_verified_at' => today(),
+        ]);
+
         if ($originalEnv !== 'production') {
-            $this->call(RouteSeeder::class);
+            $this->call(UserSeeder::class);
         }
 
         DB::statement('SET FOREIGN_KEY_CHECKS = 1');
