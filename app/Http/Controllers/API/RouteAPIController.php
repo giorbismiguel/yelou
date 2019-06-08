@@ -66,15 +66,14 @@ class RouteAPIController extends AppBaseController
     }
 
     /**
-     * Display the specified Route.
-     * GET|HEAD /routes/{id}
-     *
-     * @param int $id
-     *
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
+        $this->authorize('view', $this->routeRepository->find($id));
+
         /** @var Route $route */
         $route = $this->routeRepository->find($id);
 
@@ -89,13 +88,15 @@ class RouteAPIController extends AppBaseController
      * Update the specified Route in storage.
      * PUT/PATCH /routes/{id}
      *
-     * @param int                   $id
+     * @param                       $id
      * @param UpdateRouteAPIRequest $request
-     *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update($id, UpdateRouteAPIRequest $request)
     {
+        $this->authorize('update', $this->routeRepository->find($id));
+
         $input = $request->all();
 
         /** @var Route $route */
@@ -122,6 +123,8 @@ class RouteAPIController extends AppBaseController
      */
     public function destroy($id)
     {
+        $this->authorize('delete', $this->routeRepository->find($id));
+
         /** @var Route $route */
         $route = $this->routeRepository->find($id);
 
