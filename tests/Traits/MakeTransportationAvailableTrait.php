@@ -1,7 +1,7 @@
 <?php namespace Tests\Traits;
 
 use Faker\Factory as Faker;
-use App\Models\TransportationAvailable;
+use App\TransportationAvailable;
 use App\Repositories\TransportationAvailableRepository;
 
 trait MakeTransportationAvailableTrait

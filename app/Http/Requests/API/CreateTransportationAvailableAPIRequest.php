@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\TransportationAvailable;
+use App\TransportationAvailable;
 use InfyOm\Generator\Request\APIRequest;
 
 class CreateTransportationAvailableAPIRequest extends APIRequest
@@ -25,5 +25,18 @@ class CreateTransportationAvailableAPIRequest extends APIRequest
     public function rules()
     {
         return TransportationAvailable::$rules;
+    }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'lat'     => 'Latitud',
+            'lng'     => 'Longitud',
+            'active'  => 'Activado',
+            'user_id' => 'Identificador de usuario',
+        ];
     }
 }

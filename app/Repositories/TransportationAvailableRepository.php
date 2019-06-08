@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\TransportationAvailable;
+use App\TransportationAvailable;
 
 /**
  * Class TransportationAvailableRepository

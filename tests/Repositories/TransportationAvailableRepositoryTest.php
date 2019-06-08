@@ -1,6 +1,6 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\TransportationAvailable;
+use App\TransportationAvailable;
 use App\Repositories\TransportationAvailableRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

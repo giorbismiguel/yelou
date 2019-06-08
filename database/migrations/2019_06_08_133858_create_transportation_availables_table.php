@@ -18,7 +18,7 @@ class CreateTransportationAvailablesTable extends Migration
             $table->double('lat');
             $table->double('lng');
             $table->boolean('active')->default(0);
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->unique();
             $table->foreign('user_id')
                 ->references('id')
                 ->on('users')
@@ -26,7 +26,6 @@ class CreateTransportationAvailablesTable extends Migration
                 ->onUpdate('no action');
 
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

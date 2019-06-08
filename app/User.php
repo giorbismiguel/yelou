@@ -3,12 +3,10 @@
 namespace App;
 
 use App\Models\LicenseTypes;
-use App\Models\TransportationAvailable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Laravel\Passport\HasApiTokens;
 
@@ -64,6 +62,7 @@ class User extends Authenticatable
 
     protected $with = [
         'license',
+        'transportationAvailable',
     ];
 
     /* ========================================================================= *\
@@ -81,7 +80,7 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function available(): HasOne
+    public function transportationAvailable(): HasOne
     {
         return $this->hasOne(TransportationAvailable::class);
     }

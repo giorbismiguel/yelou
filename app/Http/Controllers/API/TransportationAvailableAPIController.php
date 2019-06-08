@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateTransportationAvailableAPIRequest;
 use App\Http\Requests\API\UpdateTransportationAvailableAPIRequest;
-use App\Models\TransportationAvailable;
+use App\TransportationAvailable;
 use App\Repositories\TransportationAvailableRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
@@ -14,7 +14,6 @@ use Response;
  * Class TransportationAvailableController
  * @package App\Http\Controllers\API
  */
-
 class TransportationAvailableAPIController extends AppBaseController
 {
     /** @var  TransportationAvailableRepository */
@@ -40,16 +39,15 @@ class TransportationAvailableAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($transportationAvailables->toArray(), 'Transportation Availables retrieved successfully');
+        return $this->sendResponse(
+            $transportationAvailables->toArray(),
+            'Puntos de los transportistas Obtenidos'
+        );
     }
 
     /**
-     * Store a newly created TransportationAvailable in storage.
-     * POST /transportationAvailables
-     *
      * @param CreateTransportationAvailableAPIRequest $request
-     *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(CreateTransportationAvailableAPIRequest $request)
     {
@@ -57,52 +55,53 @@ class TransportationAvailableAPIController extends AppBaseController
 
         $transportationAvailable = $this->transportationAvailableRepository->create($input);
 
-        return $this->sendResponse($transportationAvailable->toArray(), 'Transportation Available saved successfully');
+        return $this->sendResponse($transportationAvailable->toArray(), 'Punto de disponibilidad del transportista creado');
     }
 
     /**
-     * Display the specified TransportationAvailable.
-     * GET|HEAD /transportationAvailables/{id}
-     *
-     * @param int $id
-     *
-     * @return Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show($id)
     {
+        $this->authorize('view', $this->transportationAvailableRepository->find($id));
+
         /** @var TransportationAvailable $transportationAvailable */
         $transportationAvailable = $this->transportationAvailableRepository->find($id);
 
         if (empty($transportationAvailable)) {
-            return $this->sendError('Transportation Available not found');
+            return $this->sendError('Punto de disponibilidad del transportista no encontrado');
         }
 
-        return $this->sendResponse($transportationAvailable->toArray(), 'Transportation Available retrieved successfully');
+        return $this->sendResponse(
+            $transportationAvailable->toArray(),
+            'Punto de disponibilidad del transportista Obtenido satisfactoriamente'
+        );
     }
 
     /**
-     * Update the specified TransportationAvailable in storage.
-     * PUT/PATCH /transportationAvailables/{id}
-     *
-     * @param int $id
+     * @param                                         $id
      * @param UpdateTransportationAvailableAPIRequest $request
-     *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function update($id, UpdateTransportationAvailableAPIRequest $request)
     {
+        $this->authorize('update', $this->transportationAvailableRepository->find($id));
+
         $input = $request->all();
 
         /** @var TransportationAvailable $transportationAvailable */
         $transportationAvailable = $this->transportationAvailableRepository->find($id);
 
         if (empty($transportationAvailable)) {
-            return $this->sendError('Transportation Available not found');
+            return $this->sendError('Punto de disponibilidad del transportista no encontrado');
         }
 
         $transportationAvailable = $this->transportationAvailableRepository->update($input, $id);
 
-        return $this->sendResponse($transportationAvailable->toArray(), 'TransportationAvailable updated successfully');
+        return $this->sendResponse($transportationAvailable->toArray(), 'Punto de disponibilidad del transportista actualizado');
     }
 
     /**
@@ -117,15 +116,17 @@ class TransportationAvailableAPIController extends AppBaseController
      */
     public function destroy($id)
     {
+        $this->authorize('forceDelete', $this->transportationAvailableRepository->find($id));
+
         /** @var TransportationAvailable $transportationAvailable */
         $transportationAvailable = $this->transportationAvailableRepository->find($id);
 
         if (empty($transportationAvailable)) {
-            return $this->sendError('Transportation Available not found');
+            return $this->sendError('Punto de disponibilidad del transportista no encontrado');
         }
 
-        $transportationAvailable->delete();
+        $transportationAvailable->forceDelete();
 
-        return $this->sendResponse($id, 'Transportation Available deleted successfully');
+        return $this->sendResponse($id, 'Punto de disponibilidad del transportista eliminado');
     }
 }

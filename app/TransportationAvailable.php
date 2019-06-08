@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
-use App\User;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,7 +18,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class TransportationAvailable extends Model
 {
-    use SoftDeletes;
 
     public $table = 'transportation_availables';
 
@@ -53,8 +51,8 @@ class TransportationAvailable extends Model
     public static $rules = [
         'lat'     => 'required|numeric',
         'lng'     => 'required|numeric',
-        'active'  => 'required',
-        'user_id' => 'required|integer'
+        'active'  => 'required|boolean',
+        'user_id' => 'required|integer|unique:transportation_availables'
     ];
 
     /* ========================================================================= *\

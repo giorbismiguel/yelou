@@ -2,7 +2,8 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\TransportationAvailable;
+use App\TransportationAvailable;
+use Illuminate\Validation\Rule;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateTransportationAvailableAPIRequest extends APIRequest
@@ -24,6 +25,36 @@ class UpdateTransportationAvailableAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return TransportationAvailable::$rules;
+        $rules = TransportationAvailable::$rules;
+
+        $rules['user_id'] = [
+            'required',
+            'integer',
+            Rule::unique('transportation_availables', 'user_id')->ignore((int) $this->route('transportation_available')),
+        ];
+
+        return $rules;
     }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'lat'     => 'Latitud',
+            'lng'     => 'Longitud',
+            'active'  => 'Activado',
+            'user_id' => 'Identificador de usuario',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'user_id.unique' => 'El transportista ya tiene punto de disponibilidad',
+        ];
+    }
+
+
 }
