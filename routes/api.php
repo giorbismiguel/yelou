@@ -79,6 +79,7 @@ Route::prefix('v1')->group(function () {
             Route::prefix('admin')
                 ->group(function () {
                     Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
+                    Route::resource('payment_methods', 'Admin\PaymentMethodAPIController');
                 });
         });
 

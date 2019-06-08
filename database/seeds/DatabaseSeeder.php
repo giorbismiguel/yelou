@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         DB::statement('SET FOREIGN_KEY_CHECKS = 0');
 
         $this->call(LicenseTypesSeeder::class);
+        $this->call(PaymentMethodSeeder::class);
 
         factory(User::class)->state('administrator')->create([
             'name'              => 'Super Administrador',
