@@ -3,7 +3,10 @@
 namespace App;
 
 use App\Models\LicenseTypes;
+use App\Models\TransportationAvailable;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -70,9 +73,17 @@ class User extends Authenticatable
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function license(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    public function license(): BelongsTo
     {
         return $this->belongsTo(LicenseTypes::class, 'license_types_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function available(): HasOne
+    {
+        return $this->hasOne(TransportationAvailable::class);
     }
 
     /* ========================================================================= *\
@@ -109,6 +120,9 @@ class User extends Authenticatable
         return $query->whereNotNull('phone_verified_at');
     }
 
+    /**
+     * @return bool
+     */
     public function setVerifiedAt()
     {
         return $this->update([

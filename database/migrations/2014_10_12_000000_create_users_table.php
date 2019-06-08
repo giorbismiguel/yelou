@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('direction')->nullable()->default(null);
 
             $table->boolean('type')->default(null); // 1- Client 2- Transportation
+
             // Client
             $table->string('city')->nullable()->default(null);
             $table->string('postal_code')->nullable()->default(null);
