@@ -96,3 +96,5 @@ Route::prefix('v1')->group(function () {
                 ->name('get');
         });
 });
+
+Route::resource('request_services', 'RequestServicesAPIController');
