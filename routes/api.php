@@ -67,6 +67,7 @@ Route::prefix('v1')->group(function () {
              * Client Area
              */
             Route::resource('routes', 'RouteAPIController');
+            Route::resource('request_services', 'RequestServicesAPIController');
 
             /*
              * Transportation Area
@@ -96,5 +97,3 @@ Route::prefix('v1')->group(function () {
                 ->name('get');
         });
 });
-
-Route::resource('request_services', 'RequestServicesAPIController');

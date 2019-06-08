@@ -26,4 +26,39 @@ class CreateRequestServicesAPIRequest extends APIRequest
     {
         return RequestServices::$rules;
     }
+
+    /**
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'name_start'        => 'Origen',
+            'lat_start'         => 'Origen',
+            'lng_start'         => 'Origen',
+            'name_end'          => 'Destino',
+            'lat_end'           => 'Origen',
+            'lng_end'           => 'Origen',
+            'start_time'        => 'Hora de Inicio',
+            'route_id'          => 'Envío de Rutas',
+            'payment_method_id' => 'Medio de pago'
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'lat_start.required' => 'Vuelva a seleccionar el origen, no se ha enviado correctamente',
+            'lng_start.required' => 'Vuelva a seleccionar el origen, no se ha enviado correctamente',
+            'lat_end.required'   => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
+            'lng_end.required'   => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
+            'lat_start.numeric'  => 'Vuelva a seleccionar el origen, no se ha enviado correctamente',
+            'lng_start.numeric'  => 'Vuelva a seleccionar el origen, no se ha enviado correctamente',
+            'lat_end.numeric'    => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
+            'lng_end.numeric'    => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
+        ];
+    }
 }

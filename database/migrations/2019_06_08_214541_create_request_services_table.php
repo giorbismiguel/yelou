@@ -14,16 +14,32 @@ class CreateRequestServicesTable extends Migration
     public function up()
     {
         Schema::create('request_services', function (Blueprint $table) {
-            $table->increments('id');
-            $table->unsignedBigInteger('route_id');
+            $table->bigIncrements('id');
+
             $table->string('name_start');
             $table->double('lat_start');
             $table->double('lng_start');
+
             $table->string('name_end');
             $table->double('lat_end');
             $table->double('lng_end');
+
             $table->datetime('start_time');
+
             $table->unsignedBigInteger('payment_method_id');
+            $table->foreign('payment_method_id')
+                ->references('id')
+                ->on('payment_methods')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->unsignedBigInteger('route_id')->nullable();
+            $table->foreign('route_id')
+                ->references('id')
+                ->on('routes')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
             $table->timestamps();
             $table->softDeletes();
         });

@@ -2,7 +2,10 @@
 
 namespace App\Models;
 
+use App\Models\Admin\PaymentMethod;
+use App\Route;
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -10,25 +13,23 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @package App\Models
  * @version June 8, 2019, 9:45 pm UTC
  *
- * @property unsignedBigInteger route_id
- * @property string name_start
- * @property float lat_start
- * @property float lng_start
- * @property string name_end
- * @property float lat_end
- * @property float lng_end
+ * @property unsignedBigInteger    route_id
+ * @property string                name_start
+ * @property float                 lat_start
+ * @property float                 lng_start
+ * @property string                name_end
+ * @property float                 lat_end
+ * @property float                 lng_end
  * @property string|\Carbon\Carbon start_time
- * @property unsignedBigInteger payment_method_id
+ * @property unsignedBigInteger    payment_method_id
  */
 class RequestServices extends Model
 {
     use SoftDeletes;
 
     public $table = 'request_services';
-    
 
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'route_id',
@@ -48,13 +49,13 @@ class RequestServices extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
+        'id'         => 'integer',
         'name_start' => 'string',
-        'lat_start' => 'double',
-        'lng_start' => 'double',
-        'name_end' => 'string',
-        'lat_end' => 'double',
-        'lng_end' => 'double',
+        'lat_start'  => 'double',
+        'lng_start'  => 'double',
+        'name_end'   => 'string',
+        'lat_end'    => 'double',
+        'lng_end'    => 'double',
         'start_time' => 'datetime'
     ];
 
@@ -64,16 +65,34 @@ class RequestServices extends Model
      * @var array
      */
     public static $rules = [
-        'route_id' => 'required|integer',
-        'name_start' => 'required|min:1|max:191',
-        'lat_start' => 'required|numeric',
-        'lng_start' => 'required|numeric',
-        'name_end' => 'required|min:1|max:191',
-        'lat_end' => 'required|numeric',
-        'lng_end' => 'required|numeric',
-        'start_time' => 'required|date',
+        'route_id'          => 'nullable|integer',
+        'start_time'        => 'required|date_format:Y-m-d H:i:s|after:now',
+        'name_start'        => 'required|min:1|max:191',
+        'lat_start'         => 'required|numeric',
+        'lng_start'         => 'required|numeric',
+        'name_end'          => 'required|min:1|max:191',
+        'lat_end'           => 'required|numeric',
+        'lng_end'           => 'required|numeric',
         'payment_method_id' => 'required|integer'
     ];
 
-    
+    /* ========================================================================= *\
+     * Relations
+    \* ========================================================================= */
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function route(): BelongsTo
+    {
+        return $this->belongsTo(Route::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function paymentMethod(): BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
 }

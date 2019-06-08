@@ -57,7 +57,7 @@ class RequestServicesAPIController extends AppBaseController
 
         $requestServices = $this->requestServicesRepository->create($input);
 
-        return $this->sendResponse($requestServices->toArray(), 'Request Services saved successfully');
+        return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio creada');
     }
 
     /**
