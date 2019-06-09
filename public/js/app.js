@@ -3824,6 +3824,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -3833,6 +3836,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   data: function data() {
     return {
       loadingView: true,
+      routeSelected: true,
       form: {
         route_id: null,
         name_start: null,
@@ -3856,9 +3860,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       submitted: false,
       loading: false,
-      placeOrigin: null,
-      placeDestination: null,
-      serverErrors: {}
+      origenRequestService: null,
+      destinationRequestService: null,
+      serverErrors: {},
+      route: null
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -3866,13 +3871,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return state.auth.me;
     },
     lists: function lists(state) {
-      return state.nomenclators.listsPaymentMethod ? state.nomenclators.listsPaymentMethod : {
+      return state.nomenclators.listsRequestServices ? state.nomenclators.listsRequestServices : {
         'paymentMethods': [],
         'userRoutes': []
       };
     }
   })),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['nomenclatorsPaymentMethod', 'createRequestService']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['nomenclatorsRequestServices', 'createRequestService']), {
     onSubmit: function onSubmit() {
       var _this = this;
 
@@ -3882,16 +3887,25 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.loading = true;
           _this.serverErrors = {};
 
-          if (_this.placeOrigin) {
-            _this.form.lat_start = _this.placeOrigin.geometry.location.lat();
-            _this.form.lng_start = _this.placeOrigin.geometry.location.lng();
-            _this.form.name_start = _this.placeOrigin.formatted_address;
-          }
+          if (_this.route) {
+            _this.form.name_start = _this.route.formatted_address_start;
+            _this.form.lat_start = _this.route.lat_start;
+            _this.form.lng_start = _this.route.lng_start;
+            _this.form.name_end = _this.route.formatted_address_end;
+            _this.form.lat_end = _this.route.lat_end;
+            _this.form.lng_end = _this.route.lng_end;
+          } else {
+            if (_this.origenRequestService) {
+              _this.form.lat_start = _this.origenRequestService.geometry.location.lat();
+              _this.form.lng_start = _this.origenRequestService.geometry.location.lng();
+              _this.form.name_start = _this.origenRequestService.formatted_address;
+            }
 
-          if (_this.placeDestination) {
-            _this.form.lat_end = _this.placeDestination.geometry.location.lat();
-            _this.form.lng_end = _this.placeDestination.geometry.location.lng();
-            _this.form.name_end = _this.placeDestination.formatted_address;
+            if (_this.destinationRequestService) {
+              _this.form.lat_end = _this.destinationRequestService.geometry.location.lat();
+              _this.form.lng_end = _this.destinationRequestService.geometry.location.lng();
+              _this.form.name_end = _this.destinationRequestService.formatted_address;
+            }
           }
 
           _this.createRequestService(_this.form).then(function () {
@@ -3920,20 +3934,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
-    setPlaceOrigin: function setPlaceOrigin(place) {
-      this.placeOrigin = place;
+    setOrigenRequestServices: function setOrigenRequestServices(place) {
+      console.log(place);
+      this.origenRequestService = place;
     },
-    setPlaceDestination: function setPlaceDestination(place) {
-      this.placeDestination = place;
+    setDestinationRequestServices: function setDestinationRequestServices(place) {
+      console.log(place);
+      this.destinationRequestService = place;
     }
   }),
+  watch: {
+    'form.route_id': function formRoute_id(id) {
+      if (id) {
+        var route = this.lists.userRoutes.filter(function (route) {
+          return route.id === id;
+        });
+        this.route = route[0];
+        this.routeSelected = false;
+        this.origenRequestService = null;
+        this.destinationRequestService = null;
+        return;
+      }
+
+      this.route = null;
+      this.routeSelected = true;
+    }
+  },
   components: {
     DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a,
     Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a,
     BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   created: function created() {
-    this.nomenclatorsPaymentMethod();
+    this.nomenclatorsRequestServices();
   },
   mounted: function mounted() {
     this.loadingView = false;
@@ -3961,6 +3994,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -4056,7 +4091,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.serverErrors = {};
       sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
-        title: 'Esta seguro que desea eliminar la ruta?',
+        title: 'Esta seguro que desea eliminar el ?',
         text: 'Puedes cancelar la operación',
         type: 'warning',
         showCancelButton: true,
@@ -64293,93 +64328,117 @@ var render = function() {
                         1
                       ),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-row form-group" },
-                        [
-                          _c("label", { attrs: { for: "place_origen" } }, [
-                            _vm._v("Origen"),
-                            _c("span", { staticClass: "text-danger" }, [
-                              _vm._v("*")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("gmap-autocomplete", {
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid":
-                                _vm.submitted &&
-                                (_vm.serverErrors.lat_start ||
-                                  _vm.serverErrors.lng_start)
-                            },
-                            attrs: { id: "place_origen", name: "place_origen" },
-                            on: { place_changed: _vm.setPlaceOrigin }
-                          }),
-                          _vm._v(" "),
-                          _vm.submitted &&
-                          (_vm.serverErrors.lat_start ||
-                            _vm.serverErrors.lng_start)
-                            ? _c(
-                                "div",
-                                { staticClass: "invalid-feedback" },
+                      _vm.routeSelected
+                        ? _c(
+                            "div",
+                            { staticClass: "form-row form-group" },
+                            [
+                              _c(
+                                "label",
+                                { attrs: { for: "origen_request_services" } },
                                 [
-                                  _vm._l(_vm.serverErrors.lat_start, function(
-                                    error
-                                  ) {
-                                    return [_vm._v(_vm._s(error))]
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      ),
+                                  _vm._v("Origen"),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v("*")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("gmap-autocomplete", {
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.submitted &&
+                                    (_vm.serverErrors.lat_start ||
+                                      _vm.serverErrors.lng_start)
+                                },
+                                attrs: {
+                                  id: "origen_request_services",
+                                  name: "origen_request_services"
+                                },
+                                on: {
+                                  place_changed: _vm.setOrigenRequestServices
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.submitted &&
+                              (_vm.serverErrors.lat_start ||
+                                _vm.serverErrors.lng_start)
+                                ? _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm._l(
+                                        _vm.serverErrors.lat_start,
+                                        function(error) {
+                                          return [_vm._v(_vm._s(error))]
+                                        }
+                                      )
+                                    ],
+                                    2
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("label", { attrs: { for: "place_destination" } }, [
-                            _vm._v("Destino"),
-                            _c("span", { staticClass: "text-danger" }, [
-                              _vm._v("*")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("gmap-autocomplete", {
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid":
-                                _vm.submitted &&
-                                (_vm.serverErrors.lat_end ||
-                                  _vm.serverErrors.lng_end)
-                            },
-                            attrs: {
-                              id: "place_destination",
-                              name: "place_destination"
-                            },
-                            on: { place_changed: _vm.setPlaceDestination }
-                          }),
-                          _vm._v(" "),
-                          _vm.submitted &&
-                          (_vm.serverErrors.lat_end || _vm.serverErrors.lng_end)
-                            ? _c(
-                                "div",
-                                { staticClass: "invalid-feedback" },
+                      _vm.routeSelected
+                        ? _c(
+                            "div",
+                            { staticClass: "form-group" },
+                            [
+                              _c(
+                                "label",
+                                {
+                                  attrs: { for: "destination_request_services" }
+                                },
                                 [
-                                  _vm._l(_vm.serverErrors.lat_end, function(
-                                    error
-                                  ) {
-                                    return [_vm._v(_vm._s(error))]
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      ),
+                                  _vm._v("Destino"),
+                                  _c("span", { staticClass: "text-danger" }, [
+                                    _vm._v("*")
+                                  ])
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c("gmap-autocomplete", {
+                                staticClass: "form-control",
+                                class: {
+                                  "is-invalid":
+                                    _vm.submitted &&
+                                    (_vm.serverErrors.lat_end ||
+                                      _vm.serverErrors.lng_end)
+                                },
+                                attrs: {
+                                  id: "destination_request_services",
+                                  name: "destination_request_services"
+                                },
+                                on: {
+                                  place_changed:
+                                    _vm.setDestinationRequestServices
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.submitted &&
+                              (_vm.serverErrors.lat_end ||
+                                _vm.serverErrors.lng_end)
+                                ? _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm._l(_vm.serverErrors.lat_end, function(
+                                        error
+                                      ) {
+                                        return [_vm._v(_vm._s(error))]
+                                      })
+                                    ],
+                                    2
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        : _vm._e(),
                       _vm._v(" "),
                       _c(
                         "div",
@@ -64464,7 +64523,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\n                                    Adicionar\n                                "
+                                  "\n                                    Solicitar Servicio\n                                "
                                 )
                               ]
                             ),
@@ -64539,35 +64598,26 @@ var render = function() {
                 on: { clearFilters: _vm.clearFilter },
                 scopedSlots: _vm._u([
                   {
+                    key: "payment_method_id",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(row.payment_method.name) +
+                            "\n                "
+                        )
+                      ]
+                    }
+                  },
+                  {
                     key: "actions",
                     fn: function(ref) {
                       var row = ref.row
                       return _c("ye-actions", { staticClass: "text-center" }, [
-                        _c(
-                          "li",
-                          [
-                            _c(
-                              "router-link",
-                              {
-                                staticClass: "dropdown-item",
-                                attrs: {
-                                  to: {
-                                    name: "services_edit",
-                                    params: { id: row.id }
-                                  },
-                                  title: "Edit"
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fas fa-pen-square" }),
-                                _vm._v(
-                                  "\n                            Editar\n                        "
-                                )
-                              ]
-                            )
-                          ],
-                          1
-                        ),
+                        false
+                          ? undefined
+                          : _vm._e(),
                         _vm._v(" "),
                         _c("li", [
                           _c(
@@ -64596,8 +64646,9 @@ var render = function() {
               },
               [
                 _c("template", { slot: "table-title" }, [
-                  _vm._v("Todos los servicios disponibles")
+                  _vm._v("Todos los servicios que fueron solicitados")
                 ]),
+                _vm._v(" "),
                 _vm._v(" "),
                 _vm._v(" "),
                 _c(
@@ -64612,7 +64663,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "\n                        Adicionar\n                    "
+                          "\n                        Solicitar Servicio\n                    "
                         )
                       ]
                     )
@@ -92230,7 +92281,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   lists: [],
-  listsPaymentMethod: []
+  listsRequestServices: []
 };
 var actions = {
   nomenclators: function nomenclators(_ref) {
@@ -92247,11 +92298,11 @@ var actions = {
       });
     });
   },
-  nomenclatorsPaymentMethod: function nomenclatorsPaymentMethod(_ref3) {
+  nomenclatorsRequestServices: function nomenclatorsRequestServices(_ref3) {
     var commit = _ref3.commit,
         dispatch = _ref3.dispatch;
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.lists.payment_method')).then(function (_ref4) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.lists.request_services')).then(function (_ref4) {
         var data = _ref4.data.data;
         commit('GET_PAYMENT_METHOD_OK', data);
         resolve();
@@ -92270,7 +92321,7 @@ var mutations = {
     state.lists = [];
   },
   GET_PAYMENT_METHOD_OK: function GET_PAYMENT_METHOD_OK(state, nomenclators) {
-    state.listsPaymentMethod = nomenclators;
+    state.listsRequestServices = nomenclators;
   },
   GET_PAYMENT_METHOD_FAIL: function GET_PAYMENT_METHOD_FAIL(state) {
     state.listsPaymentMethod = [];

@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const state = {
     lists: [],
-    listsPaymentMethod: [],
+    listsRequestServices: [],
 }
 
 const actions = {
@@ -22,10 +22,10 @@ const actions = {
         })
     },
 
-    nomenclatorsPaymentMethod({commit, dispatch}) {
+    nomenclatorsRequestServices({commit, dispatch}) {
         return new Promise((resolve, reject) => {
             axios
-                .get(route('api.lists.payment_method'))
+                .get(route('api.lists.request_services'))
                 .then(({data: {data}}) => {
                     commit('GET_PAYMENT_METHOD_OK', data)
                     resolve()
@@ -49,7 +49,7 @@ const mutations = {
     },
 
     GET_PAYMENT_METHOD_OK(state, nomenclators) {
-        state.listsPaymentMethod = nomenclators
+        state.listsRequestServices = nomenclators
     },
 
     GET_PAYMENT_METHOD_FAIL(state) {

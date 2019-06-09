@@ -13,10 +13,12 @@
                           :filters="filters"
                           @clearFilters="clearFilter">
 
-                    <template slot="table-title">Todos los servicios disponibles</template>
-
+                    <template slot="table-title">Todos los servicios que fueron solicitados</template>
+                    <template slot="payment_method_id" slot-scope="{row}">
+                        {{ row.payment_method.name }}
+                    </template>
                     <ye-actions slot="actions" slot-scope="{row}" class="text-center">
-                        <li>
+                        <li v-if="false">
                             <router-link :to="{name: 'services_edit', params: { id: row.id } }" class="dropdown-item"
                                          title="Edit">
                                 <i class="fas fa-pen-square"></i>
@@ -33,7 +35,7 @@
 
                     <template slot="pre-header-buttons">
                         <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'services_create'}">
-                            Adicionar
+                            Solicitar Servicio
                         </router-link>
                     </template>
 
@@ -114,7 +116,7 @@
             onDelete(id) {
                 this.serverErrors = {}
                 Swal.fire({
-                    title: 'Esta seguro que desea eliminar la ruta?',
+                    title: 'Esta seguro que desea eliminar el ?',
                     text: 'Puedes cancelar la operación',
                     type: 'warning',
                     showCancelButton: true,

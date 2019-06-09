@@ -90,8 +90,8 @@ Route::prefix('v1')->group(function () {
                 ->name('lists.')
                 ->prefix('lists')
                 ->group(function () {
-                    Route::get('/nomenclators/payment_method', 'ListsController@paymentMethod')
-                        ->name('payment_method');
+                    Route::get('/nomenclators/request-services', 'ListsController@requestServices')
+                        ->name('request_services');
                 });
         });
 

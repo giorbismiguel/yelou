@@ -38,10 +38,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-row form-group">
-                                <label for="place_origen">Origen<span class="text-danger">*</span></label>
-                                <gmap-autocomplete class="form-control" id="place_origen" name="place_origen"
-                                                   @place_changed="setPlaceOrigin"
+                            <div class="form-row form-group" v-if="routeSelected">
+                                <label for="origen_request_services">Origen<span class="text-danger">*</span></label>
+                                <gmap-autocomplete class="form-control" id="origen_request_services"
+                                                   name="origen_request_services"
+                                                   @place_changed="setOrigenRequestServices"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                 </gmap-autocomplete>
 
@@ -51,10 +52,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="place_destination">Destino<span class="text-danger">*</span></label>
-                                <gmap-autocomplete class="form-control" id="place_destination"
-                                                   name="place_destination" @place_changed="setPlaceDestination"
+                            <div class="form-group" v-if="routeSelected">
+                                <label for="destination_request_services">Destino<span
+                                        class="text-danger">*</span></label>
+                                <gmap-autocomplete class="form-control" id="destination_request_services"
+                                                   name="destination_request_services"
+                                                   @place_changed="setDestinationRequestServices"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                 </gmap-autocomplete>
                                 <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
@@ -81,7 +84,7 @@
                                         Cancelar
                                     </router-link>
                                     <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
-                                        Adicionar
+                                        Solicitar Servicio
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>
                                 </div>
@@ -108,6 +111,7 @@
         data() {
             return {
                 loadingView: true,
+                routeSelected: true,
                 form: {
                     route_id: null,
                     name_start: null,
@@ -131,24 +135,25 @@
                 },
                 submitted: false,
                 loading: false,
-                placeOrigin: null,
-                placeDestination: null,
-                serverErrors: {}
+                origenRequestService: null,
+                destinationRequestService: null,
+                serverErrors: {},
+                route: null
             }
         },
 
         computed: {
             ...mapState({
                 me: state => state.auth.me,
-                lists: state => state.nomenclators.listsPaymentMethod
-                    ? state.nomenclators.listsPaymentMethod
+                lists: state => state.nomenclators.listsRequestServices
+                    ? state.nomenclators.listsRequestServices
                     : {'paymentMethods': [], 'userRoutes': []},
             }),
         },
 
         methods: {
             ...mapActions([
-                'nomenclatorsPaymentMethod',
+                'nomenclatorsRequestServices',
                 'createRequestService',
             ]),
 
@@ -159,16 +164,25 @@
                         this.loading = true
                         this.serverErrors = {}
 
-                        if (this.placeOrigin) {
-                            this.form.lat_start = this.placeOrigin.geometry.location.lat()
-                            this.form.lng_start = this.placeOrigin.geometry.location.lng()
-                            this.form.name_start = this.placeOrigin.formatted_address
-                        }
+                        if (this.route) {
+                            this.form.name_start = this.route.formatted_address_start
+                            this.form.lat_start = this.route.lat_start
+                            this.form.lng_start = this.route.lng_start
+                            this.form.name_end = this.route.formatted_address_end
+                            this.form.lat_end = this.route.lat_end
+                            this.form.lng_end = this.route.lng_end
+                        } else {
+                            if (this.origenRequestService) {
+                                this.form.lat_start = this.origenRequestService.geometry.location.lat()
+                                this.form.lng_start = this.origenRequestService.geometry.location.lng()
+                                this.form.name_start = this.origenRequestService.formatted_address
+                            }
 
-                        if (this.placeDestination) {
-                            this.form.lat_end = this.placeDestination.geometry.location.lat()
-                            this.form.lng_end = this.placeDestination.geometry.location.lng()
-                            this.form.name_end = this.placeDestination.formatted_address
+                            if (this.destinationRequestService) {
+                                this.form.lat_end = this.destinationRequestService.geometry.location.lat()
+                                this.form.lng_end = this.destinationRequestService.geometry.location.lng()
+                                this.form.name_end = this.destinationRequestService.formatted_address
+                            }
                         }
 
                         this.createRequestService(this.form)
@@ -197,15 +211,36 @@
                 });
             },
 
-            setPlaceOrigin(place) {
-                this.placeOrigin = place
+            setOrigenRequestServices(place) {
+                console.log(place)
+                this.origenRequestService = place
             },
 
-            setPlaceDestination(place) {
-                this.placeDestination = place
+            setDestinationRequestServices(place) {
+                console.log(place)
+                this.destinationRequestService = place
             }
         },
 
+        watch: {
+            'form.route_id': function (id) {
+                if (id) {
+                    let route = this.lists.userRoutes.filter((route) => {
+                        return route.id === id;
+                    });
+
+                    this.route = route[0]
+                    this.routeSelected = false
+                    this.origenRequestService = null
+                    this.destinationRequestService = null
+
+                    return;
+                }
+
+                this.route = null;
+                this.routeSelected = true
+            }
+        },
         components: {
             DatePicker,
             Spinner,
@@ -213,7 +248,7 @@
         },
 
         created() {
-            this.nomenclatorsPaymentMethod();
+            this.nomenclatorsRequestServices();
         },
 
         mounted() {

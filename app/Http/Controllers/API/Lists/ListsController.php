@@ -41,13 +41,26 @@ class ListsController extends Controller
         ]);
     }
 
-    public function paymentMethod()
+    public function requestServices()
     {
-        $nomenclators = Cache::remember('payment-method-lists', 300, function () {
+        $nomenclators = Cache::remember('request-services-lists', 300, function () {
             $query = [];
             $select = ['id', 'name'];
-            $data['paymentMethods'] = $this->paymentMethodRepository->all($query, null, null,)->toArray();
+            $data['paymentMethods'] = $this->paymentMethodRepository
+                ->all($query, null, null, $select)
+                ->toArray();
+
             $query = ['user_id' => \Auth::id()];
+            $select = [
+                'id',
+                'name',
+                'lat_start',
+                'lng_start',
+                'formatted_address_start',
+                'lat_end',
+                'lng_end',
+                'formatted_address_end'
+            ];
             $data['userRoutes'] = $this->routeRepository
                 ->all($query, null, null, $select)
                 ->toArray();
