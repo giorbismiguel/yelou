@@ -44,7 +44,8 @@ class RequestServices extends Model
         'lat_end',
         'lng_end',
         'start_time',
-        'payment_method_id'
+        'payment_method_id',
+        'user_id',
     ];
 
     /**

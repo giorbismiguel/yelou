@@ -40,6 +40,13 @@ class CreateRequestServicesTable extends Migration
                 ->onDelete('no action')
                 ->onUpdate('no action');
 
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
             $table->timestamps();
             $table->softDeletes();
         });

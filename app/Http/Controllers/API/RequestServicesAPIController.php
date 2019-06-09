@@ -14,7 +14,6 @@ use Response;
  * Class RequestServicesController
  * @package App\Http\Controllers\API
  */
-
 class RequestServicesAPIController extends AppBaseController
 {
     /** @var  RequestServicesRepository */
@@ -54,7 +53,7 @@ class RequestServicesAPIController extends AppBaseController
     public function store(CreateRequestServicesAPIRequest $request)
     {
         $input = $request->all();
-
+        $input['user_id'] = \Auth::id();
         $requestServices = $this->requestServicesRepository->create($input);
 
         return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio creada');
@@ -84,7 +83,7 @@ class RequestServicesAPIController extends AppBaseController
      * Update the specified RequestServices in storage.
      * PUT/PATCH /requestServices/{id}
      *
-     * @param int $id
+     * @param int                             $id
      * @param UpdateRequestServicesAPIRequest $request
      *
      * @return Response
