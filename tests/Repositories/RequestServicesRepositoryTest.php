@@ -1,6 +1,6 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\RequestServices;
+use App\RequestServices;
 use App\Repositories\RequestServicesRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

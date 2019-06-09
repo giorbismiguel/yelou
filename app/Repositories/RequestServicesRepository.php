@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\RequestServices;
+use App\RequestServices;
 use App\Repositories\BaseRepository;
 
 /**

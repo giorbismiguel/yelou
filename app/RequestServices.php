@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use App\Models\Admin\PaymentMethod;
-use App\Route;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -30,6 +29,11 @@ class RequestServices extends Model
     public $table = 'request_services';
 
     protected $dates = ['deleted_at'];
+
+    protected $with = [
+        'route:id,name',
+        'paymentMethod:id,name',
+    ];
 
     public $fillable = [
         'route_id',

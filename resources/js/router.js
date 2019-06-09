@@ -17,7 +17,10 @@ import NewCode from './components/pages/auth/NewCode'
 import ResetPassword from './components/pages/auth/ResetPassword'
 import Profile from './components/pages/profile/Profile'
 import Administration from './components/pages/administration/Index'
+
 import Services from './components/pages/administration/services/Index'
+import CreateService from './components/pages/administration/services/Create'
+
 import Routes from './components/pages/administration/routes/Index'
 import CreateRoute from './components/pages/administration/routes/Create'
 import EditRoute from './components/pages/administration/routes/Edit'
@@ -60,6 +63,9 @@ const routes = [
     },
     {
         path: '/servicios', name: 'services', component: Services, meta: {requiresAuth: true}
+    },
+    {
+        path: '/servicios/adicionar', name: 'services_create', component: CreateService, meta: {requiresAuth: true}
     },
     {
         path: '/rutas', name: 'routes', component: Routes, meta: {requiresAuth: true}

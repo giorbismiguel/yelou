@@ -18,6 +18,8 @@ $fa-font-path: "../webfonts";
 @import "@fortawesome/fontawesome-free/scss/brands.scss";
 @import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
+@import "vue-select/src/scss/vue-select.scss";
+
 .app {
   &_color {
     color: rgb(248, 248, 248) !important;
@@ -72,4 +74,15 @@ $fa-font-path: "../webfonts";
 
 footer a {
   color: rgb(248, 248, 248);
+}
+
+.v-select.is-invalid .vs__dropdown-toggle {
+  border-color: #e3342f;
+  background-repeat: no-repeat;
+  background-position: center right calc(0.4em + 0.1875rem);
+  background-size: calc(0.8em + 0.375rem) calc(0.8em + 0.375rem);
+}
+
+.v-select.is-invalid ~ .invalid-feedback {
+  display: block;
 }

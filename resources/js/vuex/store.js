@@ -5,12 +5,13 @@ import auth from './modules/auth'
 import nomenclators from './modules/nomenclators'
 import general from './modules/general'
 import routes from './modules/routes'
+import requestServices from './modules/request_services'
 
 Vue.use(Vuex)
 
 const debug = process.env.NODE_ENV !== 'production'
 
-console.log(process.env.NODE_ENV);
+// console.log(process.env.NODE_ENV);
 
 export default new Vuex.Store({
     plugins: debug ? [createLogger()] : [],
@@ -18,6 +19,7 @@ export default new Vuex.Store({
         auth,
         nomenclators,
         general,
-        routes
+        routes,
+        requestServices,
     }
 })

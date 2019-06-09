@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateRequestServicesAPIRequest;
 use App\Http\Requests\API\UpdateRequestServicesAPIRequest;
-use App\Models\RequestServices;
+use App\RequestServices;
 use App\Repositories\RequestServicesRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;

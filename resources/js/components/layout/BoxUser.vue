@@ -11,10 +11,10 @@
 
             <ul class="list-unstyled components">
                 <li>
-                    <router-link :to="{ name: 'routes' }">Rutas</router-link>
-                </li>
-                <li v-if="false">
                     <router-link :to="{ name: 'services' }">Servicios</router-link>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'routes' }">Rutas</router-link>
                 </li>
             </ul>
         </nav>

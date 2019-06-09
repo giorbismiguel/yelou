@@ -1,7 +1,7 @@
 <?php namespace Tests\Traits;
 
 use Faker\Factory as Faker;
-use App\Models\RequestServices;
+use App\RequestServices;
 use App\Repositories\RequestServicesRepository;
 
 trait MakeRequestServicesTrait

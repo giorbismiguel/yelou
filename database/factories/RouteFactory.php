@@ -5,7 +5,7 @@ use Faker\Generator as Faker;
 /**@var Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(App\Route::class, function (Faker $faker) {
     return [
-        'name'                    => $faker->name,
+        'name'                    => $faker->streetName,
         'lat_start'               => $faker->latitude,
         'lng_start'               => $faker->longitude,
         'formatted_address_start' => $faker->address,

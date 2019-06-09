@@ -82,6 +82,17 @@ Route::prefix('v1')->group(function () {
                     Route::resource('transportation_states', 'Admin\TransportationStatesAPIController');
                     Route::resource('payment_methods', 'Admin\PaymentMethodAPIController');
                 });
+
+            /*
+             *
+             */
+            Route::namespace('Lists')
+                ->name('lists.')
+                ->prefix('lists')
+                ->group(function () {
+                    Route::get('/nomenclators/payment_method', 'ListsController@paymentMethod')
+                        ->name('payment_method');
+                });
         });
 
     /*

@@ -55,6 +55,8 @@
     import Swal from 'sweetalert2'
 
     export default {
+        name: "Routes",
+
         data() {
             return {
                 filters: {
@@ -164,7 +166,3 @@
         }
     }
 </script>
-
-<style scoped>
-
-</style>

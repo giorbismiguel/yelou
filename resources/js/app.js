@@ -5,6 +5,7 @@ import es from 'vee-validate/dist/locale/es';
 import VeeValidate, {Validator} from 'vee-validate'
 import Notifications from 'vue-notification'
 import * as VueGoogleMaps from 'vue2-google-maps'
+import vSelect from 'vue-select'
 
 Vue.use(VueGoogleMaps, {
     load: {
@@ -42,6 +43,7 @@ Vue.component('feet', require('./components/layout/Feet.vue').default)
 Vue.component('sidebar', require('./components/layout/Sidebar').default)
 Vue.component('ye-actions', require('./components/modules/Actions').default);
 Vue.component('ye-table', require('./components/modules/simple-table').default);
+Vue.component('ye-select', vSelect)
 
 import App from './components/App'
 

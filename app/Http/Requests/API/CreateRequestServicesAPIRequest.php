@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\RequestServices;
+use App\RequestServices;
 use InfyOm\Generator\Request\APIRequest;
 
 class CreateRequestServicesAPIRequest extends APIRequest
@@ -59,6 +59,7 @@ class CreateRequestServicesAPIRequest extends APIRequest
             'lng_start.numeric'  => 'Vuelva a seleccionar el origen, no se ha enviado correctamente',
             'lat_end.numeric'    => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
             'lng_end.numeric'    => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
+            'start_time.after'   => 'El campo Hora de Inicio debe ser una fecha posterior a ahora.',
         ];
     }
 }
