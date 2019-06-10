@@ -43,33 +43,30 @@ class ListsController extends Controller
 
     public function requestServices()
     {
-        $nomenclators = Cache::remember('request-services-lists', 300, function () {
-            $query = [];
-            $select = ['id', 'name'];
-            $data['paymentMethods'] = $this->paymentMethodRepository
-                ->all($query, null, null, $select)
-                ->toArray();
+        $query = [];
+        $select = ['id', 'name'];
+        $data['paymentMethods'] = $this->paymentMethodRepository
+            ->all($query, null, null, $select, 'name', 'asc')
+            ->toArray();
 
-            $query = ['user_id' => \Auth::id()];
-            $select = [
-                'id',
-                'name',
-                'lat_start',
-                'lng_start',
-                'formatted_address_start',
-                'lat_end',
-                'lng_end',
-                'formatted_address_end'
-            ];
-            $data['userRoutes'] = $this->routeRepository
-                ->all($query, null, null, $select)
-                ->toArray();
+        $query = ['user_id' => \Auth::id()];
+        $select = [
+            'id',
+            'name',
+            'lat_start',
+            'lng_start',
+            'formatted_address_start',
+            'lat_end',
+            'lng_end',
+            'formatted_address_end'
+        ];
+        $data['userRoutes'] = $this->routeRepository
+            ->all($query, null, null, $select, 'name', 'asc')
+            ->toArray();
 
-            return $data;
-        });
 
         return response()->success([
-            'data' => $nomenclators,
+            'data' => $data,
         ]);
     }
 

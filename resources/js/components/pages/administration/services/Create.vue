@@ -38,10 +38,10 @@
                                 </div>
                             </div>
 
-                            <div class="form-row form-group" v-if="routeSelected">
+                            <div class="form-row form-group">
                                 <label for="origen_request_services">Origen<span class="text-danger">*</span></label>
                                 <gmap-autocomplete class="form-control" id="origen_request_services"
-                                                   name="origen_request_services"
+                                                   name="origen_request_services" :value="form.name_start"
                                                    @place_changed="setOrigenRequestServices"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                 </gmap-autocomplete>
@@ -52,11 +52,11 @@
                                 </div>
                             </div>
 
-                            <div class="form-group" v-if="routeSelected">
+                            <div class="form-group">
                                 <label for="destination_request_services">Destino<span
                                         class="text-danger">*</span></label>
                                 <gmap-autocomplete class="form-control" id="destination_request_services"
-                                                   name="destination_request_services"
+                                                   name="destination_request_services" :value="form.name_end"
                                                    @place_changed="setDestinationRequestServices"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                 </gmap-autocomplete>
@@ -111,7 +111,6 @@
         data() {
             return {
                 loadingView: true,
-                routeSelected: true,
                 form: {
                     route_id: null,
                     name_start: null,
@@ -160,18 +159,10 @@
             onSubmit() {
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
-                    if (valid) {
-                        this.loading = true
-                        this.serverErrors = {}
+                        if (valid) {
+                            this.loading = true
+                            this.serverErrors = {}
 
-                        if (this.route) {
-                            this.form.name_start = this.route.formatted_address_start
-                            this.form.lat_start = this.route.lat_start
-                            this.form.lng_start = this.route.lng_start
-                            this.form.name_end = this.route.formatted_address_end
-                            this.form.lat_end = this.route.lat_end
-                            this.form.lng_end = this.route.lng_end
-                        } else {
                             if (this.origenRequestService) {
                                 this.form.lat_start = this.origenRequestService.geometry.location.lat()
                                 this.form.lng_start = this.origenRequestService.geometry.location.lng()
@@ -183,40 +174,45 @@
                                 this.form.lng_end = this.destinationRequestService.geometry.location.lng()
                                 this.form.name_end = this.destinationRequestService.formatted_address
                             }
+
+                            this.createRequestService(this.form)
+                                .then(() => {
+                                    this.loading = false
+                                    this.$notify({
+                                        type: 'success',
+                                        group: 'create_request_service',
+                                        title: 'Ruta',
+                                        text: 'La solicitud del servicio ha sido exitosa'
+                                    });
+
+                                    this.$router.replace('/servicios')
+                                })
+                                .catch((data) => {
+                                    this.loading = false
+                                    this.$notify({
+                                        type: 'error',
+                                        group: 'create_request_service',
+                                        title: 'Ruta',
+                                        text: 'Ha ocurrido un error al realizar la solicitud del servicio.'
+                                    });
+                                    this.serverErrors = data.errors || {}
+                                })
                         }
-
-                        this.createRequestService(this.form)
-                            .then(() => {
-                                this.loading = false
-                                this.$notify({
-                                    type: 'success',
-                                    group: 'create_request_service',
-                                    title: 'Ruta',
-                                    text: 'La solicitud del servicio ha sido exitosa'
-                                });
-
-                                this.$router.replace('/servicios')
-                            })
-                            .catch((data) => {
-                                this.loading = false
-                                this.$notify({
-                                    type: 'error',
-                                    group: 'create_request_service',
-                                    title: 'Ruta',
-                                    text: 'Ha ocurrido un error al realizar la solicitud del servicio.'
-                                });
-                                this.serverErrors = data.errors || {}
-                            })
                     }
-                });
+                )
+                ;
             },
 
             setOrigenRequestServices(place) {
+                console.log(place.formatted_address)
                 this.origenRequestService = place
+                this.form.name_start = place.formatted_address
             },
 
             setDestinationRequestServices(place) {
+                console.log(place.formatted_address)
                 this.destinationRequestService = place
+                this.form.name_end = place.formatted_address
             }
         },
 
@@ -228,17 +224,31 @@
                     });
 
                     this.route = route[0]
-                    this.routeSelected = false
                     this.origenRequestService = null
                     this.destinationRequestService = null
+
+                    if (this.route) {
+                        this.form.name_start = this.route.formatted_address_start
+                        this.form.lat_start = this.route.lat_start
+                        this.form.lng_start = this.route.lng_start
+                        this.form.name_end = this.route.formatted_address_end
+                        this.form.lat_end = this.route.lat_end
+                        this.form.lng_end = this.route.lng_end
+                    }
 
                     return;
                 }
 
                 this.route = null;
-                this.routeSelected = true
+                this.form.name_start = null
+                this.form.lat_start = null
+                this.form.lng_start = null
+                this.form.name_end = null
+                this.form.lat_end = null
+                this.form.lng_end = null
             }
         },
+
         components: {
             DatePicker,
             Spinner,

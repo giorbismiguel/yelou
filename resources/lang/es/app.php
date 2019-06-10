@@ -9,5 +9,5 @@ return [
     'customer_request_transportation'                 => 'Un cliente a realizado una solicitud de taxi',
     'the_distance_travel'                             => 'La distancia a recorrer para prestarle el servico al cliente es de :distance y el tiempo aproximado es :time horas a una velocidad de 50km/h',
     'want_accept_request'                             => 'Aceptar el servicio',
-    'click_ok_provide_transportation_service_client.' => 'De clic en Aceptar para prestar el servicio de transportación al cliente.',
+    'click_ok_provide_transportation_service_client' => 'De clic en Aceptar para prestar el servicio de transportación al cliente.',
 ];

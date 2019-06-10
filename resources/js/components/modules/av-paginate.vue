@@ -72,11 +72,11 @@
             },
             prevText: {
                 type: String,
-                default: 'Prev'
+                default: 'Anterior'
             },
             nextText: {
                 type: String,
-                default: 'Next'
+                default: 'Siguiente'
             },
             breakViewText: {
                 type: String,
@@ -134,11 +134,11 @@
             },
             firstButtonText: {
                 type: String,
-                default: 'First'
+                default: 'Primero'
             },
             lastButtonText: {
                 type: String,
-                default: 'Last'
+                default: 'Ultimo'
             },
             hidePrevNext: {
                 type: Boolean,

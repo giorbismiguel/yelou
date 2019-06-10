@@ -91,6 +91,7 @@
                         'name_start': 'Origen',
                         'name_end': 'Destino',
                         'payment_method_id': 'Medio de pago',
+                        'actions': 'Acciones',
                     }
                 },
 

@@ -33,10 +33,10 @@ class RouteAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $routes = $request->merge(['user_id' => \Auth::id()])->except(['page', 'per_page', 'order_by', 'sort_by']);
+        $inputs = $request->merge(['user_id' => \Auth::id()])->except(['page', 'per_page', 'order_by', 'sort_by']);
 
         $routes = $this->routeRepository->allPagination(
-            $routes,
+            $inputs,
             $request->get('page'),
             $request->get('per_page'),
             ['id', 'name', 'formatted_address_start', 'formatted_address_end'],

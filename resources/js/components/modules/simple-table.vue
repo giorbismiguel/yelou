@@ -86,7 +86,7 @@
                         <tr v-if="!showLoadingProgress && rows.length === 0">
                             <td :colspan="columnsLength" class="text-center">
                                 <slot name="empty_table">
-                                    <div class="simple-table__no_data">You have no data to show</div>
+                                    <div class="simple-table__no_data">No hay datos para mostrar</div>
                                 </slot>
                             </td>
                         </tr>
@@ -101,7 +101,7 @@
                 <div class="col simple-table__pagination-footer__label">
                     <slot name="pagination-label"
                           v-bind:data="{total, curPage, localPerPage, paginateFrom, paginateTo}">
-                        Showing {{ paginateFrom }} to {{ paginateTo }} of {{ total }} records
+                        Mostrando de {{ paginateFrom }} a {{ paginateTo }} de {{ total }} registros
                     </slot>
                 </div>
                 <div class="col">
