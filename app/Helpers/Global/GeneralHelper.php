@@ -41,3 +41,25 @@ if (!function_exists('generate_code')) {
         return substr(str_shuffle($permittedChars), 0, 6);
     }
 }
+
+if (!function_exists('get_distance')) {
+    function get_distance($latitudeFrom, $longitudeFrom, $latitudeTo, $longitudeTo, $unit = 'K')
+    {
+        // Calculate distance between latitude and longitude
+        $theta = $longitudeFrom - $longitudeTo;
+        $dist = sin(deg2rad($latitudeFrom)) * sin(deg2rad($latitudeTo)) + cos(deg2rad($latitudeFrom)) * cos(deg2rad($latitudeTo)) * cos(deg2rad($theta));
+        $dist = acos($dist);
+        $dist = rad2deg($dist);
+        $miles = $dist * 60 * 1.1515;
+
+        // Convert unit and return distance
+        $unit = strtoupper($unit);
+        if ($unit == 'K') {
+            return round($miles * 1.609344, 2);
+        } elseif ($unit == 'M') {
+            return round($miles * 1609.344, 2);
+        } else {
+            return round($miles, 2);
+        }
+    }
+}

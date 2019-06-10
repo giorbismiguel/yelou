@@ -3916,9 +3916,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               group: 'create_request_service',
               title: 'Ruta',
               text: 'La solicitud del servicio ha sido exitosa'
-            });
+            }); // this.$router.replace('/servicios')
 
-            _this.$router.replace('/servicios');
           })["catch"](function (data) {
             _this.loading = false;
 
@@ -3935,11 +3934,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     setOrigenRequestServices: function setOrigenRequestServices(place) {
-      console.log(place);
       this.origenRequestService = place;
     },
     setDestinationRequestServices: function setDestinationRequestServices(place) {
-      console.log(place);
       this.destinationRequestService = place;
     }
   }),

@@ -212,12 +212,10 @@
             },
 
             setOrigenRequestServices(place) {
-                console.log(place)
                 this.origenRequestService = place
             },
 
             setDestinationRequestServices(place) {
-                console.log(place)
                 this.destinationRequestService = place
             }
         },

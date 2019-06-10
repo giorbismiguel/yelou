@@ -4,10 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateRequestServicesAPIRequest;
 use App\Http\Requests\API\UpdateRequestServicesAPIRequest;
+use App\Notifications\RequestServiceNotification;
+use App\Repositories\TransportationAvailableRepository;
 use App\RequestServices;
 use App\Repositories\RequestServicesRepository;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Notification;
 use Response;
 
 /**
@@ -18,10 +22,14 @@ class RequestServicesAPIController extends AppBaseController
 {
     /** @var  RequestServicesRepository */
     private $requestServicesRepository;
+    private $transportationAvailableRepository;
 
-    public function __construct(RequestServicesRepository $requestServicesRepo)
-    {
+    public function __construct(
+        RequestServicesRepository $requestServicesRepo,
+        TransportationAvailableRepository $transportationAvailableRepo
+    ) {
         $this->requestServicesRepository = $requestServicesRepo;
+        $this->transportationAvailableRepository = $transportationAvailableRepo;
     }
 
     /**
@@ -56,7 +64,24 @@ class RequestServicesAPIController extends AppBaseController
         $input['user_id'] = \Auth::id();
         $requestServices = $this->requestServicesRepository->create($input);
 
-        return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio creada');
+        $distanceToTravel = get_distance(
+            $requestServices->lat_start, $requestServices->lng_start, $requestServices->lat_end,
+            $requestServices->lng_end
+        );
+
+        $fields = ['lat', 'lng', 'user_id'];
+        $availableDrivers = $this->transportationAvailableRepository->all(['active' => 1], null, null, $fields);
+        $availableNerbyDrivers = $availableDrivers
+            ->filter(function ($available) use ($input) {
+                return get_distance($input['lat_start'], $input['lng_start'], $available->lat,
+                        $available->lng) < 10; // 10 Km
+            })
+            ->pluck('user_id');
+
+        $users = User::find($availableNerbyDrivers->toArray());
+
+        Notification::send($users, new RequestServiceNotification($distanceToTravel));
+        return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
     }
 
     /**
