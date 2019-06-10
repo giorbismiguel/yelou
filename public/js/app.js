@@ -1838,6 +1838,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -1867,8 +1872,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "BoxUser"
+  name: "BoxUser",
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    me: function me(state) {
+      return state.auth.me;
+    }
+  }))
 });
 
 /***/ }),
@@ -61836,27 +61855,52 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("ul", { staticClass: "list-unstyled components" }, [
-        _c(
-          "li",
-          [
-            _c("router-link", { attrs: { to: { name: "services" } } }, [
-              _vm._v("Servicios")
-            ])
-          ],
-          1
-        ),
-        _vm._v(" "),
-        _c(
-          "li",
-          [
-            _c("router-link", { attrs: { to: { name: "routes" } } }, [
-              _vm._v("Rutas")
-            ])
-          ],
-          1
-        )
-      ])
+      _c(
+        "ul",
+        { staticClass: "list-unstyled components" },
+        [
+          _vm.me.type === 2
+            ? [
+                _c(
+                  "li",
+                  [
+                    _c(
+                      "router-link",
+                      { attrs: { to: { name: "administration" } } },
+                      [_vm._v("Recorrido(En desarrollo)")]
+                    )
+                  ],
+                  1
+                )
+              ]
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.me.type === 1
+            ? [
+                _c(
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: { name: "services" } } }, [
+                      _vm._v("Servicios")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "li",
+                  [
+                    _c("router-link", { attrs: { to: { name: "routes" } } }, [
+                      _vm._v("Rutas")
+                    ])
+                  ],
+                  1
+                )
+              ]
+            : _vm._e()
+        ],
+        2
+      )
     ]),
     _vm._v(" "),
     _c("div", { attrs: { id: "content" } }, [_vm._t("default")], 2)

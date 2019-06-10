@@ -10,12 +10,20 @@
             </div>
 
             <ul class="list-unstyled components">
-                <li>
-                    <router-link :to="{ name: 'services' }">Servicios</router-link>
-                </li>
-                <li>
-                    <router-link :to="{ name: 'routes' }">Rutas</router-link>
-                </li>
+                <template v-if="me.type === 2">
+                    <li>
+                        <router-link :to="{ name: 'administration' }">Recorrido(En desarrollo)</router-link>
+                    </li>
+                </template>
+
+                <template v-if="me.type === 1">
+                    <li>
+                        <router-link :to="{ name: 'services' }">Servicios</router-link>
+                    </li>
+                    <li>
+                        <router-link :to="{ name: 'routes' }">Rutas</router-link>
+                    </li>
+                </template>
             </ul>
         </nav>
 
@@ -28,8 +36,16 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex'
+
     export default {
-        name: "BoxUser"
+        name: "BoxUser",
+
+        computed: {
+            ...mapState({
+                me: state => state.auth.me,
+            })
+        }
     }
 </script>
 
