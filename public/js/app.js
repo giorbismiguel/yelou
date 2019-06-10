@@ -5735,6 +5735,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Services"
 });
@@ -10857,7 +10863,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\nsection[data-v-abf9c850] {\n    width: 100%;\n    height: 428px;\n}\n.thumbnail[data-v-abf9c850] {\n    position: relative;\n}\n.caption[data-v-abf9c850] {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n.caption h3[data-v-abf9c850] {\n    color: rgb(255, 255, 255);\n    font-family: Montserrat-Bold;\n    font-size: 2em;\n    font-weight: bold;\n    height: 78px;\n    text-align: center;\n    width: 453px;\n}\n.caption p[data-v-abf9c850] {\n    width: 356px;\n    height: 76px;\n    color: rgb(255, 255, 255);\n    font-size: 1em;\n    font-family: Montserrat-Regular;\n    font-weight: normal;\n    text-align: center;\n    margin-left: .5em;\n}\n", ""]);
+exports.push([module.i, "\nsection[data-v-abf9c850] {\n    width: 100%;\n    height: 428px;\n}\n.thumbnail[data-v-abf9c850] {\n    position: relative;\n}\n.caption[data-v-abf9c850] {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n}\n.caption h3[data-v-abf9c850] {\n    color: rgb(255, 255, 255);\n    font-family: Montserrat-Bold;\n    font-size: 2.2em;\n    font-weight: bold;\n    height: 78px;\n    text-align: center;\n    width: 453px;\n}\n.caption p[data-v-abf9c850] {\n    width: 356px;\n    height: 76px;\n    color: rgb(255, 255, 255);\n    font-size: 1em;\n    font-family: 'Montserrat';\n    font-weight: normal;\n    text-align: center;\n    margin-left: .5em;\n}\n", ""]);
 
 // exports
 
@@ -10877,7 +10883,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, "\nsection[data-v-694a61e2] {\n    width: 1116px;\n    height: 406px;\n    background: rgb(245, 252, 255);\n    border-radius: 0px 0px 0px 0px;\n}\nsection div.ilustration[data-v-694a61e2] {\n    background-image: url(" + escape(__webpack_require__(/*! ../../../../img/illustration.png */ "./resources/img/illustration.png")) + ");\n    background-repeat: repeat-y;\n}\n", ""]);
+exports.push([module.i, "\nsection[data-v-694a61e2] {\n    width: 1116px;\n    height: 406px;\n    background: rgb(245, 252, 255);\n    border-radius: 0px 0px 0px 0px;\n    background-image: url(" + escape(__webpack_require__(/*! ../../../../img/illustration.png */ "./resources/img/illustration.png")) + ");\n    background-repeat: repeat-x;\n    background-color: #F5FCFF;\n    position: relative;\n}\n.caption[data-v-694a61e2] {\n    position: absolute;\n    top: 50%;\n    left: 50%;\n    -webkit-transform: translate(-50%, -50%);\n            transform: translate(-50%, -50%);\n    font-family: 'Montserrat';\n}\n", ""]);
 
 // exports
 
@@ -67713,7 +67719,7 @@ var staticRenderFns = [
         }),
         _vm._v(" "),
         _c("div", { staticClass: "caption" }, [
-          _c("h3", [_vm._v("La profesionalidad es nuestra maxima a diario")]),
+          _c("h3", [_vm._v("La profesionalidad es nuestra máxima a diario")]),
           _vm._v(" "),
           _c("p", { staticClass: "ml-5" }, [
             _vm._v(
@@ -67753,7 +67759,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("section", [_c("div", { staticClass: "ilustration" })])
+    return _c("section", [
+      _c("div", { staticClass: "caption text-center" }, [
+        _c("h3", [
+          _vm._v("Más de 230 ciudades "),
+          _c("br"),
+          _vm._v(" disfrutan de nuestros servicios")
+        ]),
+        _vm._v(" "),
+        _c("button", { staticClass: "btn app_btn-info" }, [
+          _c("img", { attrs: { src: "/img/city.png", alt: "Ciudad" } }),
+          _vm._v(" Explorar\n        ")
+        ])
+      ])
+    ])
   }
 ]
 render._withStripped = true

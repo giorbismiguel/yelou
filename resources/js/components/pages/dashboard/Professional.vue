@@ -3,7 +3,7 @@
         <div class="thumbnail">
             <img src="/img/slide_inferior.png" alt="La profesionalidad es nuestra maxima a diario" class="img-fluid">
             <div class="caption">
-                <h3>La profesionalidad es nuestra maxima a diario</h3>
+                <h3>La profesionalidad es nuestra máxima a diario</h3>
 
                 <p class="ml-5">
                     La seguridad de nuestros clientes es el principal objetivo de nuestra empresa.
@@ -40,7 +40,7 @@
     .caption h3 {
         color: rgb(255, 255, 255);
         font-family: Montserrat-Bold;
-        font-size: 2em;
+        font-size: 2.2em;
         font-weight: bold;
         height: 78px;
         text-align: center;
@@ -52,7 +52,7 @@
         height: 76px;
         color: rgb(255, 255, 255);
         font-size: 1em;
-        font-family: Montserrat-Regular;
+        font-family: 'Montserrat';
         font-weight: normal;
         text-align: center;
         margin-left: .5em;

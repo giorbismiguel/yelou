@@ -16845,6 +16845,15 @@ readers do not read off random characters that represent icons */
   color: #f8f8f8;
 }
 
+.app_btn-info {
+  background: #F5FCFF;
+  width: 115px;
+  border-radius: 3px;
+  padding: 8px;
+  border: 2px solid #3191c3;
+  color: #3191c3;
+}
+
 .cursor-pointer {
   cursor: pointer;
 }
