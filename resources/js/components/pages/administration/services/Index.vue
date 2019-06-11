@@ -26,7 +26,7 @@
                             </router-link>
                         </li>
                         <li>
-                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)">
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)" v-if="false">
                                 <i class="fas fa-trash-alt"></i>
                                 Eliminar
                             </a>

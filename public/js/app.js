@@ -3207,6 +3207,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3229,6 +3237,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
     markers: function markers(drivers) {
       return drivers.driversAvailables.markers;
+    },
+    me: function me(state) {
+      return state.auth.me;
     }
   })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['getDriversAvailable']), {
@@ -63661,87 +63672,99 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("box-user", [
-    _c("h3", [_vm._v("Choferes disponibles")]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c("div", { staticClass: "row mb-2" }, [
-      _c(
-        "div",
-        { staticClass: "col text-right" },
-        [
-          _c(
-            "router-link",
-            {
-              staticClass: "btn btn-success btn-sm --uppercase",
-              attrs: { to: { name: "services_create" } }
-            },
-            [_vm._v("\n                Solicitar Servicio\n            ")]
-          )
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col" },
-        [
-          _c(
-            "GmapMap",
-            {
-              staticStyle: { width: "100%", "min-height": "80vh" },
-              attrs: {
-                center: { lat: -0.180653, lng: -78.467834 },
-                zoom: 15,
-                "map-type-id": "terrain"
-              }
-            },
-            [
+  return _c(
+    "box-user",
+    [
+      _vm.me.type === 1
+        ? [
+            _c("h3", [_vm._v("Choferes disponibles")]),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "row mb-2" }, [
               _c(
-                "GmapInfoWindow",
-                {
-                  attrs: {
-                    options: _vm.infoOptions,
-                    position: _vm.infoWindowPos,
-                    opened: _vm.infoWinOpen
-                  },
-                  on: {
-                    closeclick: function($event) {
-                      _vm.infoWinOpen = false
-                    }
-                  }
-                },
+                "div",
+                { staticClass: "col text-right" },
                 [
-                  _vm._v(
-                    "\n                    " +
-                      _vm._s(_vm.infoContent) +
-                      "\n                "
+                  _c(
+                    "router-link",
+                    {
+                      staticClass: "btn btn-success btn-sm --uppercase",
+                      attrs: { to: { name: "services_create" } }
+                    },
+                    [
+                      _vm._v(
+                        "\n                    Solicitar Servicio\n                "
+                      )
+                    ]
                   )
-                ]
-              ),
-              _vm._v(" "),
-              _vm._l(_vm.markers, function(m, index) {
-                return _c("GmapMarker", {
-                  key: index,
-                  attrs: { position: m.position, clickable: true },
-                  on: {
-                    click: function($event) {
-                      return _vm.toggleInfoWindow(m, _vm.i)
-                    }
-                  }
-                })
-              })
-            ],
-            2
-          )
-        ],
-        1
-      )
-    ])
-  ])
+                ],
+                1
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col" },
+                [
+                  _c(
+                    "GmapMap",
+                    {
+                      staticStyle: { width: "100%", "min-height": "80vh" },
+                      attrs: {
+                        center: { lat: -0.180653, lng: -78.467834 },
+                        zoom: 15,
+                        "map-type-id": "terrain"
+                      }
+                    },
+                    [
+                      _c(
+                        "GmapInfoWindow",
+                        {
+                          attrs: {
+                            options: _vm.infoOptions,
+                            position: _vm.infoWindowPos,
+                            opened: _vm.infoWinOpen
+                          },
+                          on: {
+                            closeclick: function($event) {
+                              _vm.infoWinOpen = false
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\n                        " +
+                              _vm._s(_vm.infoContent) +
+                              "\n                    "
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.markers, function(m, index) {
+                        return _c("GmapMarker", {
+                          key: index,
+                          attrs: { position: m.position, clickable: true },
+                          on: {
+                            click: function($event) {
+                              return _vm.toggleInfoWindow(m, _vm.i)
+                            }
+                          }
+                        })
+                      })
+                    ],
+                    2
+                  )
+                ],
+                1
+              )
+            ])
+          ]
+        : [_c("h3", [_vm._v("Administración")]), _vm._v(" "), _c("hr")]
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -64810,24 +64833,9 @@ var render = function() {
                           : _vm._e(),
                         _vm._v(" "),
                         _c("li", [
-                          _c(
-                            "a",
-                            {
-                              staticClass: "dropdown-item",
-                              attrs: { href: "#", title: "Eliminar" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.onDelete(row.id)
-                                }
-                              }
-                            },
-                            [
-                              _c("i", { staticClass: "fas fa-trash-alt" }),
-                              _vm._v(
-                                "\n                            Eliminar\n                        "
-                              )
-                            ]
-                          )
+                          false
+                            ? undefined
+                            : _vm._e()
                         ])
                       ])
                     }

@@ -1,41 +1,49 @@
 <template>
     <box-user>
-        <h3>Choferes disponibles</h3>
-        <hr>
-        <div class="row mb-2">
-            <div class="col text-right">
-                <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'services_create'}">
-                    Solicitar Servicio
-                </router-link>
+        <template v-if="me.type === 1">
+            <h3>Choferes disponibles</h3>
+            <hr>
+            <div class="row mb-2">
+                <div class="col text-right">
+                    <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'services_create'}">
+                        Solicitar Servicio
+                    </router-link>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col">
-                <GmapMap
-                        :center="{lat:-0.180653, lng:-78.467834}"
-                        :zoom="15"
-                        map-type-id="terrain"
-                        style="width: 100%; min-height:80vh;"
-                >
-                    <GmapInfoWindow
-                            :options="infoOptions"
-                            :position="infoWindowPos"
-                            :opened="infoWinOpen"
-                            @closeclick="infoWinOpen=false">
-                        {{infoContent}}
-                    </GmapInfoWindow>
+            <div class="row">
+                <div class="col">
+                    <GmapMap
+                            :center="{lat:-0.180653, lng:-78.467834}"
+                            :zoom="15"
+                            map-type-id="terrain"
+                            style="width: 100%; min-height:80vh;"
+                    >
+                        <GmapInfoWindow
+                                :options="infoOptions"
+                                :position="infoWindowPos"
+                                :opened="infoWinOpen"
+                                @closeclick="infoWinOpen=false">
+                            {{infoContent}}
+                        </GmapInfoWindow>
 
-                    <GmapMarker
-                            :key="index"
-                            v-for="(m, index) in markers"
-                            :position="m.position"
-                            :clickable="true"
-                            @click="toggleInfoWindow(m,i)"
-                    />
-                </GmapMap>
+                        <GmapMarker
+                                :key="index"
+                                v-for="(m, index) in markers"
+                                :position="m.position"
+                                :clickable="true"
+                                @click="toggleInfoWindow(m,i)"
+                        />
+                    </GmapMap>
+                </div>
             </div>
-        </div>
+        </template>
+
+        <template v-else>
+            <h3>Administración</h3>
+            <hr>
+        </template>
+
     </box-user>
 </template>
 
@@ -63,7 +71,8 @@
         },
         computed: {
             ...mapState({
-                markers: drivers => drivers.driversAvailables.markers
+                markers: drivers => drivers.driversAvailables.markers,
+                me: state => state.auth.me,
             })
         },
 
