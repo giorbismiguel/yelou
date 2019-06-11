@@ -1,5 +1,5 @@
 // Fonts
-@import url('https://fonts.googleapis.com/css?family=Montserrat&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
 
 $custom-file-text: (
         en: "Browse",
@@ -62,6 +62,49 @@ $fa-font-path: "../webfonts";
     border: 2px solid rgb(49, 145, 195);
     color: rgb(49, 145, 195);
   }
+
+  &_card {
+    .card-header {
+        background: #2089C0;
+        border-radius: 16px 16px 0 0;
+        font-family: 'Montserrat-SemiBold', sans-serif;
+        font-size: 24px;
+        color: #FFFFFF;
+    }
+
+    label {
+      font-family: 'Montserrat-Bold', sans-serif;
+      font-size: 14px;
+      color: #404040;
+    }
+
+    span.text-danger {
+      color: #FFFFFF;
+    }
+  }
+}
+
+.btn-cancel {
+  font-family: 'Montserrat-Bold', sans-serif;
+  font-size: 16px;
+  color: #2089C0;
+  text-align: center;
+}
+
+.btn-accept {
+  background: #2089C0;
+  border-radius: 21.5px;
+  font-family: 'Montserrat-Bold', sans-serif;
+  font-size: 16px;
+  color: #FFFDE9;
+  text-align: center;
+}
+.btn-cancel:hover {
+  color: #2089C0;
+}
+
+.btn-accept:hover {
+  color: #FFFDE9;
 }
 
 .cursor-pointer {
@@ -79,6 +122,10 @@ $fa-font-path: "../webfonts";
   vertical-align: middle;
   padding-top: 11px;
   padding-bottom: 11px;
+}
+
+.card {
+  border: none;
 }
 
 footer a {

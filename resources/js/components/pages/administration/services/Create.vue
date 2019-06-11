@@ -1,16 +1,17 @@
 <template>
     <box-user>
-        <h3>Servicio</h3>
-        <hr>
-
         <div v-if="loadingView" class="d-flex justify-content-center mt-5">
             <spinner size="large"></spinner>
         </div>
 
-        <div v-else class="row justify-content-center">
-            <div class="col-6">
-                <div class="card m-4">
-                    <div class="card-header">Nuevo Servicio</div>
+        <div v-else class="row">
+            <div class="col-12">
+                <header-form>Servicio</header-form>
+            </div>
+
+            <div class="col-8">
+                <div class="card app_card">
+                    <div class="card-header">Solicitar Servicio</div>
                     <div class="card-body">
                         <form class="form-horizontal" id="new_route_form" role="form" autocomplete="off"
                               @submit.prevent="onSubmit">
@@ -23,7 +24,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="start_time">Hora de Inicio<span class="text-danger">*</span></label>
+                                <label for="start_time">Hora de Inicio<span class="text-primary">*</span></label>
                                 <date-picker id="start_time" name="start_time" v-model="form.start_time"
                                              style="width: 300px; display: block;" input-class="form-control"
                                              :lang="timePicker.lang" type="datetime" format="YYYY-MM-DD hh:mm:ss"
@@ -39,7 +40,7 @@
                             </div>
 
                             <div class="form-row form-group">
-                                <label for="origen_request_services">Origen<span class="text-danger">*</span></label>
+                                <label for="origen_request_services">Origen<span class="text-primary">*</span></label>
                                 <gmap-autocomplete class="form-control" id="origen_request_services"
                                                    name="origen_request_services" :value="form.name_start"
                                                    @place_changed="setOrigenRequestServices"
@@ -54,7 +55,7 @@
 
                             <div class="form-group">
                                 <label for="destination_request_services">Destino<span
-                                        class="text-danger">*</span></label>
+                                        class="text-primary">*</span></label>
                                 <gmap-autocomplete class="form-control" id="destination_request_services"
                                                    name="destination_request_services" :value="form.name_end"
                                                    @place_changed="setDestinationRequestServices"
@@ -79,11 +80,11 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'services' }" tag="button" class="btn btn-light mr-4">
+                                <div class="col d-flex justify-content-start">
+                                    <router-link :to="{ name: 'services' }" tag="button" class="btn btn-cancel mr-4">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
+                                    <button type="submit" class="btn btn-accept ml-4" :disabled="loading">
                                         Solicitar Servicio
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>
@@ -104,6 +105,7 @@
     import Spinner from 'vue-simple-spinner'
     import BoxUser from '../../../layout/BoxUser'
     import DatePicker from 'vue2-datepicker'
+    import HeaderForm from '../layout/header_form'
 
     export default {
         name: "Create",
@@ -252,7 +254,8 @@
         components: {
             DatePicker,
             Spinner,
-            BoxUser
+            BoxUser,
+            HeaderForm
         },
 
         created() {

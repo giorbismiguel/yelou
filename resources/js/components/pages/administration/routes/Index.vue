@@ -32,7 +32,7 @@
                     </ye-actions>
 
                     <template slot="pre-header-buttons">
-                        <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'routes_create'}">
+                        <router-link class="btn btn-accept" :to="{name: 'routes_create'}">
                             Adicionar
                         </router-link>
                     </template>

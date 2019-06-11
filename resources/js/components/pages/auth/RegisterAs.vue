@@ -55,7 +55,7 @@
 
     .card-register-header span {
         font-size: 32px;
-        font-family: 'Montserrat';
+        font-family: 'Montserrat', sans-serif;
     }
 
     .card-register-footer {

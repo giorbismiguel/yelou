@@ -34,7 +34,7 @@
                     </ye-actions>
 
                     <template slot="pre-header-buttons">
-                        <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'services_create'}">
+                        <router-link class="btn btn-accept" :to="{name: 'services_create'}">
                             Solicitar Servicio
                         </router-link>
                     </template>

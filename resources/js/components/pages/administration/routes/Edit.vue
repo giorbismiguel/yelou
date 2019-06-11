@@ -1,14 +1,14 @@
 <template>
     <box-user>
-        <h3>Ruta</h3>
-        <hr>
+        <div class="row">
+            <div class="col-12">
+                <header-form>Servicio</header-form>
+            </div>
 
-        <div class="row justify-content-center">
             <div class="col-10">
-
                 <spinner v-if="loadingToShow" size="medium"></spinner>
                 <template v-else>
-                    <div class="card m-4">
+                    <div class="card app_card">
                         <div class="card-header">Actualizar Ruta</div>
                         <div class="card-body">
                             <form class="form-horizontal" id="new_route_form" role="form" autocomplete="off"
@@ -47,11 +47,11 @@
                                 </div>
 
                                 <div class="form-group">
-                                    <div class="col d-flex justify-content-end">
-                                        <router-link :to="{ name: 'routes' }" tag="button" class="btn btn-light">
+                                    <div class="col d-flex justify-content-start">
+                                        <router-link :to="{ name: 'routes' }" tag="button" class="btn btn-cancel">
                                             Cancelar
                                         </router-link>
-                                        <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
+                                        <button type="submit" class="btn btn-accept ml-4" :disabled="loading">
                                             Actualizar
                                         </button>
                                         <spinner v-show="loading" size="medium" class="ml-2"></spinner>
@@ -72,6 +72,7 @@
     import {mapState, mapActions} from 'vuex'
     import Spinner from 'vue-simple-spinner'
     import BoxUser from '../../../layout/BoxUser'
+    import HeaderForm from '../layout/header_form'
 
     export default {
         name: "Edit",
@@ -179,7 +180,8 @@
 
         components: {
             Spinner,
-            BoxUser
+            BoxUser,
+            HeaderForm
         }
     }
 </script>

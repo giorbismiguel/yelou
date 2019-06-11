@@ -5,7 +5,7 @@
             <hr>
             <div class="row mb-2">
                 <div class="col text-right">
-                    <router-link class="btn btn-success btn-sm --uppercase" :to="{name: 'services_create'}">
+                    <router-link class="btn btn-accept" :to="{name: 'services_create'}">
                         Solicitar Servicio
                     </router-link>
                 </div>

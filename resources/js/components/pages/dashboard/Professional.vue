@@ -39,7 +39,7 @@
 
     .caption h3 {
         color: rgb(255, 255, 255);
-        font-family: Montserrat-Bold;
+        font-family: Montserrat-Bold, sans-serif;
         font-size: 2.2em;
         font-weight: bold;
         height: 78px;
@@ -52,7 +52,7 @@
         height: 76px;
         color: rgb(255, 255, 255);
         font-size: 1em;
-        font-family: 'Montserrat';
+        font-family: 'Montserrat', sans-serif;
         font-weight: normal;
         text-align: center;
         margin-left: .5em;

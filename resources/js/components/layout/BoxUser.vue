@@ -18,10 +18,10 @@
 
                 <template v-if="me.type === 1">
                     <li>
-                        <router-link :to="{ name: 'services' }">Servicios</router-link>
+                        <router-link :to="{ name: 'services' }"><img src="/img/icons/services.png" alt="Servicios" width="21" height="21" />  Servicios</router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'routes' }">Rutas</router-link>
+                        <router-link :to="{ name: 'routes' }"><img src="/img/icons/routes.png" alt="Rutas" width="21" height="21" />  Rutas</router-link>
                     </li>
                 </template>
             </ul>
@@ -80,14 +80,16 @@
         min-width: 250px;
         max-width: 250px;
         min-height: 100vh;
-        background: #7386D5;
-        color: #fff;
+        color: #EAEAEA;
         transition: all 0.3s;
+        background: #2089C0;
     }
 
     #sidebar .sidebar-header {
         padding: 20px;
-        background: #6d7fcc;
+        background: #005E8F;
+        font-family: 'Montserrat-Bold', sans-serif;
+        font-size: 24px;
     }
 
     #sidebar ul.components {
