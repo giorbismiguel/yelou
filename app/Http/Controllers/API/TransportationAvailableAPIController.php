@@ -6,8 +6,10 @@ use App\Http\Requests\API\CreateTransportationAvailableAPIRequest;
 use App\Http\Requests\API\UpdateTransportationAvailableAPIRequest;
 use App\TransportationAvailable;
 use App\Repositories\TransportationAvailableRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\Cache;
 use Response;
 
 /**
@@ -45,6 +47,41 @@ class TransportationAvailableAPIController extends AppBaseController
         );
     }
 
+
+    public function driversAvailable()
+    {
+        /** @var Collection $drivers */
+
+        $availables = $this
+            ->transportationAvailableRepository
+            ->makeModel()
+            ->where('active', '=', 1)
+            ->with('user:id,first_name,last_name')
+            ->get();
+
+        if (!$availables->count()) {
+
+            return [];
+        }
+
+        $drivers = $availables
+            ->map(function ($available) {
+                return [
+                    'position' => [
+                        'lat' => $available->lat,
+                        'lng' => $available->lng
+                    ],
+                    'infoText' => $available->user->first_name.' '.$available->user->last_name,
+                ];
+            })
+            ->toArray();
+
+
+        return response()->success([
+            'data' => $drivers,
+        ]);
+    }
+
     /**
      * @param CreateTransportationAvailableAPIRequest $request
      * @return \Illuminate\Http\JsonResponse
@@ -55,7 +92,8 @@ class TransportationAvailableAPIController extends AppBaseController
 
         $transportationAvailable = $this->transportationAvailableRepository->create($input);
 
-        return $this->sendResponse($transportationAvailable->toArray(), 'Punto de disponibilidad del transportista creado');
+        return $this->sendResponse($transportationAvailable->toArray(),
+            'Punto de disponibilidad del transportista creado');
     }
 
     /**
@@ -101,7 +139,8 @@ class TransportationAvailableAPIController extends AppBaseController
 
         $transportationAvailable = $this->transportationAvailableRepository->update($input, $id);
 
-        return $this->sendResponse($transportationAvailable->toArray(), 'Punto de disponibilidad del transportista actualizado');
+        return $this->sendResponse($transportationAvailable->toArray(),
+            'Punto de disponibilidad del transportista actualizado');
     }
 
     /**

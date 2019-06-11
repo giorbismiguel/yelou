@@ -3161,6 +3161,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3174,10 +3208,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Administration",
+  data: function data() {
+    return {
+      infoContent: '',
+      infoWindowPos: null,
+      infoWinOpen: false,
+      currentMidx: null,
+      //optional: offset infowindow so it visually sits nicely on top of our marker
+      infoOptions: {
+        pixelOffset: {
+          width: 0,
+          height: -35
+        }
+      }
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapState"])({
+    markers: function markers(drivers) {
+      return drivers.driversAvailables.markers;
+    }
+  })),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['getDriversAvailable']), {
+    toggleInfoWindow: function toggleInfoWindow(marker, idx) {
+      this.infoWindowPos = marker.position;
+      this.infoContent = marker.infoText; //check if its the same marker that was selected if yes toggle
+
+      if (this.currentMidx == idx) {
+        this.infoWinOpen = !this.infoWinOpen;
+      } //if different marker set infowindow to open and reset current marker index
+      else {
+          this.infoWinOpen = true;
+          this.currentMidx = idx;
+        }
+    }
+  }),
   components: {
     BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  created: function created() {
+    this.getDriversAvailable();
   }
 });
 
@@ -63590,14 +63662,84 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("box-user", [
-    _c("h3", [_vm._v("Administración")]),
+    _c("h3", [_vm._v("Choferes disponibles")]),
     _vm._v(" "),
     _c("hr"),
     _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-8" }, [
-        _vm._v("\n            Administración\n        ")
-      ])
+    _c("div", { staticClass: "row mb-2" }, [
+      _c(
+        "div",
+        { staticClass: "col text-right" },
+        [
+          _c(
+            "router-link",
+            {
+              staticClass: "btn btn-success btn-sm --uppercase",
+              attrs: { to: { name: "services_create" } }
+            },
+            [_vm._v("\n                Solicitar Servicio\n            ")]
+          )
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col" },
+        [
+          _c(
+            "GmapMap",
+            {
+              staticStyle: { width: "100%", "min-height": "80vh" },
+              attrs: {
+                center: { lat: -0.180653, lng: -78.467834 },
+                zoom: 15,
+                "map-type-id": "terrain"
+              }
+            },
+            [
+              _c(
+                "GmapInfoWindow",
+                {
+                  attrs: {
+                    options: _vm.infoOptions,
+                    position: _vm.infoWindowPos,
+                    opened: _vm.infoWinOpen
+                  },
+                  on: {
+                    closeclick: function($event) {
+                      _vm.infoWinOpen = false
+                    }
+                  }
+                },
+                [
+                  _vm._v(
+                    "\n                    " +
+                      _vm._s(_vm.infoContent) +
+                      "\n                "
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _vm._l(_vm.markers, function(m, index) {
+                return _c("GmapMarker", {
+                  key: index,
+                  attrs: { position: m.position, clickable: true },
+                  on: {
+                    click: function($event) {
+                      return _vm.toggleInfoWindow(m, _vm.i)
+                    }
+                  }
+                })
+              })
+            ],
+            2
+          )
+        ],
+        1
+      )
     ])
   ])
 }
@@ -92238,6 +92380,49 @@ var mutations = {
 
 /***/ }),
 
+/***/ "./resources/js/vuex/modules/drivers.js":
+/*!**********************************************!*\
+  !*** ./resources/js/vuex/modules/drivers.js ***!
+  \**********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var state = {
+  markers: []
+};
+var actions = {
+  getDriversAvailable: function getDriversAvailable(_ref) {
+    var commit = _ref.commit,
+        dispatch = _ref.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.drivers.available')).then(function (_ref2) {
+        var data = _ref2.data.data;
+        commit('GET_DRIVERS_AVAILABLE_OK', data);
+        resolve();
+      })["catch"](function (error) {
+        reject(error.response.data);
+      });
+    });
+  }
+};
+var mutations = {
+  GET_DRIVERS_AVAILABLE_OK: function GET_DRIVERS_AVAILABLE_OK(state, markers) {
+    state.markers = markers;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
 /***/ "./resources/js/vuex/modules/general.js":
 /*!**********************************************!*\
   !*** ./resources/js/vuex/modules/general.js ***!
@@ -92568,6 +92753,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_general__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/general */ "./resources/js/vuex/modules/general.js");
 /* harmony import */ var _modules_routes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/routes */ "./resources/js/vuex/modules/routes.js");
 /* harmony import */ var _modules_request_services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/request_services */ "./resources/js/vuex/modules/request_services.js");
+/* harmony import */ var _modules_drivers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/drivers */ "./resources/js/vuex/modules/drivers.js");
+
 
 
 
@@ -92586,7 +92773,8 @@ var debug = "development" !== 'production'; // console.log(process.env.NODE_ENV)
     nomenclators: _modules_nomenclators__WEBPACK_IMPORTED_MODULE_4__["default"],
     general: _modules_general__WEBPACK_IMPORTED_MODULE_5__["default"],
     routes: _modules_routes__WEBPACK_IMPORTED_MODULE_6__["default"],
-    requestServices: _modules_request_services__WEBPACK_IMPORTED_MODULE_7__["default"]
+    requestServices: _modules_request_services__WEBPACK_IMPORTED_MODULE_7__["default"],
+    driversAvailables: _modules_drivers__WEBPACK_IMPORTED_MODULE_8__["default"]
   }
 }));
 

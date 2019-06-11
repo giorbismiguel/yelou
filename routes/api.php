@@ -73,6 +73,8 @@ Route::prefix('v1')->group(function () {
              * Transportation Area
              */
             Route::resource('transportation_availables', 'TransportationAvailableAPIController');
+            Route::get('/drivers/availables', 'TransportationAvailableAPIController@driversAvailable')
+                ->name('drivers.available');
 
             /*
              * Admin Area

@@ -6,6 +6,7 @@ import nomenclators from './modules/nomenclators'
 import general from './modules/general'
 import routes from './modules/routes'
 import requestServices from './modules/request_services'
+import driversAvailables from './modules/drivers'
 
 Vue.use(Vuex)
 
@@ -21,5 +22,6 @@ export default new Vuex.Store({
         general,
         routes,
         requestServices,
+        driversAvailables,
     }
 })
