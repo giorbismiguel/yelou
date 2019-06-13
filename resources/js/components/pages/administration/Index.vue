@@ -1,20 +1,29 @@
 <template>
     <box-user>
         <template v-if="me.type === 1">
-            <h3>Choferes disponibles</h3>
-            <hr>
+            <div class="col-12">
+                <header-form>Servicio</header-form>
+            </div>
+
             <div class="row mb-2">
-                <div class="col text-right">
-                    <router-link class="btn btn-accept" :to="{name: 'services_create'}">
-                        Solicitar Servicio
-                    </router-link>
+                <div class="col-6">
+                    <gmap-autocomplete class="form-control" @place_changed="changePlace">
+                    </gmap-autocomplete>
+                </div>
+
+                <div class="col-6">
+                    <div class="col text-right">
+                        <router-link tag="button" class="btn btn-accept" :to="{name: 'services_create'}">
+                            Solicitar Servicio
+                        </router-link>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col">
                     <GmapMap
-                            :center="{lat:-0.180653, lng:-78.467834}"
+                            :center="centerClient"
                             :zoom="15"
                             map-type-id="terrain"
                             style="width: 100%; min-height:80vh;"
@@ -50,6 +59,7 @@
 <script>
     import BoxUser from '../../layout/BoxUser'
     import {mapState, mapActions} from 'vuex'
+    import HeaderForm from './layout/header_form'
 
     export default {
         name: "Administration",
@@ -60,15 +70,16 @@
                 infoWindowPos: null,
                 infoWinOpen: false,
                 currentMidx: null,
-                //optional: offset infowindow so it visually sits nicely on top of our marker
                 infoOptions: {
                     pixelOffset: {
                         width: 0,
                         height: -35
                     }
                 },
+                centerClient: {lat: -0.180653, lng: -78.467834}
             }
         },
+
         computed: {
             ...mapState({
                 markers: drivers => drivers.driversAvailables.markers,
@@ -93,11 +104,21 @@
                     this.infoWinOpen = true;
                     this.currentMidx = idx;
                 }
+            },
+
+            changePlace(place) {
+                let lat = place.geometry.location.lat()
+                let lng = place.geometry.location.lng()
+                let location = {lat: lat, lng: lng}
+
+                this.getDriversAvailable(location);
+                this.centerClient = location
             }
         },
 
         components: {
-            BoxUser
+            BoxUser,
+            HeaderForm
         },
 
         created() {

@@ -10,18 +10,22 @@
             </div>
 
             <ul class="list-unstyled components">
-                <template v-if="me.type === 2">
+                <template v-if="me && me.type === 2">
                     <li>
                         <router-link :to="{ name: 'administration' }">Recorrido(En desarrollo)</router-link>
                     </li>
                 </template>
 
-                <template v-if="me.type === 1">
+                <template v-if="me && me.type === 1">
                     <li>
-                        <router-link :to="{ name: 'services' }"><img src="/img/icons/services.png" alt="Servicios" width="21" height="21" />  Servicios</router-link>
+                        <router-link :to="{ name: 'services' }"><img src="/img/icons/services.png" alt="Servicios"
+                                                                     width="21" height="21"/> Servicios
+                        </router-link>
                     </li>
                     <li>
-                        <router-link :to="{ name: 'routes' }"><img src="/img/icons/routes.png" alt="Rutas" width="21" height="21" />  Rutas</router-link>
+                        <router-link :to="{ name: 'routes' }"><img src="/img/icons/routes.png" alt="Rutas" width="21"
+                                                                   height="21"/> Rutas
+                        </router-link>
                     </li>
                 </template>
             </ul>
@@ -44,7 +48,15 @@
         computed: {
             ...mapState({
                 me: state => state.auth.me,
-            })
+            }),
+
+            isCliente() {
+                return this.me && this.me.type === 1;
+            },
+
+            isDriver() {
+                return this.me && this.me.type === 2;
+            }
         }
     }
 </script>

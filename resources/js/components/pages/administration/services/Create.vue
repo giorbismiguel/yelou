@@ -206,13 +206,11 @@
             },
 
             setOrigenRequestServices(place) {
-                console.log(place.formatted_address)
                 this.origenRequestService = place
                 this.form.name_start = place.formatted_address
             },
 
             setDestinationRequestServices(place) {
-                console.log(place.formatted_address)
                 this.destinationRequestService = place
                 this.form.name_end = place.formatted_address
             }

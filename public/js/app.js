@@ -1880,6 +1880,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "BoxUser",
@@ -1887,7 +1891,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     me: function me(state) {
       return state.auth.me;
     }
-  }))
+  }), {
+    isCliente: function isCliente() {
+      return this.me && this.me.type === 1;
+    },
+    isDriver: function isDriver() {
+      return this.me && this.me.type === 2;
+    }
+  })
 });
 
 /***/ }),
@@ -3162,6 +3173,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _layout_header_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./layout/header_form */ "./resources/js/components/pages/administration/layout/header_form.vue");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -3215,6 +3227,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -3225,12 +3247,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       infoWindowPos: null,
       infoWinOpen: false,
       currentMidx: null,
-      //optional: offset infowindow so it visually sits nicely on top of our marker
       infoOptions: {
         pixelOffset: {
           width: 0,
           height: -35
         }
+      },
+      centerClient: {
+        lat: -0.180653,
+        lng: -78.467834
       }
     };
   },
@@ -3254,10 +3279,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           this.infoWinOpen = true;
           this.currentMidx = idx;
         }
+    },
+    changePlace: function changePlace(place) {
+      var lat = place.geometry.location.lat();
+      var lng = place.geometry.location.lng();
+      var location = {
+        lat: lat,
+        lng: lng
+      };
+      this.getDriversAvailable(location);
+      this.centerClient = location;
     }
   }),
   components: {
-    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__["default"]
+    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__["default"],
+    HeaderForm: _layout_header_form__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   created: function created() {
     this.getDriversAvailable();
@@ -4058,12 +4094,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     setOrigenRequestServices: function setOrigenRequestServices(place) {
-      console.log(place.formatted_address);
       this.origenRequestService = place;
       this.form.name_start = place.formatted_address;
     },
     setDestinationRequestServices: function setDestinationRequestServices(place) {
-      console.log(place.formatted_address);
       this.destinationRequestService = place;
       this.form.name_end = place.formatted_address;
     }
@@ -62023,7 +62057,7 @@ var render = function() {
         "ul",
         { staticClass: "list-unstyled components" },
         [
-          _vm.me.type === 2
+          _vm.me && _vm.me.type === 2
             ? [
                 _c(
                   "li",
@@ -62039,7 +62073,7 @@ var render = function() {
               ]
             : _vm._e(),
           _vm._v(" "),
-          _vm.me.type === 1
+          _vm.me && _vm.me.type === 1
             ? [
                 _c(
                   "li",
@@ -62053,7 +62087,7 @@ var render = function() {
                           height: "21"
                         }
                       }),
-                      _vm._v("  Servicios")
+                      _vm._v(" Servicios\n                    ")
                     ])
                   ],
                   1
@@ -62071,7 +62105,7 @@ var render = function() {
                           height: "21"
                         }
                       }),
-                      _vm._v("  Rutas")
+                      _vm._v(" Rutas\n                    ")
                     ])
                   ],
                   1
@@ -63774,30 +63808,50 @@ var render = function() {
     [
       _vm.me.type === 1
         ? [
-            _c("h3", [_vm._v("Choferes disponibles")]),
-            _vm._v(" "),
-            _c("hr"),
+            _c(
+              "div",
+              { staticClass: "col-12" },
+              [_c("header-form", [_vm._v("Servicio")])],
+              1
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "row mb-2" }, [
               _c(
                 "div",
-                { staticClass: "col text-right" },
+                { staticClass: "col-6" },
                 [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-accept",
-                      attrs: { to: { name: "services_create" } }
-                    },
-                    [
-                      _vm._v(
-                        "\n                    Solicitar Servicio\n                "
-                      )
-                    ]
-                  )
+                  _c("gmap-autocomplete", {
+                    staticClass: "form-control",
+                    on: { place_changed: _vm.changePlace }
+                  })
                 ],
                 1
-              )
+              ),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c(
+                  "div",
+                  { staticClass: "col text-right" },
+                  [
+                    _c(
+                      "router-link",
+                      {
+                        staticClass: "btn btn-accept",
+                        attrs: {
+                          tag: "button",
+                          to: { name: "services_create" }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n                        Solicitar Servicio\n                    "
+                        )
+                      ]
+                    )
+                  ],
+                  1
+                )
+              ])
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "row" }, [
@@ -63810,7 +63864,7 @@ var render = function() {
                     {
                       staticStyle: { width: "100%", "min-height": "80vh" },
                       attrs: {
-                        center: { lat: -0.180653, lng: -78.467834 },
+                        center: _vm.centerClient,
                         zoom: 15,
                         "map-type-id": "terrain"
                       }
@@ -65042,7 +65096,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-6" }, [
-        _c("div", { staticClass: "card m-4" }, [
+        _c("div", { staticClass: "card app_card m-4" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("Autenticarse")]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
@@ -65234,7 +65288,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary mr-2",
+                          staticClass: "btn btn-accept mr-2",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -92621,11 +92675,11 @@ var state = {
   markers: []
 };
 var actions = {
-  getDriversAvailable: function getDriversAvailable(_ref) {
+  getDriversAvailable: function getDriversAvailable(_ref, location) {
     var commit = _ref.commit,
         dispatch = _ref.dispatch;
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.drivers.available')).then(function (_ref2) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.drivers.available'), location).then(function (_ref2) {
         var data = _ref2.data.data;
         commit('GET_DRIVERS_AVAILABLE_OK', data);
         resolve();

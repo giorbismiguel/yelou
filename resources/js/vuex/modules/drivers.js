@@ -5,9 +5,9 @@ const state = {
 }
 
 const actions = {
-    getDriversAvailable({commit, dispatch}) {
+    getDriversAvailable({commit, dispatch}, location) {
         return new Promise((resolve, reject) => {
-            axios.get(route('api.drivers.available'))
+            axios.post(route('api.drivers.available'), location)
                 .then(({data: {data}}) => {
                     commit('GET_DRIVERS_AVAILABLE_OK', data)
                     resolve()

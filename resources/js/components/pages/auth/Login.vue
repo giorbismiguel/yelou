@@ -5,7 +5,7 @@
 
         <div class="row justify-content-center">
             <div class="col-6">
-                <div class="card m-4">
+                <div class="card app_card m-4">
                     <div class="card-header">Autenticarse</div>
                     <div class="card-body">
                         <div class="alert alert-danger text-center" v-if="error">
@@ -49,7 +49,7 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
+                                    <button type="submit" class="btn btn-accept mr-2" :disabled="loading">
                                         Ingresar
                                     </button>
                                     <spinner v-show="loading" size="medium"></spinner>

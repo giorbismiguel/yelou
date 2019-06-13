@@ -180,8 +180,11 @@ class RequestServicesAPIController extends AppBaseController
         $availableDrivers = $this->transportationAvailableRepository->all(['active' => 1], null, null, $fields);
         $availableNerbyDrivers = $availableDrivers
             ->filter(function ($available) use ($input) {
-                return get_distance($input['lat_start'], $input['lng_start'], $available->lat,
-                        $available->lng) < 10; // 10 Km
+                return get_distance(
+                        $input['lat_start'],
+                        $input['lng_start'], $available->lat,
+                        $available->lng
+                    ) < 10; // Km
             })
             ->pluck('user_id');
         return $availableNerbyDrivers;
