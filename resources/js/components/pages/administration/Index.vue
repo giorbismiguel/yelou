@@ -2,12 +2,13 @@
     <box-user>
         <template v-if="me.type === 1">
             <div class="col-12">
-                <header-form>Servicio</header-form>
+                <header-form>Choferes disponibles</header-form>
             </div>
 
             <div class="row mb-2">
                 <div class="col-6">
-                    <gmap-autocomplete class="form-control" @place_changed="changePlace">
+                    <gmap-autocomplete class="form-control" @place_changed="changePlace"
+                    placehoder="Escriba su ubicación para ver los choferes mas cercanos">
                     </gmap-autocomplete>
                 </div>
 

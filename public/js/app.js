@@ -3236,6 +3236,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -63811,7 +63812,7 @@ var render = function() {
             _c(
               "div",
               { staticClass: "col-12" },
-              [_c("header-form", [_vm._v("Servicio")])],
+              [_c("header-form", [_vm._v("Busque su ubicación en el mapa")])],
               1
             ),
             _vm._v(" "),
@@ -63822,6 +63823,7 @@ var render = function() {
                 [
                   _c("gmap-autocomplete", {
                     staticClass: "form-control",
+                    attrs: { placehoder: "Escriba su ubicación en el mapa" },
                     on: { place_changed: _vm.changePlace }
                   })
                 ],
