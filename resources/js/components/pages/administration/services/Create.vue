@@ -26,14 +26,13 @@
                             <div class="form-group">
                                 <label for="start_time">Hora de Inicio<span class="text-primary">*</span></label>
                                 <date-picker id="start_time" name="start_time" v-model="form.start_time"
-                                             style="width: 300px; display: block;" input-class="form-control"
-                                             :lang="timePicker.lang" type="datetime" format="YYYY-MM-DD hh:mm:ss"
-                                             value-type="format" confirm confirm-text="Confirmar"
-                                             :input-class="[ 'form-control', submitted && (serverErrors.start_time || serverErrors.start_time) ? 'is-invalid': '']">
+                                             style="width: 300px; display: block;" value-type="date"
+                                             :lang="timePicker.lang" type="datetime" :format="timePicker.format"
+                                             confirm confirm-text="Confirmar"
+                                             :input-class="[ 'form-control', submitted && serverErrors.start_time ? 'is-invalid': '']">
                                 </date-picker>
 
-                                <div class="form-control" v-if="false"></div>
-                                <div v-if="submitted && (serverErrors.start_time || serverErrors.start_time)"
+                                <div v-if="submitted && serverErrors.start_time"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.start_time">{{ error }}</template>
                                 </div>
@@ -80,6 +79,14 @@
                             </div>
 
                             <div class="form-group">
+                                <div class="custom-control custom-checkbox">
+                                    <input v-model="form.favourite" type="checkbox" class="custom-control-input"
+                                           id="favourite"/>
+                                    <label class="custom-control-label" for="favourite">Favorita</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col d-flex justify-content-start">
                                     <router-link :to="{ name: 'services' }" tag="button" class="btn btn-cancel mr-4">
                                         Cancelar
@@ -121,8 +128,9 @@
                     name_end: null,
                     lat_end: null,
                     lng_end: null,
-                    start_time: null,
-                    payment_method_id: null
+                    start_time: new Date(),
+                    payment_method_id: null,
+                    favourite: 0,
                 },
                 timePicker: {
                     lang: {
@@ -132,7 +140,8 @@
                         placeholder: {
                             date: 'Seleccione el dia'
                         }
-                    }
+                    },
+                    format: 'DD/MM/YYYY hh:mm:ss'
                 },
                 submitted: false,
                 loading: false,
@@ -177,6 +186,7 @@
                                 this.form.name_end = this.destinationRequestService.formatted_address
                             }
 
+                            this.form.start_time = DatePicker.fecha.format(new Date(this.form.start_time), 'DD/MM/YYYY HH:mm:ss')
                             this.createRequestService(this.form)
                                 .then(() => {
                                     this.loading = false

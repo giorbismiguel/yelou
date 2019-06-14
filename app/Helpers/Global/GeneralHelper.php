@@ -1,5 +1,7 @@
 <?php
 
+use Carbon\Carbon;
+
 if (!function_exists('app_name')) {
     /**
      * Helper to grab the application name.
@@ -61,5 +63,12 @@ if (!function_exists('get_distance')) {
         } else {
             return round($miles, 2);
         }
+    }
+}
+
+if (!function_exists('convert_us_date_to_db')) {
+    function convert_us_date_to_db($date, string $format = 'd/m/Y H:i:s', string $newFormat = 'Y-m-d H:i:s'): string
+    {
+        return Carbon::createFromFormat($format, $date)->format($newFormat);
     }
 }

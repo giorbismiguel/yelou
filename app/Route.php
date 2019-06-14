@@ -21,9 +21,7 @@ class Route extends Model
 
     public $table = 'routes';
 
-
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'name',
@@ -34,6 +32,7 @@ class Route extends Model
         'lng_end',
         'formatted_address_end',
         'user_id',
+        'favourite',
     ];
 
     /**
@@ -49,7 +48,8 @@ class Route extends Model
         'formatted_address_start' => 'string',
         'lat_end'                 => 'double',
         'lng_end'                 => 'double',
-        'formatted_address_end'   => 'string'
+        'formatted_address_end'   => 'string',
+        'favourite'               => 'boolean',
     ];
 
     /**
@@ -64,7 +64,7 @@ class Route extends Model
         'formatted_address_start' => 'required|max:191|min:1',
         'lat_end'                 => 'required|numeric',
         'lng_end'                 => 'required|numeric',
-        'formatted_address_end'   => 'required|max:191|min:1'
+        'formatted_address_end'   => 'required|max:191|min:1',
+        'favourite'               => 'boolean',
     ];
-
 }

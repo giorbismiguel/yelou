@@ -16,6 +16,7 @@ class RouteRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
+        'id',
         'name',
         'lat_start',
         'lng_start',

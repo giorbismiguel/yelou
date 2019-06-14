@@ -22,6 +22,7 @@ class CreateRoutesTable extends Migration
             $table->double('lat_end');
             $table->double('lng_end');
             $table->string('formatted_address_end');
+            $table->boolean('favourite')->default(0);
 
             $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')

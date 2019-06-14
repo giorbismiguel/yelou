@@ -3996,6 +3996,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4014,8 +4021,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name_end: null,
         lat_end: null,
         lng_end: null,
-        start_time: null,
-        payment_method_id: null
+        start_time: new Date(),
+        payment_method_id: null,
+        favourite: 0
       },
       timePicker: {
         lang: {
@@ -4025,7 +4033,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           placeholder: {
             date: 'Seleccione el dia'
           }
-        }
+        },
+        format: 'DD/MM/YYYY hh:mm:ss'
       },
       submitted: false,
       loading: false,
@@ -4067,6 +4076,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.form.lng_end = _this.destinationRequestService.geometry.location.lng();
             _this.form.name_end = _this.destinationRequestService.formatted_address;
           }
+
+          _this.form.start_time = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.form.start_time), 'DD/MM/YYYY HH:mm:ss');
 
           _this.createRequestService(_this.form).then(function () {
             _this.loading = false;
@@ -63812,7 +63823,7 @@ var render = function() {
             _c(
               "div",
               { staticClass: "col-12" },
-              [_c("header-form", [_vm._v("Busque su ubicación en el mapa")])],
+              [_c("header-form", [_vm._v("Choferes disponibles")])],
               1
             ),
             _vm._v(" "),
@@ -63823,7 +63834,10 @@ var render = function() {
                 [
                   _c("gmap-autocomplete", {
                     staticClass: "form-control",
-                    attrs: { placehoder: "Escriba su ubicación en el mapa" },
+                    attrs: {
+                      placehoder:
+                        "Escriba su ubicación para ver los choferes mas cercanos"
+                    },
                     on: { place_changed: _vm.changePlace }
                   })
                 ],
@@ -64687,18 +64701,15 @@ var render = function() {
                             attrs: {
                               id: "start_time",
                               name: "start_time",
-                              "input-class": "form-control",
+                              "value-type": "date",
                               lang: _vm.timePicker.lang,
                               type: "datetime",
-                              format: "YYYY-MM-DD hh:mm:ss",
-                              "value-type": "format",
+                              format: _vm.timePicker.format,
                               confirm: "",
                               "confirm-text": "Confirmar",
                               "input-class": [
                                 "form-control",
-                                _vm.submitted &&
-                                (_vm.serverErrors.start_time ||
-                                  _vm.serverErrors.start_time)
+                                _vm.submitted && _vm.serverErrors.start_time
                                   ? "is-invalid"
                                   : ""
                               ]
@@ -64712,13 +64723,7 @@ var render = function() {
                             }
                           }),
                           _vm._v(" "),
-                          false
-                            ? undefined
-                            : _vm._e(),
-                          _vm._v(" "),
-                          _vm.submitted &&
-                          (_vm.serverErrors.start_time ||
-                            _vm.serverErrors.start_time)
+                          _vm.submitted && _vm.serverErrors.start_time
                             ? _c(
                                 "div",
                                 { staticClass: "invalid-feedback" },
@@ -64892,6 +64897,71 @@ var render = function() {
                         ],
                         1
                       ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "div",
+                          { staticClass: "custom-control custom-checkbox" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.form.favourite,
+                                  expression: "form.favourite"
+                                }
+                              ],
+                              staticClass: "custom-control-input",
+                              attrs: { type: "checkbox", id: "favourite" },
+                              domProps: {
+                                checked: Array.isArray(_vm.form.favourite)
+                                  ? _vm._i(_vm.form.favourite, null) > -1
+                                  : _vm.form.favourite
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$a = _vm.form.favourite,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = null,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        _vm.$set(
+                                          _vm.form,
+                                          "favourite",
+                                          $$a.concat([$$v])
+                                        )
+                                    } else {
+                                      $$i > -1 &&
+                                        _vm.$set(
+                                          _vm.form,
+                                          "favourite",
+                                          $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1))
+                                        )
+                                    }
+                                  } else {
+                                    _vm.$set(_vm.form, "favourite", $$c)
+                                  }
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "label",
+                              {
+                                staticClass: "custom-control-label",
+                                attrs: { for: "favourite" }
+                              },
+                              [_vm._v("Favorita")]
+                            )
+                          ]
+                        )
+                      ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [
                         _c(

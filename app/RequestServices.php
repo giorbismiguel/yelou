@@ -61,7 +61,7 @@ class RequestServices extends Model
         'name_end'   => 'string',
         'lat_end'    => 'double',
         'lng_end'    => 'double',
-        'start_time' => 'datetime'
+        'start_time' => 'datetime',
     ];
 
     /**
@@ -71,14 +71,14 @@ class RequestServices extends Model
      */
     public static $rules = [
         'route_id'          => 'nullable|integer',
-        'start_time'        => 'required|date_format:Y-m-d H:i:s|after:now',
+        'start_time'        => 'required|date_format:d/m/Y H:i:s|after:now',
         'name_start'        => 'required|min:1|max:191',
         'lat_start'         => 'required|numeric',
         'lng_start'         => 'required|numeric',
         'name_end'          => 'required|min:1|max:191',
         'lat_end'           => 'required|numeric',
         'lng_end'           => 'required|numeric',
-        'payment_method_id' => 'required|integer'
+        'payment_method_id' => 'required|integer',
     ];
 
     /* ========================================================================= *\

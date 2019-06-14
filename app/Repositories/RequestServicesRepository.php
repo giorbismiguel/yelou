@@ -9,8 +9,7 @@ use App\Repositories\BaseRepository;
  * Class RequestServicesRepository
  * @package App\Repositories
  * @version June 8, 2019, 9:45 pm UTC
-*/
-
+ */
 class RequestServicesRepository extends BaseRepository
 {
     /**
