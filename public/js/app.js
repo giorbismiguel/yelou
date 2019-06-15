@@ -3290,6 +3290,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       this.getDriversAvailable(location);
       this.centerClient = location;
+    },
+    getCurrentPositionUser: function getCurrentPositionUser() {
+      var _this = this;
+
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+          console.table(position);
+          _this.centerClient = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude
+          };
+        });
+      }
     }
   }),
   components: {
@@ -3298,6 +3311,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.getDriversAvailable();
+  },
+  mounted: function mounted() {
+    this.getCurrentPositionUser();
   }
 });
 
@@ -4348,9 +4364,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
 //
 //
 //
@@ -65162,11 +65175,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("h3", [_vm._v("Autenticarse")]),
-    _vm._v(" "),
-    _c("hr"),
-    _vm._v(" "),
-    _c("div", { staticClass: "row justify-content-center" }, [
+    _c("div", { staticClass: "row justify-content-center mt-4" }, [
       _c("div", { staticClass: "col-6" }, [
         _c("div", { staticClass: "card app_card m-4" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("Autenticarse")]),
