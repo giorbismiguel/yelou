@@ -54,7 +54,7 @@
                                         <button type="submit" class="btn btn-accept ml-4" :disabled="loading">
                                             Actualizar
                                         </button>
-                                        <spinner v-show="loading" size="medium" class="ml-2"></spinner>
+                                        <spinner v-if="loading" size="medium" class="ml-2"></spinner>
                                     </div>
                                 </div>
                             </form>

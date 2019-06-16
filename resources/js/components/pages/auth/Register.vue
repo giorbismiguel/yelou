@@ -1,11 +1,8 @@
 <template>
     <div class="container">
-        <h3>Registrarse</h3>
-        <hr>
-
         <div class="row justify-content-center">
             <div class="col-8">
-                <div class="card m-4">
+                <div class="card app_card m-4">
                     <div class="card-header">Registrarse</div>
                     <div class="card-body">
                         <form class="form-horizontal" id="register_form" role="form" autocomplete="off"
@@ -113,9 +110,12 @@
                                     Teléfono <span class="text-danger">*</span>
                                 </label>
                                 <div class="col">
-                                    <input v-validate="'required|max:191'" data-vv-as="Teléfono" id="phone"
-                                           name="phone" type="text" class="form-control" v-model="form.phone"
-                                           :class="{ 'is-invalid': submitted && (errors.has('phone') || serverErrors.phone) }">
+
+                                    <vue-phone-number-input v-validate="'required|max:191'" data-vv-as="Teléfono"
+                                                            id="phone" name="phone" type="text"
+                                                            v-model="form.phone" :translations="phone.translations"
+                                                            :default-country-code="phone.countryCode"
+                                                            :class="{ 'is-invalid': submitted && (errors.has('phone') || serverErrors.phone) }"/>
 
                                     <div v-if="submitted && (errors.has('phone') || serverErrors.phone) "
                                          class="invalid-feedback">
@@ -298,13 +298,13 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light mr-4">
+                                    <router-link :to="{ name: 'login' }" tag="button" class="btn btn-light">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
+                                    <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
                                         Registrarse
                                     </button>
-                                    <spinner v-show="loading" size="medium"></spinner>
+                                    <spinner v-if="loading" size="medium" class="ml-2"></spinner>
                                 </div>
                             </div>
                         </form>
@@ -351,6 +351,15 @@
                 submitted: false,
                 loading: false,
                 direction: {},
+                phone: {
+                    countryCode: 'EC',
+                    translations: {
+                        countrySelectorLabel: 'Código del país',
+                        countrySelectorError: 'Choisir un pays',
+                        phoneNumberLabel: 'Número de teléfono',
+                        example: 'Ejemplo :'
+                    }
+                }
             }
         },
 

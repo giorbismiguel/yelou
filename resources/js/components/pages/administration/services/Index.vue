@@ -26,7 +26,7 @@
                             </router-link>
                         </li>
                         <li>
-                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)" v-if="false">
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)">
                                 <i class="fas fa-trash-alt"></i>
                                 Eliminar
                             </a>
@@ -115,6 +115,8 @@
             ]),
 
             onDelete(id) {
+                return;
+
                 this.serverErrors = {}
                 Swal.fire({
                     title: 'Esta seguro que desea eliminar el ?',

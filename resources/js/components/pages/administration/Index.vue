@@ -24,11 +24,10 @@
             <div class="row">
                 <div class="col">
                     <GmapMap
-                            :center="centerClient"
+                            :center="latLngClient"
                             :zoom="15"
                             map-type-id="terrain"
-                            style="width: 100%; min-height:80vh;"
-                    >
+                            style="width: 100%; min-height:80vh;">
                         <GmapInfoWindow
                                 :options="infoOptions"
                                 :position="infoWindowPos"
@@ -77,7 +76,7 @@
                         height: -35
                     }
                 },
-                centerClient: {lat: -0.180653, lng: -78.467834}
+                latLngClient: {lat: -0.180653, lng: -78.467834}
             }
         },
 
@@ -113,14 +112,13 @@
                 let location = {lat: lat, lng: lng}
 
                 this.getDriversAvailable(location);
-                this.centerClient = location
+                this.latLngClient = location
             },
 
             getCurrentPositionUser() {
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(position => {
-                        console.table(position)
-                        this.centerClient = {lat: position.coords.latitude, lng: position.coords.longitude}
+                        this.latLngClient = {lat: position.coords.latitude, lng: position.coords.longitude}
                     });
                 }
             }

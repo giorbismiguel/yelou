@@ -25,13 +25,14 @@
 
                             <div class="form-group">
                                 <label for="start_time">Hora de Inicio<span class="text-primary">*</span></label>
-                                <date-picker id="start_time" name="start_time" v-model="form.start_time"
+                                <date-picker id="start_time" name="start_time" v-model="universalTime"
                                              style="width: 300px; display: block;" value-type="date"
                                              :lang="timePicker.lang" type="datetime" :format="timePicker.format"
                                              confirm confirm-text="Confirmar"
                                              :input-class="[ 'form-control', submitted && serverErrors.start_time ? 'is-invalid': '']">
                                 </date-picker>
-
+                                <input type="text" class="form-control" v-show="false"
+                                       :class="submitted && serverErrors.start_time ? 'is-invalid': ''"/>
                                 <div v-if="submitted && serverErrors.start_time"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.start_time">{{ error }}</template>
@@ -40,16 +41,28 @@
 
                             <div class="form-row form-group">
                                 <label for="origen_request_services">Origen<span class="text-primary">*</span></label>
-                                <gmap-autocomplete class="form-control" id="origen_request_services"
+
+                                <input v-model="this.form.name_start" :placeholder="placeholderCurrentLocation"
+                                       v-if="currentLocation" id="actual_ubication" name="actual_ubication" type="text"
+                                       class="form-control"/>
+
+                                <gmap-autocomplete v-else class="form-control" id="origen_request_services" ref="origen"
                                                    name="origen_request_services" :value="form.name_start"
                                                    @place_changed="setOrigenRequestServices"
+                                                   :placeholder="writeLocationText"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                 </gmap-autocomplete>
+
+                                <button type="button" class="btn btn-accept btn-sm mt-2"
+                                        @click="changeCurrentLocation">
+                                    Escribir el origen
+                                </button>
 
                                 <div v-if="submitted && (serverErrors.lat_start || serverErrors.lng_start)"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.lat_start">{{ error }}</template>
                                 </div>
+
                             </div>
 
                             <div class="form-group">
@@ -58,6 +71,7 @@
                                 <gmap-autocomplete class="form-control" id="destination_request_services"
                                                    name="destination_request_services" :value="form.name_end"
                                                    @place_changed="setDestinationRequestServices"
+                                                   placeholder="¿ A dónde vas?"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                 </gmap-autocomplete>
                                 <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
@@ -78,7 +92,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" v-show="!form.route_id">
                                 <div class="custom-control custom-checkbox">
                                     <input v-model="form.favourite" type="checkbox" class="custom-control-input"
                                            id="favourite"/>
@@ -128,10 +142,13 @@
                     name_end: null,
                     lat_end: null,
                     lng_end: null,
-                    start_time: new Date(),
+                    start_time: null,
                     payment_method_id: null,
                     favourite: 0,
+                    today_time: null
                 },
+                universalTimeNow: new Date(),
+                universalTime: new Date(new Date().getTime() + 10 * 60000),
                 timePicker: {
                     lang: {
                         days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
@@ -145,7 +162,12 @@
                 },
                 submitted: false,
                 loading: false,
-                origenRequestService: null,
+                currentLocationLatLng: true,
+                placeholderCurrentLocation: 'Ubicación actual',
+                currentLocationText: 'Ubicación actual',
+                writeLocationText: 'Escribe la ubicación actual',
+                currentLocation: true,
+                originRequestService: null,
                 destinationRequestService: null,
                 serverErrors: {},
                 route: null
@@ -174,10 +196,13 @@
                             this.loading = true
                             this.serverErrors = {}
 
-                            if (this.origenRequestService) {
-                                this.form.lat_start = this.origenRequestService.geometry.location.lat()
-                                this.form.lng_start = this.origenRequestService.geometry.location.lng()
-                                this.form.name_start = this.origenRequestService.formatted_address
+                            if (this.currentLocationLatLng && !this.route && !this.originRequestService) {
+                                this.form.lat_start = this.currentLocationLatLng.lat
+                                this.form.lng_start = this.currentLocationLatLng.lng
+                            } else if (this.originRequestService) {
+                                this.form.lat_start = this.originRequestService.geometry.location.lat()
+                                this.form.lng_start = this.originRequestService.geometry.location.lng()
+                                this.form.name_start = this.originRequestService.formatted_address
                             }
 
                             if (this.destinationRequestService) {
@@ -186,7 +211,9 @@
                                 this.form.name_end = this.destinationRequestService.formatted_address
                             }
 
-                            this.form.start_time = DatePicker.fecha.format(new Date(this.form.start_time), 'DD/MM/YYYY HH:mm:ss')
+                            this.form.start_time = DatePicker.fecha.format(new Date(this.universalTime), 'DD/MM/YYYY HH:mm:ss')
+                            this.form.today_time = DatePicker.fecha.format(new Date(this.universalTimeNow), 'DD/MM/YYYY HH:mm:ss')
+                            this.form.favourite = this.form.favourite ? 1 : 0;
                             this.createRequestService(this.form)
                                 .then(() => {
                                     this.loading = false
@@ -216,13 +243,26 @@
             },
 
             setOrigenRequestServices(place) {
-                this.origenRequestService = place
+                this.originRequestService = place
                 this.form.name_start = place.formatted_address
             },
 
             setDestinationRequestServices(place) {
                 this.destinationRequestService = place
                 this.form.name_end = place.formatted_address
+            },
+
+            getCurrentPositionUser() {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(position => {
+                        this.currentLocationLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
+                    });
+                }
+            },
+
+            changeCurrentLocation() {
+                this.currentLocation = !this.currentLocation
+                this.placeholderCurrentLocation = this.currentLocation ? this.currentLocationText : ''
             }
         },
 
@@ -234,7 +274,7 @@
                     });
 
                     this.route = route[0]
-                    this.origenRequestService = null
+                    this.originRequestService = null
                     this.destinationRequestService = null
 
                     if (this.route) {
@@ -256,6 +296,7 @@
                 this.form.name_end = null
                 this.form.lat_end = null
                 this.form.lng_end = null
+                this.favourite = 0;
             }
         },
 
@@ -271,6 +312,7 @@
         },
 
         mounted() {
+            this.getCurrentPositionUser()
             this.loadingView = false
         }
     }

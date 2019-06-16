@@ -62,7 +62,7 @@
                                     <button type="submit" class="btn btn-primary" :disabled="loading">
                                         Recuperar
                                     </button>
-                                    <spinner v-show="loading" size="medium" class="ml-3"></spinner>
+                                    <spinner v-if="loading" size="medium" class="ml-2"></spinner>
                                 </div>
                             </div>
                         </form>

@@ -77,7 +77,7 @@
                                     <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
                                         Actualizar
                                     </button>
-                                    <spinner v-show="loading" size="medium"></spinner>
+                                    <spinner v-if="loading" size="medium"></spinner>
                                 </div>
                             </div>
                         </form>

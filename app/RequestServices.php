@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Admin\PaymentMethod;
+use Carbon\Carbon;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -71,7 +72,7 @@ class RequestServices extends Model
      */
     public static $rules = [
         'route_id'          => 'nullable|integer',
-        'start_time'        => 'required|date_format:d/m/Y H:i:s|after:now',
+        'start_time'        => "required|date_format:d/m/Y H:i:s|after:today_time",
         'name_start'        => 'required|min:1|max:191',
         'lat_start'         => 'required|numeric',
         'lng_start'         => 'required|numeric',

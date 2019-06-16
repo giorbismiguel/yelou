@@ -75,7 +75,7 @@ class RequestServicesAPIController extends AppBaseController
 
         $input['start_time'] = convert_us_date_to_db($input['start_time']);
         if ($request->filled('route_id')) {
-            if ($this->routeRepository->allQuery([
+            if (!$this->routeRepository->allQuery([
                 'id'      => $input['route_id'],
                 'user_id' => $input['user_id'],
             ])->exists()) {
@@ -92,15 +92,16 @@ class RequestServicesAPIController extends AppBaseController
                     'lat_end'                 => $input['lat_end'],
                     'lng_end'                 => $input['lng_end'],
                 ]);
-        } elseif ($request->get('favourite') === '1') {
+        } elseif ($request->get('favourite') === 1) {
             $this->routeRepository->create([
-                'name'                    => $input['name_start'].' hasta '.$input['name_end'],
+                'name'                    => 'Origen: ' . $input['name_start'].' y Destino: '.$input['name_end'],
                 'formatted_address_start' => $input['name_start'],
                 'lat_start'               => $input['lat_start'],
                 'lng_start'               => $input['lng_start'],
                 'formatted_address_end'   => $input['name_end'],
                 'lat_end'                 => $input['lat_end'],
                 'lng_end'                 => $input['lng_end'],
+                'user_id'                 => $input['user_id'],
                 'favourite'               => 1,
             ]);
         }

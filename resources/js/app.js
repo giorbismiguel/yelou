@@ -6,6 +6,9 @@ import VeeValidate, {Validator} from 'vee-validate'
 import Notifications from 'vue-notification'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import vSelect from 'vue-select'
+import VuePhoneNumberInput from 'vue-phone-number-input';
+Vue.component('vue-phone-number-input', VuePhoneNumberInput);
+import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 
 Vue.use(VueGoogleMaps, {
     load: {
