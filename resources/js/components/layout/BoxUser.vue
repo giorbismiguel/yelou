@@ -12,7 +12,7 @@
             <ul class="list-unstyled components">
                 <template v-if="me && me.type === 2">
                     <li>
-                        <router-link :to="{ name: 'administration' }">Recorrido(En desarrollo)</router-link>
+                        <router-link :to="{ name: 'tours' }">Recorridos</router-link>
                     </li>
                 </template>
 
