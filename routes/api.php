@@ -75,6 +75,7 @@ Route::prefix('v1')->group(function () {
             Route::resource('transportation_availables', 'TransportationAvailableAPIController');
             Route::post('/drivers/availables', 'TransportationAvailableAPIController@driversAvailable')
                 ->name('drivers.available');
+            Route::resource('requested_services', 'RequestedServiceAPIController');
 
             /*
              * Admin Area
@@ -121,5 +122,3 @@ Route::prefix('v1')->group(function () {
                 ->name('get');
         });
 });
-
-Route::resource('requested_services', 'RequestedServiceAPIController');
