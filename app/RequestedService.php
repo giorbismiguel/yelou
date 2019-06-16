@@ -2,7 +2,9 @@
 
 namespace App;
 
+use App\Models\Admin\RequestedServiceStatus;
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -22,6 +24,12 @@ class RequestedService extends Model
 
     protected $dates = ['deleted_at'];
 
+    protected $with = [
+        'client:id,name',
+        'service:id,name_start,name_end',
+        'status:id,name',
+    ];
+
     public $fillable = [
         'client_id',
         'transporter_id',
@@ -35,7 +43,8 @@ class RequestedService extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer'
+        'id'         => 'integer',
+        'created_at' => 'datetime: d/m/Y H:i:s',
     ];
 
     /**
@@ -49,4 +58,40 @@ class RequestedService extends Model
         'service_id'     => 'required|integer',
         'status_id'      => 'required|integer',
     ];
+
+    /* ========================================================================= *\
+     * Relations
+    \* ========================================================================= */
+
+    /**
+     * @return BelongsTo
+     */
+    public function client(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'client_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'transporter_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(RequestServices::class, 'service_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(RequestedServiceStatus::class, 'status_id');
+    }
 }

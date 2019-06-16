@@ -129,12 +129,11 @@
             HeaderForm
         },
 
-        created() {
-            this.getDriversAvailable();
-        },
-
         mounted() {
-            this.getCurrentPositionUser()
+            if (this.me.type === 1) {
+                this.getDriversAvailable();
+                this.getCurrentPositionUser()
+            }
         }
     }
 </script>

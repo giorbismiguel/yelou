@@ -26,6 +26,8 @@ import Routes from './components/pages/administration/routes/Index'
 import CreateRoute from './components/pages/administration/routes/Create'
 import EditRoute from './components/pages/administration/routes/Edit'
 
+import Tours from './components/pages/administration/tours/Index'
+
 import NotFound from './components/NotFound';
 
 const routes = [
@@ -79,6 +81,9 @@ const routes = [
     },
     {
         path: '/rutas/modificar/:id', name: 'routes_edit', component: EditRoute, meta: {requiresAuth: true}
+    },
+    {
+        path: '/recorridos', name: 'tours', component: Tours, meta: {requiresAuth: true}
     },
     {
         path: '*', component: NotFound

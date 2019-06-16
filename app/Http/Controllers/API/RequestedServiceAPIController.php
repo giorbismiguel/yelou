@@ -14,7 +14,6 @@ use Response;
  * Class RequestedServiceController
  * @package App\Http\Controllers\API
  */
-
 class RequestedServiceAPIController extends AppBaseController
 {
     /** @var  RequestedServiceRepository */
@@ -34,13 +33,25 @@ class RequestedServiceAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $requestedServices = $this->requestedServiceRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
+        $inputs = $request->except([
+            'page',
+            'per_page',
+            'order_by',
+            'sort_by'
+        ]);
+
+        $inputs['transporter_id'] = \Auth::id();
+
+        $requestedServices = $this->requestedServiceRepository->allPagination(
+            $inputs,
+            $request->get('page'),
+            $request->get('per_page'),
+            ['*'],
+            $request->get('order_by'),
+            $request->get('sort_by')
         );
 
-        return $this->sendResponse($requestedServices->toArray(), 'Requested Services retrieved successfully');
+        return $this->sendResponsePagination($requestedServices->toArray());
     }
 
     /**
@@ -84,7 +95,7 @@ class RequestedServiceAPIController extends AppBaseController
      * Update the specified RequestedService in storage.
      * PUT/PATCH /requestedServices/{id}
      *
-     * @param int $id
+     * @param int                              $id
      * @param UpdateRequestedServiceAPIRequest $request
      *
      * @return Response

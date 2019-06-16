@@ -3307,11 +3307,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__["default"],
     HeaderForm: _layout_header_form__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
-  created: function created() {
-    this.getDriversAvailable();
-  },
   mounted: function mounted() {
-    this.getCurrentPositionUser();
+    if (this.me.type === 1) {
+      this.getDriversAvailable();
+      this.getCurrentPositionUser();
+    }
   }
 });
 
@@ -4446,6 +4446,189 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this = this;
 
       return;
+      this.serverErrors = {};
+      sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
+        title: 'Esta seguro que desea eliminar el ?',
+        text: 'Puedes cancelar la operación',
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Eliminar',
+        cancelButtonText: 'Cancelar',
+        showCloseButton: true,
+        showLoaderOnConfirm: true
+      }).then(function (result) {
+        if (result.value) {
+          _this.deleteRoute(id).then(function () {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'success',
+              group: 'index_route',
+              title: 'Ruta',
+              text: 'Se ha eliminado la ruta correctamente'
+            });
+
+            _this.reloadTable();
+          })["catch"](function (data) {
+            _this.loading = false;
+
+            _this.$notify({
+              type: 'error',
+              group: 'index_route',
+              title: 'Ruta',
+              text: 'Ha ocurrido un error al eliminar la ruta.'
+            });
+
+            _this.serverErrors = data.errors || {};
+          });
+        }
+      });
+    },
+    clearFilter: function clearFilter() {
+      this.filters = Object(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.defaultFilters);
+      this.$nextTick(this.reloadTable);
+    },
+    reloadTable: function reloadTable() {
+      return this.$refs['table'].applyFiltersAndReload();
+    }
+  }),
+  mounted: function mounted() {
+    this.defaultFilters = Object(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.filters);
+  },
+  components: {
+    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/tours/Index.vue?vue&type=script&lang=js&":
+/*!*******************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/administration/tours/Index.vue?vue&type=script&lang=js& ***!
+  \*******************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
+/* harmony import */ var _modules_query_string__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../modules/query-string */ "./resources/js/components/modules/query-string.js");
+/* harmony import */ var _modules_query_string__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/lib/index.js");
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker__WEBPACK_IMPORTED_MODULE_4__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Tours",
+  data: function data() {
+    return {
+      filters: {
+        start_time: null,
+        name_start: null,
+        name_end: null,
+        payment_method_id: null
+      },
+      columns: ['client_id', 'service_id', 'status_id', 'created_at', 'actions'],
+      options: {
+        sortable: ['client_id', 'service_id', 'status_id', 'created_at'],
+        columnsClasses: {
+          'actions': 'action-col'
+        },
+        headings: {
+          'client_id': 'Cliente',
+          'service_id': 'Servicio solicitado',
+          'status_id': 'Estado',
+          'created_at': 'Fecha'
+        }
+      },
+      defaultFilters: {}
+    };
+  },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
+    me: function me(state) {
+      return state.auth.me;
+    }
+  }), {
+    apiEndpoint: function apiEndpoint() {
+      return route('api.requested_services.index');
+    }
+  }),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRoute']), {
+    onDelete: function onDelete(id) {
+      var _this = this;
+
       this.serverErrors = {};
       sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
         title: 'Esta seguro que desea eliminar el ?',
@@ -62274,8 +62457,8 @@ var render = function() {
                       [
                         _c(
                           "router-link",
-                          { attrs: { to: { name: "administration" } } },
-                          [_vm._v("Recorrido(En desarrollo)")]
+                          { attrs: { to: { name: "tours" } } },
+                          [_vm._v("Recorridos")]
                         )
                       ],
                       1
@@ -65454,6 +65637,174 @@ var render = function() {
                   ],
                   1
                 ),
+                _vm._v(" "),
+                _c("template", { slot: "filters-form" })
+              ],
+              2
+            )
+          ],
+          1
+        )
+      ]),
+      _vm._v(" "),
+      _c("notifications", { attrs: { group: "index_request_services" } })
+    ],
+    1
+  )
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/tours/Index.vue?vue&type=template&id=14940403&scoped=true&":
+/*!***********************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/administration/tours/Index.vue?vue&type=template&id=14940403&scoped=true& ***!
+  \***********************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "box-user",
+    [
+      _c("h3", [_vm._v("Recorridos")]),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("div", { staticClass: "row justify-content-center" }, [
+        _c(
+          "div",
+          { staticClass: "col" },
+          [
+            _c(
+              "ye-table",
+              {
+                ref: "table",
+                attrs: {
+                  id: "table_routes",
+                  columns: _vm.columns,
+                  options: _vm.options,
+                  url: _vm.apiEndpoint,
+                  filters: _vm.filters
+                },
+                on: { clearFilters: _vm.clearFilter },
+                scopedSlots: _vm._u([
+                  {
+                    key: "client_id",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(row.client.name) +
+                            "\n                "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "service_id",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _c("strong", { staticClass: "app_color_blue" }, [
+                          _vm._v("Origen:")
+                        ]),
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(row.service.name_start) +
+                            "\n                    y\n                    "
+                        ),
+                        _c("strong", { staticClass: "app_color_blue" }, [
+                          _vm._v("Destino:")
+                        ]),
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(row.service.name_end) +
+                            "\n                "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "status_id",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(row.status.name) +
+                            "\n                "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "created_at",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(row.created_at) +
+                            "\n                "
+                        )
+                      ]
+                    }
+                  },
+                  {
+                    key: "actions",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return _c("ye-actions", { staticClass: "text-center" }, [
+                        false
+                          ? undefined
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", title: "Eliminar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.onDelete(row.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-trash-alt" }),
+                              _vm._v(
+                                "\n                            Eliminar\n                        "
+                              )
+                            ]
+                          )
+                        ])
+                      ])
+                    }
+                  }
+                ])
+              },
+              [
+                _c("template", { slot: "table-title" }, [
+                  _vm._v("Todos sus recorridos solicitados")
+                ]),
+                _vm._v(" "),
+                _vm._v(" "),
+                _vm._v(" "),
+                _vm._v(" "),
+                _vm._v(" "),
                 _vm._v(" "),
                 _c("template", { slot: "filters-form" })
               ],
@@ -101975,6 +102326,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/administration/tours/Index.vue":
+/*!**********************************************************************!*\
+  !*** ./resources/js/components/pages/administration/tours/Index.vue ***!
+  \**********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Index_vue_vue_type_template_id_14940403_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Index.vue?vue&type=template&id=14940403&scoped=true& */ "./resources/js/components/pages/administration/tours/Index.vue?vue&type=template&id=14940403&scoped=true&");
+/* harmony import */ var _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Index.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/administration/tours/Index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Index_vue_vue_type_template_id_14940403_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Index_vue_vue_type_template_id_14940403_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "14940403",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/administration/tours/Index.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/administration/tours/Index.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************!*\
+  !*** ./resources/js/components/pages/administration/tours/Index.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Index.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/tours/Index.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/administration/tours/Index.vue?vue&type=template&id=14940403&scoped=true&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/pages/administration/tours/Index.vue?vue&type=template&id=14940403&scoped=true& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_14940403_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./Index.vue?vue&type=template&id=14940403&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/administration/tours/Index.vue?vue&type=template&id=14940403&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_14940403_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Index_vue_vue_type_template_id_14940403_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/auth/Login.vue":
 /*!******************************************************!*\
   !*** ./resources/js/components/pages/auth/Login.vue ***!
@@ -102974,11 +103394,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_pages_administration_routes_Index__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/pages/administration/routes/Index */ "./resources/js/components/pages/administration/routes/Index.vue");
 /* harmony import */ var _components_pages_administration_routes_Create__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/pages/administration/routes/Create */ "./resources/js/components/pages/administration/routes/Create.vue");
 /* harmony import */ var _components_pages_administration_routes_Edit__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/pages/administration/routes/Edit */ "./resources/js/components/pages/administration/routes/Edit.vue");
-/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _components_pages_administration_tours_Index__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/pages/administration/tours/Index */ "./resources/js/components/pages/administration/tours/Index.vue");
+/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -103089,8 +103511,15 @@ var routes = [{
     requiresAuth: true
   }
 }, {
+  path: '/recorridos',
+  name: 'tours',
+  component: _components_pages_administration_tours_Index__WEBPACK_IMPORTED_MODULE_20__["default"],
+  meta: {
+    requiresAuth: true
+  }
+}, {
   path: '*',
-  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_20__["default"]
+  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_21__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes,
