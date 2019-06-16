@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\RequestedService;
+use App\RequestedService;
 use InfyOm\Generator\Request\APIRequest;
 
 class CreateRequestedServiceAPIRequest extends APIRequest

@@ -2,19 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Http\Requests\API\CreateRequestServicesAPIRequest;
-use App\Http\Requests\API\UpdateRequestServicesAPIRequest;
-use App\Notifications\RequestServiceNotification;
-use App\Repositories\RouteRepository;
-use App\Repositories\TransportationAvailableRepository;
-use App\Repositories\UserRepository;
-use App\RequestServices;
+
+use App\Repositories\RequestedServiceRepository;
 use App\Repositories\RequestServicesRepository;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-use Illuminate\Support\Facades\Notification;
-use Response;
+
 
 /**
  * Class RequestServicesController
@@ -23,25 +16,30 @@ use Response;
 class RequestedServicesAPIController extends AppBaseController
 {
     /** @var  RequestServicesRepository */
-    private $requestServicesRepository;
-    private $transportationAvailableRepository;
-    private $userRepository;
-    private $routeRepository;
+    private $requestedServiceRepository;
+
+    /** @var RequestedServiceRepository */
+    private $requestServiceRepository;
 
     public function __construct(
-        RequestServicesRepository $requestServicesRepo,
-        TransportationAvailableRepository $transportationAvailableRepo,
-        UserRepository $userRepository,
-        RouteRepository $routeRepository
+        RequestedServiceRepository $requestedServiceRepository,
+        RequestServicesRepository $requestServiceRepository
     ) {
-        $this->requestServicesRepository = $requestServicesRepo;
-        $this->transportationAvailableRepository = $transportationAvailableRepo;
-        $this->userRepository = $userRepository;
-        $this->routeRepository = $routeRepository;
+        $this->requestedServiceRepository = $requestedServiceRepository;
+        $this->requestServiceRepository = $requestServiceRepository;
     }
 
     public function accept(Request $request)
     {
-        return $this->sendResponse([$request->service_id, $request->driver_id], 'Solicitud del servicio enviada');
+        $service = $this->requestServiceRepository->find($request->service_id);
+
+        $requestedService = $this->requestedServiceRepository->create([
+            'client_id'      => $service->user_id,
+            'transporter_id' => $request->driver_id,
+            'route_id'       => $service->router_id,
+            'status_id'      => 1,
+        ]);
+
+        return $this->sendResponse($requestedService->toArray(), 'Solicitud del servicio enviada');
     }
 }

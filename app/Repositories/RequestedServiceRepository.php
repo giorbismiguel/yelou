@@ -2,15 +2,14 @@
 
 namespace App\Repositories;
 
-use App\Models\RequestedService;
+use App\RequestedService;
 use App\Repositories\BaseRepository;
 
 /**
  * Class RequestedServiceRepository
  * @package App\Repositories
  * @version June 16, 2019, 6:32 pm UTC
-*/
-
+ */
 class RequestedServiceRepository extends BaseRepository
 {
     /**
@@ -19,7 +18,8 @@ class RequestedServiceRepository extends BaseRepository
     protected $fieldSearchable = [
         'client_id',
         'transporter_id',
-        'route_id'
+        'service_id',
+        'status_id',
     ];
 
     /**

@@ -93,7 +93,7 @@ class RequestServicesAPIController extends AppBaseController
                     'lng_end'                 => $input['lng_end'],
                 ]);
         } elseif ($request->get('favourite') === 1) {
-            $this->routeRepository->create([
+            $route = $this->routeRepository->create([
                 'name'                    => 'Origen: '.$input['name_start'].' y Destino: '.$input['name_end'],
                 'formatted_address_start' => $input['name_start'],
                 'lat_start'               => $input['lat_start'],
@@ -104,6 +104,8 @@ class RequestServicesAPIController extends AppBaseController
                 'user_id'                 => $input['user_id'],
                 'favourite'               => 1,
             ]);
+
+            $input['route_id'] = $route->id;
         }
 
         $requestServices = $this->requestServicesRepository->create($input);

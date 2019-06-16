@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -19,15 +19,14 @@ class RequestedService extends Model
     use SoftDeletes;
 
     public $table = 'requested_services';
-    
 
     protected $dates = ['deleted_at'];
-
 
     public $fillable = [
         'client_id',
         'transporter_id',
-        'route_id'
+        'service_id',
+        'status_id',
     ];
 
     /**
@@ -45,10 +44,9 @@ class RequestedService extends Model
      * @var array
      */
     public static $rules = [
-        'client_id' => 'required|integer',
+        'client_id'      => 'required|integer',
         'transporter_id' => 'required|integer',
-        'route_id' => 'status_id integer'
+        'service_id'     => 'required|integer',
+        'status_id'      => 'required|integer',
     ];
-
-    
 }
