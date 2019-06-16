@@ -19,7 +19,7 @@ class CreateRequestedServicesTable extends Migration
             $table->unsignedBigInteger('client_id');
             $table->unsignedBigInteger('transporter_id');
             $table->unsignedBigInteger('service_id');
-            $table->unsignedSmallInteger('status_id'); // 1- Pending 2- Accepted  3- Rejected
+            $table->unsignedBigInteger('status_id'); // 1- Pending 2- Accepted  3- Rejected
 
             $table->foreign('client_id')
                 ->references('id')

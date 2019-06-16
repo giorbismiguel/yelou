@@ -14,9 +14,10 @@ class CreateRequestedServiceStatusesTable extends Migration
     public function up()
     {
         Schema::create('requested_service_statuses', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('name');
             $table->text('description');
+
             $table->timestamps();
             $table->softDeletes();
         });
