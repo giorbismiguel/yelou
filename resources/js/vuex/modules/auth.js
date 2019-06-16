@@ -25,11 +25,10 @@ const actions = {
             }
 
             axios.get(route('api.me'))
-                .then(
-                    response => {
-                        commit('CHECK_LOGIN_OK', response.data)
-                        resolve()
-                    })
+                .then(response => {
+                    commit('CHECK_LOGIN_OK', response.data)
+                    resolve()
+                })
                 .catch(error => {
                     localStorage.removeItem('access_token')
                     commit('CHECK_LOGIN_FAIL')

@@ -72,7 +72,7 @@ new Vue({
 store
     .dispatch('checkLogin')
     .then(() => {
-        router.replace('/')
+        router.replace('/administracion')
     })
     .catch(() => {
     })

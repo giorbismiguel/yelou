@@ -70,7 +70,7 @@ Route::prefix('v1')->group(function () {
             Route::resource('request_services', 'RequestServicesAPIController');
 
             /*
-             * Transportation Area
+             * Driver Area
              */
             Route::resource('transportation_availables', 'TransportationAvailableAPIController');
             Route::post('/drivers/availables', 'TransportationAvailableAPIController@driversAvailable')
@@ -86,7 +86,7 @@ Route::prefix('v1')->group(function () {
                 });
 
             /*
-             *
+             * Comun Area
              */
             Route::namespace('Lists')
                 ->name('lists.')
@@ -101,6 +101,16 @@ Route::prefix('v1')->group(function () {
      * Comun Area
      */
     Route::resource('license_types', 'LicenseTypesAPIController');
+
+    /*
+     * Client and Driver Area
+     */
+    Route::prefix('requested_services')
+        ->name('requested_services.')
+        ->group(function () {
+            Route::get('/request/{service_id}/{driver_id}', 'RequestedServicesAPIController@accept')
+                ->name('accept');
+        });
 
     Route::namespace('Lists')
         ->name('lists.')

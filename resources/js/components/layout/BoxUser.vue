@@ -2,7 +2,7 @@
     <div class="wrapper">
 
         <!-- Sidebar -->
-        <nav id="sidebar">
+        <nav id="sidebar" v-if="me">
             <div class="sidebar-header">
                 <h3>
                     <router-link :to="{ name: 'administration' }">Administración</router-link>

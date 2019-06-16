@@ -20,6 +20,7 @@ import Administration from './components/pages/administration/Index'
 
 import Services from './components/pages/administration/services/Index'
 import CreateService from './components/pages/administration/services/Create'
+import AcceptService from './components/pages/administration/services/Accept'
 
 import Routes from './components/pages/administration/routes/Index'
 import CreateRoute from './components/pages/administration/routes/Create'
@@ -66,6 +67,9 @@ const routes = [
     },
     {
         path: '/servicios/adicionar', name: 'services_create', component: CreateService, meta: {requiresAuth: true}
+    },
+    {
+        path: '/servicios/aceptar/:service/:driver', component: AcceptService
     },
     {
         path: '/rutas', name: 'routes', component: Routes, meta: {requiresAuth: true}
