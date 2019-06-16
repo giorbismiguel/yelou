@@ -16,5 +16,14 @@ mix
     .copyDirectory('resources/img', 'public/img');
 
 mix.browserSync({
-    proxy: 'yelou.test'
+    proxy: 'yelou.test',
+    files: [
+        'resources/**/*'
+    ],
+    notify: {
+        styles: {
+            top: 'auto',
+            bottom: '0'
+        }
+    },
 });

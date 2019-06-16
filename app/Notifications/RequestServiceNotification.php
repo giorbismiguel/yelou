@@ -2,6 +2,8 @@
 
 namespace App\Notifications;
 
+use App\RequestServices;
+use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -11,15 +13,25 @@ class RequestServiceNotification extends Notification
 {
     use Queueable;
 
+    /** @var $driver User */
+    protected $driver;
+
+    /** @var $requestServices RequestServices */
+    protected $requestServices;
+
+    /** @var integer */
     protected $distanceToTravel;
 
     /**
-     * Create a new notification instance.
-     *
-     * @return void
+     * RequestServiceNotification constructor.
+     * @param $driver
+     * @param $requestServices
+     * @param $distanceToTravel
      */
-    public function __construct($distanceToTravel)
+    public function __construct($driver, $requestServices, $distanceToTravel)
     {
+        $this->driver = $driver;
+        $this->requestServices = $requestServices;
         $this->distanceToTravel = $distanceToTravel;
     }
 
@@ -42,7 +54,7 @@ class RequestServiceNotification extends Notification
      */
     public function toMail($notifiable)
     {
-        $url = url('/servicios/aceptar');
+        $url = url('/servicios/aceptar/'.$this->requestServices->id.'/'.$this->driver->id);
 
         return (new MailMessage)
             ->subject(__('app.customer_request_transportation'))

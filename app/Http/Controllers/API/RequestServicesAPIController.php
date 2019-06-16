@@ -94,7 +94,7 @@ class RequestServicesAPIController extends AppBaseController
                 ]);
         } elseif ($request->get('favourite') === 1) {
             $this->routeRepository->create([
-                'name'                    => 'Origen: ' . $input['name_start'].' y Destino: '.$input['name_end'],
+                'name'                    => 'Origen: '.$input['name_start'].' y Destino: '.$input['name_end'],
                 'formatted_address_start' => $input['name_start'],
                 'lat_start'               => $input['lat_start'],
                 'lng_start'               => $input['lng_start'],
@@ -114,9 +114,15 @@ class RequestServicesAPIController extends AppBaseController
 
         $availableNerbyDrivers = $this->getDriversToSendNotification($input);
 
-        $users = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
+        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
 
-        Notification::send($users, new RequestServiceNotification($distanceToTravel));
+        if ($drivers->count() === 0) {
+            return $this->sendError('No se ha encontrado ningún chofer disponible para anteder su servicio.');
+        }
+
+        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+        });
 
         return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
     }
@@ -207,6 +213,7 @@ class RequestServicesAPIController extends AppBaseController
                     ) < 10; // Km
             })
             ->pluck('user_id');
+
         return $availableNerbyDrivers;
     }
 }

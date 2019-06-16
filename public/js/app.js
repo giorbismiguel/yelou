@@ -4031,6 +4031,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4069,7 +4077,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       submitted: false,
       loading: false,
-      currentLocationLatLng: true,
+      currentLocationLatLng: null,
       placeholderCurrentLocation: 'Ubicación actual',
       currentLocationText: 'Ubicación actual',
       writeLocationText: 'Escribe la ubicación actual',
@@ -4104,6 +4112,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (_this.currentLocationLatLng && !_this.route && !_this.originRequestService) {
             _this.form.lat_start = _this.currentLocationLatLng.lat;
             _this.form.lng_start = _this.currentLocationLatLng.lng;
+            _this.form.name_start = _this.form.name_start ? _this.form.name_start : _this.currentLocationText;
           } else if (_this.originRequestService) {
             _this.form.lat_start = _this.originRequestService.geometry.location.lat();
             _this.form.lng_start = _this.originRequestService.geometry.location.lng();
@@ -4128,9 +4137,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               group: 'create_request_service',
               title: 'Ruta',
               text: 'La solicitud del servicio ha sido exitosa'
-            });
+            }); //this.$router.replace('/servicios')
 
-            _this.$router.replace('/servicios');
           })["catch"](function (data) {
             _this.loading = false;
 
@@ -64852,8 +64860,8 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: this.form.name_start,
-                                    expression: "this.form.name_start"
+                                    value: _vm.form.name_start,
+                                    expression: "form.name_start"
                                   }
                                 ],
                                 staticClass: "form-control",
@@ -64863,14 +64871,14 @@ var render = function() {
                                   name: "actual_ubication",
                                   type: "text"
                                 },
-                                domProps: { value: this.form.name_start },
+                                domProps: { value: _vm.form.name_start },
                                 on: {
                                   input: function($event) {
                                     if ($event.target.composing) {
                                       return
                                     }
                                     _vm.$set(
-                                      this.form,
+                                      _vm.form,
                                       "name_start",
                                       $event.target.value
                                     )
@@ -102833,6 +102841,13 @@ var routes = [{
     requiresAuth: true
   }
 }, {
+  path: '/servicios/aceptar/:service/:driver',
+  name: 'services_create',
+  component: _components_pages_administration_services_Create__WEBPACK_IMPORTED_MODULE_15__["default"],
+  meta: {
+    requiresAuth: true
+  }
+}, {
   path: '/rutas',
   name: 'routes',
   component: _components_pages_administration_routes_Index__WEBPACK_IMPORTED_MODULE_16__["default"],
@@ -103395,6 +103410,20 @@ var actions = {
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.request_services.store'), form).then(function (_ref2) {
         var data = _ref2.data;
+        commit('CREATE_REQUEST_SERVICES_OK', data);
+        resolve();
+      })["catch"](function (error) {
+        commit('CREATE_REQUEST_SERVICES_FAIL');
+        reject(error.response.data);
+      });
+    });
+  },
+  acceptRequestService: function acceptRequestService(_ref3, form) {
+    var commit = _ref3.commit,
+        dispatch = _ref3.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.request_services.accept'), form).then(function (_ref4) {
+        var data = _ref4.data;
         commit('CREATE_REQUEST_SERVICES_OK', data);
         resolve();
       })["catch"](function (error) {

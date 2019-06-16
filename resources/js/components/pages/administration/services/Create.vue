@@ -18,6 +18,7 @@
 
                             <div class="form-group">
                                 <label for="route">Rutas</label>
+
                                 <ye-select id="route" name="route" v-model="form.route_id"
                                            :options="lists.userRoutes"
                                            :reduce="route => route.id" label="name"></ye-select>
@@ -25,14 +26,17 @@
 
                             <div class="form-group">
                                 <label for="start_time">Hora de Inicio<span class="text-primary">*</span></label>
+
                                 <date-picker id="start_time" name="start_time" v-model="universalTime"
                                              style="width: 300px; display: block;" value-type="date"
                                              :lang="timePicker.lang" type="datetime" :format="timePicker.format"
                                              confirm confirm-text="Confirmar"
                                              :input-class="[ 'form-control', submitted && serverErrors.start_time ? 'is-invalid': '']">
                                 </date-picker>
+
                                 <input type="text" class="form-control" v-show="false"
                                        :class="submitted && serverErrors.start_time ? 'is-invalid': ''"/>
+
                                 <div v-if="submitted && serverErrors.start_time"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.start_time">{{ error }}</template>
@@ -42,7 +46,7 @@
                             <div class="form-row form-group">
                                 <label for="origen_request_services">Origen<span class="text-primary">*</span></label>
 
-                                <input v-model="this.form.name_start" :placeholder="placeholderCurrentLocation"
+                                <input v-model="form.name_start" :placeholder="placeholderCurrentLocation"
                                        v-if="currentLocation" id="actual_ubication" name="actual_ubication" type="text"
                                        class="form-control"/>
 
@@ -68,12 +72,14 @@
                             <div class="form-group">
                                 <label for="destination_request_services">Destino<span
                                         class="text-primary">*</span></label>
+
                                 <gmap-autocomplete class="form-control" id="destination_request_services"
                                                    name="destination_request_services" :value="form.name_end"
                                                    @place_changed="setDestinationRequestServices"
                                                    placeholder="¿ A dónde vas?"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                 </gmap-autocomplete>
+
                                 <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.lat_end">{{ error }}</template>
@@ -82,10 +88,12 @@
 
                             <div class="form-group">
                                 <label for="payment_method">Medio de pago</label>
+
                                 <ye-select id="payment_method" name="payment_method" v-model="form.payment_method_id"
                                            :options="lists.paymentMethods"
                                            :class="{ 'is-invalid': submitted && (serverErrors.payment_method_id || serverErrors.payment_method_id) }"
                                            :reduce="method => method.id" label="name"></ye-select>
+
                                 <div v-if="submitted && (serverErrors.payment_method_id || serverErrors.payment_method_id)"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.payment_method_id">{{ error }}</template>
@@ -162,7 +170,7 @@
                 },
                 submitted: false,
                 loading: false,
-                currentLocationLatLng: true,
+                currentLocationLatLng: null,
                 placeholderCurrentLocation: 'Ubicación actual',
                 currentLocationText: 'Ubicación actual',
                 writeLocationText: 'Escribe la ubicación actual',
@@ -199,6 +207,7 @@
                             if (this.currentLocationLatLng && !this.route && !this.originRequestService) {
                                 this.form.lat_start = this.currentLocationLatLng.lat
                                 this.form.lng_start = this.currentLocationLatLng.lng
+                                this.form.name_start = this.form.name_start ? this.form.name_start : this.currentLocationText
                             } else if (this.originRequestService) {
                                 this.form.lat_start = this.originRequestService.geometry.location.lat()
                                 this.form.lng_start = this.originRequestService.geometry.location.lng()
@@ -224,7 +233,7 @@
                                         text: 'La solicitud del servicio ha sido exitosa'
                                     });
 
-                                    this.$router.replace('/servicios')
+                                    //this.$router.replace('/servicios')
                                 })
                                 .catch((data) => {
                                     this.loading = false
