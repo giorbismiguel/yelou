@@ -120,3 +120,5 @@ Route::prefix('v1')->group(function () {
                 ->name('get');
         });
 });
+
+Route::resource('requested_services', 'RequestedServiceAPIController');
