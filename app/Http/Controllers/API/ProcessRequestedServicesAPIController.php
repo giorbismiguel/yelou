@@ -13,7 +13,7 @@ use App\Http\Controllers\AppBaseController;
  * Class RequestServicesController
  * @package App\Http\Controllers\API
  */
-class RequestedServicesAPIController extends AppBaseController
+class ProcessRequestedServicesAPIController extends AppBaseController
 {
     /** @var  RequestServicesRepository */
     private $requestedServiceRepository;
@@ -31,15 +31,29 @@ class RequestedServicesAPIController extends AppBaseController
 
     public function accept(Request $request)
     {
-        $service = $this->requestServiceRepository->find($request->service_id);
+        if ($this->requestedServiceRepository->allQuery([
+            'service_id' => $request->service_id,
+            'status_id'  => 3, // Accept
+        ])->exists()) {
 
-        $requestedService = $this->requestedServiceRepository->create([
+            return $this->sendError('Esta solicitud ya fue antendida');
+        }
+
+        $service = $this->requestServiceRepository->find($request->service_id);
+        $input = [
             'client_id'      => $service->user_id,
             'transporter_id' => $request->driver_id,
-            'route_id'       => $service->router_id,
-            'status_id'      => 1,
-        ]);
+            'service_id'     => $request->service_id,
+            'status_id'      => 1, // Pending
+        ];
 
-        return $this->sendResponse($requestedService->toArray(), 'Solicitud del servicio enviada');
+        if ($this->requestedServiceRepository->allQuery($input)->exists()) {
+
+            return $this->sendError('Ya usted respondio a esta solicitud');
+        }
+
+        $requestedService = $this->requestedServiceRepository->create($input);
+
+        return $this->sendResponse($requestedService->toArray(), 'Solicitud aceptada');
     }
 }

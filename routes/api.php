@@ -109,7 +109,7 @@ Route::prefix('v1')->group(function () {
     Route::prefix('requested_services')
         ->name('requested_services.')
         ->group(function () {
-            Route::get('/request/{service_id}/{driver_id}', 'RequestedServicesAPIController@accept')
+            Route::get('/request/{service_id}/{driver_id}', 'ProcessRequestedServicesAPIController@accept')
                 ->name('accept');
         });
 

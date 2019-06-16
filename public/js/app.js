@@ -3901,6 +3901,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
 /* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -3913,6 +3915,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+
 
 
 
@@ -3927,32 +3932,54 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       loadingView: true
     };
   },
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
+    responseRequested: function responseRequested(state) {
+      return state.requestServices.responseRequested;
+    }
+  })),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['acceptRequestedService']), {
     processRequestedService: function processRequestedService() {
       var _this = this;
 
       this.acceptRequestedService(this.form).then(function () {
+        _this.loadingView = false;
+
         _this.$notify({
           type: 'success',
-          group: 'create_request_service',
-          title: 'Ruta',
+          group: 'create_request_accept',
+          title: 'Aceptar Servicio',
           text: 'La solicitud del servicio ha sido exitosa'
         });
       })["catch"](function (data) {
-        console.log(data);
+        _this.loadingView = false;
 
-        _this.$notify({
+        if (!data.success) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
+            text: data.message,
+            type: 'info',
+            showCancelButton: false,
+            confirmButtonText: 'Aceptar'
+          }).then(function () {
+            _this.$router.replace('/entrar');
+          });
+          return;
+        }
+
+        sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
+          text: data.message,
           type: 'error',
-          group: 'create_request_service',
-          title: 'Ruta',
-          text: 'Ha ocurrido un error al realizar la solicitud del servicio.'
+          showCancelButton: false,
+          confirmButtonText: 'Aceptar'
+        }).then(function () {
+          _this.$router.replace('/entrar');
         });
       });
     }
   }),
   components: {
     Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a,
-    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__["default"]
+    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__["default"],
+    Swal: sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a
   },
   mounted: function mounted() {
     this.form.service_id = this.$route.params.service;
@@ -64781,16 +64808,22 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("box-user", [
-    _vm.loadingView
-      ? _c(
-          "div",
-          { staticClass: "d-flex justify-content-center mt-5" },
-          [_c("spinner", { attrs: { size: "large" } })],
-          1
-        )
-      : _vm._e()
-  ])
+  return _c(
+    "box-user",
+    [
+      _vm.loadingView
+        ? _c(
+            "div",
+            { staticClass: "d-flex justify-content-center mt-5" },
+            [_c("spinner", { attrs: { size: "large" } })],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("notifications", { attrs: { group: "create_request_accept" } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -103588,7 +103621,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var state = {
-  p: []
+  p: [],
+  responseRequested: null
 };
 var actions = {
   createRequestService: function createRequestService(_ref, form) {
@@ -103613,14 +103647,13 @@ var actions = {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(route('api.requested_services.accept', {
         service_id: form.service_id,
         driver_id: form.driver_id
-      })).then(function (_ref4) {
-        var data = _ref4.data;
+      })).then(function (data) {
         commit('CREATE_REQUESTED_SERVICES_OK', data);
         resolve();
-      })["catch"](function (error) {
-        commit('CREATE_REQUESTED_SERVICES_FAIL');
-        console.log(error.response);
-        reject(error.response);
+      })["catch"](function (_ref4) {
+        var data = _ref4.response.data;
+        commit('CREATE_REQUESTED_SERVICES_FAIL', data);
+        reject(data);
       });
     });
   }
@@ -103632,8 +103665,12 @@ var mutations = {
   CREATE_REQUEST_SERVICES_FAIL: function CREATE_REQUEST_SERVICES_FAIL(state, nomenclators) {
     state.lists = nomenclators;
   },
-  CREATE_REQUESTED_SERVICES_OK: function CREATE_REQUESTED_SERVICES_OK(state) {},
-  CREATE_REQUESTED_SERVICES_FAIL: function CREATE_REQUESTED_SERVICES_FAIL(state) {}
+  CREATE_REQUESTED_SERVICES_OK: function CREATE_REQUESTED_SERVICES_OK(state, data) {
+    state.responseRequested = data;
+  },
+  CREATE_REQUESTED_SERVICES_FAIL: function CREATE_REQUESTED_SERVICES_FAIL(state, data) {
+    state.responseRequested = data;
+  }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: state,

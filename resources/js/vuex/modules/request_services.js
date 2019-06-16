@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const state = {
     p: [],
+    responseRequested: null
 }
 
 const actions = {
@@ -24,15 +25,13 @@ const actions = {
             console.log(form);
 
             axios.get(route('api.requested_services.accept', {service_id: form.service_id, driver_id: form.driver_id}))
-                .then(({data}) => {
+                .then((data) => {
                     commit('CREATE_REQUESTED_SERVICES_OK', data)
-
                     resolve()
                 })
-                .catch(error => {
-                    commit('CREATE_REQUESTED_SERVICES_FAIL')
-                    console.log(error.response)
-                    reject(error.response)
+                .catch(({response: {data}}) => {
+                    commit('CREATE_REQUESTED_SERVICES_FAIL', data)
+                    reject(data)
                 })
         })
     }
@@ -47,12 +46,12 @@ const mutations = {
         state.lists = nomenclators
     },
 
-    CREATE_REQUESTED_SERVICES_OK(state) {
-
+    CREATE_REQUESTED_SERVICES_OK(state, data) {
+        state.responseRequested = data;
     },
 
-    CREATE_REQUESTED_SERVICES_FAIL(state) {
-
+    CREATE_REQUESTED_SERVICES_FAIL(state, data) {
+        state.responseRequested = data
     }
 };
 
