@@ -145,7 +145,7 @@
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
                                     <gmap-autocomplete class="form-control" id="direction" name="direction"
-                                                       @place_changed="setDirection"
+                                                       @place_changed="setDirection" @keypress.enter="$event.preventDefault()"
                                                        :class="{ 'is-invalid': submitted && serverErrors.direction }">
                                     </gmap-autocomplete>
 

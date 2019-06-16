@@ -53,7 +53,7 @@
                                 <gmap-autocomplete v-else class="form-control" id="origen_request_services" ref="origen"
                                                    name="origen_request_services" :value="form.name_start"
                                                    @place_changed="setOrigenRequestServices"
-                                                   :placeholder="writeLocationText"
+                                                   :placeholder="writeLocationText" @keypress.enter="$event.preventDefault()"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                 </gmap-autocomplete>
 
@@ -76,7 +76,7 @@
                                 <gmap-autocomplete class="form-control" id="destination_request_services"
                                                    name="destination_request_services" :value="form.name_end"
                                                    @place_changed="setDestinationRequestServices"
-                                                   placeholder="¿ A dónde vas?"
+                                                   placeholder="¿ A dónde vas?" @keypress.enter="$event.preventDefault()"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                 </gmap-autocomplete>
 

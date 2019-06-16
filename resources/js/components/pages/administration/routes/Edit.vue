@@ -32,7 +32,7 @@
                                     <div class="form-group col-md-6">
                                         <label for="place_origen">Origen<span class="text-danger">*</span></label>
                                         <gmap-autocomplete ref="origin" class="form-control" id="place_origen"
-                                                           :value="form.formatted_address_start"
+                                                           :value="form.formatted_address_start" @keypress.enter="$event.preventDefault()"
                                                            name="place_origen" @place_changed="setPlaceOrigin">
                                         </gmap-autocomplete>
                                     </div>
@@ -40,7 +40,7 @@
                                         <label for="place_destination">Destino<span class="text-danger">*</span></label>
                                         <gmap-autocomplete class="form-control" id="place_destination"
                                                            :value="form.formatted_address_end"
-                                                           name="place_destination"
+                                                           name="place_destination" @keypress.enter="$event.preventDefault()"
                                                            @place_changed="setPlaceDestination">
                                         </gmap-autocomplete>
                                     </div>

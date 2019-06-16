@@ -29,7 +29,7 @@
                                 <div class="form-group col-md-6">
                                     <label for="place_origen">Origen<span class="text-danger">*</span></label>
                                     <gmap-autocomplete class="form-control" id="place_origen" name="place_origen"
-                                                       @place_changed="setPlaceOrigin"
+                                                       @place_changed="setPlaceOrigin" @keypress.enter="$event.preventDefault()"
                                                        :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                     </gmap-autocomplete>
 
@@ -40,7 +40,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="place_destination">Destino<span class="text-danger">*</span></label>
-                                    <gmap-autocomplete class="form-control" id="place_destination"
+                                    <gmap-autocomplete class="form-control" id="place_destination" @keypress.enter="$event.preventDefault()"
                                                        name="place_destination" @place_changed="setPlaceDestination"
                                                        :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                     </gmap-autocomplete>

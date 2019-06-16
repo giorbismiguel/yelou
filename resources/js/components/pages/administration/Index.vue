@@ -7,7 +7,7 @@
 
             <div class="row mb-2">
                 <div class="col-6">
-                    <gmap-autocomplete class="form-control" @place_changed="changePlace"
+                    <gmap-autocomplete class="form-control" @place_changed="changePlace" @keypress.enter="$event.preventDefault()"
                                        placehoder="Escriba su ubicación para ver los choferes mas cercanos">
                     </gmap-autocomplete>
                 </div>

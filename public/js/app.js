@@ -64228,7 +64228,24 @@ var render = function() {
                       placehoder:
                         "Escriba su ubicación para ver los choferes mas cercanos"
                     },
-                    on: { place_changed: _vm.changePlace }
+                    on: {
+                      place_changed: _vm.changePlace,
+                      keypress: function($event) {
+                        if (
+                          !$event.type.indexOf("key") &&
+                          _vm._k(
+                            $event.keyCode,
+                            "enter",
+                            13,
+                            $event.key,
+                            "Enter"
+                          )
+                        ) {
+                          return null
+                        }
+                        return $event.preventDefault()
+                      }
+                    }
                   })
                 ],
                 1
@@ -64470,7 +64487,24 @@ var render = function() {
                                 _vm.serverErrors.lng_start)
                           },
                           attrs: { id: "place_origen", name: "place_origen" },
-                          on: { place_changed: _vm.setPlaceOrigin }
+                          on: {
+                            place_changed: _vm.setPlaceOrigin,
+                            keypress: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return $event.preventDefault()
+                            }
+                          }
                         }),
                         _vm._v(" "),
                         _vm.submitted &&
@@ -64516,7 +64550,24 @@ var render = function() {
                             id: "place_destination",
                             name: "place_destination"
                           },
-                          on: { place_changed: _vm.setPlaceDestination }
+                          on: {
+                            keypress: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return $event.preventDefault()
+                            },
+                            place_changed: _vm.setPlaceDestination
+                          }
                         }),
                         _vm._v(" "),
                         _vm.submitted &&
@@ -64731,7 +64782,24 @@ var render = function() {
                                   value: _vm.form.formatted_address_start,
                                   name: "place_origen"
                                 },
-                                on: { place_changed: _vm.setPlaceOrigin }
+                                on: {
+                                  keypress: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    return $event.preventDefault()
+                                  },
+                                  place_changed: _vm.setPlaceOrigin
+                                }
                               })
                             ],
                             1
@@ -64759,7 +64827,24 @@ var render = function() {
                                   value: _vm.form.formatted_address_end,
                                   name: "place_destination"
                                 },
-                                on: { place_changed: _vm.setPlaceDestination }
+                                on: {
+                                  keypress: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    return $event.preventDefault()
+                                  },
+                                  place_changed: _vm.setPlaceDestination
+                                }
                               })
                             ],
                             1
@@ -65237,7 +65322,22 @@ var render = function() {
                                   placeholder: _vm.writeLocationText
                                 },
                                 on: {
-                                  place_changed: _vm.setOrigenRequestServices
+                                  place_changed: _vm.setOrigenRequestServices,
+                                  keypress: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    return $event.preventDefault()
+                                  }
                                 }
                               }),
                           _vm._v(" "),
@@ -65305,7 +65405,22 @@ var render = function() {
                               placeholder: "¿ A dónde vas?"
                             },
                             on: {
-                              place_changed: _vm.setDestinationRequestServices
+                              place_changed: _vm.setDestinationRequestServices,
+                              keypress: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return $event.preventDefault()
+                              }
                             }
                           }),
                           _vm._v(" "),
@@ -66802,7 +66917,24 @@ var render = function() {
                             _vm.submitted && _vm.serverErrors.direction
                         },
                         attrs: { id: "direction", name: "direction" },
-                        on: { place_changed: _vm.setDirection }
+                        on: {
+                          place_changed: _vm.setDirection,
+                          keypress: function($event) {
+                            if (
+                              !$event.type.indexOf("key") &&
+                              _vm._k(
+                                $event.keyCode,
+                                "enter",
+                                13,
+                                $event.key,
+                                "Enter"
+                              )
+                            ) {
+                              return null
+                            }
+                            return $event.preventDefault()
+                          }
+                        }
                       }),
                       _vm._v(" "),
                       _vm.submitted &&
