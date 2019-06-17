@@ -59,7 +59,7 @@
 
                                 <button type="button" class="btn btn-accept btn-sm mt-2"
                                         @click="changeCurrentLocation">
-                                    Escribir el origen
+                                    Completar con Google Maps
                                 </button>
 
                                 <div v-if="submitted && (serverErrors.lat_start || serverErrors.lng_start)"

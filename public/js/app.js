@@ -65350,7 +65350,7 @@ var render = function() {
                             },
                             [
                               _vm._v(
-                                "\n                                Escribir el origen\n                            "
+                                "\n                                Escribir con ayuda\n                            "
                               )
                             ]
                           ),
