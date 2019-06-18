@@ -112,6 +112,8 @@ Route::prefix('v1')->group(function () {
         ->group(function () {
             Route::get('/request/{service_id}/{driver_id}', 'ProcessRequestedServicesAPIController@accept')
                 ->name('accept');
+            Route::post('/request/{requested_service_id}', 'ProcessRequestedServicesAPIController@acceptClient')
+                ->name('accept.client');
         });
 
     Route::namespace('Lists')

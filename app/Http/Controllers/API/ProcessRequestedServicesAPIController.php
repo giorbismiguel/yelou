@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\API;
 
 
+use App\Notifications\RequestedDriverAccepted;
 use App\Repositories\RequestedServiceRepository;
 use App\Repositories\RequestServicesRepository;
+use App\Repositories\UserRepository;
+use App\RequestedService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 
@@ -21,12 +24,17 @@ class ProcessRequestedServicesAPIController extends AppBaseController
     /** @var RequestedServiceRepository */
     private $requestServiceRepository;
 
+    /** @var UserRepository */
+    private $userRepository;
+
     public function __construct(
         RequestedServiceRepository $requestedServiceRepository,
-        RequestServicesRepository $requestServiceRepository
+        RequestServicesRepository $requestServiceRepository,
+        UserRepository $userRepository
     ) {
         $this->requestedServiceRepository = $requestedServiceRepository;
         $this->requestServiceRepository = $requestServiceRepository;
+        $this->userRepository = $userRepository;
     }
 
     public function accept(Request $request)
@@ -55,5 +63,24 @@ class ProcessRequestedServicesAPIController extends AppBaseController
         $requestedService = $this->requestedServiceRepository->create($input);
 
         return $this->sendResponse($requestedService->toArray(), 'Solicitud aceptada');
+    }
+
+    public function acceptClient(Request $request)
+    {
+        /** @var RequestedService $requestedService */
+        $requestedService = $this->requestedServiceRepository->find($request->requested_service_id);
+
+        $requestedService->update(['status_id' => 2]); // Accept
+
+        $requestedService
+            ->where('id', '!=', $requestedService->id)
+            ->where('service_id', '=', $requestedService->service_id)
+            ->update(['status_id' => 3]); // Reject
+
+        $user = $this->userRepository->find($requestedService->transporter_id);
+
+        $user->notify(new RequestedDriverAccepted($requestedService));
+
+        return $this->sendResponse($requestedService->toArray(), 'Solicitud aceptada por el cliente');
     }
 }

@@ -33,6 +33,7 @@ class RequestedServiceAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
+        $user = \Auth::user();
         $inputs = $request->except([
             'page',
             'per_page',
@@ -40,7 +41,12 @@ class RequestedServiceAPIController extends AppBaseController
             'sort_by'
         ]);
 
-        $inputs['transporter_id'] = \Auth::id();
+        if ($user->type === 2) {
+            $inputs['transporter_id'] = $user->id;
+        } elseif ($user->type === 1) {
+            $inputs['client_id'] = $user->id;
+            $inputs['status_id'] = 1;
+        }
 
         $requestedServices = $this->requestedServiceRepository->allPagination(
             $inputs,

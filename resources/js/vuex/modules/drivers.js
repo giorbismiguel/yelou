@@ -16,7 +16,19 @@ const actions = {
                     reject(error.response.data)
                 })
         })
-    }
+    },
+
+    acceptDriverService({commit, dispatch}, id) {
+        return new Promise((resolve, reject) => {
+            axios.post(route('api.requested_services.accept.client', id))
+                .then(success => {
+                    resolve(success)
+                })
+                .catch(error => {
+                    reject(error.response.data)
+                })
+        })
+    },
 }
 
 const mutations = {

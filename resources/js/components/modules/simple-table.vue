@@ -7,7 +7,7 @@
                     <select v-model="localPerPage" class="custom-select custom-select-sm" :disabled="rows.length === 0">
                         <option v-for="perPageItem in perPageList" :value="perPageItem">{{ perPageItem }}</option>
                     </select>
-                    <label>rutas</label>
+                    <label>registros</label>
                 </slot>
             </div>
             <div class="col-sm-12 col-md-8 text-right" style="padding-top: 4px;">

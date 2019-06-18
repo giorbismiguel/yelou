@@ -25,10 +25,18 @@
                                 Editar
                             </router-link>
                         </li>
+
                         <li>
-                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)">
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDeleteService(row.id)">
                                 <i class="fas fa-trash-alt"></i>
                                 Eliminar
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="showDriverModal">
+                                <i class="fas fa-users"></i>
+                                Choferes disponibles
                             </a>
                         </li>
                     </ye-actions>
@@ -46,6 +54,40 @@
             </div>
         </div>
 
+        <ye-modal id="modalAddresses" :title="modal.title" :show="modal.showDriver" size="large" cancel-text="Cerrar"
+                  okHidden="true" @cancel="hideDriverModel" @ok="save">
+            <div class="row">
+                <div class="col-md-12">
+                    <ye-table id="table_requested_services"
+                              :columns="columnsDriver"
+                              :options="optionsDriver"
+                              :url="apiEndpointDriver"
+                              ref="table"
+                              :filters="filtersDrivers"
+                              @clearFilters="clearFilterDriver">
+
+                        <template slot="table-title">Todas las solicitudes para prestarle el servicio</template>
+
+                        <template slot="transporter_id" slot-scope="{row}">
+                            {{ row.transporter.name }}
+                        </template>
+
+                        <ye-actions slot="actions" slot-scope="{row}" class="text-center">
+                            <li>
+                                <a href="#" class="dropdown-item" title="Aceptar Servicio"
+                                   @click="acceptService(row.id)">
+                                    <i class="fas fa-car-alt"></i>
+                                    Aceptar
+                                </a>
+                            </li>
+                        </ye-actions>
+
+                        <template slot="filters-form"></template>
+                    </ye-table>
+                </div>
+            </div>
+        </ye-modal>
+
         <notifications group="index_request_services"/>
     </box-user>
 </template>
@@ -61,6 +103,11 @@
 
         data() {
             return {
+                modal: {
+                    title: 'Choferes disponibles para prestar el servicio',
+                    showDriver: false,
+                },
+
                 filters: {
                     start_time: null,
                     name_start: null,
@@ -95,7 +142,32 @@
                     }
                 },
 
-                defaultFilters: {}
+                defaultFilters: {},
+
+                filtersDriver: {
+                    start_time: null,
+                    name_start: null,
+                    name_end: null,
+                    payment_method_id: null
+                },
+
+                columnsDriver: [
+                    'transporter_id',
+                    'actions',
+                ],
+
+                optionsDriver: {
+                    columnsClasses: {
+                        'actions': 'action-col'
+                    },
+
+                    headings: {
+                        'transporter_id': 'Nombre',
+                        'actions': 'Acciones',
+                    }
+                },
+
+                defaultFiltersDriver: {}
             };
         },
 
@@ -106,15 +178,28 @@
 
             apiEndpoint() {
                 return route('api.request_services.index');
+            },
+
+            apiEndpointDriver() {
+                return route('api.requested_services.index');
             }
         },
 
         methods: {
             ...mapActions([
-                'deleteRoute',
+                'deleteService',
+                'acceptDriverService'
             ]),
 
-            onDelete(id) {
+            hideDriverModel() {
+                this.modal.showDriver = false
+            },
+
+            showDriverModal() {
+                this.modal.showDriver = true
+            },
+
+            onDeleteService(id) {
                 return;
 
                 this.serverErrors = {}
@@ -162,6 +247,10 @@
 
             reloadTable() {
                 return this.$refs['table'].applyFiltersAndReload()
+            },
+
+            acceptService(id) {
+                this.acceptDriverService(id);
             }
         },
 

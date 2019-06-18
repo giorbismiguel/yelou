@@ -46,6 +46,7 @@ Vue.component('feet', require('./components/layout/Feet.vue').default)
 Vue.component('sidebar', require('./components/layout/Sidebar').default)
 Vue.component('ye-actions', require('./components/modules/Actions').default);
 Vue.component('ye-table', require('./components/modules/simple-table').default);
+Vue.component('ye-modal', require('./components/modules/modal.vue').default);
 Vue.component('ye-select', vSelect)
 
 import App from './components/App'

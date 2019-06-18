@@ -28,6 +28,7 @@ class RequestedService extends Model
         'client:id,name',
         'service:id,name_start,name_end',
         'status:id,name',
+        'transporter:id,name',
     ];
 
     public $fillable = [
@@ -74,7 +75,7 @@ class RequestedService extends Model
     /**
      * @return BelongsTo
      */
-    public function driver(): BelongsTo
+    public function transporter(): BelongsTo
     {
         return $this->belongsTo(User::class, 'transporter_id');
     }

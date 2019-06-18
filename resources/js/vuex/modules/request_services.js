@@ -22,8 +22,6 @@ const actions = {
 
     acceptRequestedService({commit, dispatch}, form) {
         return new Promise((resolve, reject) => {
-            console.log(form);
-
             axios.get(route('api.requested_services.accept', {service_id: form.service_id, driver_id: form.driver_id}))
                 .then((data) => {
                     commit('CREATE_REQUESTED_SERVICES_OK', data)
