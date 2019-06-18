@@ -59,12 +59,12 @@
             <div class="row">
                 <div class="col-md-12">
                     <ye-table id="table_requested_services"
-                              :columns="columnsDriver"
-                              :options="optionsDriver"
-                              :url="apiEndpointDriver"
-                              ref="table"
+                              :columns="columnsDrivers"
+                              :options="optionsDrivers"
+                              :url="apiEndpointDrivers"
+                              ref="tableDrivers"
                               :filters="filtersDrivers"
-                              @clearFilters="clearFilterDriver">
+                              @clearFilters="clearFilterDrivers">
 
                         <template slot="table-title">Todas las solicitudes para prestarle el servicio</template>
 
@@ -88,7 +88,7 @@
             </div>
         </ye-modal>
 
-        <notifications group="index_request_services"/>
+        <notifications group="index_requested_services"/>
     </box-user>
 </template>
 
@@ -144,19 +144,19 @@
 
                 defaultFilters: {},
 
-                filtersDriver: {
+                filtersDrivers: {
                     start_time: null,
                     name_start: null,
                     name_end: null,
                     payment_method_id: null
                 },
 
-                columnsDriver: [
+                columnsDrivers: [
                     'transporter_id',
                     'actions',
                 ],
 
-                optionsDriver: {
+                optionsDrivers: {
                     columnsClasses: {
                         'actions': 'action-col'
                     },
@@ -167,7 +167,7 @@
                     }
                 },
 
-                defaultFiltersDriver: {}
+                defaultFiltersDrivers: {},
             };
         },
 
@@ -180,7 +180,7 @@
                 return route('api.request_services.index');
             },
 
-            apiEndpointDriver() {
+            apiEndpointDrivers() {
                 return route('api.requested_services.index');
             }
         },
@@ -223,8 +223,6 @@
                                     title: 'Ruta',
                                     text: 'Se ha eliminado la ruta correctamente'
                                 });
-
-                                this.reloadTable()
                             })
                             .catch((data) => {
                                 this.loading = false
@@ -245,12 +243,42 @@
                 this.$nextTick(this.reloadTable)
             },
 
+            clearFilterDrivers() {
+                this.filters = cloneDeep(this.defaultFiltersDrivers)
+                this.$nextTick(this.reloadTable)
+            },
+
             reloadTable() {
                 return this.$refs['table'].applyFiltersAndReload()
             },
 
+            reloadTableDrivers() {
+                return this.$refs['tableDrivers'].applyFiltersAndReload()
+            },
+
             acceptService(id) {
-                this.acceptDriverService(id);
+                this.acceptDriverService(id)
+                    .then(() => {
+                        this.hideDriverModel()
+                        this.$notify({
+                            type: 'success',
+                            group: 'index_requested_services',
+                            title: 'Servicios',
+                            text: 'Se le ha enviado una notificación al chofer'
+                        })
+
+                        this.reloadTableDrivers()
+                    })
+                    .catch((data) => {
+                        this.hideDriverModel()
+                        this.$notify({
+                            type: 'error',
+                            group: 'index_requested_services',
+                            title: 'Servicios',
+                            text: 'Ha ocurrido un error al enviar la notificacion chofer'
+                        });
+                        this.reloadTableDrivers()
+                    })
             }
         },
 

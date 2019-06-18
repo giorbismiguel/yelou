@@ -70,6 +70,8 @@ class ProcessRequestedServicesAPIController extends AppBaseController
         /** @var RequestedService $requestedService */
         $requestedService = $this->requestedServiceRepository->find($request->requested_service_id);
 
+        $requestedService->load('service.route');
+
         $requestedService->update(['status_id' => 2]); // Accept
 
         $requestedService

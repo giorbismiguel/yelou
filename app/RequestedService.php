@@ -25,7 +25,7 @@ class RequestedService extends Model
     protected $dates = ['deleted_at'];
 
     protected $with = [
-        'client:id,name',
+        'client:id,name,phone',
         'service:id,name_start,name_end',
         'status:id,name',
         'transporter:id,name',

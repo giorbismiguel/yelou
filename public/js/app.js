@@ -4667,14 +4667,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       },
       defaultFilters: {},
-      filtersDriver: {
+      filtersDrivers: {
         start_time: null,
         name_start: null,
         name_end: null,
         payment_method_id: null
       },
-      columnsDriver: ['transporter_id', 'actions'],
-      optionsDriver: {
+      columnsDrivers: ['transporter_id', 'actions'],
+      optionsDrivers: {
         columnsClasses: {
           'actions': 'action-col'
         },
@@ -4683,7 +4683,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'actions': 'Acciones'
         }
       },
-      defaultFiltersDriver: {}
+      defaultFiltersDrivers: {}
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
@@ -4694,7 +4694,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     apiEndpoint: function apiEndpoint() {
       return route('api.request_services.index');
     },
-    apiEndpointDriver: function apiEndpointDriver() {
+    apiEndpointDrivers: function apiEndpointDrivers() {
       return route('api.requested_services.index');
     }
   }),
@@ -4730,8 +4730,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               title: 'Ruta',
               text: 'Se ha eliminado la ruta correctamente'
             });
-
-            _this.reloadTable();
           })["catch"](function (data) {
             _this.loading = false;
 
@@ -4751,11 +4749,42 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.filters = Object(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.defaultFilters);
       this.$nextTick(this.reloadTable);
     },
+    clearFilterDrivers: function clearFilterDrivers() {
+      this.filters = Object(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.defaultFiltersDrivers);
+      this.$nextTick(this.reloadTable);
+    },
     reloadTable: function reloadTable() {
       return this.$refs['table'].applyFiltersAndReload();
     },
+    reloadTableDrivers: function reloadTableDrivers() {
+      return this.$refs['tableDrivers'].applyFiltersAndReload();
+    },
     acceptService: function acceptService(id) {
-      this.acceptDriverService(id);
+      var _this2 = this;
+
+      this.acceptDriverService(id).then(function () {
+        _this2.hideDriverModel();
+
+        _this2.$notify({
+          type: 'success',
+          group: 'index_requested_services',
+          title: 'Servicios',
+          text: 'Se le ha enviado una notificación al chofer'
+        });
+
+        _this2.reloadTableDrivers();
+      })["catch"](function (data) {
+        _this2.hideDriverModel();
+
+        _this2.$notify({
+          type: 'error',
+          group: 'index_requested_services',
+          title: 'Servicios',
+          text: 'Ha ocurrido un error al enviar la notificacion chofer'
+        });
+
+        _this2.reloadTableDrivers();
+      });
     }
   }),
   mounted: function mounted() {
@@ -66277,15 +66306,15 @@ var render = function() {
                 _c(
                   "ye-table",
                   {
-                    ref: "table",
+                    ref: "tableDrivers",
                     attrs: {
                       id: "table_requested_services",
-                      columns: _vm.columnsDriver,
-                      options: _vm.optionsDriver,
-                      url: _vm.apiEndpointDriver,
+                      columns: _vm.columnsDrivers,
+                      options: _vm.optionsDrivers,
+                      url: _vm.apiEndpointDrivers,
                       filters: _vm.filtersDrivers
                     },
-                    on: { clearFilters: _vm.clearFilterDriver },
+                    on: { clearFilters: _vm.clearFilterDrivers },
                     scopedSlots: _vm._u([
                       {
                         key: "transporter_id",
@@ -66355,7 +66384,7 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("notifications", { attrs: { group: "index_request_services" } })
+      _c("notifications", { attrs: { group: "index_requested_services" } })
     ],
     1
   )

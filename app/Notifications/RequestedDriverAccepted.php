@@ -42,11 +42,13 @@ class RequestedDriverAccepted extends Notification
      */
     public function toMail($notifiable)
     {
+
         $line = 'El cliente: ' . $this->requestedService->client->name . ' ha aceptado su servicio, la ruta es: ';
-        $line .= $this->requestedService->service->route->name_start . ' hasta ' . $this->requestedService->service->route->name_start;
+        $line .= $this->requestedService->service->name_start . ' hasta ' . $this->requestedService->service->name_end;
         $line .= ' y el telefono de contacto es: ' . $this->requestedService->client->phone;
 
         return (new MailMessage)
+            ->subject('Servicio de traslado aceptado')
             ->line($line)
             ->line('Muchas gracias por utilizar nuestro servicio');
     }
