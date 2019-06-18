@@ -4430,8 +4430,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               group: 'create_request_service',
               title: 'Ruta',
               text: 'La solicitud del servicio ha sido exitosa'
-            }); //this.$router.replace('/servicios')
+            });
 
+            _this.$router.replace('/servicios');
           })["catch"](function (data) {
             _this.loading = false;
 
@@ -65667,7 +65668,7 @@ var render = function() {
                         { staticClass: "form-group" },
                         [
                           _c("label", { attrs: { for: "route" } }, [
-                            _vm._v("Rutas")
+                            _vm._v("Ruta Favorita")
                           ]),
                           _vm._v(" "),
                           _c("ye-select", {
@@ -65675,6 +65676,7 @@ var render = function() {
                               id: "route",
                               name: "route",
                               options: _vm.lists.userRoutes,
+                              placeholder: "Seleccionar",
                               reduce: function(route) {
                                 return route.id
                               },
@@ -65950,60 +65952,6 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("label", { attrs: { for: "payment_method" } }, [
-                            _vm._v("Medio de pago")
-                          ]),
-                          _vm._v(" "),
-                          _c("ye-select", {
-                            class: {
-                              "is-invalid":
-                                _vm.submitted &&
-                                (_vm.serverErrors.payment_method_id ||
-                                  _vm.serverErrors.payment_method_id)
-                            },
-                            attrs: {
-                              id: "payment_method",
-                              name: "payment_method",
-                              options: _vm.lists.paymentMethods,
-                              reduce: function(method) {
-                                return method.id
-                              },
-                              label: "name"
-                            },
-                            model: {
-                              value: _vm.form.payment_method_id,
-                              callback: function($$v) {
-                                _vm.$set(_vm.form, "payment_method_id", $$v)
-                              },
-                              expression: "form.payment_method_id"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.submitted &&
-                          (_vm.serverErrors.payment_method_id ||
-                            _vm.serverErrors.payment_method_id)
-                            ? _c(
-                                "div",
-                                { staticClass: "invalid-feedback" },
-                                [
-                                  _vm._l(
-                                    _vm.serverErrors.payment_method_id,
-                                    function(error) {
-                                      return [_vm._v(_vm._s(error))]
-                                    }
-                                  )
-                                ],
-                                2
-                              )
-                            : _vm._e()
-                        ],
-                        1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
                         {
                           directives: [
                             {
@@ -66074,11 +66022,65 @@ var render = function() {
                                   staticClass: "custom-control-label",
                                   attrs: { for: "favourite" }
                                 },
-                                [_vm._v("Favorita")]
+                                [_vm._v("Marcar como Favorita")]
                               )
                             ]
                           )
                         ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "payment_method" } }, [
+                            _vm._v("Medio de pago")
+                          ]),
+                          _vm._v(" "),
+                          _c("ye-select", {
+                            class: {
+                              "is-invalid":
+                                _vm.submitted &&
+                                (_vm.serverErrors.payment_method_id ||
+                                  _vm.serverErrors.payment_method_id)
+                            },
+                            attrs: {
+                              id: "payment_method",
+                              name: "payment_method",
+                              options: _vm.lists.paymentMethods,
+                              reduce: function(method) {
+                                return method.id
+                              },
+                              label: "name"
+                            },
+                            model: {
+                              value: _vm.form.payment_method_id,
+                              callback: function($$v) {
+                                _vm.$set(_vm.form, "payment_method_id", $$v)
+                              },
+                              expression: "form.payment_method_id"
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.submitted &&
+                          (_vm.serverErrors.payment_method_id ||
+                            _vm.serverErrors.payment_method_id)
+                            ? _c(
+                                "div",
+                                { staticClass: "invalid-feedback" },
+                                [
+                                  _vm._l(
+                                    _vm.serverErrors.payment_method_id,
+                                    function(error) {
+                                      return [_vm._v(_vm._s(error))]
+                                    }
+                                  )
+                                ],
+                                2
+                              )
+                            : _vm._e()
+                        ],
+                        1
                       ),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group" }, [

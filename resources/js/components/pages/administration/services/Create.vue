@@ -17,10 +17,10 @@
                               @submit.prevent="onSubmit">
 
                             <div class="form-group">
-                                <label for="route">Rutas</label>
+                                <label for="route">Ruta Favorita</label>
 
                                 <ye-select id="route" name="route" v-model="form.route_id"
-                                           :options="lists.userRoutes"
+                                           :options="lists.userRoutes" placeholder="Seleccionar"
                                            :reduce="route => route.id" label="name"></ye-select>
                             </div>
 
@@ -86,6 +86,14 @@
                                 </div>
                             </div>
 
+                            <div class="form-group" v-show="!form.route_id">
+                                <div class="custom-control custom-checkbox">
+                                    <input v-model="form.favourite" type="checkbox" class="custom-control-input"
+                                           id="favourite"/>
+                                    <label class="custom-control-label" for="favourite">Marcar como Favorita</label>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="payment_method">Medio de pago</label>
 
@@ -97,14 +105,6 @@
                                 <div v-if="submitted && (serverErrors.payment_method_id || serverErrors.payment_method_id)"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.payment_method_id">{{ error }}</template>
-                                </div>
-                            </div>
-
-                            <div class="form-group" v-show="!form.route_id">
-                                <div class="custom-control custom-checkbox">
-                                    <input v-model="form.favourite" type="checkbox" class="custom-control-input"
-                                           id="favourite"/>
-                                    <label class="custom-control-label" for="favourite">Favorita</label>
                                 </div>
                             </div>
 
@@ -233,7 +233,7 @@
                                         text: 'La solicitud del servicio ha sido exitosa'
                                     });
 
-                                    //this.$router.replace('/servicios')
+                                    this.$router.replace('/servicios')
                                 })
                                 .catch((data) => {
                                     this.loading = false
