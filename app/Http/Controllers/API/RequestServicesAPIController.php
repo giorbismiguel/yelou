@@ -212,7 +212,7 @@ class RequestServicesAPIController extends AppBaseController
                         $input['lat_start'],
                         $input['lng_start'], $available->lat,
                         $available->lng
-                    ) < 10; // Km
+                    ) < 1000000000000000000; // Km
             })
             ->pluck('user_id');
 
