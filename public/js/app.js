@@ -4151,7 +4151,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             showCancelButton: false,
             confirmButtonText: 'Aceptar'
           }).then(function () {
-            _this.$router.replace('/entrar');
+            _this.$router.replace('/administracion');
           });
           return;
         }
@@ -4162,7 +4162,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           showCancelButton: false,
           confirmButtonText: 'Aceptar'
         }).then(function () {
-          _this.$router.replace('/entrar');
+          _this.$router.replace('/administracion');
         });
       });
     }
@@ -68067,12 +68067,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group" }, [
                   _c(
                     "div",
-                    { staticClass: "col d-flex justify-content-end" },
+                    { staticClass: "col d-flex justify-content-start" },
                     [
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-light",
+                          staticClass: "btn btn-cancel",
                           attrs: { to: { name: "login" }, tag: "button" }
                         },
                         [
@@ -68085,7 +68085,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-4",
+                          staticClass: "btn btn-accept ml-4",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
