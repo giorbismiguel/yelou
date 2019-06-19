@@ -53,7 +53,8 @@
                                 <gmap-autocomplete v-else class="form-control" id="origen_request_services" ref="origen"
                                                    name="origen_request_services" :value="form.name_start"
                                                    @place_changed="setOrigenRequestServices"
-                                                   :placeholder="writeLocationText" @keypress.enter="$event.preventDefault()"
+                                                   :placeholder="writeLocationText"
+                                                   @keypress.enter="$event.preventDefault()"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                 </gmap-autocomplete>
 
@@ -76,7 +77,8 @@
                                 <gmap-autocomplete class="form-control" id="destination_request_services"
                                                    name="destination_request_services" :value="form.name_end"
                                                    @place_changed="setDestinationRequestServices"
-                                                   placeholder="¿ A dónde vas?" @keypress.enter="$event.preventDefault()"
+                                                   placeholder="¿ A dónde vas?"
+                                                   @keypress.enter="$event.preventDefault()"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                 </gmap-autocomplete>
 
@@ -135,6 +137,7 @@
     import BoxUser from '../../../layout/BoxUser'
     import DatePicker from 'vue2-datepicker'
     import HeaderForm from '../layout/header_form'
+    import Swal from 'sweetalert2'
 
     export default {
         name: "Create",
@@ -236,6 +239,21 @@
                                     this.$router.replace('/servicios')
                                 })
                                 .catch((data) => {
+                                    if (data.success === false) {
+                                        Swal.fire({
+                                            text: data.message,
+                                            type: 'info',
+                                            showCancelButton: false,
+                                            confirmButtonText: 'Aceptar',
+                                        }).then(() => {
+                                            this.$router.replace('/servicios')
+                                        })
+
+                                        this.serverErrors = data.errors || {}
+
+                                        return;
+                                    }
+
                                     this.loading = false
                                     this.$notify({
                                         type: 'error',

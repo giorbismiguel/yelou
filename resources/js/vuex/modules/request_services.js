@@ -2,7 +2,8 @@ import axios from 'axios'
 
 const state = {
     p: [],
-    responseRequested: null
+    responseRequested: null,
+    requestService: null
 }
 
 const actions = {
@@ -36,12 +37,12 @@ const actions = {
 }
 
 const mutations = {
-    CREATE_REQUEST_SERVICES_OK(state, nomenclators) {
-        state.lists = nomenclators
+    CREATE_REQUEST_SERVICES_OK(state, data) {
+        state.requestService = data
     },
 
-    CREATE_REQUEST_SERVICES_FAIL(state, nomenclators) {
-        state.lists = nomenclators
+    CREATE_REQUEST_SERVICES_FAIL(state) {
+        state.requestService = null
     },
 
     CREATE_REQUESTED_SERVICES_OK(state, data) {

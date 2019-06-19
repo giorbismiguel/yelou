@@ -58,7 +58,7 @@
                                 showCancelButton: false,
                                 confirmButtonText: 'Aceptar',
                             }).then(() => {
-                                this.$router.replace('/entrar')
+                                this.$router.replace('/administracion')
                             })
 
                             return;
@@ -70,7 +70,7 @@
                             showCancelButton: false,
                             confirmButtonText: 'Aceptar',
                         }).then(() => {
-                            this.$router.replace('/entrar')
+                            this.$router.replace('/administracion')
                         })
                     })
             },

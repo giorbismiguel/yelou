@@ -4197,6 +4197,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/lib/index.js");
 /* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var _layout_header_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../layout/header_form */ "./resources/js/components/pages/administration/layout/header_form.vue");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
+/* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4332,6 +4334,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+
 
 
 
@@ -4434,6 +4439,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
             _this.$router.replace('/servicios');
           })["catch"](function (data) {
+            if (data.success === false) {
+              sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a.fire({
+                text: data.message,
+                type: 'info',
+                showCancelButton: false,
+                confirmButtonText: 'Aceptar'
+              }).then(function () {
+                _this.$router.replace('/servicios');
+              });
+              _this.serverErrors = data.errors || {};
+              return;
+            }
+
             _this.loading = false;
 
             _this.$notify({
@@ -104906,7 +104924,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   p: [],
-  responseRequested: null
+  responseRequested: null,
+  requestService: null
 };
 var actions = {
   createRequestService: function createRequestService(_ref, form) {
@@ -104942,11 +104961,11 @@ var actions = {
   }
 };
 var mutations = {
-  CREATE_REQUEST_SERVICES_OK: function CREATE_REQUEST_SERVICES_OK(state, nomenclators) {
-    state.lists = nomenclators;
+  CREATE_REQUEST_SERVICES_OK: function CREATE_REQUEST_SERVICES_OK(state, data) {
+    state.requestService = data;
   },
-  CREATE_REQUEST_SERVICES_FAIL: function CREATE_REQUEST_SERVICES_FAIL(state, nomenclators) {
-    state.lists = nomenclators;
+  CREATE_REQUEST_SERVICES_FAIL: function CREATE_REQUEST_SERVICES_FAIL(state) {
+    state.requestService = null;
   },
   CREATE_REQUESTED_SERVICES_OK: function CREATE_REQUESTED_SERVICES_OK(state, data) {
     state.responseRequested = data;
