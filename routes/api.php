@@ -76,6 +76,7 @@ Route::prefix('v1')->group(function () {
             Route::post('/drivers/availables', 'TransportationAvailableAPIController@driversAvailable')
                 ->name('drivers.available');
             Route::resource('requested_services', 'RequestedServiceAPIController');
+            Route::resource('register_gps', 'RegisterGpsAPIController');
 
             /*
              * Admin Area
