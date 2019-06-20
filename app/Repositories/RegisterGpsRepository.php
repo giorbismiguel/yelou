@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\RegisterGps;
-use App\Repositories\BaseRepository;
+use App\RegisterGps;
 
 /**
  * Class RegisterGpsRepository

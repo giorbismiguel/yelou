@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateRegisterGpsAPIRequest;
 use App\Http\Requests\API\UpdateRegisterGpsAPIRequest;
-use App\Models\RegisterGps;
+use App\RegisterGps;
 use App\Repositories\RegisterGpsRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;

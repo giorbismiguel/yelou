@@ -1,6 +1,6 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\RegisterGps;
+use App\RegisterGps;
 use App\Repositories\RegisterGpsRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

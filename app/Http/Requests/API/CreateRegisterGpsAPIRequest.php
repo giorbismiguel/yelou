@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\RegisterGps;
+use App\RegisterGps;
 use InfyOm\Generator\Request\APIRequest;
 
 class CreateRegisterGpsAPIRequest extends APIRequest

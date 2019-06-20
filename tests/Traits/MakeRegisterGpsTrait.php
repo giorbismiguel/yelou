@@ -1,7 +1,7 @@
 <?php namespace Tests\Traits;
 
 use Faker\Factory as Faker;
-use App\Models\RegisterGps;
+use App\RegisterGps;
 use App\Repositories\RegisterGpsRepository;
 
 trait MakeRegisterGpsTrait
