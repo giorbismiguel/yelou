@@ -40,7 +40,7 @@ class RegisterGpsAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($registerGps->toArray(), 'Register Gps retrieved successfully');
+        return $this->sendResponse($registerGps->toArray(), 'Todos los registros de coordenadas existentes');
     }
 
     /**
@@ -57,7 +57,7 @@ class RegisterGpsAPIController extends AppBaseController
 
         $registerGps = $this->registerGpsRepository->create($input);
 
-        return $this->sendResponse($registerGps->toArray(), 'Register Gps saved successfully');
+        return $this->sendResponse($registerGps->toArray(), 'Se ha registrado correctamente la coordenada');
     }
 
     /**
@@ -74,10 +74,10 @@ class RegisterGpsAPIController extends AppBaseController
         $registerGps = $this->registerGpsRepository->find($id);
 
         if (empty($registerGps)) {
-            return $this->sendError('Register Gps not found');
+            return $this->sendError('Registro de Coordenada no encontrado');
         }
 
-        return $this->sendResponse($registerGps->toArray(), 'Register Gps retrieved successfully');
+        return $this->sendResponse($registerGps->toArray(), 'Se ha obtenido correctamente la coordenada');
     }
 
     /**
@@ -97,12 +97,12 @@ class RegisterGpsAPIController extends AppBaseController
         $registerGps = $this->registerGpsRepository->find($id);
 
         if (empty($registerGps)) {
-            return $this->sendError('Register Gps not found');
+            return $this->sendError('Registro de Coordenada no encontrado');
         }
 
         $registerGps = $this->registerGpsRepository->update($input, $id);
 
-        return $this->sendResponse($registerGps->toArray(), 'RegisterGps updated successfully');
+        return $this->sendResponse($registerGps->toArray(), 'Se ha actualizado el registro de la coordenada');
     }
 
     /**
@@ -121,11 +121,11 @@ class RegisterGpsAPIController extends AppBaseController
         $registerGps = $this->registerGpsRepository->find($id);
 
         if (empty($registerGps)) {
-            return $this->sendError('Register Gps not found');
+            return $this->sendError('Registro de Coordenada no encontrado');
         }
 
         $registerGps->delete();
 
-        return $this->sendResponse($id, 'Register Gps deleted successfully');
+        return $this->sendResponse($id, 'Se ha eliminado el registro de la coordenada');
     }
 }
