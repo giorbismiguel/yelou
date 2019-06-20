@@ -1,9 +1,8 @@
 import axios from 'axios'
 
 const state = {
-    p: [],
-    responseRequested: null,
-    requestService: null
+    requestService: null,
+    responseRequested: null
 }
 
 const actions = {

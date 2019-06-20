@@ -39,6 +39,7 @@ class CreateRequestServicesAPIRequest extends APIRequest
             'name_end'          => 'Destino',
             'lat_end'           => 'Origen',
             'lng_end'           => 'Origen',
+            'start_date'        => 'Día',
             'start_time'        => 'Hora de Inicio',
             'route_id'          => 'Envío de Rutas',
             'payment_method_id' => 'Medio de pago'
@@ -59,7 +60,6 @@ class CreateRequestServicesAPIRequest extends APIRequest
             'lng_start.numeric'  => 'Vuelva a seleccionar el origen, no se ha enviado correctamente',
             'lat_end.numeric'    => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
             'lng_end.numeric'    => 'Vuelva a seleccionar el destino, no se ha enviado correctamente',
-            'start_time.after'   => 'El campo Hora de Inicio debe ser una fecha posterior a ahora.',
         ];
     }
 }

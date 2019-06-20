@@ -24,6 +24,7 @@ class RequestServicesRepository extends BaseRepository
         'lat_end',
         'lng_end',
         'start_time',
+        'start_date',
         'payment_method_id',
         'user_id',
     ];

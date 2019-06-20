@@ -55,7 +55,7 @@ class RequestServicesAPIController extends AppBaseController
             $inputs,
             $request->get('page'),
             $request->get('per_page'),
-            ['id', 'start_time', 'name_start', 'name_end', 'payment_method_id'],
+            ['id', 'start_date', 'start_time', 'name_start', 'name_end', 'payment_method_id'],
             $request->get('order_by'),
             $request->get('sort_by')
         );
@@ -70,10 +70,18 @@ class RequestServicesAPIController extends AppBaseController
      */
     public function store(CreateRequestServicesAPIRequest $request)
     {
+
         $input = $request->all();
         $input['user_id'] = \Auth::id();
 
-        $input['start_time'] = convert_us_date_to_db($input['start_time']);
+        $availableNerbyDrivers = $this->getDriversToSendNotification($input);
+
+        if ($availableNerbyDrivers->count() === 0) {
+            return $this->sendError('No se ha encontrado ningún chofer disponible para anteder su servicio.');
+        }
+
+
+        $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
         if ($request->filled('route_id')) {
             if (!$this->routeRepository->allQuery([
                 'id'      => $input['route_id'],
@@ -114,13 +122,8 @@ class RequestServicesAPIController extends AppBaseController
             $requestServices->lng_end
         );
 
-        $availableNerbyDrivers = $this->getDriversToSendNotification($input);
-
         $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
 
-        if ($drivers->count() === 0) {
-            return $this->sendError('No se ha encontrado ningún chofer disponible para anteder su servicio.');
-        }
 
         $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
             $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
@@ -212,7 +215,7 @@ class RequestServicesAPIController extends AppBaseController
                         $input['lat_start'],
                         $input['lng_start'], $available->lat,
                         $available->lng
-                    ) < 1000000000000000000; // Km
+                    ) < 1000; // Km
             })
             ->pluck('user_id');
 

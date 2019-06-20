@@ -25,17 +25,33 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="start_time">Hora de Inicio<span class="text-primary">*</span></label>
+                                <label for="start_date">Día<span class="text-primary">*</span></label>
 
-                                <date-picker id="start_time" name="start_time" v-model="universalTime"
+                                <date-picker id="start_date" name="start_date" v-model="defaultDate"
                                              style="width: 300px; display: block;" value-type="date"
-                                             :lang="timePicker.lang" type="datetime" :format="timePicker.format"
-                                             confirm confirm-text="Confirmar"
-                                             :input-class="[ 'form-control', submitted && serverErrors.start_time ? 'is-invalid': '']">
+                                             :not-before="new Date()"
+                                             :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
+                                             confirm-text="Confirmar"
+                                             :input-class="[ 'form-control', submitted && serverErrors.start_date ? 'is-invalid': '']">
                                 </date-picker>
 
                                 <input type="text" class="form-control" v-show="false"
-                                       :class="submitted && serverErrors.start_time ? 'is-invalid': ''"/>
+                                       :class="submitted && serverErrors.start_date ? 'is-invalid': ''"/>
+
+                                <div v-if="submitted && serverErrors.start_date"
+                                     class="invalid-feedback">
+                                    <template v-for="error in serverErrors.start_date">{{ error }}</template>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="start_time">Hora de Inicio</label>
+
+                                <date-picker id="start_time" name="start_time" v-model="defaultTime"
+                                             style="width: 300px; display: block;" :lang="timePicker.langTime"
+                                             type="time"
+                                             :format="timePicker.time" confirm confirm-text="Confirmar">
+                                </date-picker>
 
                                 <div v-if="submitted && serverErrors.start_time"
                                      class="invalid-feedback">
@@ -119,6 +135,11 @@
                                         Solicitar Servicio
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>
+
+                                    <button type="button" class="btn btn-success ml-5" @click="calculateRate"
+                                            v-show="originAndSourceActive">
+                                        Calcular Tarifa
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -153,23 +174,29 @@
                     name_end: null,
                     lat_end: null,
                     lng_end: null,
+                    start_date: null,
                     start_time: null,
                     payment_method_id: null,
-                    favourite: 0,
-                    today_time: null
+                    favourite: 0
                 },
-                universalTimeNow: new Date(),
-                universalTime: new Date(new Date().getTime() + 10 * 60000),
+                defaultDate: new Date(),
+                defaultTime: null,
                 timePicker: {
                     lang: {
                         days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
                         months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
                         pickers: ['next 7 days', 'next 30 days', 'previous 7 days', 'previous 30 days'],
                         placeholder: {
-                            date: 'Seleccione el dia'
+                            date: 'Seleccione el día'
                         }
                     },
-                    format: 'DD/MM/YYYY hh:mm:ss'
+                    langTime: {
+                        placeholder: {
+                            date: 'Seleccione la hora'
+                        }
+                    },
+                    date: 'DD/MM/YYYY',
+                    time: 'hh:mm:ss'
                 },
                 submitted: false,
                 loading: false,
@@ -192,6 +219,11 @@
                     ? state.nomenclators.listsRequestServices
                     : {'paymentMethods': [], 'userRoutes': []},
             }),
+
+            originAndSourceActive() {
+                return (this.currentLocationLatLng && !this.route && !this.originRequestService && this.destinationRequestService) ||
+                    (this.originRequestService && this.destinationRequestService)
+            }
         },
 
         methods: {
@@ -223,8 +255,9 @@
                                 this.form.name_end = this.destinationRequestService.formatted_address
                             }
 
-                            this.form.start_time = DatePicker.fecha.format(new Date(this.universalTime), 'DD/MM/YYYY HH:mm:ss')
-                            this.form.today_time = DatePicker.fecha.format(new Date(this.universalTimeNow), 'DD/MM/YYYY HH:mm:ss')
+                            this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
+                            this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
+
                             this.form.favourite = this.form.favourite ? 1 : 0;
                             this.createRequestService(this.form)
                                 .then(() => {
@@ -265,8 +298,7 @@
                                 })
                         }
                     }
-                )
-                ;
+                );
             },
 
             setOrigenRequestServices(place) {
@@ -290,6 +322,10 @@
             changeCurrentLocation() {
                 this.currentLocation = !this.currentLocation
                 this.placeholderCurrentLocation = this.currentLocation ? this.currentLocationText : ''
+            },
+
+            calculateRate() {
+
             }
         },
 

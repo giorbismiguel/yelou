@@ -4336,6 +4336,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4355,23 +4376,29 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         name_end: null,
         lat_end: null,
         lng_end: null,
+        start_date: null,
         start_time: null,
         payment_method_id: null,
-        favourite: 0,
-        today_time: null
+        favourite: 0
       },
-      universalTimeNow: new Date(),
-      universalTime: new Date(new Date().getTime() + 10 * 60000),
+      defaultDate: new Date(),
+      defaultTime: null,
       timePicker: {
         lang: {
           days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
           months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
           pickers: ['next 7 days', 'next 30 days', 'previous 7 days', 'previous 30 days'],
           placeholder: {
-            date: 'Seleccione el dia'
+            date: 'Seleccione el día'
           }
         },
-        format: 'DD/MM/YYYY hh:mm:ss'
+        langTime: {
+          placeholder: {
+            date: 'Seleccione la hora'
+          }
+        },
+        date: 'DD/MM/YYYY',
+        time: 'hh:mm:ss'
       },
       submitted: false,
       loading: false,
@@ -4396,7 +4423,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'userRoutes': []
       };
     }
-  })),
+  }), {
+    originAndSourceActive: function originAndSourceActive() {
+      return this.currentLocationLatLng && !this.route && !this.originRequestService && this.destinationRequestService || this.originRequestService && this.destinationRequestService;
+    }
+  }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['nomenclatorsRequestServices', 'createRequestService']), {
     onSubmit: function onSubmit() {
       var _this = this;
@@ -4423,8 +4454,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.form.name_end = _this.destinationRequestService.formatted_address;
           }
 
-          _this.form.start_time = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.universalTime), 'DD/MM/YYYY HH:mm:ss');
-          _this.form.today_time = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.universalTimeNow), 'DD/MM/YYYY HH:mm:ss');
+          _this.form.start_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultDate), 'DD/MM/YYYY');
+          _this.form.start_time = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultTime), 'HH:mm:ss');
           _this.form.favourite = _this.form.favourite ? 1 : 0;
 
           _this.createRequestService(_this.form).then(function () {
@@ -4489,7 +4520,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     changeCurrentLocation: function changeCurrentLocation() {
       this.currentLocation = !this.currentLocation;
       this.placeholderCurrentLocation = this.currentLocation ? this.currentLocationText : '';
-    }
+    },
+    calculateRate: function calculateRate() {}
   }),
   watch: {
     'form.route_id': function formRoute_id(id) {
@@ -4653,6 +4685,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4666,18 +4704,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         showDriver: false
       },
       filters: {
+        start_date: null,
         start_time: null,
         name_start: null,
         name_end: null,
         payment_method_id: null
       },
-      columns: ['start_time', 'name_start', 'name_end', 'payment_method_id', 'actions'],
+      columns: ['start_date', 'start_time', 'name_start', 'name_end', 'payment_method_id', 'actions'],
       options: {
-        sortable: ['start_time', 'name_start', 'name_end', 'payment_method_id'],
+        sortable: ['start_date', 'start_time', 'name_start', 'name_end', 'payment_method_id'],
         columnsClasses: {
           'actions': 'action-col'
         },
         headings: {
+          'start_date': 'Día',
           'start_time': 'Hora de Inicio',
           'name_start': 'Origen',
           'name_end': 'Destino',
@@ -4687,7 +4727,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       defaultFilters: {},
       filtersDrivers: {
-        start_time: null,
+        start_date: null,
         name_start: null,
         name_end: null,
         payment_method_id: null
@@ -65716,8 +65756,8 @@ var render = function() {
                         "div",
                         { staticClass: "form-group" },
                         [
-                          _c("label", { attrs: { for: "start_time" } }, [
-                            _vm._v("Hora de Inicio"),
+                          _c("label", { attrs: { for: "start_date" } }, [
+                            _vm._v("Día"),
                             _c("span", { staticClass: "text-primary" }, [
                               _vm._v("*")
                             ])
@@ -65726,27 +65766,28 @@ var render = function() {
                           _c("date-picker", {
                             staticStyle: { width: "300px", display: "block" },
                             attrs: {
-                              id: "start_time",
-                              name: "start_time",
+                              id: "start_date",
+                              name: "start_date",
                               "value-type": "date",
+                              "not-before": new Date(),
                               lang: _vm.timePicker.lang,
-                              type: "datetime",
-                              format: _vm.timePicker.format,
+                              type: "date",
+                              format: _vm.timePicker.date,
                               confirm: "",
                               "confirm-text": "Confirmar",
                               "input-class": [
                                 "form-control",
-                                _vm.submitted && _vm.serverErrors.start_time
+                                _vm.submitted && _vm.serverErrors.start_date
                                   ? "is-invalid"
                                   : ""
                               ]
                             },
                             model: {
-                              value: _vm.universalTime,
+                              value: _vm.defaultDate,
                               callback: function($$v) {
-                                _vm.universalTime = $$v
+                                _vm.defaultDate = $$v
                               },
-                              expression: "universalTime"
+                              expression: "defaultDate"
                             }
                           }),
                           _vm._v(" "),
@@ -65761,10 +65802,56 @@ var render = function() {
                             ],
                             staticClass: "form-control",
                             class:
-                              _vm.submitted && _vm.serverErrors.start_time
+                              _vm.submitted && _vm.serverErrors.start_date
                                 ? "is-invalid"
                                 : "",
                             attrs: { type: "text" }
+                          }),
+                          _vm._v(" "),
+                          _vm.submitted && _vm.serverErrors.start_date
+                            ? _c(
+                                "div",
+                                { staticClass: "invalid-feedback" },
+                                [
+                                  _vm._l(_vm.serverErrors.start_date, function(
+                                    error
+                                  ) {
+                                    return [_vm._v(_vm._s(error))]
+                                  })
+                                ],
+                                2
+                              )
+                            : _vm._e()
+                        ],
+                        1
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "start_time" } }, [
+                            _vm._v("Hora de Inicio")
+                          ]),
+                          _vm._v(" "),
+                          _c("date-picker", {
+                            staticStyle: { width: "300px", display: "block" },
+                            attrs: {
+                              id: "start_time",
+                              name: "start_time",
+                              lang: _vm.timePicker.langTime,
+                              type: "time",
+                              format: _vm.timePicker.time,
+                              confirm: "",
+                              "confirm-text": "Confirmar"
+                            },
+                            model: {
+                              value: _vm.defaultTime,
+                              callback: function($$v) {
+                                _vm.defaultTime = $$v
+                              },
+                              expression: "defaultTime"
+                            }
                           }),
                           _vm._v(" "),
                           _vm.submitted && _vm.serverErrors.start_time
@@ -66140,7 +66227,29 @@ var render = function() {
                                   staticClass: "ml-2",
                                   attrs: { size: "medium" }
                                 })
-                              : _vm._e()
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: _vm.originAndSourceActive,
+                                    expression: "originAndSourceActive"
+                                  }
+                                ],
+                                staticClass: "btn btn-success ml-5",
+                                attrs: { type: "button" },
+                                on: { click: _vm.calculateRate }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                    Calcular Tarifa\n                                "
+                                )
+                              ]
+                            )
                           ],
                           1
                         )
@@ -66204,6 +66313,21 @@ var render = function() {
                 },
                 on: { clearFilters: _vm.clearFilter },
                 scopedSlots: _vm._u([
+                  {
+                    key: "start_time",
+                    fn: function(ref) {
+                      var row = ref.row
+                      return [
+                        _vm._v(
+                          "\n                    " +
+                            _vm._s(
+                              row.start_time == "00:00:00" ? "" : row.start_time
+                            ) +
+                            "\n                "
+                        )
+                      ]
+                    }
+                  },
                   {
                     key: "payment_method_id",
                     fn: function(ref) {
@@ -66272,6 +66396,7 @@ var render = function() {
                 _c("template", { slot: "table-title" }, [
                   _vm._v("Todos los servicios que fueron solicitados")
                 ]),
+                _vm._v(" "),
                 _vm._v(" "),
                 _vm._v(" "),
                 _vm._v(" "),
@@ -104923,9 +105048,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 var state = {
-  p: [],
-  responseRequested: null,
-  requestService: null
+  requestService: null,
+  responseRequested: null
 };
 var actions = {
   createRequestService: function createRequestService(_ref, form) {

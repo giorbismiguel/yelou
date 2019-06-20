@@ -74,7 +74,7 @@ class TransportationAvailableAPIController extends AppBaseController
                             $input['lng_start'],
                             $available->lat,
                             $available->lng
-                        ) < 100000000000000000000000; // Km
+                        ) < 10; // Km
                 });
         }
 

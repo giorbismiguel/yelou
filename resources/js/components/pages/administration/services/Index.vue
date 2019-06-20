@@ -14,9 +14,15 @@
                           @clearFilters="clearFilter">
 
                     <template slot="table-title">Todos los servicios que fueron solicitados</template>
+
+                    <template slot="start_time" slot-scope="{row}">
+                        {{ row.start_time == '00:00:00' ? '' : row.start_time }}
+                    </template>
+
                     <template slot="payment_method_id" slot-scope="{row}">
                         {{ row.payment_method.name }}
                     </template>
+
                     <ye-actions slot="actions" slot-scope="{row}" class="text-center">
                         <li v-if="false">
                             <router-link :to="{name: 'services_edit', params: { id: row.id } }" class="dropdown-item"
@@ -109,6 +115,7 @@
                 },
 
                 filters: {
+                    start_date: null,
                     start_time: null,
                     name_start: null,
                     name_end: null,
@@ -116,6 +123,7 @@
                 },
 
                 columns: [
+                    'start_date',
                     'start_time',
                     'name_start',
                     'name_end',
@@ -125,6 +133,7 @@
 
                 options: {
                     sortable: [
+                        'start_date',
                         'start_time',
                         'name_start',
                         'name_end',
@@ -134,6 +143,7 @@
                         'actions': 'action-col'
                     },
                     headings: {
+                        'start_date': 'Día',
                         'start_time': 'Hora de Inicio',
                         'name_start': 'Origen',
                         'name_end': 'Destino',
@@ -145,7 +155,7 @@
                 defaultFilters: {},
 
                 filtersDrivers: {
-                    start_time: null,
+                    start_date: null,
                     name_start: null,
                     name_end: null,
                     payment_method_id: null

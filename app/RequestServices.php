@@ -20,8 +20,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string                name_end
  * @property float                 lat_end
  * @property float                 lng_end
+ * @property string|\Carbon\Carbon start_date
  * @property string|\Carbon\Carbon start_time
  * @property unsignedBigInteger    payment_method_id
+ * @property unsignedBigInteger    user_id
  */
 class RequestServices extends Model
 {
@@ -44,6 +46,7 @@ class RequestServices extends Model
         'name_end',
         'lat_end',
         'lng_end',
+        'start_date',
         'start_time',
         'payment_method_id',
         'user_id',
@@ -62,7 +65,8 @@ class RequestServices extends Model
         'name_end'   => 'string',
         'lat_end'    => 'double',
         'lng_end'    => 'double',
-        'start_time' => 'datetime',
+        'start_date' => 'date:d/m/Y',
+        'start_time' => 'time',
     ];
 
     /**
@@ -72,7 +76,8 @@ class RequestServices extends Model
      */
     public static $rules = [
         'route_id'          => 'nullable|integer',
-        'start_time'        => "required|date_format:d/m/Y H:i:s|after:today_time",
+        'start_date'        => "required|date_format:d/m/Y",
+        'start_time'        => "nullable|date_format:H:i:s",
         'name_start'        => 'required|min:1|max:191',
         'lat_start'         => 'required|numeric',
         'lng_start'         => 'required|numeric',
