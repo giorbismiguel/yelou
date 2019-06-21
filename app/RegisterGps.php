@@ -3,6 +3,7 @@
 namespace App;
 
 use Eloquent as Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -14,8 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property float              lng
  * @property unsignedBigInteger driver_id
  * @property unsignedBigInteger service_id
- * @property datetime           start_time
- * @property datetime           end_time
+ * @property datetime           registered_at
  */
 class RegisterGps extends Model
 {
@@ -30,8 +30,7 @@ class RegisterGps extends Model
         'lng',
         'driver_id',
         'service_id',
-        'start_time',
-        'end_time'
+        'registered_at',
     ];
 
     /**
@@ -40,11 +39,12 @@ class RegisterGps extends Model
      * @var array
      */
     protected $casts = [
-        'id'         => 'integer',
-        'lat'        => 'double',
-        'lng'        => 'double',
-        'start_time' => 'datetime:d/m/Y H:i:s',
-        'end_time'   => 'datetime:d/m/Y H:i:s'
+        'id'            => 'integer',
+        'lat'           => 'double',
+        'lng'           => 'double',
+        'driver_id'     => 'integer',
+        'service_id'    => 'integer',
+        'registered_at' => 'datetime:d/m/Y H:i:s'
     ];
 
     /**
@@ -53,11 +53,30 @@ class RegisterGps extends Model
      * @var array
      */
     public static $rules = [
-        'lat'        => 'required|numeric',
-        'lng'        => 'required|numeric',
-        'driver_id'  => 'required|integer',
-        'service_id' => 'required|integer',
-        'start_time' => 'required|date_format:d/m/Y H:i:s',
-        'end_time'   => 'required|date_format:d/m/Y H:i:s'
+        'lat'           => 'required|numeric',
+        'lng'           => 'required|numeric',
+        'driver_id'     => 'required|integer',
+        'service_id'    => 'required|integer',
+        'registered_at' => 'required|date_format:d/m/Y H:i:s',
     ];
+
+    /* ========================================================================= *\
+     * Relations
+    \* ========================================================================= */
+
+    /**
+     * @return BelongsTo
+     */
+    public function driver(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'driver_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(RequestServices::class, 'service_id');
+    }
 }

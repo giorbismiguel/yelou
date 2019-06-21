@@ -4455,7 +4455,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
 
           _this.form.start_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultDate), 'DD/MM/YYYY');
-          _this.form.start_time = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultTime), 'HH:mm:ss');
+
+          if (_this.defaultTime) {
+            _this.form.start_time = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultTime), 'HH:mm:ss');
+          }
+
           _this.form.favourite = _this.form.favourite ? 1 : 0;
 
           _this.createRequestService(_this.form).then(function () {

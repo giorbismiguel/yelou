@@ -14,7 +14,6 @@ use Response;
  * Class RegisterGpsController
  * @package App\Http\Controllers\API
  */
-
 class RegisterGpsAPIController extends AppBaseController
 {
     /** @var  RegisterGpsRepository */
@@ -54,7 +53,7 @@ class RegisterGpsAPIController extends AppBaseController
     public function store(CreateRegisterGpsAPIRequest $request)
     {
         $input = $request->all();
-
+        $input['registered_at'] = convert_us_date_to_db($input['registered_at']);
         $registerGps = $this->registerGpsRepository->create($input);
 
         return $this->sendResponse($registerGps->toArray(), 'Se ha registrado correctamente la coordenada');
@@ -84,7 +83,7 @@ class RegisterGpsAPIController extends AppBaseController
      * Update the specified RegisterGps in storage.
      * PUT/PATCH /registerGps/{id}
      *
-     * @param int $id
+     * @param int                         $id
      * @param UpdateRegisterGpsAPIRequest $request
      *
      * @return Response
@@ -100,6 +99,7 @@ class RegisterGpsAPIController extends AppBaseController
             return $this->sendError('Registro de Coordenada no encontrado');
         }
 
+        $input['registered_at'] = convert_us_date_to_db($input['registered_at']);
         $registerGps = $this->registerGpsRepository->update($input, $id);
 
         return $this->sendResponse($registerGps->toArray(), 'Se ha actualizado el registro de la coordenada');

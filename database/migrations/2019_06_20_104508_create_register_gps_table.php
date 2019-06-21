@@ -14,13 +14,25 @@ class CreateRegisterGpsTable extends Migration
     public function up()
     {
         Schema::create('register_gps', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
+
             $table->double('lat');
             $table->double('lng');
             $table->unsignedBigInteger('driver_id');
             $table->unsignedBigInteger('service_id');
-            $table->dateTime('start_time');
-            $table->dateTime('end_time');
+            $table->dateTime('registered_at');
+
+            $table->foreign('driver_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
+            $table->foreign('service_id')
+                ->references('id')
+                ->on('request_services')
+                ->onDelete('no action')
+                ->onUpdate('no action');
 
             $table->timestamps();
             $table->softDeletes();

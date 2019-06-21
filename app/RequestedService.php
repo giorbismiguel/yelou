@@ -45,7 +45,7 @@ class RequestedService extends Model
      */
     protected $casts = [
         'id'         => 'integer',
-        'created_at' => 'datetime: d/m/Y H:i:s',
+        'created_at' => 'datetime:d/m/Y H:i:s',
     ];
 
     /**

@@ -26,4 +26,15 @@ class UpdateRegisterGpsAPIRequest extends APIRequest
     {
         return RegisterGps::$rules;
     }
+
+    public function attributes()
+    {
+        return [
+            'lat'           => 'Latitud',
+            'lng'           => 'Longitud',
+            'driver_id'     => 'Identificador del Chofer',
+            'service_id'    => 'Identificador del Servicio',
+            'registered_at' => 'Hora de Registro',
+        ];
+    }
 }

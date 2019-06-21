@@ -42,14 +42,11 @@ trait MakeRegisterGpsTrait
         $fake = Faker::create();
 
         return array_merge([
-            'lat' => $fake->word,
-            'lng' => $fake->word,
-            'driver_id' => $fake->word,
-            'service_id' => $fake->word,
-            'required|date_format:d/m/Y' => $fake->word,
-            'required|date_format:d/m/Y' => $fake->word,
-            'created_at' => $fake->date('Y-m-d H:i:s'),
-            'updated_at' => $fake->date('Y-m-d H:i:s')
+            'lat'           => $fake->word,
+            'lng'           => $fake->word,
+            'driver_id'     => $fake->word,
+            'service_id'    => $fake->word,
+            'registered_at' => $fake->date('Y-m-d H:i:s'),
         ], $registerGpsFields);
     }
 }

@@ -19,8 +19,7 @@ class RegisterGpsRepository extends BaseRepository
         'lng',
         'driver_id',
         'service_id',
-        'start_time',
-        'end_time',
+        'registered_at',
     ];
 
     /**
