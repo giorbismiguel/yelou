@@ -256,7 +256,9 @@
                             }
 
                             this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
-                            this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
+                            if (this.defaultTime) {
+                                this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
+                            }
 
                             this.form.favourite = this.form.favourite ? 1 : 0;
                             this.createRequestService(this.form)
