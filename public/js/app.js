@@ -2516,6 +2516,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /**
  * Bootstrap Style Modal Component for Vue
@@ -2575,11 +2577,11 @@ __webpack_require__.r(__webpack_exports__);
     },
     okClass: {
       type: String,
-      "default": 'btn btn-cancel'
+      "default": 'btn btn-accept'
     },
     cancelClass: {
       type: String,
-      "default": 'btn btn-accept'
+      "default": 'btn btn-cancel'
     },
     okHidden: {
       type: Boolean,
@@ -3365,6 +3367,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _layout_header_form__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./layout/header_form */ "./resources/js/components/pages/administration/layout/header_form.vue");
+/* harmony import */ var _mixins_navigator__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../mixins/navigator */ "./resources/js/mixins/navigator.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -3427,11 +3430,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Administration",
+  mixins: [_mixins_navigator__WEBPACK_IMPORTED_MODULE_3__["default"]],
   data: function data() {
     return {
       infoContent: '',
@@ -3461,11 +3467,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_1__["mapActions"])(['getDriversAvailable']), {
     toggleInfoWindow: function toggleInfoWindow(marker, idx) {
       this.infoWindowPos = marker.position;
-      this.infoContent = marker.infoText; //check if its the same marker that was selected if yes toggle
+      this.infoContent = marker.infoText; // Check if its the same marker that was selected if yes toggle
 
       if (this.currentMidx == idx) {
         this.infoWinOpen = !this.infoWinOpen;
-      } //if different marker set infowindow to open and reset current marker index
+      } // If different marker set infowindow to open and reset current marker index
       else {
           this.infoWinOpen = true;
           this.currentMidx = idx;
@@ -3480,28 +3486,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       };
       this.getDriversAvailable(location);
       this.latLngClient = location;
-    },
-    getCurrentPositionUser: function getCurrentPositionUser() {
-      var _this = this;
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          _this.latLngClient = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-        });
-      }
     }
   }),
   components: {
     BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_0__["default"],
     HeaderForm: _layout_header_form__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
+  created: function created() {
+    this.latLngClient = this.getCurrentPositionUser();
+  },
   mounted: function mounted() {
     if (this.me.type === 1) {
       this.getDriversAvailable();
-      this.getCurrentPositionUser();
     }
   }
 });
@@ -4199,6 +4195,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layout_header_form__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../layout/header_form */ "./resources/js/components/pages/administration/layout/header_form.vue");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _mixins_navigator__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../../mixins/navigator */ "./resources/js/mixins/navigator.js");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -4357,6 +4354,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -4365,6 +4375,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Create",
+  mixins: [_mixins_navigator__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
       loadingView: true,
@@ -4383,6 +4394,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       defaultDate: new Date(),
       defaultTime: null,
+      markers: [],
+      centerMarker: null,
+      modal: {
+        title: '',
+        show: false
+      },
       timePicker: {
         lang: {
           days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
@@ -4509,23 +4526,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.destinationRequestService = place;
       this.form.name_end = place.formatted_address;
     },
-    getCurrentPositionUser: function getCurrentPositionUser() {
-      var _this2 = this;
-
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(function (position) {
-          _this2.currentLocationLatLng = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude
-          };
-        });
-      }
-    },
     changeCurrentLocation: function changeCurrentLocation() {
       this.currentLocation = !this.currentLocation;
       this.placeholderCurrentLocation = this.currentLocation ? this.currentLocationText : '';
     },
-    calculateRate: function calculateRate() {}
+    calculateRate: function calculateRate() {},
+    showOrigin: function showOrigin() {
+      this.modal.title = 'Punto de Origen';
+      this.modal.show = true;
+    },
+    showDestiny: function showDestiny() {
+      this.modal.title = 'Punto de Destino';
+      this.modal.show = true;
+    },
+    hideMarkers: function hideMarkers() {
+      this.modal.show = false;
+    },
+    saveMarker: function saveMarker() {}
   }),
   watch: {
     'form.route_id': function formRoute_id(id) {
@@ -4566,10 +4583,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     HeaderForm: _layout_header_form__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   created: function created() {
+    this.centerMarker = this.getCurrentPositionUser();
+    this.markers.push({
+      position: this.centerMarker
+    });
     this.nomenclatorsRequestServices();
   },
   mounted: function mounted() {
-    this.getCurrentPositionUser();
     this.loadingView = false;
   }
 });
@@ -63986,11 +64006,7 @@ var render = function() {
                           attrs: { type: "button", "aria-label": "Close" },
                           on: { click: _vm.cancel }
                         },
-                        [
-                          _c("i", { staticClass: "fal fa-times" }, [
-                            _vm._v(" ")
-                          ])
-                        ]
+                        [_c("i", { staticClass: "far fa-window-close" })]
                       )
                     ])
                   ],
@@ -65878,98 +65894,57 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "form-row form-group" },
+                        { staticClass: "input-group form-group" },
                         [
-                          _c(
-                            "label",
-                            { attrs: { for: "origen_request_services" } },
-                            [
-                              _vm._v("Origen"),
-                              _c("span", { staticClass: "text-primary" }, [
-                                _vm._v("*")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.currentLocation
-                            ? _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.name_start,
-                                    expression: "form.name_start"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                attrs: {
-                                  placeholder: _vm.placeholderCurrentLocation,
-                                  id: "actual_ubication",
-                                  name: "actual_ubication",
-                                  type: "text"
-                                },
-                                domProps: { value: _vm.form.name_start },
-                                on: {
-                                  input: function($event) {
-                                    if ($event.target.composing) {
-                                      return
-                                    }
-                                    _vm.$set(
-                                      _vm.form,
-                                      "name_start",
-                                      $event.target.value
-                                    )
-                                  }
-                                }
-                              })
-                            : _c("gmap-autocomplete", {
-                                ref: "origen",
-                                staticClass: "form-control",
-                                class: {
-                                  "is-invalid":
-                                    _vm.submitted &&
-                                    (_vm.serverErrors.lat_start ||
-                                      _vm.serverErrors.lng_start)
-                                },
-                                attrs: {
-                                  id: "origen_request_services",
-                                  name: "origen_request_services",
-                                  value: _vm.form.name_start,
-                                  placeholder: _vm.writeLocationText
-                                },
-                                on: {
-                                  place_changed: _vm.setOrigenRequestServices,
-                                  keypress: function($event) {
-                                    if (
-                                      !$event.type.indexOf("key") &&
-                                      _vm._k(
-                                        $event.keyCode,
-                                        "enter",
-                                        13,
-                                        $event.key,
-                                        "Enter"
-                                      )
-                                    ) {
-                                      return null
-                                    }
-                                    return $event.preventDefault()
-                                  }
-                                }
-                              }),
-                          _vm._v(" "),
-                          _c(
-                            "button",
-                            {
-                              staticClass: "btn btn-accept btn-sm mt-2",
-                              attrs: { type: "button" },
-                              on: { click: _vm.changeCurrentLocation }
+                          _c("gmap-autocomplete", {
+                            ref: "origen",
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid":
+                                _vm.submitted &&
+                                (_vm.serverErrors.lat_start ||
+                                  _vm.serverErrors.lng_start)
                             },
-                            [
-                              _vm._v(
-                                "\n                                Completar con Google Maps\n                            "
-                              )
-                            ]
-                          ),
+                            attrs: {
+                              id: "origen_request_services",
+                              name: "origen_request_services",
+                              value: _vm.form.name_start,
+                              placeholder: _vm.writeLocationText
+                            },
+                            on: {
+                              place_changed: _vm.setOrigenRequestServices,
+                              keypress: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return $event.preventDefault()
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "input-group-prepend" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "input-group-text",
+                                on: { click: _vm.showOrigin }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-search-location"
+                                })
+                              ]
+                            )
+                          ]),
                           _vm._v(" "),
                           _vm.submitted &&
                           (_vm.serverErrors.lat_start ||
@@ -65993,19 +65968,8 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "form-group" },
+                        { staticClass: "input-group form-group" },
                         [
-                          _c(
-                            "label",
-                            { attrs: { for: "destination_request_services" } },
-                            [
-                              _vm._v("Destino"),
-                              _c("span", { staticClass: "text-primary" }, [
-                                _vm._v("*")
-                              ])
-                            ]
-                          ),
-                          _vm._v(" "),
                           _c("gmap-autocomplete", {
                             staticClass: "form-control",
                             class: {
@@ -66039,6 +66003,21 @@ var render = function() {
                               }
                             }
                           }),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "input-group-prepend" }, [
+                            _c(
+                              "span",
+                              {
+                                staticClass: "input-group-text",
+                                on: { click: _vm.showDestiny }
+                              },
+                              [
+                                _c("i", {
+                                  staticClass: "fas fa-search-location"
+                                })
+                              ]
+                            )
+                          ]),
                           _vm._v(" "),
                           _vm.submitted &&
                           (_vm.serverErrors.lat_end || _vm.serverErrors.lng_end)
@@ -66265,6 +66244,54 @@ var render = function() {
             ])
           ]),
       _vm._v(" "),
+      _c(
+        "ye-modal",
+        {
+          attrs: {
+            id: "",
+            title: _vm.modal.title,
+            show: _vm.modal.show,
+            size: "large",
+            "cancel-text": "Cerrar"
+          },
+          on: { cancel: _vm.hideMarkers, ok: _vm.saveMarker }
+        },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-12" },
+              [
+                _c(
+                  "GmapMap",
+                  {
+                    staticStyle: { width: "100%", height: "70vh" },
+                    attrs: { center: _vm.centerMarker, zoom: 7 }
+                  },
+                  _vm._l(_vm.markers, function(m, index) {
+                    return _c("gmap-marker", {
+                      key: index,
+                      attrs: {
+                        position: m.position,
+                        clickable: true,
+                        draggable: true
+                      },
+                      on: {
+                        click: function($event) {
+                          _vm.centerMarker = m.position
+                        }
+                      }
+                    })
+                  }),
+                  1
+                )
+              ],
+              1
+            )
+          ])
+        ]
+      ),
+      _vm._v(" "),
       _c("notifications", { attrs: { group: "create_request_service" } })
     ],
     1
@@ -66442,9 +66469,9 @@ var render = function() {
             show: _vm.modal.showDriver,
             size: "large",
             "cancel-text": "Cerrar",
-            okHidden: "true"
+            okHidden: true
           },
-          on: { cancel: _vm.hideDriverModel, ok: _vm.save }
+          on: { cancel: _vm.hideDriverModel }
         },
         [
           _c("div", { staticClass: "row" }, [
@@ -104352,6 +104379,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Profile_vue_vue_type_template_id_05b8059d___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/mixins/navigator.js":
+/*!******************************************!*\
+  !*** ./resources/js/mixins/navigator.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  methods: {
+    getCurrentPositionUser: function getCurrentPositionUser() {
+      var location = {
+        lat: -0.180653,
+        lng: -78.467834
+      };
+
+      if (!navigator.geolocation) {
+        return location;
+      }
+
+      navigator.geolocation.getCurrentPosition(function (position) {
+        location = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude
+        };
+      });
+      return location;
+    }
+  }
+});
 
 /***/ }),
 

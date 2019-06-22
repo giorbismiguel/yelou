@@ -10,7 +10,7 @@
                                 <slot name="title">{{title}}</slot>
                             </h3>
                             <button @click="cancel" type="button" class="close" aria-label="Close">
-                                <i class="fal fa-times">&nbsp;</i>
+                                <i class="far fa-window-close"></i>
                             </button>
                         </slot>
                     </div>
@@ -21,10 +21,12 @@
                     <!--Footer-->
                     <div class="modal-footer">
                         <slot name="footer">
-                            <button id="cancelButton" v-if="!cancelHidden" type="button" :class="cancelClass" @click="cancel" rel="prev">
+                            <button id="cancelButton" v-if="!cancelHidden" type="button" :class="cancelClass"
+                                    @click="cancel" rel="prev">
                                 {{ cancelText }}
                             </button>
-                            <button id="okButton" v-if="!okHidden" type="button" :class="okClass" @click="ok" rel="next" :disabled="okDisabled">
+                            <button id="okButton" v-if="!okHidden" type="button" :class="okClass" @click="ok" rel="next"
+                                    :disabled="okDisabled">
                                 {{okText}}
                             </button>
                         </slot>
@@ -96,11 +98,11 @@
             },
             okClass: {
                 type: String,
-                default: 'btn btn-cancel'
+                default: 'btn btn-accept'
             },
             cancelClass: {
                 type: String,
-                default: 'btn btn-accept'
+                default: 'btn btn-cancel'
             },
             okHidden: {
                 type: Boolean,
@@ -153,8 +155,7 @@
             show(value) {
                 if (value) {
                     document.body.className += ' modal-open';
-                }
-                else {
+                } else {
                     if (!this.duration) {
                         this.duration = window.getComputedStyle(this.$refs.dialog)['transition-duration'].replace('s', '') * 1000;
                     }

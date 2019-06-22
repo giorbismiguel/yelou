@@ -59,14 +59,8 @@
                                 </div>
                             </div>
 
-                            <div class="form-row form-group">
-                                <label for="origen_request_services">Origen<span class="text-primary">*</span></label>
-
-                                <input v-model="form.name_start" :placeholder="placeholderCurrentLocation"
-                                       v-if="currentLocation" id="actual_ubication" name="actual_ubication" type="text"
-                                       class="form-control"/>
-
-                                <gmap-autocomplete v-else class="form-control" id="origen_request_services" ref="origen"
+                            <div class="input-group form-group">
+                                <gmap-autocomplete class="form-control" id="origen_request_services" ref="origen"
                                                    name="origen_request_services" :value="form.name_start"
                                                    @place_changed="setOrigenRequestServices"
                                                    :placeholder="writeLocationText"
@@ -74,22 +68,19 @@
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
                                 </gmap-autocomplete>
 
-                                <button type="button" class="btn btn-accept btn-sm mt-2"
-                                        @click="changeCurrentLocation">
-                                    Completar con Google Maps
-                                </button>
+                                <div class="input-group-prepend">
+                                    <span @click="showOrigin" class="input-group-text">
+                                        <i class="fas fa-search-location"></i>
+                                    </span>
+                                </div>
 
                                 <div v-if="submitted && (serverErrors.lat_start || serverErrors.lng_start)"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.lat_start">{{ error }}</template>
                                 </div>
-
                             </div>
 
-                            <div class="form-group">
-                                <label for="destination_request_services">Destino<span
-                                        class="text-primary">*</span></label>
-
+                            <div class="input-group form-group">
                                 <gmap-autocomplete class="form-control" id="destination_request_services"
                                                    name="destination_request_services" :value="form.name_end"
                                                    @place_changed="setDestinationRequestServices"
@@ -97,6 +88,11 @@
                                                    @keypress.enter="$event.preventDefault()"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_end || serverErrors.lng_end) }">
                                 </gmap-autocomplete>
+
+                                <div class="input-group-prepend">
+                                    <span @click="showDestiny" class="input-group-text"> <i
+                                            class="fas fa-search-location"></i></span>
+                                </div>
 
                                 <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
                                      class="invalid-feedback">
@@ -148,6 +144,22 @@
             </div>
         </div>
 
+        <ye-modal id="" :title="modal.title" :show="modal.show" size="large" cancel-text="Cerrar"
+                  @cancel="hideMarkers" @ok="saveMarker">
+            <div class="row">
+                <div class="col-md-12">
+                    <GmapMap :center="centerMarker" :zoom="7" style="width: 100%; height: 70vh;">
+                        <gmap-marker v-for="(m, index) in markers"
+                                     :position="m.position"
+                                     :clickable="true" :draggable="true"
+                                     @click="centerMarker=m.position"
+                                     :key="index">
+                        </gmap-marker>
+                    </GmapMap>
+                </div>
+            </div>
+        </ye-modal>
+
         <notifications group="create_request_service"/>
     </box-user>
 </template>
@@ -159,9 +171,12 @@
     import DatePicker from 'vue2-datepicker'
     import HeaderForm from '../layout/header_form'
     import Swal from 'sweetalert2'
+    import navigator from '../../../../mixins/navigator'
 
     export default {
         name: "Create",
+
+        mixins: [navigator],
 
         data() {
             return {
@@ -181,6 +196,12 @@
                 },
                 defaultDate: new Date(),
                 defaultTime: null,
+                markers: [],
+                centerMarker: null,
+                modal: {
+                    title: '',
+                    show: false
+                },
                 timePicker: {
                     lang: {
                         days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
@@ -313,20 +334,30 @@
                 this.form.name_end = place.formatted_address
             },
 
-            getCurrentPositionUser() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(position => {
-                        this.currentLocationLatLng = {lat: position.coords.latitude, lng: position.coords.longitude}
-                    });
-                }
-            },
-
             changeCurrentLocation() {
                 this.currentLocation = !this.currentLocation
                 this.placeholderCurrentLocation = this.currentLocation ? this.currentLocationText : ''
             },
 
             calculateRate() {
+
+            },
+
+            showOrigin() {
+                this.modal.title = 'Punto de Origen'
+                this.modal.show = true
+            },
+
+            showDestiny() {
+                this.modal.title = 'Punto de Destino'
+                this.modal.show = true
+            },
+
+            hideMarkers() {
+                this.modal.show = false
+            },
+
+            saveMarker() {
 
             }
         },
@@ -373,11 +404,16 @@
         },
 
         created() {
+            this.centerMarker = this.getCurrentPositionUser()
+
+            this.markers.push({
+                position: this.centerMarker
+            })
+
             this.nomenclatorsRequestServices();
         },
 
         mounted() {
-            this.getCurrentPositionUser()
             this.loadingView = false
         }
     }

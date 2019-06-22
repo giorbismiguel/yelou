@@ -61,7 +61,7 @@
         </div>
 
         <ye-modal id="modalAddresses" :title="modal.title" :show="modal.showDriver" size="large" cancel-text="Cerrar"
-                  okHidden="true" @cancel="hideDriverModel" @ok="save">
+                  :okHidden="true" @cancel="hideDriverModel">
             <div class="row">
                 <div class="col-md-12">
                     <ye-table id="table_requested_services"

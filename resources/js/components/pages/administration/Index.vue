@@ -7,7 +7,8 @@
 
             <div class="row mb-2">
                 <div class="col-6">
-                    <gmap-autocomplete class="form-control" @place_changed="changePlace" @keypress.enter="$event.preventDefault()"
+                    <gmap-autocomplete class="form-control" @place_changed="changePlace"
+                                       @keypress.enter="$event.preventDefault()"
                                        placehoder="Escriba su ubicación para ver los choferes mas cercanos">
                     </gmap-autocomplete>
                 </div>
@@ -33,7 +34,7 @@
                                 :position="infoWindowPos"
                                 :opened="infoWinOpen"
                                 @closeclick="infoWinOpen=false">
-                            {{infoContent}}
+                            {{ infoContent }}
                         </GmapInfoWindow>
 
                         <GmapMarker
@@ -60,9 +61,12 @@
     import BoxUser from '../../layout/BoxUser'
     import {mapState, mapActions} from 'vuex'
     import HeaderForm from './layout/header_form'
+    import navigator from '../../../mixins/navigator'
 
     export default {
         name: "Administration",
+
+        mixins: [navigator],
 
         data() {
             return {
@@ -95,11 +99,11 @@
             toggleInfoWindow: function (marker, idx) {
                 this.infoWindowPos = marker.position;
                 this.infoContent = marker.infoText;
-                //check if its the same marker that was selected if yes toggle
+                // Check if its the same marker that was selected if yes toggle
                 if (this.currentMidx == idx) {
                     this.infoWinOpen = !this.infoWinOpen;
                 }
-                //if different marker set infowindow to open and reset current marker index
+                // If different marker set infowindow to open and reset current marker index
                 else {
                     this.infoWinOpen = true;
                     this.currentMidx = idx;
@@ -115,13 +119,6 @@
                 this.latLngClient = location
             },
 
-            getCurrentPositionUser() {
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(position => {
-                        this.latLngClient = {lat: position.coords.latitude, lng: position.coords.longitude}
-                    });
-                }
-            }
         },
 
         components: {
@@ -129,10 +126,13 @@
             HeaderForm
         },
 
+        created() {
+            this.latLngClient = this.getCurrentPositionUser()
+        },
+
         mounted() {
             if (this.me.type === 1) {
                 this.getDriversAvailable();
-                this.getCurrentPositionUser()
             }
         }
     }
