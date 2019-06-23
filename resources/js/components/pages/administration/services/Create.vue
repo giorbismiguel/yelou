@@ -185,11 +185,12 @@
     import HeaderForm from '../layout/header_form'
     import Swal from 'sweetalert2'
     import navigator from '../../../../mixins/navigator'
+    import geocoder from '../../../../mixins/geocoder'
 
     export default {
         name: "CreateService",
 
-        mixins: [navigator],
+        mixins: [navigator, geocoder],
 
         data() {
             return {
@@ -262,7 +263,12 @@
             }),
 
             originAndSourceActive() {
-                return (this.coordinatesOrigin && !this.route && !this.originRequestService && this.destinationRequestService) ||
+                return (
+                    this.coordinatesOrigin &&
+                    !this.route &&
+                    !this.originRequestService &&
+                    this.destinationRequestService)
+                    ||
                     (this.originRequestService && this.destinationRequestService)
             }
         },
@@ -421,15 +427,6 @@
                 }
 
                 this.geocodedAddress(this.coordinatesOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
-            },
-
-            geocodedAddress(coordinates) {
-                let geocoder = new google.maps.Geocoder()
-                geocoder.geocode({'latLng': coordinates}, (result, status) => {
-                    if (status === google.maps.GeocoderStatus.OK) {
-                        this.formatAddress = result[0].formatted_address
-                    }
-                })
             }
         },
 
@@ -475,14 +472,16 @@
         },
 
         created() {
+            let address = this.geocodedAddress(this.centerMarker)
             this.centerMarker = this.getCurrentPositionUser()
-            this.coordinatesOrigin = this.centerMarker;
+            this.coordinatesOrigin = this.centerMarker
+            this.form.name_start = address ? address : this.defaultNameOrigin
 
             this.markers.push({
                 position: this.centerMarker
             })
 
-            this.nomenclatorsRequestServices();
+            this.nomenclatorsRequestServices()
         },
 
         mounted() {
