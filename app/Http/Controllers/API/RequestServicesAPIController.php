@@ -70,16 +70,13 @@ class RequestServicesAPIController extends AppBaseController
      */
     public function store(CreateRequestServicesAPIRequest $request)
     {
-
         $input = $request->all();
         $input['user_id'] = \Auth::id();
 
         $availableNerbyDrivers = $this->getDriversToSendNotification($input);
-
         if ($availableNerbyDrivers->count() === 0) {
             return $this->sendError('No se ha encontrado ningún chofer disponible para anteder su servicio.');
         }
-
 
         $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
         if ($request->filled('route_id')) {
@@ -118,12 +115,13 @@ class RequestServicesAPIController extends AppBaseController
 
         $requestServices = $this->requestServicesRepository->create($input);
         $distanceToTravel = get_distance(
-            $requestServices->lat_start, $requestServices->lng_start, $requestServices->lat_end,
+            $requestServices->lat_start,
+            $requestServices->lng_start,
+            $requestServices->lat_end,
             $requestServices->lng_end
         );
 
         $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
-
 
         $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
             $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
