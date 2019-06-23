@@ -90,8 +90,9 @@
                                 </gmap-autocomplete>
 
                                 <div class="input-group-prepend">
-                                    <span @click="showDestiny" class="input-group-text"> <i
-                                            class="fas fa-search-location"></i></span>
+                                    <span @click="showDestiny" class="input-group-text">
+                                        <i class="fas fa-search-location"></i>
+                                    </span>
                                 </div>
 
                                 <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
@@ -145,17 +146,29 @@
         </div>
 
         <ye-modal id="" :title="modal.title" :show="modal.show" size="large" cancel-text="Cerrar"
-                  @cancel="hideMarkers" @ok="saveMarker">
+                  @cancel="hideMarkers" @ok="saveMarker" ok-text="Aceptar">
             <div class="row">
                 <div class="col-md-12">
-                    <GmapMap :center="centerMarker" :zoom="7" style="width: 100%; height: 70vh;">
-                        <gmap-marker v-for="(m, index) in markers"
-                                     :position="m.position"
-                                     :clickable="true" :draggable="true"
-                                     @click="centerMarker=m.position"
-                                     :key="index">
-                        </gmap-marker>
+                    <GmapMap :center="centerMarker" :zoom="15" style="width: 100%; height: 70vh;">
+                        <GmapMarker v-for="(m, index) in markers"
+                                    :position="m.position"
+                                    @drag="updateCoordinates"
+                                    :clickable="true" :draggable="true"
+                                    @click="centerMarker=m.position"
+                                    :key="index">
+                        </GmapMarker>
                     </GmapMap>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="adddresFormat">
+                                <i class="fas fa-search-location"></i>
+                            </span>
+                        </div>
+                        <input v-model="formatAddress" type="text" class="form-control" placeholder="Username"
+                               aria-label="Username"
+                               aria-describedby="adddresFormat">
+                    </div>
                 </div>
             </div>
         </ye-modal>
@@ -174,7 +187,7 @@
     import navigator from '../../../../mixins/navigator'
 
     export default {
-        name: "Create",
+        name: "CreateService",
 
         mixins: [navigator],
 
@@ -221,9 +234,16 @@
                 },
                 submitted: false,
                 loading: false,
-                currentLocationLatLng: null,
+
+                isSelectingOrigin: false,
+                coordinatesOrigin: null,
+
+                isSelectingDestiny: false,
+                coordinatesDestiny: null,
+                formatAddress: null,
                 placeholderCurrentLocation: 'Ubicación actual',
-                currentLocationText: 'Ubicación actual',
+                defaultNameOrigin: 'Ubicación actual',
+                defaultNameDestiny: 'Destino seleccionado',
                 writeLocationText: 'Escribe la ubicación actual',
                 currentLocation: true,
                 originRequestService: null,
@@ -242,7 +262,7 @@
             }),
 
             originAndSourceActive() {
-                return (this.currentLocationLatLng && !this.route && !this.originRequestService && this.destinationRequestService) ||
+                return (this.coordinatesOrigin && !this.route && !this.originRequestService && this.destinationRequestService) ||
                     (this.originRequestService && this.destinationRequestService)
             }
         },
@@ -260,17 +280,21 @@
                             this.loading = true
                             this.serverErrors = {}
 
-                            if (this.currentLocationLatLng && !this.route && !this.originRequestService) {
-                                this.form.lat_start = this.currentLocationLatLng.lat
-                                this.form.lng_start = this.currentLocationLatLng.lng
-                                this.form.name_start = this.form.name_start ? this.form.name_start : this.currentLocationText
+                            if (this.coordinatesOrigin && !this.route && !this.originRequestService) {
+                                this.form.lat_start = this.coordinatesOrigin.lat
+                                this.form.lng_start = this.coordinatesOrigin.lng
+                                this.form.name_start = this.form.name_start ? this.form.name_start : this.defaultNameOrigin
                             } else if (this.originRequestService) {
                                 this.form.lat_start = this.originRequestService.geometry.location.lat()
                                 this.form.lng_start = this.originRequestService.geometry.location.lng()
                                 this.form.name_start = this.originRequestService.formatted_address
                             }
 
-                            if (this.destinationRequestService) {
+                            if (this.coordinatesDestiny && !this.route && !this.originRequestService) {
+                                this.form.lat_end = this.coordinatesDestiny.lat
+                                this.form.lng_end = this.coordinatesDestiny.lng
+                                this.form.coordinatesDestiny = this.form.name_end ? this.form.name_end : this.defaultNameDestiny
+                            } else if (this.destinationRequestService) {
                                 this.form.lat_end = this.destinationRequestService.geometry.location.lat()
                                 this.form.lng_end = this.destinationRequestService.geometry.location.lng()
                                 this.form.name_end = this.destinationRequestService.formatted_address
@@ -336,7 +360,7 @@
 
             changeCurrentLocation() {
                 this.currentLocation = !this.currentLocation
-                this.placeholderCurrentLocation = this.currentLocation ? this.currentLocationText : ''
+                this.placeholderCurrentLocation = this.currentLocation ? this.defaultNameOrigin : ''
             },
 
             calculateRate() {
@@ -344,21 +368,68 @@
             },
 
             showOrigin() {
+                this.formatAddress = null
                 this.modal.title = 'Punto de Origen'
                 this.modal.show = true
+                this.isSelectingOrigin = true
             },
 
             showDestiny() {
+                this.formatAddress = null
                 this.modal.title = 'Punto de Destino'
                 this.modal.show = true
+                this.isSelectingDestiny = true
             },
 
             hideMarkers() {
                 this.modal.show = false
+                if (this.isSelectingOrigin) {
+                    this.isSelectingOrigin = false
+                }
+
+                if (this.isSelectingDestiny) {
+                    this.isSelectingDestiny = false
+                }
             },
 
             saveMarker() {
+                this.modal.show = false
+                if (this.isSelectingOrigin) {
+                    this.form.name_start = this.formatAddress
+                    this.isSelectingOrigin = false
+                }
 
+                if (this.isSelectingDestiny) {
+                    this.form.name_end = this.formatAddress
+                    this.isSelectingDestiny = false
+                }
+
+                this.formatAddress = null
+            },
+
+            updateCoordinates(location) {
+                if (this.isSelectingOrigin) {
+                    this.coordinatesOrigin = {
+                        lat: location.latLng.lat(),
+                        lng: location.latLng.lng(),
+                    }
+                } else {
+                    this.coordinatesDestiny = {
+                        lat: location.latLng.lat(),
+                        lng: location.latLng.lng(),
+                    }
+                }
+
+                this.geocodedAddress(this.coordinatesOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+            },
+
+            geocodedAddress(coordinates) {
+                let geocoder = new google.maps.Geocoder()
+                geocoder.geocode({'latLng': coordinates}, (result, status) => {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        this.formatAddress = result[0].formatted_address
+                    }
+                })
             }
         },
 
@@ -405,6 +476,7 @@
 
         created() {
             this.centerMarker = this.getCurrentPositionUser()
+            this.coordinatesOrigin = this.centerMarker;
 
             this.markers.push({
                 position: this.centerMarker

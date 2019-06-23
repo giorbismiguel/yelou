@@ -4366,6 +4366,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4374,7 +4387,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Create",
+  name: "CreateService",
   mixins: [_mixins_navigator__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
@@ -4419,9 +4432,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       submitted: false,
       loading: false,
-      currentLocationLatLng: null,
+      isSelectingOrigin: false,
+      coordinatesOrigin: null,
+      isSelectingDestiny: false,
+      coordinatesDestiny: null,
+      formatAddress: null,
       placeholderCurrentLocation: 'Ubicación actual',
-      currentLocationText: 'Ubicación actual',
+      defaultNameOrigin: 'Ubicación actual',
+      defaultNameDestiny: 'Destino seleccionado',
       writeLocationText: 'Escribe la ubicación actual',
       currentLocation: true,
       originRequestService: null,
@@ -4442,7 +4460,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }), {
     originAndSourceActive: function originAndSourceActive() {
-      return this.currentLocationLatLng && !this.route && !this.originRequestService && this.destinationRequestService || this.originRequestService && this.destinationRequestService;
+      return this.coordinatesOrigin && !this.route && !this.originRequestService && this.destinationRequestService || this.originRequestService && this.destinationRequestService;
     }
   }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['nomenclatorsRequestServices', 'createRequestService']), {
@@ -4455,17 +4473,21 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.loading = true;
           _this.serverErrors = {};
 
-          if (_this.currentLocationLatLng && !_this.route && !_this.originRequestService) {
-            _this.form.lat_start = _this.currentLocationLatLng.lat;
-            _this.form.lng_start = _this.currentLocationLatLng.lng;
-            _this.form.name_start = _this.form.name_start ? _this.form.name_start : _this.currentLocationText;
+          if (_this.coordinatesOrigin && !_this.route && !_this.originRequestService) {
+            _this.form.lat_start = _this.coordinatesOrigin.lat;
+            _this.form.lng_start = _this.coordinatesOrigin.lng;
+            _this.form.name_start = _this.form.name_start ? _this.form.name_start : _this.defaultNameOrigin;
           } else if (_this.originRequestService) {
             _this.form.lat_start = _this.originRequestService.geometry.location.lat();
             _this.form.lng_start = _this.originRequestService.geometry.location.lng();
             _this.form.name_start = _this.originRequestService.formatted_address;
           }
 
-          if (_this.destinationRequestService) {
+          if (_this.coordinatesDestiny && !_this.route && !_this.originRequestService) {
+            _this.form.lat_end = _this.coordinatesDestiny.lat;
+            _this.form.lng_end = _this.coordinatesDestiny.lng;
+            _this.form.coordinatesDestiny = _this.form.name_end ? _this.form.name_end : _this.defaultNameDestiny;
+          } else if (_this.destinationRequestService) {
             _this.form.lat_end = _this.destinationRequestService.geometry.location.lat();
             _this.form.lng_end = _this.destinationRequestService.geometry.location.lng();
             _this.form.name_end = _this.destinationRequestService.formatted_address;
@@ -4528,21 +4550,74 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     changeCurrentLocation: function changeCurrentLocation() {
       this.currentLocation = !this.currentLocation;
-      this.placeholderCurrentLocation = this.currentLocation ? this.currentLocationText : '';
+      this.placeholderCurrentLocation = this.currentLocation ? this.defaultNameOrigin : '';
     },
     calculateRate: function calculateRate() {},
     showOrigin: function showOrigin() {
+      this.formatAddress = null;
       this.modal.title = 'Punto de Origen';
       this.modal.show = true;
+      this.isSelectingOrigin = true;
     },
     showDestiny: function showDestiny() {
+      this.formatAddress = null;
       this.modal.title = 'Punto de Destino';
       this.modal.show = true;
+      this.isSelectingDestiny = true;
     },
     hideMarkers: function hideMarkers() {
       this.modal.show = false;
+
+      if (this.isSelectingOrigin) {
+        this.isSelectingOrigin = false;
+      }
+
+      if (this.isSelectingDestiny) {
+        this.isSelectingDestiny = false;
+      }
     },
-    saveMarker: function saveMarker() {}
+    saveMarker: function saveMarker() {
+      this.modal.show = false;
+
+      if (this.isSelectingOrigin) {
+        this.form.name_start = this.formatAddress;
+        this.isSelectingOrigin = false;
+      }
+
+      if (this.isSelectingDestiny) {
+        this.form.name_end = this.formatAddress;
+        this.isSelectingDestiny = false;
+      }
+
+      this.formatAddress = null;
+    },
+    updateCoordinates: function updateCoordinates(location) {
+      if (this.isSelectingOrigin) {
+        this.coordinatesOrigin = {
+          lat: location.latLng.lat(),
+          lng: location.latLng.lng()
+        };
+      } else {
+        this.coordinatesDestiny = {
+          lat: location.latLng.lat(),
+          lng: location.latLng.lng()
+        };
+      }
+
+      this.geocodedAddress(this.coordinatesOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+    },
+    geocodedAddress: function geocodedAddress(coordinates) {
+      var _this2 = this;
+
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+        'latLng': coordinates
+      }, function (result, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          _this2.formatAddress = result[0].formatted_address;
+        }
+      });
+    }
   }),
   watch: {
     'form.route_id': function formRoute_id(id) {
@@ -4584,6 +4659,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   created: function created() {
     this.centerMarker = this.getCurrentPositionUser();
+    this.coordinatesOrigin = this.centerMarker;
     this.markers.push({
       position: this.centerMarker
     });
@@ -66252,7 +66328,8 @@ var render = function() {
             title: _vm.modal.title,
             show: _vm.modal.show,
             size: "large",
-            "cancel-text": "Cerrar"
+            "cancel-text": "Cerrar",
+            "ok-text": "Aceptar"
           },
           on: { cancel: _vm.hideMarkers, ok: _vm.saveMarker }
         },
@@ -66266,10 +66343,10 @@ var render = function() {
                   "GmapMap",
                   {
                     staticStyle: { width: "100%", height: "70vh" },
-                    attrs: { center: _vm.centerMarker, zoom: 7 }
+                    attrs: { center: _vm.centerMarker, zoom: 15 }
                   },
                   _vm._l(_vm.markers, function(m, index) {
-                    return _c("gmap-marker", {
+                    return _c("GmapMarker", {
                       key: index,
                       attrs: {
                         position: m.position,
@@ -66277,6 +66354,7 @@ var render = function() {
                         draggable: true
                       },
                       on: {
+                        drag: _vm.updateCoordinates,
                         click: function($event) {
                           _vm.centerMarker = m.position
                         }
@@ -66284,7 +66362,47 @@ var render = function() {
                     })
                   }),
                   1
-                )
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "input-group mb-3" }, [
+                  _c("div", { staticClass: "input-group-prepend" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass: "input-group-text",
+                        attrs: { id: "adddresFormat" }
+                      },
+                      [_c("i", { staticClass: "fas fa-search-location" })]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formatAddress,
+                        expression: "formatAddress"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Username",
+                      "aria-label": "Username",
+                      "aria-describedby": "adddresFormat"
+                    },
+                    domProps: { value: _vm.formatAddress },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.formatAddress = $event.target.value
+                      }
+                    }
+                  })
+                ])
               ],
               1
             )
