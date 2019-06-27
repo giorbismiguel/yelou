@@ -42,7 +42,7 @@
                                 <label for="password" class="col control-label">Contraseña <span
                                         class="text-danger">*</span></label>
                                 <div class="col">
-                                    <input v-model="form.password" v-validate="'required|min:6|max:20'"
+                                    <input v-model="form.password" v-validate="'required|min:6|max:18'"
                                            data-vv-as="Contraseña" id="password" type="password" name="password"
                                            class="form-control" ref="password"
                                            :class="{ 'is-invalid': submitted && errors.has('password') }">
@@ -59,7 +59,7 @@
                                 </label>
                                 <div class="col">
                                     <input v-model="form.password_confirmation"
-                                           v-validate="'required|confirmed:password|min:6|max:20'"
+                                           v-validate="'required|confirmed:password|min:6|max:18'"
                                            data-vv-as="Confirmar Contraseña" id="password_confirmation"
                                            name="password_confirmation" type="password"
                                            class="form-control"

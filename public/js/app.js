@@ -67535,8 +67535,8 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required|min:6|max:20",
-                          expression: "'required|min:6|max:20'"
+                          value: "required|min:6|max:18",
+                          expression: "'required|min:6|max:18'"
                         }
                       ],
                       ref: "password",
@@ -67589,9 +67589,9 @@ var render = function() {
                         {
                           name: "validate",
                           rawName: "v-validate",
-                          value: "required|confirmed:password|min:6|max:20",
+                          value: "required|confirmed:password|min:6|max:18",
                           expression:
-                            "'required|confirmed:password|min:6|max:20'"
+                            "'required|confirmed:password|min:6|max:18'"
                         }
                       ],
                       staticClass: "form-control",

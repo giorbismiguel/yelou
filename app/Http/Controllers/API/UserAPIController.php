@@ -168,8 +168,8 @@ class UserAPIController extends AppBaseController
     {
         $this->validate($request, [
             'current'               => 'required|string',
-            'password'              => 'required|string|confirmed',
-            'password_confirmation' => 'required|string'
+            'password'              => 'required|min:6|max:18|confirmed',
+            'password_confirmation' => 'required|min:6|max:18'
         ]);
 
         $user = User::find(Auth::id());
@@ -179,8 +179,10 @@ class UserAPIController extends AppBaseController
         }
 
         if (\Hash::check($request->password, $user->password)) {
-            return response()->json(['errors' => ['password' => ['La nueva contraseña no debe ser igual a la anterior']]],
-                422);
+            return response()->json(
+                ['errors' => ['password' => ['La nueva contraseña no debe ser igual a la anterior']]],
+                422
+            );
         }
 
         $user->password = Hash::make($request->password);

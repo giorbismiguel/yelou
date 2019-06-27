@@ -99,9 +99,11 @@ class AuthController extends Controller
 //            'text' => __('app.message_code_activation', ['code' => $codeActivation])
 //        ]);
 
+        $message = 'Para la activación  de su cuenta se enviará un código';
+        $message .= ' al celular, por favor verifique los datos para registrarse.';
         return [
             'success' => true,
-            'message' => 'Para la activación  de su cuenta se enviará un código al celular, por favor verifique los datos para registrarse.',
+            'message' => $message,
         ];
     }
 
@@ -163,7 +165,7 @@ class AuthController extends Controller
         $rules = [
             'name'       => 'required|max:191',
             'email'      => 'required|email|max:191|unique:users',
-            'password'   => 'required|min:6|confirmed',
+            'password'   => 'required|min:6|max:18|confirmed',
             'first_name' => 'required|max:191',
             'last_name'  => 'required|max:191',
             'phone'      => 'required|max:191|unique:users',
