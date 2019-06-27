@@ -4379,7 +4379,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 
@@ -4390,7 +4389,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "CreateService",
-  mixins: [_mixins_navigator__WEBPACK_IMPORTED_MODULE_6__["default"], _mixins_geocoder__WEBPACK_IMPORTED_MODULE_7__["default"]],
+  mixins: [_mixins_navigator__WEBPACK_IMPORTED_MODULE_6__["default"]],
   data: function data() {
     return {
       loadingView: true,
@@ -4406,6 +4405,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         start_time: null,
         payment_method_id: null,
         favourite: 0
+      },
+      formRate: {
+        latitude_from: null,
+        longitude_from: null,
+        latitude_to: null,
+        longitude_to: null
       },
       defaultDate: new Date(),
       defaultTime: null,
@@ -4459,13 +4464,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         'paymentMethods': [],
         'userRoutes': []
       };
+    },
+    rate: function rate(state) {
+      return state.general.rate;
     }
   }), {
     originAndSourceActive: function originAndSourceActive() {
       return this.coordinatesOrigin && !this.route && !this.originRequestService && this.destinationRequestService || this.originRequestService && this.destinationRequestService;
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['nomenclatorsRequestServices', 'createRequestService']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['nomenclatorsRequestServices', 'createRequestService', 'calculateRate']), {
     onSubmit: function onSubmit() {
       var _this = this;
 
@@ -4554,7 +4562,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.currentLocation = !this.currentLocation;
       this.placeholderCurrentLocation = this.currentLocation ? this.defaultNameOrigin : '';
     },
-    calculateRate: function calculateRate() {},
+    calculate: function calculate() {
+      var _this2 = this;
+
+      this.calculateRate(this.formRate).then(function () {
+        if (_this2.rate.success) {
+          sweetalert2__WEBPACK_IMPORTED_MODULE_5___default.a.fire({
+            text: _this2.rate.message,
+            type: 'info',
+            showCancelButton: false,
+            confirmButtonText: 'Aceptar'
+          });
+        }
+      })["catch"](function (data) {
+        _this2.serverErrors = data.errors || {};
+      });
+    },
     showOrigin: function showOrigin() {
       this.formatAddress = null;
       this.modal.title = 'Punto de Origen';
@@ -4606,7 +4629,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
       }
 
-      this.geocodedAddress(this.coordinatesOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+      this.formatAddress = this.geocodedAddress(this.isSelectingOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+    },
+    geocodedAddress: function geocodedAddress(coordinates) {
+      var _this3 = this;
+
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+        'latLng': coordinates
+      }, function (result, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          _this3.formatAddress = result[0].formatted_address;
+        }
+      });
     }
   }),
   watch: {
@@ -4639,6 +4674,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.form.lat_end = null;
       this.form.lng_end = null;
       this.favourite = 0;
+    },
+    coordinatesOrigin: function coordinatesOrigin(_coordinatesOrigin) {
+      this.formRate.latitude_from = _coordinatesOrigin.lat;
+      this.formRate.longitude_from = _coordinatesOrigin.lat;
+    },
+    coordinatesDestiny: function coordinatesDestiny(_coordinatesDestiny) {
+      this.formRate.latitude_from = _coordinatesDestiny.lat;
+      this.formRate.longitude_from = _coordinatesDestiny.lat;
+    },
+    originRequestService: function originRequestService(_originRequestService) {
+      this.formRate.latitude_from = _originRequestService.geometry.location.lat();
+      this.formRate.longitude_from = _originRequestService.geometry.location.lat();
+    },
+    destinationRequestService: function destinationRequestService(_destinationRequestService) {
+      this.formRate.latitude_to = _destinationRequestService.geometry.location.lat();
+      this.formRate.longitude_to = _destinationRequestService.geometry.location.lat();
     }
   },
   components: {
@@ -4648,9 +4699,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     HeaderForm: _layout_header_form__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   created: function created() {
+    var address = this.geocodedAddress(this.centerMarker);
     this.centerMarker = this.getCurrentPositionUser();
     this.coordinatesOrigin = this.centerMarker;
-    this.form.name_start = this.geocodedAddress(this.centerMarker);
+    this.form.name_start = address ? address : '';
     this.markers.push({
       position: this.centerMarker
     });
@@ -64859,7 +64911,7 @@ var render = function() {
   return _c(
     "box-user",
     [
-      _vm.me.type === 1
+      _vm.me && _vm.me.type === 1
         ? [
             _c(
               "div",
@@ -66290,9 +66342,9 @@ var render = function() {
                                     expression: "originAndSourceActive"
                                   }
                                 ],
-                                staticClass: "btn btn-success ml-5",
+                                staticClass: "btn btn-cancel ml-5",
                                 attrs: { type: "button" },
-                                on: { click: _vm.calculateRate }
+                                on: { click: _vm.calculate }
                               },
                               [
                                 _vm._v(
@@ -66379,8 +66431,7 @@ var render = function() {
                     staticClass: "form-control",
                     attrs: {
                       type: "text",
-                      placeholder: "Username",
-                      "aria-label": "Username",
+                      placeholder: _vm.modal.title,
                       "aria-describedby": "adddresFormat"
                     },
                     domProps: { value: _vm.formatAddress },
@@ -105107,7 +105158,8 @@ var state = {
     longest_run: {
       user: {}
     }
-  }
+  },
+  rate: null
 };
 var actions = {
   stopLoading: function stopLoading(_ref) {
@@ -105128,9 +105180,22 @@ var actions = {
       });
     });
   },
-  loadAdminDashboard: function loadAdminDashboard(_ref3) {
+  calculateRate: function calculateRate(_ref3, form) {
     var commit = _ref3.commit,
         dispatch = _ref3.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post(route('api.distance.calculate_rate'), form).then(function (response) {
+        commit('DISTANCE_CALCULATE_OK', response.data);
+        resolve();
+      })["catch"](function (error) {
+        commit('DISTANCE_CALCULATE_FAIL');
+        reject(error.response.data);
+      });
+    });
+  },
+  loadAdminDashboard: function loadAdminDashboard(_ref4) {
+    var commit = _ref4.commit,
+        dispatch = _ref4.dispatch;
     commit('LOAD_ADMIN_DASHBOARD');
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.get(Config.apiPath + 'dashboard/admin-data').then(function (response) {
@@ -105158,6 +105223,12 @@ var mutations = _objectSpread({}, Object(_helpers__WEBPACK_IMPORTED_MODULE_1__["
   LOAD_ADMIN_DASHBOARD_OK: function LOAD_ADMIN_DASHBOARD_OK(state, dashboard) {
     state.admin_dashboard = dashboard;
     state.loading = false;
+  },
+  DISTANCE_CALCULATE_OK: function DISTANCE_CALCULATE_OK(state, data) {
+    state.rate = data;
+  },
+  DISTANCE_CALCULATE_FAIL: function DISTANCE_CALCULATE_FAIL(state) {
+    state.rate = null;
   }
 });
 

@@ -1,6 +1,6 @@
 <template>
     <box-user>
-        <template v-if="me.type === 1">
+        <template v-if="me && me.type === 1">
             <div class="col-12">
                 <header-form>Choferes disponibles</header-form>
             </div>

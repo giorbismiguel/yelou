@@ -133,7 +133,7 @@
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>
 
-                                    <button type="button" class="btn btn-success ml-5" @click="calculateRate"
+                                    <button type="button" class="btn btn-cancel ml-5" @click="calculate"
                                             v-show="originAndSourceActive">
                                         Calcular Tarifa
                                     </button>
@@ -165,8 +165,7 @@
                                 <i class="fas fa-search-location"></i>
                             </span>
                         </div>
-                        <input v-model="formatAddress" type="text" class="form-control" placeholder="Username"
-                               aria-label="Username"
+                        <input v-model="formatAddress" type="text" class="form-control" :placeholder="modal.title"
                                aria-describedby="adddresFormat">
                     </div>
                 </div>
@@ -190,7 +189,7 @@
     export default {
         name: "CreateService",
 
-        mixins: [navigator, geocoder],
+        mixins: [navigator],
 
         data() {
             return {
@@ -207,6 +206,12 @@
                     start_time: null,
                     payment_method_id: null,
                     favourite: 0
+                },
+                formRate: {
+                    latitude_from: null,
+                    longitude_from: null,
+                    latitude_to: null,
+                    longitude_to: null
                 },
                 defaultDate: new Date(),
                 defaultTime: null,
@@ -260,6 +265,7 @@
                 lists: state => state.nomenclators.listsRequestServices
                     ? state.nomenclators.listsRequestServices
                     : {'paymentMethods': [], 'userRoutes': []},
+                rate: state => state.general.rate
             }),
 
             originAndSourceActive() {
@@ -277,6 +283,7 @@
             ...mapActions([
                 'nomenclatorsRequestServices',
                 'createRequestService',
+                'calculateRate',
             ]),
 
             onSubmit() {
@@ -369,8 +376,21 @@
                 this.placeholderCurrentLocation = this.currentLocation ? this.defaultNameOrigin : ''
             },
 
-            calculateRate() {
-
+            calculate() {
+                this.calculateRate(this.formRate)
+                    .then(() => {
+                        if (this.rate.success) {
+                            Swal.fire({
+                                text: this.rate.message,
+                                type: 'info',
+                                showCancelButton: false,
+                                confirmButtonText: 'Aceptar',
+                            })
+                        }
+                    })
+                    .catch((data) => {
+                        this.serverErrors = data.errors || {}
+                    })
             },
 
             showOrigin() {
@@ -426,7 +446,16 @@
                     }
                 }
 
-                this.geocodedAddress(this.coordinatesOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+                this.formatAddress = this.geocodedAddress(this.isSelectingOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+            },
+
+            geocodedAddress(coordinates) {
+                let geocoder = new google.maps.Geocoder()
+                geocoder.geocode({'latLng': coordinates}, (result, status) => {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        this.formatAddress = result[0].formatted_address
+                    }
+                })
             }
         },
 
@@ -461,6 +490,26 @@
                 this.form.lat_end = null
                 this.form.lng_end = null
                 this.favourite = 0;
+            },
+
+            coordinatesOrigin(coordinatesOrigin){
+                this.formRate.latitude_from = coordinatesOrigin.lat
+                this.formRate.longitude_from = coordinatesOrigin.lat
+            },
+
+            coordinatesDestiny(coordinatesDestiny){
+                this.formRate.latitude_from = coordinatesDestiny.lat
+                this.formRate.longitude_from = coordinatesDestiny.lat
+            },
+
+            originRequestService(originRequestService){
+                this.formRate.latitude_from = originRequestService.geometry.location.lat()
+                this.formRate.longitude_from = originRequestService.geometry.location.lat()
+            },
+
+            destinationRequestService(destinationRequestService){
+                this.formRate.latitude_to = destinationRequestService.geometry.location.lat()
+                this.formRate.longitude_to  = destinationRequestService.geometry.location.lat()
             }
         },
 
@@ -475,7 +524,7 @@
             let address = this.geocodedAddress(this.centerMarker)
             this.centerMarker = this.getCurrentPositionUser()
             this.coordinatesOrigin = this.centerMarker
-            this.form.name_start = address ? address : this.defaultNameOrigin
+            this.form.name_start = address ? address : ''
 
             this.markers.push({
                 position: this.centerMarker

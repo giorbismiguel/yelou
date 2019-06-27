@@ -1,5 +1,6 @@
 <?php
 
+use App\Repositories\RouteRepository;
 use Illuminate\Http\Request;
 
 /*
@@ -97,6 +98,13 @@ Route::prefix('v1')->group(function () {
                 ->group(function () {
                     Route::get('/nomenclators/request-services', 'ListsController@requestServices')
                         ->name('request_services');
+                });
+
+            Route::prefix('distance')
+                ->name('distance.')
+                ->group(function () {
+                    Route::post('/calculate', 'DistanceController@calculateRate')
+                        ->name('calculate_rate');
                 });
         });
 

@@ -112,6 +112,7 @@ class AuthController extends Controller
      */
     public function active(Request $request)
     {
+        // Validate phone
         $query = User::where('code_activation', '=', $request->code_activation)
             ->where('phone', '=', $request->phone);
 
