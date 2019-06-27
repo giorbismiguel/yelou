@@ -9,7 +9,7 @@
                               @submit.prevent="onSubmit" novalidate>
 
                             <div class="form-group">
-                                <label for="name" class="col control-label">Nombre de usuario <span class="text-danger">*</span></label>
+                                <label for="name" class="col control-label">Nombre de Usuario <span class="text-danger">*</span></label>
                                 <div class="col">
                                     <input v-model="form.name" v-validate="'required|max:191'"
                                            data-vv-as="Nombre de usuario" id="name" name="name" type="text"
@@ -74,7 +74,7 @@
 
                             <div class="form-group">
                                 <label for="first_name" class="col control-label">
-                                    Nombre o razon social <span class="text-danger">*</span>
+                                    Nombre o Razón Social <span class="text-danger">*</span>
                                 </label>
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="Nombre o razon social"
@@ -284,7 +284,7 @@
                                                    id="image_certificate_background" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('image_certificate_background') }"/>
                                             <label for="image_certificate_background" class="custom-file-label">
-                                                {{ imageCertificateBackgroundLabel }} <span class="text-danger">*</span>
+                                                {{ imageCertificateBackgroundLabel }}
                                             </label>
                                         </div>
 

@@ -68353,11 +68353,8 @@ var render = function() {
                                     _vm._s(
                                       _vm.imageCertificateBackgroundLabel
                                     ) +
-                                    " "
-                                ),
-                                _c("span", { staticClass: "text-danger" }, [
-                                  _vm._v("*")
-                                ])
+                                    "\n                                        "
+                                )
                               ]
                             )
                           ]),
@@ -68439,7 +68436,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "col control-label", attrs: { for: "name" } },
       [
-        _vm._v("Nombre de usuario "),
+        _vm._v("Nombre de Usuario "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ]
     )
@@ -68494,7 +68491,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "col control-label", attrs: { for: "first_name" } },
       [
-        _vm._v("\n                                Nombre o razon social "),
+        _vm._v("\n                                Nombre o Razón Social "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ]
     )
