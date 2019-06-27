@@ -61,7 +61,7 @@
                         </div>
                     </div>
 
-                    <notifications group="edit_route"/>
+                    <notifications group="edit_route" position="bottom right"/>
                 </template>
             </div>
         </div>

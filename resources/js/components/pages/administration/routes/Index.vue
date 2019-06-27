@@ -44,7 +44,7 @@
             </div>
         </div>
 
-        <notifications group="index_route"/>
+        <notifications group="index_route" position="bottom right"/>
     </box-user>
 </template>
 

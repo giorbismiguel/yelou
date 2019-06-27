@@ -271,7 +271,7 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
+                                    <router-link :to="{ name: 'administration' }" tag="button" class="btn btn-light">
                                         Cancelar
                                     </router-link>
                                     <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
@@ -286,7 +286,7 @@
             </div>
         </div>
 
-        <notifications group="update_profile"/>
+        <notifications group="update_profile" position="bottom right"/>
     </box-user>
 </template>
 

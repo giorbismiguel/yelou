@@ -4,7 +4,7 @@
             <spinner size="large"></spinner>
         </div>
 
-        <notifications group="create_request_accept"/>
+        <notifications group="create_request_accept" position="bottom right"/>
     </box-user>
 </template>
 

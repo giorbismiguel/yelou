@@ -24,41 +24,6 @@
                                            :reduce="route => route.id" label="name"></ye-select>
                             </div>
 
-                            <div class="form-group">
-                                <label for="start_date">Día<span class="text-primary">*</span></label>
-
-                                <date-picker id="start_date" name="start_date" v-model="defaultDate"
-                                             style="width: 300px; display: block;" value-type="date"
-                                             :not-before="new Date()"
-                                             :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
-                                             confirm-text="Confirmar"
-                                             :input-class="[ 'form-control', submitted && serverErrors.start_date ? 'is-invalid': '']">
-                                </date-picker>
-
-                                <input type="text" class="form-control" v-show="false"
-                                       :class="submitted && serverErrors.start_date ? 'is-invalid': ''"/>
-
-                                <div v-if="submitted && serverErrors.start_date"
-                                     class="invalid-feedback">
-                                    <template v-for="error in serverErrors.start_date">{{ error }}</template>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="start_time">Hora de Inicio</label>
-
-                                <date-picker id="start_time" name="start_time" v-model="defaultTime"
-                                             style="width: 300px; display: block;" :lang="timePicker.langTime"
-                                             type="time"
-                                             :format="timePicker.time" confirm confirm-text="Confirmar">
-                                </date-picker>
-
-                                <div v-if="submitted && serverErrors.start_time"
-                                     class="invalid-feedback">
-                                    <template v-for="error in serverErrors.start_time">{{ error }}</template>
-                                </div>
-                            </div>
-
                             <div class="input-group form-group">
                                 <gmap-autocomplete class="form-control" id="origen_request_services" ref="origen"
                                                    name="origen_request_services" :value="form.name_start"
@@ -98,6 +63,41 @@
                                 <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.lat_end">{{ error }}</template>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="start_date">Día<span class="text-primary">*</span></label>
+
+                                <date-picker id="start_date" name="start_date" v-model="defaultDate"
+                                             style="width: 300px; display: block;" value-type="date"
+                                             :not-before="new Date()"
+                                             :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
+                                             confirm-text="Confirmar"
+                                             :input-class="[ 'form-control', submitted && serverErrors.start_date ? 'is-invalid': '']">
+                                </date-picker>
+
+                                <input type="text" class="form-control" v-show="false"
+                                       :class="submitted && serverErrors.start_date ? 'is-invalid': ''"/>
+
+                                <div v-if="submitted && serverErrors.start_date"
+                                     class="invalid-feedback">
+                                    <template v-for="error in serverErrors.start_date">{{ error }}</template>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="start_time">Hora de Inicio</label>
+
+                                <date-picker id="start_time" name="start_time" v-model="defaultTime"
+                                             style="width: 300px; display: block;" :lang="timePicker.langTime"
+                                             type="time"
+                                             :format="timePicker.time" confirm confirm-text="Confirmar">
+                                </date-picker>
+
+                                <div v-if="submitted && serverErrors.start_time"
+                                     class="invalid-feedback">
+                                    <template v-for="error in serverErrors.start_time">{{ error }}</template>
                                 </div>
                             </div>
 
@@ -172,7 +172,7 @@
             </div>
         </ye-modal>
 
-        <notifications group="create_request_service"/>
+        <notifications group="create_request_service" position="bottom right"/>
     </box-user>
 </template>
 

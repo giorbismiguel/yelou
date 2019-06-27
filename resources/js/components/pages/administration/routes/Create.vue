@@ -68,7 +68,7 @@
             </div>
         </div>
 
-        <notifications group="create_route"/>
+        <notifications group="create_route" position="bottom right"/>
     </box-user>
 </template>
 

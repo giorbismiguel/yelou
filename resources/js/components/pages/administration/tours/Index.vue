@@ -56,7 +56,7 @@
             </div>
         </div>
 
-        <notifications group="index_request_services"/>
+        <notifications group="index_request_services" position="bottom right"/>
     </box-user>
 </template>
 

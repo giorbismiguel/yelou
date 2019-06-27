@@ -86,7 +86,7 @@
             </div>
         </div>
 
-        <notifications group="reset_password"/>
+        <notifications group="reset_password" position="bottom right"/>
     </box-user>
 </template>
 

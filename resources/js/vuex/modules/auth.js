@@ -157,14 +157,13 @@ const actions = {
 
         return new Promise((resolve, reject) => {
             axios.post('/api/v1/auth/register', form)
-                .then(
-                    response => {
-                        const accessToken = response.data.access_token
-                        localStorage.setItem('access_token', accessToken)
+                .then(response => {
+                    const accessToken = response.data.access_token
+                    localStorage.setItem('access_token', accessToken)
 
-                        commit('REGISTER_OK', response.data.user)
-                        resolve()
-                    })
+                    commit('REGISTER_OK', response.data.user)
+                    resolve()
+                })
                 .catch(error => {
                     commit('REGISTER_FAIL')
                     reject(error.response.data)
@@ -173,8 +172,6 @@ const actions = {
     },
 
     updateProfile({commit, dispatch}, form) {
-        //commit('UPDATE_PROFILE')
-
         return new Promise((resolve, reject) => {
             axios.post(route('api.users.update', form.get('id')), form)
                 .then(({data: {data}}) => {
@@ -182,8 +179,7 @@ const actions = {
                     resolve()
                 })
                 .catch(error => {
-                    console.log(error)
-                    //commit('UPDATE_PROFILE_FAIL')
+                    commit('UPDATE_PROFILE_FAIL')
                     reject(error.response.data)
                 })
         })

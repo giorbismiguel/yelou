@@ -94,7 +94,7 @@
             </div>
         </ye-modal>
 
-        <notifications group="index_requested_services"/>
+        <notifications group="index_requested_services" position="bottom right"/>
     </box-user>
 </template>
 
