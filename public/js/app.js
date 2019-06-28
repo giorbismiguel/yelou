@@ -66405,7 +66405,7 @@ var render = function() {
                         draggable: true
                       },
                       on: {
-                        drag: _vm.updateCoordinates,
+                        dragend: _vm.updateCoordinates,
                         click: function($event) {
                           _vm.centerMarker = m.position
                         }

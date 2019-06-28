@@ -152,7 +152,7 @@
                     <GmapMap :center="centerMarker" :zoom="15" style="width: 100%; height: 70vh;">
                         <GmapMarker v-for="(m, index) in markers"
                                     :position="m.position"
-                                    @drag="updateCoordinates"
+                                    @dragend="updateCoordinates"
                                     :clickable="true" :draggable="true"
                                     @click="centerMarker=m.position"
                                     :key="index">
@@ -160,7 +160,7 @@
                     </GmapMap>
 
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
+                        <div class="input-group-prepend">{
                             <span class="input-group-text" id="adddresFormat">
                                 <i class="fas fa-search-location"></i>
                             </span>
