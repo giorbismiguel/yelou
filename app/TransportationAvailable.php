@@ -52,7 +52,7 @@ class TransportationAvailable extends Model
         'lat'     => 'required|numeric',
         'lng'     => 'required|numeric',
         'active'  => 'required|boolean',
-        'user_id' => 'required|integer|unique:transportation_availables'
+        'user_id' => 'required|integer'
     ];
 
     /* ========================================================================= *\

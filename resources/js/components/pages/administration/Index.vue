@@ -52,6 +52,11 @@
         <template v-else>
             <h3>Administración</h3>
             <hr>
+
+            <div class="d-flex justify-content-end">
+                <toggle-button @change="onChangeStatusDriver" :labels="{checked: 'Activo', unchecked: 'Inactivo'}"
+                               :width="85" :height="30" :value="stateDriver" :sync="stateDriver"/>
+            </div>
         </template>
 
     </box-user>
@@ -80,20 +85,22 @@
                         height: -35
                     }
                 },
-                latLngClient: {lat: -0.180653, lng: -78.467834}
+                latLngClient: {lat: -0.180653, lng: -78.467834},
+                stateDriver: false
             }
         },
 
         computed: {
             ...mapState({
                 markers: drivers => drivers.driversAvailables.markers,
-                me: state => state.auth.me,
+                me: state => state.auth.me
             })
         },
 
         methods: {
             ...mapActions([
                 'getDriversAvailable',
+                'activeDriverService'
             ]),
 
             toggleInfoWindow: function (marker, idx) {
@@ -119,6 +126,22 @@
                 this.latLngClient = location
             },
 
+            onChangeStatusDriver(event) {
+                let form = {
+                    lat: this.latLngClient.lat,
+                    lng: this.latLngClient.lng,
+                    user_id: this.me.id,
+                    active: event.value ? 1 : 0
+                }
+
+                this.activeDriverService(form)
+                    .then(() => {
+
+                    })
+                    .catch(() => {
+
+                    })
+            }
         },
 
         components: {
@@ -131,8 +154,11 @@
         },
 
         mounted() {
+
             if (this.me.type === 1) {
                 this.getDriversAvailable();
+            } else {
+                this.stateDriver = this.me.transportation_available.active
             }
         }
     }

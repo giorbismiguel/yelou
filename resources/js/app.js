@@ -9,6 +9,7 @@ import vSelect from 'vue-select'
 import VuePhoneNumberInput from 'vue-phone-number-input';
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
+import { ToggleButton } from 'vue-js-toggle-button'
 
 Vue.use(VueGoogleMaps, {
     load: {
@@ -48,6 +49,7 @@ Vue.component('ye-actions', require('./components/modules/Actions').default);
 Vue.component('ye-table', require('./components/modules/simple-table').default);
 Vue.component('ye-modal', require('./components/modules/modal.vue').default);
 Vue.component('ye-select', vSelect)
+Vue.component('ToggleButton', ToggleButton)
 
 import App from './components/App'
 

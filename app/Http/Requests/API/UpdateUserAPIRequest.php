@@ -3,7 +3,6 @@
 namespace App\Http\Requests\API;
 
 use App\Exceptions\AuthenticationException;
-use App\User;
 use Illuminate\Validation\Rule;
 use InfyOm\Generator\Request\APIRequest;
 

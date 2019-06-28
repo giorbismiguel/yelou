@@ -2,6 +2,7 @@ import axios from 'axios'
 
 const state = {
     markers: [],
+    update_driver_available: null,
 }
 
 const actions = {
@@ -29,11 +30,33 @@ const actions = {
                 })
         })
     },
+
+    activeDriverService({commit, dispatch}, form) {
+        return new Promise((resolve, reject) => {
+            axios.post(route('api.transportation_availables.store', form))
+                .then(response => {
+                    commit('UPDATE_DRIVERS_AVAILABLE_OK', response)
+                    resolve(success)
+                })
+                .catch(error => {
+                    commit('UPDATE_DRIVERS_AVAILABLE_FAIL')
+                    reject(error)
+                })
+        })
+    }
 }
 
 const mutations = {
     GET_DRIVERS_AVAILABLE_OK(state, markers) {
         state.markers = markers
+    },
+
+    UPDATE_DRIVERS_AVAILABLE_OK(data) {
+        state.update_driver_available = data
+    },
+
+    UPDATE_DRIVERS_AVAILABLE_FAIL() {
+        state.update_driver_available = null
     }
 };
 

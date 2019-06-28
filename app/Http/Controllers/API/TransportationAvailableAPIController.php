@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Illuminate\Support\Facades\Cache;
+use Mockery\Exception;
 use Response;
 
 /**
@@ -97,15 +98,21 @@ class TransportationAvailableAPIController extends AppBaseController
     /**
      * @param CreateTransportationAvailableAPIRequest $request
      * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(CreateTransportationAvailableAPIRequest $request)
     {
         $input = $request->all();
 
-        $transportationAvailable = $this->transportationAvailableRepository->create($input);
+        $transportationAvailable = $this->transportationAvailableRepository->makeModel()->updateOrInsert(
+            ['user_id' => $input['user_id']],
+            ['lat' => $input['lng'], 'lng' => $input['lng'], 'active' => $input['active']],
+        );
 
-        return $this->sendResponse($transportationAvailable->toArray(),
-            'Punto de disponibilidad del transportista creado');
+        return $this->sendResponse(
+            $transportationAvailable,
+            'Punto de disponibilidad del transportista actualizado'
+        );
     }
 
     /**
