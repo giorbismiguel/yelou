@@ -322,6 +322,30 @@
                             </template>
 
                             <div class="form-group">
+                                <div class="col">
+                                    <div class="custom-control custom-checkbox">
+                                        <input v-model="form.term_condition" type="checkbox"
+                                               class="custom-control-input" v-validate="'required'"
+                                               data-vv-as="Términos y condiciones" name="term_condition"
+                                               id="term_condition"
+                                               :class="{ 'is-invalid': submitted && (errors.has('term_condition')  || serverErrors.term_condition)}"/>
+                                        <label class="custom-control-label" for="term_condition">
+                                            <router-link :to="{ name: 'term_condition' }" target="_blank">
+                                                Términos y condiciones
+                                            </router-link>
+                                        </label>
+                                    </div>
+                                    <input type="text" class="form-control" v-show="false"
+                                           :class="submitted && (errors.has('term_condition') || serverErrors.term_condition) ? 'is-invalid': ''"/>
+
+                                    <div v-if="submitted && (errors.has('term_condition') || serverErrors.term_condition)"
+                                         class="invalid-feedback">
+                                        {{ errors.first('term_condition') }}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <div class="col d-flex justify-content-start">
                                     <router-link :to="{ name: 'login' }" tag="button" class="btn btn-cancel">
                                         Cancelar
@@ -369,6 +393,7 @@
                     image_driver_license: null,
                     image_permit_circulation: null,
                     image_certificate_background: null,
+                    term_condition: null
                 },
                 selectedPhoto: null,
                 imageDriveLicense: null,
@@ -435,6 +460,7 @@
                         this.loading = true
                         let formData, key
                         this.form.birth_date = DatePicker.fecha.format(new Date(this.form.birth_date), 'DD/MM/YYYY')
+                        this.form.term_condition = this.form.term_condition ? 1 : 0
 
                         if (!this.isClient()) {
                             formData = new FormData()

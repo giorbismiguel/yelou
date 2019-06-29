@@ -39,6 +39,7 @@ class User extends Authenticatable
         'image_certificate_background',
         'phone_verified_at',
         'code_activation',
+        'term_condition',
     ];
 
     /**

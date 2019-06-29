@@ -7,6 +7,7 @@ Vue.use(VueRouter)
 import Home from './components/pages/Home'
 
 import Register from './components/pages/auth/Register'
+import TermCondition from './components/pages/auth/TermCondition';
 import SelectRegister from './components/pages/auth/SelectRegister'
 import Login from './components/pages/auth/Login'
 import RenewPassword from './components/pages/auth/RenewPassword'
@@ -48,6 +49,9 @@ const routes = [
     },
     {
         path: '/registrarse/:type', name: 'register', component: Register
+    },
+    {
+        path: '/terminos-condiciones', name: 'term_condition', component: TermCondition
     },
     {
         path: '/verificar/codigo', name: 'verify_phone', component: VerifyPhone

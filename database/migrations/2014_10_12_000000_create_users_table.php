@@ -44,6 +44,7 @@ class CreateUsersTable extends Migration
             $table->string('image_permit_circulation')->nullable();
             $table->string('image_certificate_background')->nullable()->default(null);
             $table->string('code_activation', 6)->nullable();
+            $table->boolean('term_condition')->default(0);
 
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('phone_verified_at')->nullable();

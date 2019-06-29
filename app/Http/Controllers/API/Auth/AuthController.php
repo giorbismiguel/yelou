@@ -91,13 +91,13 @@ class AuthController extends Controller
         $request = $request->merge(['code_activation' => $codeActivation]);
         event(new Registered($user = $this->create($request->all())));
 
-        $user->notify(new UserRegistered($codeActivation));
-
-        Nexmo::message()->send([
-            'to'   => $request->get('phone'),
-            'from' => 'YElOU',
-            'text' => __('app.message_code_activation', ['code' => $codeActivation])
-        ]);
+//        $user->notify(new UserRegistered($codeActivation));
+//
+//        Nexmo::message()->send([
+//            'to'   => $request->get('phone'),
+//            'from' => 'YElOU',
+//            'text' => __('app.message_code_activation', ['code' => $codeActivation])
+//        ]);
 
         $message = 'Para la activación  de su cuenta se enviará un código';
         $message .= ' al celular, por favor verifique los datos para registrarse.';
@@ -163,27 +163,29 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         $rules = [
-            'name'       => 'required|max:191',
-            'email'      => 'required|email|max:191|unique:users',
-            'password'   => 'required|min:6|max:18|confirmed',
-            'first_name' => 'required|max:191',
-            'last_name'  => 'required|max:191',
-            'birth_date' => 'required|date_format:d/m/Y',
-            'phone'      => 'required|max:191|unique:users',
-            'ruc'        => 'required|max:191',
-            'direction'  => 'nullable|max:191',
+            'name'           => 'required|max:191',
+            'email'          => 'required|email|max:191|unique:users',
+            'password'       => 'required|min:6|max:18|confirmed',
+            'first_name'     => 'required|max:191',
+            'last_name'      => 'required|max:191',
+            'birth_date'     => 'required|date_format:d/m/Y',
+            'phone'          => 'required|max:191|unique:users',
+            'ruc'            => 'required|max:191',
+            'direction'      => 'nullable|max:191',
+            'term_condition' => 'accepted',
         ];
 
         $customAttributes = [
-            'name'       => 'Nombre de usuario',
-            'email'      => 'Correo electrónico',
-            'password'   => 'Contraseña',
-            'first_name' => 'Nombre ',
-            'last_name'  => 'Apellido ',
-            'birth_date' => 'Fecha de nacimiento',
-            'phone'      => 'Teléfono',
-            'ruc'        => 'RUC',
-            'direction'  => 'Dirección',
+            'name'           => 'Nombre de usuario',
+            'email'          => 'Correo electrónico',
+            'password'       => 'Contraseña',
+            'first_name'     => 'Nombre ',
+            'last_name'      => 'Apellido ',
+            'birth_date'     => 'Fecha de nacimiento',
+            'phone'          => 'Teléfono',
+            'ruc'            => 'RUC',
+            'direction'      => 'Dirección',
+            'term_condition' => 'Términos y condiciones',
         ];
 
         if ((int) request()->get('type') === \UserTypes::CLIENT) {
@@ -244,6 +246,7 @@ class AuthController extends Controller
             'image_driver_license'         => $data['image_driver_license_name'] ?? null,
             'image_permit_circulation'     => $data['image_permit_circulation_name'] ?? null,
             'image_certificate_background' => $data['image_certificate_background_name'] ?? null,
+            'term_condition'               => $data['term_condition'],
         ]);
     }
 

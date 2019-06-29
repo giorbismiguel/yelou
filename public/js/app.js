@@ -5830,6 +5830,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5855,7 +5879,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         photo: null,
         image_driver_license: null,
         image_permit_circulation: null,
-        image_certificate_background: null
+        image_certificate_background: null,
+        term_condition: null
       },
       selectedPhoto: null,
       imageDriveLicense: null,
@@ -5915,6 +5940,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.loading = true;
           var formData, key;
           _this.form.birth_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.form.birth_date), 'DD/MM/YYYY');
+          _this.form.term_condition = _this.form.term_condition ? 1 : 0;
 
           if (!_this.isClient()) {
             formData = new FormData();
@@ -6600,6 +6626,45 @@ __webpack_require__.r(__webpack_exports__);
   name: "SelectRegister",
   components: {
     RegisterAs: _RegisterAs__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/TermCondition.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/auth/TermCondition.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _administration_layout_header_form__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../administration/layout/header_form */ "./resources/js/components/pages/administration/layout/header_form.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "TermCondition",
+  components: {
+    HeaderForm: _administration_layout_header_form__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -67072,6 +67137,85 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: !_vm.form.route_id,
+                              expression: "!form.route_id"
+                            }
+                          ],
+                          staticClass: "form-group"
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "custom-control custom-checkbox" },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.form.favourite,
+                                    expression: "form.favourite"
+                                  }
+                                ],
+                                staticClass: "custom-control-input",
+                                attrs: { type: "checkbox", id: "favourite" },
+                                domProps: {
+                                  checked: Array.isArray(_vm.form.favourite)
+                                    ? _vm._i(_vm.form.favourite, null) > -1
+                                    : _vm.form.favourite
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a = _vm.form.favourite,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.form,
+                                            "favourite",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.form,
+                                            "favourite",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(_vm.form, "favourite", $$c)
+                                    }
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "custom-control-label",
+                                  attrs: { for: "favourite" }
+                                },
+                                [_vm._v("Marcar como Favorita")]
+                              )
+                            ]
+                          )
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
                         { staticClass: "form-group" },
                         [
                           _c("label", { attrs: { for: "start_date" } }, [
@@ -67188,85 +67332,6 @@ var render = function() {
                             : _vm._e()
                         ],
                         1
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: !_vm.form.route_id,
-                              expression: "!form.route_id"
-                            }
-                          ],
-                          staticClass: "form-group"
-                        },
-                        [
-                          _c(
-                            "div",
-                            { staticClass: "custom-control custom-checkbox" },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.form.favourite,
-                                    expression: "form.favourite"
-                                  }
-                                ],
-                                staticClass: "custom-control-input",
-                                attrs: { type: "checkbox", id: "favourite" },
-                                domProps: {
-                                  checked: Array.isArray(_vm.form.favourite)
-                                    ? _vm._i(_vm.form.favourite, null) > -1
-                                    : _vm.form.favourite
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$a = _vm.form.favourite,
-                                      $$el = $event.target,
-                                      $$c = $$el.checked ? true : false
-                                    if (Array.isArray($$a)) {
-                                      var $$v = null,
-                                        $$i = _vm._i($$a, $$v)
-                                      if ($$el.checked) {
-                                        $$i < 0 &&
-                                          _vm.$set(
-                                            _vm.form,
-                                            "favourite",
-                                            $$a.concat([$$v])
-                                          )
-                                      } else {
-                                        $$i > -1 &&
-                                          _vm.$set(
-                                            _vm.form,
-                                            "favourite",
-                                            $$a
-                                              .slice(0, $$i)
-                                              .concat($$a.slice($$i + 1))
-                                          )
-                                      }
-                                    } else {
-                                      _vm.$set(_vm.form, "favourite", $$c)
-                                    }
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "custom-control-label",
-                                  attrs: { for: "favourite" }
-                                },
-                                [_vm._v("Marcar como Favorita")]
-                              )
-                            ]
-                          )
-                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -69512,6 +69577,137 @@ var render = function() {
                     ],
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "col" }, [
+                    _c(
+                      "div",
+                      { staticClass: "custom-control custom-checkbox" },
+                      [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.form.term_condition,
+                              expression: "form.term_condition"
+                            },
+                            {
+                              name: "validate",
+                              rawName: "v-validate",
+                              value: "required",
+                              expression: "'required'"
+                            }
+                          ],
+                          staticClass: "custom-control-input",
+                          class: {
+                            "is-invalid":
+                              _vm.submitted &&
+                              (_vm.errors.has("term_condition") ||
+                                _vm.serverErrors.term_condition)
+                          },
+                          attrs: {
+                            type: "checkbox",
+                            "data-vv-as": "Términos y condiciones",
+                            name: "term_condition",
+                            id: "term_condition"
+                          },
+                          domProps: {
+                            checked: Array.isArray(_vm.form.term_condition)
+                              ? _vm._i(_vm.form.term_condition, null) > -1
+                              : _vm.form.term_condition
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.form.term_condition,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.form,
+                                      "term_condition",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.form,
+                                      "term_condition",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.form, "term_condition", $$c)
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "custom-control-label",
+                            attrs: { for: "term_condition" }
+                          },
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to: { name: "term_condition" },
+                                  target: "_blank"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                            Términos y condiciones\n                                        "
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: false,
+                          expression: "false"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class:
+                        _vm.submitted &&
+                        (_vm.errors.has("term_condition") ||
+                          _vm.serverErrors.term_condition)
+                          ? "is-invalid"
+                          : "",
+                      attrs: { type: "text" }
+                    }),
+                    _vm._v(" "),
+                    _vm.submitted &&
+                    (_vm.errors.has("term_condition") ||
+                      _vm.serverErrors.term_condition)
+                      ? _c("div", { staticClass: "invalid-feedback" }, [
+                          _vm._v(
+                            "\n                                    " +
+                              _vm._s(_vm.errors.first("term_condition")) +
+                              "\n                                "
+                          )
+                        ])
+                      : _vm._e()
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
                   _c(
                     "div",
                     { staticClass: "col d-flex justify-content-start" },
@@ -70692,6 +70888,54 @@ var render = function() {
   return _c("div", { staticClass: "container" }, [_c("register-as")], 1)
 }
 var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/auth/TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-12" },
+        [_c("header-form", [_vm._v("Términos y condiciones")])],
+        1
+      ),
+      _vm._v(" "),
+      _vm._m(0)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col" }, [
+      _c("p", [
+        _vm._v(
+          "\n                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna\n                aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.\n                Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint\n                occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum\n            "
+        )
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -105424,6 +105668,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/pages/auth/TermCondition.vue":
+/*!**************************************************************!*\
+  !*** ./resources/js/components/pages/auth/TermCondition.vue ***!
+  \**************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _TermCondition_vue_vue_type_template_id_7e8b1bbe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true& */ "./resources/js/components/pages/auth/TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true&");
+/* harmony import */ var _TermCondition_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./TermCondition.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/auth/TermCondition.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _TermCondition_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _TermCondition_vue_vue_type_template_id_7e8b1bbe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _TermCondition_vue_vue_type_template_id_7e8b1bbe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "7e8b1bbe",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/pages/auth/TermCondition.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/auth/TermCondition.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/pages/auth/TermCondition.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TermCondition_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TermCondition.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/TermCondition.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_TermCondition_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/auth/TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true&":
+/*!*********************************************************************************************************!*\
+  !*** ./resources/js/components/pages/auth/TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true& ***!
+  \*********************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TermCondition_vue_vue_type_template_id_7e8b1bbe_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/auth/TermCondition.vue?vue&type=template&id=7e8b1bbe&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TermCondition_vue_vue_type_template_id_7e8b1bbe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_TermCondition_vue_vue_type_template_id_7e8b1bbe_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/components/pages/auth/VerifyPhone.vue":
 /*!************************************************************!*\
   !*** ./resources/js/components/pages/auth/VerifyPhone.vue ***!
@@ -105900,27 +106213,29 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _vuex_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vuex/store */ "./resources/js/vuex/store.js");
 /* harmony import */ var _components_pages_Home__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/pages/Home */ "./resources/js/components/pages/Home.vue");
 /* harmony import */ var _components_pages_auth_Register__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/pages/auth/Register */ "./resources/js/components/pages/auth/Register.vue");
-/* harmony import */ var _components_pages_auth_SelectRegister__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/auth/SelectRegister */ "./resources/js/components/pages/auth/SelectRegister.vue");
-/* harmony import */ var _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/auth/Login */ "./resources/js/components/pages/auth/Login.vue");
-/* harmony import */ var _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/auth/RenewPassword */ "./resources/js/components/pages/auth/RenewPassword.vue");
-/* harmony import */ var _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/auth/ResetPasswordCreate */ "./resources/js/components/pages/auth/ResetPasswordCreate.vue");
-/* harmony import */ var _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/auth/VerifyPhone */ "./resources/js/components/pages/auth/VerifyPhone.vue");
-/* harmony import */ var _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/auth/NewCode */ "./resources/js/components/pages/auth/NewCode.vue");
-/* harmony import */ var _components_pages_auth_ResetPassword__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/pages/auth/ResetPassword */ "./resources/js/components/pages/auth/ResetPassword.vue");
-/* harmony import */ var _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/pages/profile/Profile */ "./resources/js/components/pages/profile/Profile.vue");
-/* harmony import */ var _components_pages_administration_Index__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/pages/administration/Index */ "./resources/js/components/pages/administration/Index.vue");
-/* harmony import */ var _components_pages_administration_services_Index__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/pages/administration/services/Index */ "./resources/js/components/pages/administration/services/Index.vue");
-/* harmony import */ var _components_pages_administration_services_Create__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/pages/administration/services/Create */ "./resources/js/components/pages/administration/services/Create.vue");
-/* harmony import */ var _components_pages_administration_services_Accept__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/pages/administration/services/Accept */ "./resources/js/components/pages/administration/services/Accept.vue");
-/* harmony import */ var _components_pages_administration_routes_Index__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/pages/administration/routes/Index */ "./resources/js/components/pages/administration/routes/Index.vue");
-/* harmony import */ var _components_pages_administration_routes_Create__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/pages/administration/routes/Create */ "./resources/js/components/pages/administration/routes/Create.vue");
-/* harmony import */ var _components_pages_administration_routes_Edit__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/pages/administration/routes/Edit */ "./resources/js/components/pages/administration/routes/Edit.vue");
-/* harmony import */ var _components_pages_administration_tours_Index__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/pages/administration/tours/Index */ "./resources/js/components/pages/administration/tours/Index.vue");
-/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
+/* harmony import */ var _components_pages_auth_TermCondition__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/pages/auth/TermCondition */ "./resources/js/components/pages/auth/TermCondition.vue");
+/* harmony import */ var _components_pages_auth_SelectRegister__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/pages/auth/SelectRegister */ "./resources/js/components/pages/auth/SelectRegister.vue");
+/* harmony import */ var _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/pages/auth/Login */ "./resources/js/components/pages/auth/Login.vue");
+/* harmony import */ var _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/pages/auth/RenewPassword */ "./resources/js/components/pages/auth/RenewPassword.vue");
+/* harmony import */ var _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/pages/auth/ResetPasswordCreate */ "./resources/js/components/pages/auth/ResetPasswordCreate.vue");
+/* harmony import */ var _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/pages/auth/VerifyPhone */ "./resources/js/components/pages/auth/VerifyPhone.vue");
+/* harmony import */ var _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/pages/auth/NewCode */ "./resources/js/components/pages/auth/NewCode.vue");
+/* harmony import */ var _components_pages_auth_ResetPassword__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/pages/auth/ResetPassword */ "./resources/js/components/pages/auth/ResetPassword.vue");
+/* harmony import */ var _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/pages/profile/Profile */ "./resources/js/components/pages/profile/Profile.vue");
+/* harmony import */ var _components_pages_administration_Index__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/pages/administration/Index */ "./resources/js/components/pages/administration/Index.vue");
+/* harmony import */ var _components_pages_administration_services_Index__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/pages/administration/services/Index */ "./resources/js/components/pages/administration/services/Index.vue");
+/* harmony import */ var _components_pages_administration_services_Create__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/pages/administration/services/Create */ "./resources/js/components/pages/administration/services/Create.vue");
+/* harmony import */ var _components_pages_administration_services_Accept__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./components/pages/administration/services/Accept */ "./resources/js/components/pages/administration/services/Accept.vue");
+/* harmony import */ var _components_pages_administration_routes_Index__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./components/pages/administration/routes/Index */ "./resources/js/components/pages/administration/routes/Index.vue");
+/* harmony import */ var _components_pages_administration_routes_Create__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/pages/administration/routes/Create */ "./resources/js/components/pages/administration/routes/Create.vue");
+/* harmony import */ var _components_pages_administration_routes_Edit__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/pages/administration/routes/Edit */ "./resources/js/components/pages/administration/routes/Edit.vue");
+/* harmony import */ var _components_pages_administration_tours_Index__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./components/pages/administration/tours/Index */ "./resources/js/components/pages/administration/tours/Index.vue");
+/* harmony import */ var _components_NotFound__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/NotFound */ "./resources/js/components/NotFound.vue");
 
 
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+
 
 
 
@@ -105947,100 +106262,104 @@ var routes = [{
 }, {
   path: '/entrar',
   name: 'login',
-  component: _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_pages_auth_Login__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
   path: '/restabler/clave',
   name: 'restabler_clave',
-  component: _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_pages_auth_ResetPasswordCreate__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: '/actualizar/clave/:token',
   name: 'actualizar_clave',
-  component: _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_pages_auth_RenewPassword__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: '/registrarse',
   name: 'register_as',
-  component: _components_pages_auth_SelectRegister__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_pages_auth_SelectRegister__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   path: '/registrarse/:type',
   name: 'register',
   component: _components_pages_auth_Register__WEBPACK_IMPORTED_MODULE_4__["default"]
 }, {
+  path: '/terminos-condiciones',
+  name: 'term_condition',
+  component: _components_pages_auth_TermCondition__WEBPACK_IMPORTED_MODULE_5__["default"]
+}, {
   path: '/verificar/codigo',
   name: 'verify_phone',
-  component: _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_pages_auth_VerifyPhone__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   path: '/codigo/nuevo',
   name: 'new_code',
-  component: _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_pages_auth_NewCode__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   path: '/cuenta',
   name: 'account',
-  component: _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_12__["default"],
+  component: _components_pages_profile_Profile__WEBPACK_IMPORTED_MODULE_13__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/cuenta/clave',
   name: 'reset_password',
-  component: _components_pages_auth_ResetPassword__WEBPACK_IMPORTED_MODULE_11__["default"],
+  component: _components_pages_auth_ResetPassword__WEBPACK_IMPORTED_MODULE_12__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/administracion',
   name: 'administration',
-  component: _components_pages_administration_Index__WEBPACK_IMPORTED_MODULE_13__["default"],
+  component: _components_pages_administration_Index__WEBPACK_IMPORTED_MODULE_14__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/servicios',
   name: 'services',
-  component: _components_pages_administration_services_Index__WEBPACK_IMPORTED_MODULE_14__["default"],
+  component: _components_pages_administration_services_Index__WEBPACK_IMPORTED_MODULE_15__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/servicios/adicionar',
   name: 'services_create',
-  component: _components_pages_administration_services_Create__WEBPACK_IMPORTED_MODULE_15__["default"],
+  component: _components_pages_administration_services_Create__WEBPACK_IMPORTED_MODULE_16__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/servicios/aceptar/:service/:driver',
-  component: _components_pages_administration_services_Accept__WEBPACK_IMPORTED_MODULE_16__["default"]
+  component: _components_pages_administration_services_Accept__WEBPACK_IMPORTED_MODULE_17__["default"]
 }, {
   path: '/rutas',
   name: 'routes',
-  component: _components_pages_administration_routes_Index__WEBPACK_IMPORTED_MODULE_17__["default"],
+  component: _components_pages_administration_routes_Index__WEBPACK_IMPORTED_MODULE_18__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/rutas/adicionar',
   name: 'routes_create',
-  component: _components_pages_administration_routes_Create__WEBPACK_IMPORTED_MODULE_18__["default"],
+  component: _components_pages_administration_routes_Create__WEBPACK_IMPORTED_MODULE_19__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/rutas/modificar/:id',
   name: 'routes_edit',
-  component: _components_pages_administration_routes_Edit__WEBPACK_IMPORTED_MODULE_19__["default"],
+  component: _components_pages_administration_routes_Edit__WEBPACK_IMPORTED_MODULE_20__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '/recorridos',
   name: 'tours',
-  component: _components_pages_administration_tours_Index__WEBPACK_IMPORTED_MODULE_20__["default"],
+  component: _components_pages_administration_tours_Index__WEBPACK_IMPORTED_MODULE_21__["default"],
   meta: {
     requiresAuth: true
   }
 }, {
   path: '*',
-  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_21__["default"]
+  component: _components_NotFound__WEBPACK_IMPORTED_MODULE_22__["default"]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
   routes: routes,

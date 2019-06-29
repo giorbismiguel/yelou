@@ -38,6 +38,7 @@ class UpdateUserAPIRequest extends APIRequest
             ],
             'first_name' => 'required|max:191',
             'last_name'  => 'required|max:191',
+            'birth_date' => 'required|date_format:d/m/Y',
             'phone'      => [
                 'required',
                 'max:191',
@@ -73,6 +74,7 @@ class UpdateUserAPIRequest extends APIRequest
             'email'                        => 'Correo electrónico',
             'first_name'                   => 'Nombre ',
             'last_name'                    => 'Apellido ',
+            'birth_date'                   => 'Fecha de nacimiento',
             'phone'                        => 'Teléfono',
             'ruc'                          => 'RUC',
             'direction'                    => 'Dirección',

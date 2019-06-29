@@ -66,6 +66,14 @@
                                 </div>
                             </div>
 
+                            <div class="form-group" v-show="!form.route_id">
+                                <div class="custom-control custom-checkbox">
+                                    <input v-model="form.favourite" type="checkbox" class="custom-control-input"
+                                           id="favourite"/>
+                                    <label class="custom-control-label" for="favourite">Marcar como Favorita</label>
+                                </div>
+                            </div>
+
                             <div class="form-group">
                                 <label for="start_date">Día<span class="text-primary">*</span></label>
 
@@ -98,14 +106,6 @@
                                 <div v-if="submitted && serverErrors.start_time"
                                      class="invalid-feedback">
                                     <template v-for="error in serverErrors.start_time">{{ error }}</template>
-                                </div>
-                            </div>
-
-                            <div class="form-group" v-show="!form.route_id">
-                                <div class="custom-control custom-checkbox">
-                                    <input v-model="form.favourite" type="checkbox" class="custom-control-input"
-                                           id="favourite"/>
-                                    <label class="custom-control-label" for="favourite">Marcar como Favorita</label>
                                 </div>
                             </div>
 
