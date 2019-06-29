@@ -106,7 +106,7 @@ class TransportationAvailableAPIController extends AppBaseController
 
         $transportationAvailable = $this->transportationAvailableRepository->makeModel()->updateOrInsert(
             ['user_id' => $input['user_id']],
-            ['lat' => $input['lng'], 'lng' => $input['lng'], 'active' => $input['active']]
+            ['lat' => $input['lat'], 'lng' => $input['lng'], 'active' => $input['active']]
         );
 
         return $this->sendResponse(

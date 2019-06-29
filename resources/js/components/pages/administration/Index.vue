@@ -42,7 +42,7 @@
                                 v-for="(m, index) in markers"
                                 :position="m.position"
                                 :clickable="true"
-                                @click="toggleInfoWindow(m,i)"
+                                @click="toggleInfoWindow(m,index)"
                         />
                     </GmapMap>
                 </div>
@@ -135,12 +135,6 @@
                 }
 
                 this.activeDriverService(form)
-                    .then(() => {
-
-                    })
-                    .catch(() => {
-
-                    })
             }
         },
 
@@ -154,16 +148,11 @@
         },
 
         mounted() {
-
             if (this.me.type === 1) {
                 this.getDriversAvailable();
             } else {
-                this.stateDriver = this.me.transportation_available.active
+                this.stateDriver = this.me ? this.me.transportation_available.active : false
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>

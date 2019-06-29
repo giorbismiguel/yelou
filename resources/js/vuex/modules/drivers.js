@@ -36,7 +36,7 @@ const actions = {
             axios.post(route('api.transportation_availables.store', form))
                 .then(response => {
                     commit('UPDATE_DRIVERS_AVAILABLE_OK', response)
-                    resolve(success)
+                    resolve(response)
                 })
                 .catch(error => {
                     commit('UPDATE_DRIVERS_AVAILABLE_FAIL')
