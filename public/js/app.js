@@ -4396,6 +4396,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -66395,7 +66398,11 @@ var render = function() {
                           "router-link",
                           {
                             staticClass: "btn btn-cancel",
-                            attrs: { to: { name: "routes" }, tag: "button" }
+                            attrs: {
+                              to: { name: "routes" },
+                              tag: "button",
+                              type: "button"
+                            }
                           },
                           [
                             _vm._v(
@@ -66408,7 +66415,24 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-accept ml-4",
-                            attrs: { type: "submit", disabled: _vm.loading }
+                            attrs: { type: "submit", disabled: _vm.loading },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.onSubmit($event)
+                              }
+                            }
                           },
                           [
                             _vm._v(
@@ -66660,7 +66684,8 @@ var render = function() {
                                   staticClass: "btn btn-cancel",
                                   attrs: {
                                     to: { name: "routes" },
-                                    tag: "button"
+                                    tag: "button",
+                                    type: "button"
                                   }
                                 },
                                 [
@@ -66677,6 +66702,23 @@ var render = function() {
                                   attrs: {
                                     type: "submit",
                                     disabled: _vm.loading
+                                  },
+                                  on: {
+                                    keyup: function($event) {
+                                      if (
+                                        !$event.type.indexOf("key") &&
+                                        _vm._k(
+                                          $event.keyCode,
+                                          "enter",
+                                          13,
+                                          $event.key,
+                                          "Enter"
+                                        )
+                                      ) {
+                                        return null
+                                      }
+                                      return _vm.onSubmit($event)
+                                    }
                                   }
                                 },
                                 [
@@ -67402,7 +67444,8 @@ var render = function() {
                                 staticClass: "btn btn-cancel mr-4",
                                 attrs: {
                                   to: { name: "services" },
-                                  tag: "button"
+                                  tag: "button",
+                                  type: "button"
                                 }
                               },
                               [
@@ -67416,7 +67459,27 @@ var render = function() {
                               "button",
                               {
                                 staticClass: "btn btn-accept ml-4",
-                                attrs: { type: "submit", disabled: _vm.loading }
+                                attrs: {
+                                  type: "submit",
+                                  disabled: _vm.loading
+                                },
+                                on: {
+                                  keyup: function($event) {
+                                    if (
+                                      !$event.type.indexOf("key") &&
+                                      _vm._k(
+                                        $event.keyCode,
+                                        "enter",
+                                        13,
+                                        $event.key,
+                                        "Enter"
+                                      )
+                                    ) {
+                                      return null
+                                    }
+                                    return _vm.onSubmit($event)
+                                  }
+                                }
                               },
                               [
                                 _vm._v(
@@ -68219,7 +68282,24 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-accept",
-                          attrs: { type: "submit", disabled: _vm.loading }
+                          attrs: { type: "submit", disabled: _vm.loading },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.onSubmit($event)
+                            }
+                          }
                         },
                         [
                           _vm._v(
@@ -68421,7 +68501,11 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "btn btn-cancel",
-                          attrs: { to: { name: "home" }, tag: "button" }
+                          attrs: {
+                            to: { name: "home" },
+                            tag: "button",
+                            type: "button"
+                          }
                         },
                         [
                           _vm._v(
@@ -68434,7 +68518,24 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-accept mr-4",
-                          attrs: { type: "submit", disabled: _vm.loading }
+                          attrs: { type: "submit", disabled: _vm.loading },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.onSubmit($event)
+                            }
+                          }
                         },
                         [
                           _vm._v(
@@ -69730,7 +69831,11 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "btn btn-cancel",
-                          attrs: { to: { name: "login" }, tag: "button" }
+                          attrs: {
+                            to: { name: "login" },
+                            tag: "button",
+                            type: "button"
+                          }
                         },
                         [
                           _vm._v(
@@ -69743,7 +69848,24 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-accept ml-4",
-                          attrs: { type: "submit", disabled: _vm.loading }
+                          attrs: { type: "submit", disabled: _vm.loading },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.onSubmit($event)
+                            }
+                          }
                         },
                         [
                           _vm._v(
@@ -70238,7 +70360,24 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-accept",
-                          attrs: { type: "submit", disabled: _vm.loading }
+                          attrs: { type: "submit", disabled: _vm.loading },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.onSubmit($event)
+                            }
+                          }
                         },
                         [
                           _vm._v(
@@ -70627,7 +70766,8 @@ var render = function() {
                             staticClass: "btn btn-cancel mr-3",
                             attrs: {
                               to: { name: "administration" },
-                              tag: "button"
+                              tag: "button",
+                              type: "button"
                             }
                           },
                           [
@@ -70641,7 +70781,24 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-accept mr-2",
-                            attrs: { type: "submit", disabled: _vm.loading }
+                            attrs: { type: "submit", disabled: _vm.loading },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.onSubmit($event)
+                              }
+                            }
                           },
                           [
                             _vm._v(
@@ -70815,7 +70972,8 @@ var render = function() {
                           staticClass: "btn btn-cancel mr-3",
                           attrs: {
                             to: { name: "administration" },
-                            tag: "button"
+                            tag: "button",
+                            type: "button"
                           }
                         },
                         [
@@ -70829,7 +70987,24 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-accept mr-2",
-                          attrs: { type: "submit", disabled: _vm.loading }
+                          attrs: { type: "submit", disabled: _vm.loading },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.onSubmit($event)
+                            }
+                          }
                         },
                         [
                           _vm._v(
@@ -71122,7 +71297,11 @@ var render = function() {
                         "router-link",
                         {
                           staticClass: "btn btn-cancel",
-                          attrs: { to: { name: "home" }, tag: "button" }
+                          attrs: {
+                            to: { name: "home" },
+                            tag: "button",
+                            type: "button"
+                          }
                         },
                         [
                           _vm._v(
@@ -71135,7 +71314,24 @@ var render = function() {
                         "button",
                         {
                           staticClass: "btn btn-accept ml-4",
-                          attrs: { type: "submit", disabled: _vm.loading }
+                          attrs: { type: "submit", disabled: _vm.loading },
+                          on: {
+                            keyup: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return _vm.onSubmit($event)
+                            }
+                          }
                         },
                         [
                           _vm._v(
@@ -72577,7 +72773,8 @@ var render = function() {
                             staticClass: "btn btn-cancel",
                             attrs: {
                               to: { name: "administration" },
-                              tag: "button"
+                              tag: "button",
+                              type: "button"
                             }
                           },
                           [
@@ -72591,7 +72788,24 @@ var render = function() {
                           "button",
                           {
                             staticClass: "btn btn-accept ml-4",
-                            attrs: { type: "submit", disabled: _vm.loading }
+                            attrs: { type: "submit", disabled: _vm.loading },
+                            on: {
+                              keyup: function($event) {
+                                if (
+                                  !$event.type.indexOf("key") &&
+                                  _vm._k(
+                                    $event.keyCode,
+                                    "enter",
+                                    13,
+                                    $event.key,
+                                    "Enter"
+                                  )
+                                ) {
+                                  return null
+                                }
+                                return _vm.onSubmit($event)
+                              }
+                            }
                           },
                           [
                             _vm._v(

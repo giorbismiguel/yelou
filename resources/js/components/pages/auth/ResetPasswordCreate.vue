@@ -36,10 +36,10 @@
 
                             <div class="form-group mb-2">
                                 <div class="col d-flex justify-content-start">
-                                    <router-link :to="{ name: 'administration' }" tag="button" class="btn btn-cancel mr-3">
+                                    <router-link :to="{ name: 'administration' }" tag="button" type="button" class="btn btn-cancel mr-3">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-accept mr-2" :disabled="loading">
+                                    <button @keyup.enter="onSubmit" type="submit" class="btn btn-accept mr-2" :disabled="loading">
                                         Restablecer
                                     </button>
                                     <spinner v-show="loadingCode" size="medium"></spinner>

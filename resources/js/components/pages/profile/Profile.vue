@@ -305,10 +305,10 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-start">
-                                    <router-link :to="{ name: 'administration' }" tag="button" class="btn btn-cancel">
+                                    <router-link :to="{ name: 'administration' }" tag="button" type="button" class="btn btn-cancel">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-accept ml-4" :disabled="loading">
+                                    <button @keyup.enter="onSubmit" type="submit" class="btn btn-accept ml-4" :disabled="loading">
                                         Actualizar
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>

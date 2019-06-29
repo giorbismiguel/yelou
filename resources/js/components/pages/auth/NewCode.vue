@@ -36,10 +36,10 @@
 
                             <div class="form-group mb-2">
                                 <div class="col d-flex justify-content-start">
-                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-cancel">
+                                    <router-link :to="{ name: 'home' }" tag="button" type="button" class="btn btn-cancel">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-accept mr-4" :disabled="loading">
+                                    <button @keyup.enter="onSubmit" type="submit" class="btn btn-accept mr-4" :disabled="loading">
                                         Solicitar Nuevo código
                                     </button>
                                     <spinner v-show="loadingCode" size="medium"></spinner>

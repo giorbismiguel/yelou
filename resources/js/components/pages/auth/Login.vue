@@ -46,7 +46,7 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-accept" :disabled="loading">
+                                    <button @keyup.enter="onSubmit" type="submit" class="btn btn-accept" :disabled="loading">
                                         Ingresar
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>

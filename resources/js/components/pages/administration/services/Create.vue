@@ -125,12 +125,15 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-start">
-                                    <router-link :to="{ name: 'services' }" tag="button" class="btn btn-cancel mr-4">
+                                    <router-link :to="{ name: 'services' }" tag="button" type="button" class="btn btn-cancel mr-4">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-accept ml-4" :disabled="loading">
+
+                                    <button @keyup.enter="onSubmit" type="submit" class="btn btn-accept ml-4"
+                                            :disabled="loading">
                                         Solicitar Servicio
                                     </button>
+
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>
 
                                     <button type="button" class="btn btn-cancel ml-5" @click="calculate"
@@ -492,24 +495,24 @@
                 this.favourite = 0;
             },
 
-            coordinatesOrigin(coordinatesOrigin){
+            coordinatesOrigin(coordinatesOrigin) {
                 this.formRate.latitude_from = coordinatesOrigin.lat
                 this.formRate.longitude_from = coordinatesOrigin.lat
             },
 
-            coordinatesDestiny(coordinatesDestiny){
+            coordinatesDestiny(coordinatesDestiny) {
                 this.formRate.latitude_from = coordinatesDestiny.lat
                 this.formRate.longitude_from = coordinatesDestiny.lat
             },
 
-            originRequestService(originRequestService){
+            originRequestService(originRequestService) {
                 this.formRate.latitude_from = originRequestService.geometry.location.lat()
                 this.formRate.longitude_from = originRequestService.geometry.location.lat()
             },
 
-            destinationRequestService(destinationRequestService){
+            destinationRequestService(destinationRequestService) {
                 this.formRate.latitude_to = destinationRequestService.geometry.location.lat()
-                this.formRate.longitude_to  = destinationRequestService.geometry.location.lat()
+                this.formRate.longitude_to = destinationRequestService.geometry.location.lat()
             }
         },
 
