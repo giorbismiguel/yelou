@@ -5482,6 +5482,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/lib/index.js");
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -5803,6 +5805,32 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -5817,6 +5845,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         password_confirmation: null,
         first_name: null,
         last_name: null,
+        birth_date: null,
         phone: null,
         ruc: null,
         direction: null,
@@ -5844,6 +5873,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           phoneNumberLabel: 'Número de teléfono',
           example: 'Ejemplo :'
         }
+      },
+      timePicker: {
+        lang: {
+          days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+          months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
+          placeholder: {
+            date: 'Seleccione el día'
+          }
+        },
+        date: 'DD/MM/YYYY'
       }
     };
   },
@@ -5876,6 +5915,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (valid) {
           _this.loading = true;
           var formData, key;
+          _this.form.birth_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.form.birth_date), 'DD/MM/YYYY');
 
           if (!_this.isClient()) {
             formData = new FormData();
@@ -5974,6 +6014,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.nomenclators();
   },
   components: {
+    DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a,
     Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a
   }
 });
@@ -68634,6 +68675,96 @@ var render = function() {
                     "div",
                     { staticClass: "col" },
                     [
+                      _c("date-picker", {
+                        directives: [
+                          {
+                            name: "validate",
+                            rawName: "v-validate",
+                            value: "required",
+                            expression: "'required'"
+                          }
+                        ],
+                        staticStyle: { width: "300px", display: "block" },
+                        attrs: {
+                          id: "birth_date",
+                          name: "birth_date",
+                          "value-type": "date",
+                          lang: _vm.timePicker.lang,
+                          type: "date",
+                          format: _vm.timePicker.date,
+                          confirm: "",
+                          "confirm-text": "Confirmar",
+                          "data-vv-as": "Fecha de Nacimiento",
+                          "input-class": [
+                            "form-control",
+                            _vm.submitted &&
+                            (_vm.serverErrors.birth_date ||
+                              _vm.errors.has("birth_date"))
+                              ? "is-invalid"
+                              : ""
+                          ]
+                        },
+                        model: {
+                          value: _vm.form.birth_date,
+                          callback: function($$v) {
+                            _vm.$set(_vm.form, "birth_date", $$v)
+                          },
+                          expression: "form.birth_date"
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: false,
+                            expression: "false"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class:
+                          _vm.submitted &&
+                          (_vm.serverErrors.birth_date ||
+                            _vm.errors.has("birth_date"))
+                            ? "is-invalid"
+                            : "",
+                        attrs: { type: "text" }
+                      }),
+                      _vm._v(" "),
+                      _vm.submitted &&
+                      (_vm.serverErrors.birth_date ||
+                        _vm.errors.has("birth_date"))
+                        ? _c(
+                            "div",
+                            { staticClass: "invalid-feedback" },
+                            [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.errors.first("birth_date")) +
+                                  "\n                                    "
+                              ),
+                              _vm._l(_vm.serverErrors.birth_date, function(
+                                error
+                              ) {
+                                return [_vm._v(_vm._s(error))]
+                              })
+                            ],
+                            2
+                          )
+                        : _vm._e()
+                    ],
+                    1
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col" },
+                    [
                       _c("vue-phone-number-input", {
                         directives: [
                           {
@@ -68689,7 +68820,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
-                  _vm._m(7),
+                  _vm._m(8),
                   _vm._v(" "),
                   _c("div", { staticClass: "col" }, [
                     _c("input", {
@@ -68804,7 +68935,7 @@ var render = function() {
                 _vm.form.type === 1
                   ? [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(8),
+                        _vm._m(9),
                         _vm._v(" "),
                         _c("div", { staticClass: "col" }, [
                           _c("input", {
@@ -68922,7 +69053,7 @@ var render = function() {
                     ]
                   : [
                       _c("div", { staticClass: "form-group" }, [
-                        _vm._m(9),
+                        _vm._m(10),
                         _vm._v(" "),
                         _c("div", { staticClass: "col" }, [
                           _c(
@@ -69391,6 +69522,19 @@ var staticRenderFns = [
       { staticClass: "col control-label", attrs: { for: "last_name" } },
       [
         _vm._v("\n                                Apellido(s) "),
+        _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "col control-label", attrs: { for: "birth_date" } },
+      [
+        _vm._v("\n                                Fecha de Nacimiento "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ]
     )

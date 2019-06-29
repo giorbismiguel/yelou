@@ -106,11 +106,35 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="birth_date" class="col control-label">
+                                    Fecha de Nacimiento <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col">
+                                    <date-picker id="birth_date" name="birth_date" v-model="form.birth_date"
+                                                 style="width: 300px; display: block;" value-type="date"
+                                                 :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
+                                                 confirm-text="Confirmar" v-validate="'required'"
+                                                 data-vv-as="Fecha de Nacimiento"
+                                                 :input-class="[ 'form-control', submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': '']">
+                                    </date-picker>
+
+                                    <input type="text" class="form-control" v-show="false"
+                                           :class="submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': ''"/>
+
+                                    <div v-if="submitted && (serverErrors.birth_date || errors.has('birth_date'))"
+                                         class="invalid-feedback">
+                                        {{ errors.first('birth_date') }}
+                                        <template v-for="error in serverErrors.birth_date">{{ error }}</template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="phone" class="col control-label">
                                     Teléfono <span class="text-danger">*</span>
                                 </label>
                                 <div class="col">
-
                                     <vue-phone-number-input v-validate="'required|max:191'" data-vv-as="Teléfono"
                                                             id="phone" name="phone" type="text"
                                                             v-model="form.phone" :translations="phone.translations"
@@ -145,7 +169,8 @@
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
                                     <gmap-autocomplete class="form-control" id="direction" name="direction"
-                                                       @place_changed="setDirection" @keypress.enter="$event.preventDefault()"
+                                                       @place_changed="setDirection"
+                                                       @keypress.enter="$event.preventDefault()"
                                                        :class="{ 'is-invalid': submitted && serverErrors.direction }">
                                     </gmap-autocomplete>
 
@@ -319,6 +344,7 @@
     import {mapState, mapActions} from 'vuex'
     import Spinner from 'vue-simple-spinner'
     import Swal from 'sweetalert2'
+    import DatePicker from 'vue2-datepicker'
 
     export default {
 
@@ -332,6 +358,7 @@
                     password_confirmation: null,
                     first_name: null,
                     last_name: null,
+                    birth_date: null,
                     phone: null,
                     ruc: null,
                     direction: null,
@@ -359,6 +386,16 @@
                         phoneNumberLabel: 'Número de teléfono',
                         example: 'Ejemplo :'
                     }
+                },
+                timePicker: {
+                    lang: {
+                        days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                        months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        placeholder: {
+                            date: 'Seleccione el día'
+                        }
+                    },
+                    date: 'DD/MM/YYYY'
                 }
             }
         },
@@ -398,6 +435,7 @@
                     if (valid) {
                         this.loading = true
                         let formData, key;
+                        this.form.birth_date = DatePicker.fecha.format(new Date(this.form.birth_date), 'DD/MM/YYYY')
 
                         if (!this.isClient()) {
                             formData = new FormData()
@@ -481,6 +519,7 @@
         },
 
         components: {
+            DatePicker,
             Spinner
         }
 

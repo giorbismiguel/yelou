@@ -12,6 +12,7 @@ $factory->define(User::class, function (Faker $faker) {
         'password'        => bcrypt('123456'),
         'first_name'      => $faker->firstName,
         'last_name'       => $faker->lastName,
+        'birth_date'      => $faker->date(),
         'phone'           => $faker->phoneNumber,
         'ruc'             => $faker->numerify('###########'),
         'direction'       => $faker->address,

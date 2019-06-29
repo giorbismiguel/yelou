@@ -91,7 +91,7 @@ class AuthController extends Controller
         $request = $request->merge(['code_activation' => $codeActivation]);
         event(new Registered($user = $this->create($request->all())));
 
-        $user->notify(new UserRegistered($codeActivation));
+        //$user->notify(new UserRegistered($codeActivation));
 
 //        Nexmo::message()->send([
 //            'to'   => $request->get('phone'),
@@ -122,8 +122,8 @@ class AuthController extends Controller
             throw new AuthenticationException('Código de activación inválido');
         }
 
-        $user = $query->first();
         /** @var User $user */
+        $user = $query->first();
         $user->setVerifiedAt();
 
         return [
@@ -168,6 +168,7 @@ class AuthController extends Controller
             'password'   => 'required|min:6|max:18|confirmed',
             'first_name' => 'required|max:191',
             'last_name'  => 'required|max:191',
+            'birth_date' => 'required|date_format:d/m/Y',
             'phone'      => 'required|max:191|unique:users',
             'ruc'        => 'required|max:191',
             'direction'  => 'nullable|max:191',
@@ -179,6 +180,7 @@ class AuthController extends Controller
             'password'   => 'Contraseña',
             'first_name' => 'Nombre ',
             'last_name'  => 'Apellido ',
+            'birth_date' => 'Fecha de nacimiento',
             'phone'      => 'Teléfono',
             'ruc'        => 'RUC',
             'direction'  => 'Dirección',
@@ -230,6 +232,7 @@ class AuthController extends Controller
             'password'                     => bcrypt($data['password']),
             'first_name'                   => $data['first_name'],
             'last_name'                    => $data['last_name'],
+            'birth_date'                   => convert_us_date_to_db($data['birth_date'].' 00:00:00'),
             'phone'                        => $data['phone'],
             'ruc'                          => $data['ruc'],
             'direction'                    => $data['direction'],
