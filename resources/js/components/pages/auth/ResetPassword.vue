@@ -5,7 +5,7 @@
 
         <div class="row justify-content-center">
             <div class="col-6">
-                <div class="card m-4">
+                <div class="card app_card m-4">
                     <div class="card-header">Actualizar contraseña</div>
                     <div class="card-body">
                         <div class="alert alert-danger text-center" v-if="error">
@@ -73,8 +73,11 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary mr-2" :disabled="loading">
+                                <div class="col d-flex justify-content-start">
+                                    <router-link :to="{ name: 'administration' }" tag="button" class="btn btn-cancel mr-3">
+                                        Cancelar
+                                    </router-link>
+                                    <button type="submit" class="btn btn-accept mr-2" :disabled="loading">
                                         Actualizar
                                     </button>
                                     <spinner v-if="loading" size="medium"></spinner>

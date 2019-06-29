@@ -104,7 +104,7 @@ class UserAPIController extends AppBaseController
         $request = get_file($request, 'image_permit_circulation');
         $request = get_file($request, 'image_certificate_background');
 
-        $input = $request->except(['password', 'password_confirmation']);
+        $input = $request->except(['code_activation']);
 
         /** @var User $user */
         $user = $this->userRepository->find($id);
@@ -113,6 +113,7 @@ class UserAPIController extends AppBaseController
             return $this->sendError('Usuario no encontrado');
         }
 
+        $input['birth_date'] = convert_us_date_to_db($input['birth_date'].' 00:00:00');
         $input['photo'] = $input['photo_name'] ?? null;
         $input['image_driver_license'] = $input['image_driver_license_name'] ?? null;
         $input['image_permit_circulation'] = $input['image_permit_circulation_name'] ?? null;

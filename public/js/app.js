@@ -3514,7 +3514,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     if (this.me.type === 1) {
       this.getDriversAvailable();
     } else {
-      this.stateDriver = this.me ? this.me.transportation_available.active : false;
+      this.stateDriver = this.me && this.me.transportation_available ? this.me.transportation_available.active : false;
     }
   }
 });
@@ -5864,7 +5864,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       serverErrors: {},
       submitted: false,
       loading: false,
-      direction: {},
       phone: {
         countryCode: 'EC',
         translations: {
@@ -5921,7 +5920,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             formData = new FormData();
 
             for (key in _this.form) {
-              formData.append(key, _this.form[key]);
+              formData.append(key, _this.form[key] !== null ? _this.form[key] : '');
             }
 
             formData.append('photo', _this.selectedPhoto, _this.selectedPhoto.name);
@@ -5951,8 +5950,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     setDirection: function setDirection(place) {
       var that = this;
+      this.form.direction = null;
       this.form.city = null;
-      this.form.city = null;
+      this.form.postal_code = null;
       var _iteratorNormalCompletion = true;
       var _didIteratorError = false;
       var _iteratorError = undefined;
@@ -6376,6 +6376,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -6469,8 +6472,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
 //
 //
 //
@@ -6854,6 +6855,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-simple-spinner */ "./node_modules/vue-simple-spinner/dist/vue-simple-spinner.js");
 /* harmony import */ var vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../layout/BoxUser */ "./resources/js/components/layout/BoxUser.vue");
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/lib/index.js");
+/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker__WEBPACK_IMPORTED_MODULE_3__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -7150,6 +7153,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -7160,10 +7197,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         type: 1,
         name: null,
         email: null,
-        password: null,
-        password_confirmation: null,
         first_name: null,
         last_name: null,
+        birth_date: null,
         phone: null,
         ruc: null,
         direction: null,
@@ -7174,6 +7210,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         image_driver_license: null,
         image_permit_circulation: null,
         image_certificate_background: null
+      },
+      birth_date: null,
+      timePicker: {
+        lang: {
+          days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+          months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
+          placeholder: {
+            date: 'Seleccione el día'
+          }
+        },
+        date: 'DD/MM/YYYY'
       },
       selectedPhoto: null,
       imageDriveLicense: null,
@@ -7217,9 +7264,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.loading = true;
           var formData = new FormData(),
               key;
+          _this.form.birth_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.birth_date), 'DD/MM/YYYY');
 
           for (key in _this.form) {
-            formData.append(key, _this.form[key]);
+            formData.append(key, _this.form[key] !== null ? _this.form[key] : '');
           }
 
           if (!_this.isClient()) {
@@ -7275,17 +7323,82 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     isClient: function isClient() {
       return this.form.type === 1;
+    },
+    setDirection: function setDirection(place) {
+      var that = this;
+      this.form.direction = null;
+      this.form.city = null;
+      this.form.postal_code = null;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
+
+      try {
+        var _loop = function _loop() {
+          var address = _step.value;
+          Object.keys(address).forEach(function (prop) {
+            if (prop === 'types') {
+              address['types'].forEach(function (propType) {
+                if (propType === 'locality') {
+                  that.form.city = address.long_name;
+                }
+
+                if (propType === 'postal_code') {
+                  that.form.postal_code = address.long_name;
+                }
+              });
+            }
+          });
+        };
+
+        for (var _iterator = place.address_components[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          _loop();
+        }
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator["return"] != null) {
+            _iterator["return"]();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
     }
   }),
   created: function created() {
+    // let propertiesForm = [
+    //     'type',
+    //     'name',
+    //     'email',
+    //     'first_name',
+    //     'last_name',
+    //     'birth_date',
+    //     'phone',
+    //     'ruc',
+    //     'direction',
+    //     'city',
+    //     'postal_code',
+    //     'license_types_id',
+    //     'photo',
+    //     'image_driver_license',
+    //     'image_permit_circulation',
+    //     'image_certificate_background',
+    // ]
     this.form = this.me;
+    this.birth_date = this.me.birth_date;
   },
   mounted: function mounted() {
     this.nomenclators();
   },
   components: {
     Spinner: vue_simple_spinner__WEBPACK_IMPORTED_MODULE_1___default.a,
-    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__["default"]
+    BoxUser: _layout_BoxUser__WEBPACK_IMPORTED_MODULE_2__["default"],
+    DatePicker: vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a
   }
 });
 
@@ -68116,7 +68229,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-6" }, [
-        _c("div", { staticClass: "card m-4" }, [
+        _c("div", { staticClass: "card app_card m-4" }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v("Obtener Nuevo código")
           ]),
@@ -68234,12 +68347,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group mb-2" }, [
                   _c(
                     "div",
-                    { staticClass: "col d-flex justify-content-center" },
+                    { staticClass: "col d-flex justify-content-start" },
                     [
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-light",
+                          staticClass: "btn btn-cancel",
                           attrs: { to: { name: "home" }, tag: "button" }
                         },
                         [
@@ -68252,7 +68365,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary mr-4",
+                          staticClass: "btn btn-accept mr-4",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -68891,7 +69004,11 @@ var render = function() {
                           "is-invalid":
                             _vm.submitted && _vm.serverErrors.direction
                         },
-                        attrs: { id: "direction", name: "direction" },
+                        attrs: {
+                          id: "direction",
+                          name: "direction",
+                          placeholder: "Escriba su dirección"
+                        },
                         on: {
                           place_changed: _vm.setDirection,
                           keypress: function($event) {
@@ -69715,7 +69832,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-5" }, [
-        _c("div", { staticClass: "card m-4" }, [
+        _c("div", { staticClass: "card app_card m-4" }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v("Recuperar contraseña")
           ]),
@@ -69905,12 +70022,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group" }, [
                   _c(
                     "div",
-                    { staticClass: "col d-flex justify-content-center" },
+                    { staticClass: "col d-flex justify-content-start" },
                     [
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary",
+                          staticClass: "btn btn-accept",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -70016,7 +70133,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-6" }, [
-          _c("div", { staticClass: "card m-4" }, [
+          _c("div", { staticClass: "card app_card m-4" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v("Actualizar contraseña")
             ]),
@@ -70292,12 +70409,28 @@ var render = function() {
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "div",
-                      { staticClass: "col d-flex justify-content-center" },
+                      { staticClass: "col d-flex justify-content-start" },
                       [
+                        _c(
+                          "router-link",
+                          {
+                            staticClass: "btn btn-cancel mr-3",
+                            attrs: {
+                              to: { name: "administration" },
+                              tag: "button"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                    Cancelar\n                                "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-primary mr-2",
+                            staticClass: "btn btn-accept mr-2",
                             attrs: { type: "submit", disabled: _vm.loading }
                           },
                           [
@@ -70357,7 +70490,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-6" }, [
-        _c("div", { staticClass: "card m-4" }, [
+        _c("div", { staticClass: "card app_card m-4" }, [
           _c("div", { staticClass: "card-header" }, [
             _vm._v("Restablecer contraseña")
           ]),
@@ -70464,13 +70597,16 @@ var render = function() {
                 _c("div", { staticClass: "form-group mb-2" }, [
                   _c(
                     "div",
-                    { staticClass: "col d-flex justify-content-end" },
+                    { staticClass: "col d-flex justify-content-start" },
                     [
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-light mr-3",
-                          attrs: { to: { name: "login" }, tag: "button" }
+                          staticClass: "btn btn-cancel mr-3",
+                          attrs: {
+                            to: { name: "administration" },
+                            tag: "button"
+                          }
                         },
                         [
                           _vm._v(
@@ -70482,7 +70618,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary mr-2",
+                          staticClass: "btn btn-accept mr-2",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -70584,7 +70720,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-6" }, [
-        _c("div", { staticClass: "card m-4" }, [
+        _c("div", { staticClass: "card app_card m-4" }, [
           _c("div", { staticClass: "card-header" }, [_vm._v("Activar Cuenta")]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
@@ -70722,12 +70858,12 @@ var render = function() {
                 _c("div", { staticClass: "form-group mt-5" }, [
                   _c(
                     "div",
-                    { staticClass: "col d-flex justify-content-end" },
+                    { staticClass: "col d-flex justify-content-start" },
                     [
                       _c(
                         "router-link",
                         {
-                          staticClass: "btn btn-light",
+                          staticClass: "btn btn-cancel",
                           attrs: { to: { name: "home" }, tag: "button" }
                         },
                         [
@@ -70740,7 +70876,7 @@ var render = function() {
                       _c(
                         "button",
                         {
-                          staticClass: "btn btn-primary ml-4",
+                          staticClass: "btn btn-accept ml-4",
                           attrs: { type: "submit", disabled: _vm.loading }
                         },
                         [
@@ -71016,7 +71152,7 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "row justify-content-center" }, [
         _c("div", { staticClass: "col-8" }, [
-          _c("div", { staticClass: "card m-4" }, [
+          _c("div", { staticClass: "card app_card m-4" }, [
             _c("div", { staticClass: "card-header" }, [
               _vm._v("Edite el Perfil")
             ]),
@@ -71321,6 +71457,110 @@ var render = function() {
                       "label",
                       {
                         staticClass: "col control-label",
+                        attrs: { for: "birth_date" }
+                      },
+                      [
+                        _vm._v(
+                          "\n                                Fecha de Nacimiento "
+                        ),
+                        _c("span", { staticClass: "text-danger" }, [
+                          _vm._v("*")
+                        ])
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "col" },
+                      [
+                        _c("date-picker", {
+                          directives: [
+                            {
+                              name: "validate",
+                              rawName: "v-validate",
+                              value: "required",
+                              expression: "'required'"
+                            }
+                          ],
+                          staticStyle: { width: "300px", display: "block" },
+                          attrs: {
+                            id: "birth_date",
+                            name: "birth_date",
+                            "value-type": "date",
+                            lang: _vm.timePicker.lang,
+                            type: "date",
+                            format: _vm.timePicker.date,
+                            confirm: "",
+                            "confirm-text": "Confirmar",
+                            "data-vv-as": "Fecha de Nacimiento",
+                            "input-class": [
+                              "form-control",
+                              _vm.submitted &&
+                              (_vm.serverErrors.birth_date ||
+                                _vm.errors.has("birth_date"))
+                                ? "is-invalid"
+                                : ""
+                            ]
+                          },
+                          model: {
+                            value: _vm.birth_date,
+                            callback: function($$v) {
+                              _vm.birth_date = $$v
+                            },
+                            expression: "birth_date"
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: false,
+                              expression: "false"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class:
+                            _vm.submitted &&
+                            (_vm.serverErrors.birth_date ||
+                              _vm.errors.has("birth_date"))
+                              ? "is-invalid"
+                              : "",
+                          attrs: { type: "text" }
+                        }),
+                        _vm._v(" "),
+                        _vm.submitted &&
+                        (_vm.serverErrors.birth_date ||
+                          _vm.errors.has("birth_date"))
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback" },
+                              [
+                                _vm._v(
+                                  "\n                                    " +
+                                    _vm._s(_vm.errors.first("birth_date")) +
+                                    "\n                                    "
+                                ),
+                                _vm._l(_vm.serverErrors.birth_date, function(
+                                  error
+                                ) {
+                                  return [_vm._v(_vm._s(error))]
+                                })
+                              ],
+                              2
+                            )
+                          : _vm._e()
+                      ],
+                      1
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "label",
+                      {
+                        staticClass: "col control-label",
                         attrs: { for: "phone" }
                       },
                       [
@@ -71465,54 +71705,60 @@ var render = function() {
                       [_vm._v("Dirección")]
                     ),
                     _vm._v(" "),
-                    _c("div", { staticClass: "col" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "validate",
-                            rawName: "v-validate",
-                            value: "max:191",
-                            expression: "'max:191'"
+                    _c(
+                      "div",
+                      { staticClass: "col" },
+                      [
+                        _c("gmap-autocomplete", {
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid":
+                              _vm.submitted && _vm.serverErrors.direction
                           },
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.form.direction,
-                            expression: "form.direction"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: {
-                          "is-invalid":
-                            _vm.submitted && _vm.errors.has("direction")
-                        },
-                        attrs: {
-                          "data-vv-as": "Dirección",
-                          id: "direction",
-                          name: "direction",
-                          type: "text"
-                        },
-                        domProps: { value: _vm.form.direction },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                          attrs: {
+                            id: "direction",
+                            name: "direction",
+                            placeholder: "Escriba su dirección"
+                          },
+                          on: {
+                            place_changed: _vm.setDirection,
+                            keypress: function($event) {
+                              if (
+                                !$event.type.indexOf("key") &&
+                                _vm._k(
+                                  $event.keyCode,
+                                  "enter",
+                                  13,
+                                  $event.key,
+                                  "Enter"
+                                )
+                              ) {
+                                return null
+                              }
+                              return $event.preventDefault()
                             }
-                            _vm.$set(_vm.form, "direction", $event.target.value)
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.submitted && _vm.errors.has("direction")
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.errors.first("direction")) +
-                                "\n                                "
+                        }),
+                        _vm._v(" "),
+                        _vm.submitted &&
+                        (_vm.serverErrors.direction ||
+                          _vm.serverErrors.direction)
+                          ? _c(
+                              "div",
+                              { staticClass: "invalid-feedback" },
+                              [
+                                _vm._l(_vm.serverErrors.direction, function(
+                                  error
+                                ) {
+                                  return [_vm._v(_vm._s(error))]
+                                })
+                              ],
+                              2
                             )
-                          ])
-                        : _vm._e()
-                    ])
+                          : _vm._e()
+                      ],
+                      1
+                    )
                   ]),
                   _vm._v(" "),
                   _vm.form.type === 1
@@ -72016,11 +72262,8 @@ var render = function() {
                                       _vm._s(
                                         _vm.imageCertificateBackgroundLabel
                                       ) +
-                                      " "
-                                  ),
-                                  _c("span", { staticClass: "text-danger" }, [
-                                    _vm._v("*")
-                                  ])
+                                      "\n                                        "
+                                  )
                                 ]
                               )
                             ]),
@@ -72057,12 +72300,12 @@ var render = function() {
                   _c("div", { staticClass: "form-group" }, [
                     _c(
                       "div",
-                      { staticClass: "col d-flex justify-content-end" },
+                      { staticClass: "col d-flex justify-content-start" },
                       [
                         _c(
                           "router-link",
                           {
-                            staticClass: "btn btn-light",
+                            staticClass: "btn btn-cancel",
                             attrs: {
                               to: { name: "administration" },
                               tag: "button"
@@ -72078,7 +72321,7 @@ var render = function() {
                         _c(
                           "button",
                           {
-                            staticClass: "btn btn-primary ml-4",
+                            staticClass: "btn btn-accept ml-4",
                             attrs: { type: "submit", disabled: _vm.loading }
                           },
                           [

@@ -23,7 +23,7 @@ class CreateUsersTable extends Migration
             $table->date('birth_date');
             $table->string('phone')->unique();
             $table->string('ruc');
-            $table->string('direction')->nullable()->default(null);
+            $table->string('direction')->nullable()->default('');
 
             $table->boolean('type')->default(null); // 1- Client 2- Transporter 3- Admin
 

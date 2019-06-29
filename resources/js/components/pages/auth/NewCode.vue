@@ -5,7 +5,7 @@
 
         <div class="row justify-content-center">
             <div class="col-6">
-                <div class="card m-4">
+                <div class="card app_card m-4">
                     <div class="card-header">Obtener Nuevo código</div>
                     <div class="card-body">
 
@@ -35,11 +35,11 @@
                             </div>
 
                             <div class="form-group mb-2">
-                                <div class="col d-flex justify-content-center">
-                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
+                                <div class="col d-flex justify-content-start">
+                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-cancel">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary mr-4" :disabled="loading">
+                                    <button type="submit" class="btn btn-accept mr-4" :disabled="loading">
                                         Solicitar Nuevo código
                                     </button>
                                     <spinner v-show="loadingCode" size="medium"></spinner>

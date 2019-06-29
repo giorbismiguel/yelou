@@ -5,7 +5,7 @@
 
         <div class="row justify-content-center">
             <div class="col-8">
-                <div class="card m-4">
+                <div class="card app_card m-4">
                     <div class="card-header">Edite el Perfil</div>
                     <div class="card-body">
                         <form class="form-horizontal" id="register_form" role="form" autocomplete="off"
@@ -77,6 +77,31 @@
                             </div>
 
                             <div class="form-group">
+                                <label for="birth_date" class="col control-label">
+                                    Fecha de Nacimiento <span class="text-danger">*</span>
+                                </label>
+
+                                <div class="col">
+                                    <date-picker id="birth_date" name="birth_date" v-model="birth_date"
+                                                 style="width: 300px; display: block;" value-type="date"
+                                                 :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
+                                                 confirm-text="Confirmar" v-validate="'required'"
+                                                 data-vv-as="Fecha de Nacimiento"
+                                                 :input-class="[ 'form-control', submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': '']">
+                                    </date-picker>
+
+                                    <input type="text" class="form-control" v-show="false"
+                                           :class="submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': ''"/>
+
+                                    <div v-if="submitted && (serverErrors.birth_date || errors.has('birth_date'))"
+                                         class="invalid-feedback">
+                                        {{ errors.first('birth_date') }}
+                                        <template v-for="error in serverErrors.birth_date">{{ error }}</template>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="phone" class="col control-label">
                                     Teléfono <span class="text-danger">*</span>
                                 </label>
@@ -112,14 +137,16 @@
                             <div class="form-group">
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
-                                    <input v-validate="'max:191'" data-vv-as="Dirección" id="direction"
-                                           name="direction" type="text" class="form-control"
-                                           v-model="form.direction"
-                                           :class="{ 'is-invalid': submitted && errors.has('direction') }">
+                                    <gmap-autocomplete class="form-control" id="direction" name="direction"
+                                                       @place_changed="setDirection"
+                                                       @keypress.enter="$event.preventDefault()"
+                                                       placeholder="Escriba su dirección"
+                                                       :class="{ 'is-invalid': submitted && serverErrors.direction }">
+                                    </gmap-autocomplete>
 
-                                    <div v-if="submitted && errors.has('direction')"
+                                    <div v-if="submitted && (serverErrors.direction || serverErrors.direction)"
                                          class="invalid-feedback">
-                                        {{ errors.first('direction') }}
+                                        <template v-for="error in serverErrors.direction">{{ error }}</template>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +224,8 @@
                                             {{ errors.first('photo') }}
                                         </div>
                                     </div>
-                                    <img :src="'/storage/' + form.photo" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
+                                    <img :src="'/storage/' + form.photo" class="rounded float-right mt-2 mb-2"
+                                         alt="Foto" style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -218,7 +246,9 @@
                                             {{ errors.first('image_driver_license') }}
                                         </div>
                                     </div>
-                                    <img :src="'/storage/' + form.image_driver_license" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
+                                    <img :src="'/storage/' + form.image_driver_license"
+                                         class="rounded float-right mt-2 mb-2" alt="Foto"
+                                         style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -241,7 +271,9 @@
                                             {{ errors.first('image_permit_circulation') }}
                                         </div>
                                     </div>
-                                    <img :src="'/storage/' + form.image_permit_circulation" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
+                                    <img :src="'/storage/' + form.image_permit_circulation"
+                                         class="rounded float-right mt-2 mb-2" alt="Foto"
+                                         style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -255,8 +287,7 @@
                                                    id="image_certificate_background" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('image_certificate_background') }"/>
                                             <label for="image_certificate_background" class="custom-file-label">
-                                                {{ imageCertificateBackgroundLabel }} <span
-                                                    class="text-danger">*</span>
+                                                {{ imageCertificateBackgroundLabel }}
                                             </label>
                                         </div>
 
@@ -265,16 +296,18 @@
                                             {{ errors.first('image_certificate_background') }}
                                         </div>
                                     </div>
-                                    <img :src="'/storage/' + form.image_certificate_background" class="rounded float-right mt-2 mb-2" alt="Foto" style="width: 200px; height: 200px;"/>
+                                    <img :src="'/storage/' + form.image_certificate_background"
+                                         class="rounded float-right mt-2 mb-2" alt="Foto"
+                                         style="width: 200px; height: 200px;"/>
                                 </div>
                             </template>
 
                             <div class="form-group">
-                                <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'administration' }" tag="button" class="btn btn-light">
+                                <div class="col d-flex justify-content-start">
+                                    <router-link :to="{ name: 'administration' }" tag="button" class="btn btn-cancel">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
+                                    <button type="submit" class="btn btn-accept ml-4" :disabled="loading">
                                         Actualizar
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>
@@ -294,6 +327,7 @@
     import {mapState, mapActions} from 'vuex'
     import Spinner from 'vue-simple-spinner'
     import BoxUser from '../../layout/BoxUser'
+    import DatePicker from 'vue2-datepicker'
 
     export default {
 
@@ -303,10 +337,9 @@
                     type: 1,
                     name: null,
                     email: null,
-                    password: null,
-                    password_confirmation: null,
                     first_name: null,
                     last_name: null,
+                    birth_date: null,
                     phone: null,
                     ruc: null,
                     direction: null,
@@ -317,6 +350,17 @@
                     image_driver_license: null,
                     image_permit_circulation: null,
                     image_certificate_background: null,
+                },
+                birth_date: null,
+                timePicker: {
+                    lang: {
+                        days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+                        months: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
+                        placeholder: {
+                            date: 'Seleccione el día'
+                        }
+                    },
+                    date: 'DD/MM/YYYY'
                 },
                 selectedPhoto: null,
                 imageDriveLicense: null,
@@ -352,7 +396,6 @@
         },
 
         methods: {
-
             ...mapActions([
                 'updateProfile',
                 'nomenclators',
@@ -363,10 +406,11 @@
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         this.loading = true
-
                         let formData = new FormData(), key
+                        this.form.birth_date = DatePicker.fecha.format(new Date(this.birth_date), 'DD/MM/YYYY')
+
                         for (key in this.form) {
-                            formData.append(key, this.form[key]);
+                            formData.append(key, this.form[key] !== null ? this.form[key] : '')
                         }
 
                         if (!this.isClient()) {
@@ -425,11 +469,54 @@
 
             isClient() {
                 return this.form.type === 1;
+            },
+
+            setDirection(place) {
+                let that = this
+                this.form.direction = null
+                this.form.city = null
+                this.form.postal_code = null
+
+                for (let address  of place.address_components) {
+                    Object.keys(address).forEach(function (prop) {
+                        if (prop === 'types') {
+                            address['types'].forEach(function (propType) {
+                                if (propType === 'locality') {
+                                    that.form.city = address.long_name
+                                }
+
+                                if (propType === 'postal_code') {
+                                    that.form.postal_code = address.long_name
+                                }
+                            })
+                        }
+                    })
+                }
             }
         },
 
         created() {
-            this.form = this.me;
+            // let propertiesForm = [
+            //     'type',
+            //     'name',
+            //     'email',
+            //     'first_name',
+            //     'last_name',
+            //     'birth_date',
+            //     'phone',
+            //     'ruc',
+            //     'direction',
+            //     'city',
+            //     'postal_code',
+            //     'license_types_id',
+            //     'photo',
+            //     'image_driver_license',
+            //     'image_permit_circulation',
+            //     'image_certificate_background',
+            // ]
+
+            this.form = this.me
+            this.birth_date = this.me.birth_date
         },
 
         mounted() {
@@ -438,7 +525,8 @@
 
         components: {
             Spinner,
-            BoxUser
+            BoxUser,
+            DatePicker
         }
 
     }

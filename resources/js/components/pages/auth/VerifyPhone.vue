@@ -5,7 +5,7 @@
 
         <div class="row justify-content-center">
             <div class="col-6">
-                <div class="card m-4">
+                <div class="card app_card m-4">
                     <div class="card-header">Activar Cuenta</div>
                     <div class="card-body">
 
@@ -38,11 +38,11 @@
                             </div>
 
                             <div class="form-group mt-5">
-                                <div class="col d-flex justify-content-end">
-                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-light">
+                                <div class="col d-flex justify-content-start">
+                                    <router-link :to="{ name: 'home' }" tag="button" class="btn btn-cancel">
                                         Cancelar
                                     </router-link>
-                                    <button type="submit" class="btn btn-primary ml-4" :disabled="loading">
+                                    <button type="submit" class="btn btn-accept ml-4" :disabled="loading">
                                         Activar
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>

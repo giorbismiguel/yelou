@@ -169,7 +169,7 @@
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
                                     <gmap-autocomplete class="form-control" id="direction" name="direction"
-                                                       @place_changed="setDirection"
+                                                       @place_changed="setDirection" placeholder="Escriba su dirección"
                                                        @keypress.enter="$event.preventDefault()"
                                                        :class="{ 'is-invalid': submitted && serverErrors.direction }">
                                     </gmap-autocomplete>
@@ -377,7 +377,6 @@
                 serverErrors: {},
                 submitted: false,
                 loading: false,
-                direction: {},
                 phone: {
                     countryCode: 'EC',
                     translations: {
@@ -434,13 +433,13 @@
                 this.$validator.validate().then(valid => {
                     if (valid) {
                         this.loading = true
-                        let formData, key;
+                        let formData, key
                         this.form.birth_date = DatePicker.fecha.format(new Date(this.form.birth_date), 'DD/MM/YYYY')
 
                         if (!this.isClient()) {
                             formData = new FormData()
                             for (key in this.form) {
-                                formData.append(key, this.form[key]);
+                                formData.append(key, this.form[key] !== null ? this.form[key] : '')
                             }
                             formData.append('photo', this.selectedPhoto, this.selectedPhoto.name)
                             formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense.name)
@@ -472,8 +471,9 @@
 
             setDirection(place) {
                 let that = this
+                this.form.direction = null
                 this.form.city = null
-                this.form.city = null
+                this.form.postal_code = null
 
                 for (let address  of place.address_components) {
                     Object.keys(address).forEach(function (prop) {

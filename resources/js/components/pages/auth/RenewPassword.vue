@@ -5,7 +5,7 @@
 
         <div class="row justify-content-center">
             <div class="col-5">
-                <div class="card m-4">
+                <div class="card app_card m-4">
                     <div class="card-header">Recuperar contraseña</div>
                     <div class="card-body">
                         <div class="alert alert-danger text-center" v-if="error">
@@ -58,8 +58,8 @@
                             </div>
 
                             <div class="form-group">
-                                <div class="col d-flex justify-content-center">
-                                    <button type="submit" class="btn btn-primary" :disabled="loading">
+                                <div class="col d-flex justify-content-start">
+                                    <button type="submit" class="btn btn-accept" :disabled="loading">
                                         Recuperar
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>

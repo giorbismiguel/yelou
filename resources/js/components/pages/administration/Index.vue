@@ -151,7 +151,7 @@
             if (this.me.type === 1) {
                 this.getDriversAvailable();
             } else {
-                this.stateDriver = this.me ? this.me.transportation_available.active : false
+                this.stateDriver = this.me && this.me.transportation_available ? this.me.transportation_available.active : false
             }
         }
     }
