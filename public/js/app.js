@@ -5854,6 +5854,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -6926,6 +6928,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -69018,7 +69021,9 @@ var render = function() {
                       ],
                       staticClass: "form-control",
                       class: {
-                        "is-invalid": _vm.submitted && _vm.errors.has("ruc")
+                        "is-invalid":
+                          _vm.submitted &&
+                          (_vm.serverErrors.ruc || _vm.errors.has("ruc"))
                       },
                       attrs: {
                         "data-vv-as": "RUC",
@@ -69037,14 +69042,23 @@ var render = function() {
                       }
                     }),
                     _vm._v(" "),
-                    _vm.submitted && _vm.errors.has("ruc")
-                      ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.errors.first("ruc")) +
-                              "\n                                "
-                          )
-                        ])
+                    _vm.submitted &&
+                    (_vm.serverErrors.ruc || _vm.errors.has("ruc"))
+                      ? _c(
+                          "div",
+                          { staticClass: "invalid-feedback" },
+                          [
+                            _vm._v(
+                              "\n                                    " +
+                                _vm._s(_vm.errors.first("ruc")) +
+                                "\n                                    "
+                            ),
+                            _vm._l(_vm.serverErrors.ruc, function(error) {
+                              return [_vm._v(_vm._s(error))]
+                            })
+                          ],
+                          2
+                        )
                       : _vm._e()
                   ])
                 ]),
@@ -69779,7 +69793,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "col control-label", attrs: { for: "email" } },
       [
-        _vm._v("Correo electrónico "),
+        _vm._v("\n                                Correo electrónico "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ]
     )
@@ -71908,7 +71922,9 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: {
-                          "is-invalid": _vm.submitted && _vm.errors.has("ruc")
+                          "is-invalid":
+                            _vm.submitted &&
+                            (_vm.serverErrors.ruc || _vm.errors.has("ruc"))
                         },
                         attrs: {
                           "data-vv-as": "RUC",
@@ -71927,14 +71943,23 @@ var render = function() {
                         }
                       }),
                       _vm._v(" "),
-                      _vm.submitted && _vm.errors.has("ruc")
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.errors.first("ruc")) +
-                                "\n                                "
-                            )
-                          ])
+                      _vm.submitted &&
+                      (_vm.serverErrors.ruc || _vm.errors.has("ruc"))
+                        ? _c(
+                            "div",
+                            { staticClass: "invalid-feedback" },
+                            [
+                              _vm._v(
+                                "\n                                    " +
+                                  _vm._s(_vm.errors.first("ruc")) +
+                                  "\n                                    "
+                              ),
+                              _vm._l(_vm.serverErrors.ruc, function(error) {
+                                return [_vm._v(_vm._s(error))]
+                              })
+                            ],
+                            2
+                          )
                         : _vm._e()
                     ])
                   ]),

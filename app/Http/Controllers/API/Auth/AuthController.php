@@ -170,7 +170,7 @@ class AuthController extends Controller
             'last_name'      => 'required|max:191',
             'birth_date'     => 'required|date_format:d/m/Y',
             'phone'          => 'required|max:191|unique:users',
-            'ruc'            => 'required|max:191',
+            'ruc'            => 'required|max:191|unique:users',
             'direction'      => 'nullable|max:191',
             'term_condition' => 'accepted',
         ];

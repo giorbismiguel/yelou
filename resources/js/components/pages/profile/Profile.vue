@@ -125,11 +125,12 @@
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="RUC" id="ruc"
                                            name="ruc" type="text" class="form-control" v-model="form.ruc"
-                                           :class="{ 'is-invalid': submitted && errors.has('ruc') }">
+                                           :class="{ 'is-invalid': submitted && (serverErrors.ruc || errors.has('ruc')) }">
 
-                                    <div v-if="submitted && errors.has('ruc')"
+                                    <div v-if="submitted && (serverErrors.ruc || errors.has('ruc'))"
                                          class="invalid-feedback">
                                         {{ errors.first('ruc') }}
+                                        <template v-for="error in serverErrors.ruc">{{ error }}</template>
                                     </div>
                                 </div>
                             </div>

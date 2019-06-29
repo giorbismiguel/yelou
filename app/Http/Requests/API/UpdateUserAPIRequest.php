@@ -44,7 +44,11 @@ class UpdateUserAPIRequest extends APIRequest
                 'max:191',
                 Rule::unique('users')->ignore((int) $this->route('user'))
             ],
-            'ruc'        => 'required|max:191',
+            'ruc'      => [
+                'required',
+                'max:191',
+                Rule::unique('users')->ignore((int) $this->route('user'))
+            ],
             'direction'  => 'nullable|max:191',
         ];
 

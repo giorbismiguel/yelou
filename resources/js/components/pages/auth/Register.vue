@@ -22,8 +22,9 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="email" class="col control-label">Correo electrónico <span
-                                        class="text-danger">*</span></label>
+                                <label for="email" class="col control-label">
+                                    Correo electrónico <span class="text-danger">*</span>
+                                </label>
                                 <div class="col">
                                     <input v-model="form.email" v-validate="'required|email|max:191'"
                                            data-vv-as="Correo electrónico" id="email" name="email" type="email"
@@ -156,11 +157,12 @@
                                 <div class="col">
                                     <input v-validate="'required|max:191'" data-vv-as="RUC" id="ruc"
                                            name="ruc" type="text" class="form-control" v-model="form.ruc"
-                                           :class="{ 'is-invalid': submitted && errors.has('ruc') }">
+                                           :class="{ 'is-invalid': submitted && (serverErrors.ruc || errors.has('ruc')) }">
 
-                                    <div v-if="submitted && errors.has('ruc')"
+                                    <div v-if="submitted && (serverErrors.ruc || errors.has('ruc'))"
                                          class="invalid-feedback">
                                         {{ errors.first('ruc') }}
+                                        <template v-for="error in serverErrors.ruc">{{ error }}</template>
                                     </div>
                                 </div>
                             </div>
