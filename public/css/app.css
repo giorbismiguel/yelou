@@ -16920,6 +16920,10 @@ footer a {
   color: #f8f8f8;
 }
 
+.form-group {
+  margin-bottom: 2rem;
+}
+
 .v-select.is-invalid .vs__dropdown-toggle {
   border-color: #e3342f;
   background-repeat: no-repeat;

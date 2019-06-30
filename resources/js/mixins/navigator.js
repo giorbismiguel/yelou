@@ -6,7 +6,6 @@ export default {
                 return location
             }
 
-
             navigator.geolocation.getCurrentPosition(position => {
                 location = {lat: position.coords.latitude, lng: position.coords.longitude}
             });

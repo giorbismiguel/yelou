@@ -8,6 +8,7 @@ $custom-file-text: (
 
 // Variables
 @import 'variables';
+
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
@@ -18,8 +19,10 @@ $fa-font-path: "../webfonts";
 @import "@fortawesome/fontawesome-free/scss/brands.scss";
 @import "@fortawesome/fontawesome-free/scss/fontawesome.scss";
 
+// Vue Css
 @import "vue-select/src/scss/vue-select.scss";
 
+// App Styles
 .app {
   &_color {
     color: rgb(248, 248, 248) !important;
@@ -133,6 +136,11 @@ footer a {
   color: rgb(248, 248, 248);
 }
 
+.form-group {
+  margin-bottom: 2rem;
+}
+
+// Vue components
 .v-select.is-invalid .vs__dropdown-toggle {
   border-color: #e3342f;
   background-repeat: no-repeat;

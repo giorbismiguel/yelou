@@ -4854,6 +4854,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4920,7 +4927,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return route('api.requested_services.index');
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteService', 'acceptDriverService']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRequestedService', 'acceptDriverService']), {
     hideDriverModel: function hideDriverModel() {
       this.modal.showDriver = false;
     },
@@ -4930,10 +4937,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     onDeleteService: function onDeleteService(id) {
       var _this = this;
 
-      return;
       this.serverErrors = {};
       sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
-        title: 'Esta seguro que desea eliminar el ?',
+        title: 'Esta seguro que desea eliminar el servicio?',
         text: 'Puedes cancelar la operación',
         type: 'warning',
         showCancelButton: true,
@@ -4943,23 +4949,23 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         showLoaderOnConfirm: true
       }).then(function (result) {
         if (result.value) {
-          _this.deleteRoute(id).then(function () {
+          _this.deleteRequestedService(id).then(function () {
             _this.loading = false;
 
             _this.$notify({
               type: 'success',
-              group: 'index_route',
+              group: 'index_requested_services',
               title: 'Ruta',
-              text: 'Se ha eliminado la ruta correctamente'
+              text: 'Se ha eliminado el servicio'
             });
           })["catch"](function (data) {
             _this.loading = false;
 
             _this.$notify({
               type: 'error',
-              group: 'index_route',
+              group: 'index_requested_services',
               title: 'Ruta',
-              text: 'Ha ocurrido un error al eliminar la ruta.'
+              text: 'Ha ocurrido un error al eliminar el servicio'
             });
 
             _this.serverErrors = data.errors || {};
@@ -4967,6 +4973,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
+    cancelService: function cancelService() {},
     clearFilter: function clearFilter() {
       this.filters = Object(_modules_query_string__WEBPACK_IMPORTED_MODULE_1__["cloneDeep"])(this.defaultFilters);
       this.$nextTick(this.reloadTable);
@@ -67735,6 +67742,27 @@ var render = function() {
                             {
                               staticClass: "dropdown-item",
                               attrs: { href: "#", title: "Eliminar" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.cancelService(row.id)
+                                }
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-trash-alt" }),
+                              _vm._v(
+                                "\n                            Cancelar\n                        "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#", title: "Eliminar" },
                               on: { click: _vm.showDriverModal }
                             },
                             [
@@ -106419,6 +106447,7 @@ __webpack_require__.r(__webpack_exports__);
         lat: -0.180653,
         lng: -78.467834
       };
+      console.log(navigator.geolocation);
 
       if (!navigator.geolocation) {
         return location;
@@ -107210,6 +107239,19 @@ var actions = {
         var data = _ref4.response.data;
         commit('CREATE_REQUESTED_SERVICES_FAIL', data);
         reject(data);
+      });
+    });
+  },
+  deleteRequestedService: function deleteRequestedService(_ref5, id) {
+    var commit = _ref5.commit,
+        dispatch = _ref5.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route('api.request_services.destroy', id)).then(function (data) {
+        commit('DELETE_REQUEST_SERVICES_OK', data);
+        resolve();
+      })["catch"](function (error) {
+        commit('DELETE_REQUEST_SERVICES_FAIL');
+        reject(error.response.data);
       });
     });
   }

@@ -40,6 +40,13 @@
                         </li>
 
                         <li>
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="cancelService(row.id)">
+                                <i class="fas fa-trash-alt"></i>
+                                Cancelar
+                            </a>
+                        </li>
+
+                        <li>
                             <a href="#" class="dropdown-item" title="Eliminar" @click="showDriverModal">
                                 <i class="fas fa-users"></i>
                                 Choferes disponibles
@@ -197,7 +204,7 @@
 
         methods: {
             ...mapActions([
-                'deleteService',
+                'deleteRequestedService',
                 'acceptDriverService'
             ]),
 
@@ -210,11 +217,10 @@
             },
 
             onDeleteService(id) {
-                return;
-
                 this.serverErrors = {}
+
                 Swal.fire({
-                    title: 'Esta seguro que desea eliminar el ?',
+                    title: 'Esta seguro que desea eliminar el servicio?',
                     text: 'Puedes cancelar la operación',
                     type: 'warning',
                     showCancelButton: true,
@@ -224,28 +230,32 @@
                     showLoaderOnConfirm: true
                 }).then((result) => {
                     if (result.value) {
-                        this.deleteRoute(id)
+                        this.deleteRequestedService(id)
                             .then(() => {
                                 this.loading = false
                                 this.$notify({
                                     type: 'success',
-                                    group: 'index_route',
+                                    group: 'index_requested_services',
                                     title: 'Ruta',
-                                    text: 'Se ha eliminado la ruta correctamente'
+                                    text: 'Se ha eliminado el servicio'
                                 });
                             })
                             .catch((data) => {
                                 this.loading = false
                                 this.$notify({
                                     type: 'error',
-                                    group: 'index_route',
+                                    group: 'index_requested_services',
                                     title: 'Ruta',
-                                    text: 'Ha ocurrido un error al eliminar la ruta.'
+                                    text: 'Ha ocurrido un error al eliminar el servicio'
                                 });
                                 this.serverErrors = data.errors || {}
                             })
                     }
                 })
+            },
+
+            cancelService() {
+
             },
 
             clearFilter() {

@@ -190,6 +190,7 @@ class RequestServicesAPIController extends AppBaseController
         /** @var RequestServices $requestServices */
         $requestServices = $this->requestServicesRepository->find($id);
 
+        // Tener en cuenta cuando se puede eliminar
         if (empty($requestServices)) {
             return $this->sendError('Request Services not found');
         }
