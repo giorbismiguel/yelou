@@ -52,11 +52,13 @@ class RegisterGpsAPIController extends AppBaseController
      */
     public function store(CreateRegisterGpsAPIRequest $request)
     {
-        $input = $request->all();
-        $input['registered_at'] = convert_us_date_to_db($input['registered_at']);
-        $registerGps = $this->registerGpsRepository->create($input);
+        $registersGps = [];
+        foreach ($request->coordinates as $coordinate) {
+            $coordinate['registered_at'] = convert_us_date_to_db($coordinate['registered_at']);
+            $registersGps[] = $this->registerGpsRepository->create($coordinate);
+        }
 
-        return $this->sendResponse($registerGps->toArray(), 'Se ha registrado correctamente la coordenada');
+        return $this->sendResponse($registersGps, 'Se ha registrado correctamente la coordenada');
     }
 
     /**

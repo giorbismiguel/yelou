@@ -53,11 +53,7 @@ class RegisterGps extends Model
      * @var array
      */
     public static $rules = [
-        'lat'           => 'required|numeric',
-        'lng'           => 'required|numeric',
-        'driver_id'     => 'required|integer',
-        'service_id'    => 'required|integer',
-        'registered_at' => 'required|date_format:d/m/Y H:i:s',
+        'coordinates' => 'required|array',
     ];
 
     /* ========================================================================= *\
