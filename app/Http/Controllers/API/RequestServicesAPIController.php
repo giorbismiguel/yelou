@@ -212,9 +212,10 @@ class RequestServicesAPIController extends AppBaseController
             ->filter(function ($available) use ($input) {
                 return get_distance(
                         $input['lat_start'],
-                        $input['lng_start'], $available->lat,
+                        $input['lng_start'],
+                        $available->lat,
                         $available->lng
-                    ) < 1000; // Km
+                    ) < 100000000000000000; // Km
             })
             ->pluck('user_id');
 
