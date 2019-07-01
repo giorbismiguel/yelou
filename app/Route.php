@@ -49,7 +49,7 @@ class Route extends Model
         'lat_end'                 => 'double',
         'lng_end'                 => 'double',
         'formatted_address_end'   => 'string',
-        'favourite'               => 'boolean',
+        'favourite'               => 'integer',
     ];
 
     /**
