@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const state = {
     requestService: null,
-    responseRequested: null
+    responseRequested: null,
     responseDeleteService: null
 }
 

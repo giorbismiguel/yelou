@@ -106447,7 +106447,6 @@ __webpack_require__.r(__webpack_exports__);
         lat: -0.180653,
         lng: -78.467834
       };
-      console.log(navigator.geolocation);
 
       if (!navigator.geolocation) {
         return location;
@@ -107208,7 +107207,8 @@ __webpack_require__.r(__webpack_exports__);
 
 var state = {
   requestService: null,
-  responseRequested: null
+  responseRequested: null,
+  responseDeleteService: null
 };
 var actions = {
   createRequestService: function createRequestService(_ref, form) {
@@ -107235,22 +107235,21 @@ var actions = {
       })).then(function (data) {
         commit('CREATE_REQUESTED_SERVICES_OK', data);
         resolve();
-      })["catch"](function (_ref4) {
-        var data = _ref4.response.data;
-        commit('CREATE_REQUESTED_SERVICES_FAIL', data);
+      })["catch"](function (error) {
+        commit('CREATE_REQUESTED_SERVICES_FAIL', error);
         reject(data);
       });
     });
   },
-  deleteRequestedService: function deleteRequestedService(_ref5, id) {
-    var commit = _ref5.commit,
-        dispatch = _ref5.dispatch;
+  deleteRequestedService: function deleteRequestedService(_ref4, id) {
+    var commit = _ref4.commit,
+        dispatch = _ref4.dispatch;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route('api.request_services.destroy', id)).then(function (data) {
         commit('DELETE_REQUEST_SERVICES_OK', data);
         resolve();
       })["catch"](function (error) {
-        commit('DELETE_REQUEST_SERVICES_FAIL');
+        commit('DELETE_REQUEST_SERVICES_FAIL', error);
         reject(error.response.data);
       });
     });
@@ -107262,6 +107261,12 @@ var mutations = {
   },
   CREATE_REQUEST_SERVICES_FAIL: function CREATE_REQUEST_SERVICES_FAIL(state) {
     state.requestService = null;
+  },
+  DELETE_REQUEST_SERVICES_OK: function DELETE_REQUEST_SERVICES_OK(state, data) {
+    state.responseDeleteService = data;
+  },
+  DELETE_REQUEST_SERVICES_FAIL: function DELETE_REQUEST_SERVICES_FAIL(state, error) {
+    state.responseDeleteService = error;
   },
   CREATE_REQUESTED_SERVICES_OK: function CREATE_REQUESTED_SERVICES_OK(state, data) {
     state.responseRequested = data;

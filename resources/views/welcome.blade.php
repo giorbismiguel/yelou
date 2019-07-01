@@ -10,7 +10,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
-
+        <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
         <title>{{ config('app.name', 'Yelou') }}</title>
     </head>
     <body>
