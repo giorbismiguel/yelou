@@ -91,7 +91,7 @@ class AuthController extends Controller
         $request = $request->merge(['code_activation' => $codeActivation]);
         event(new Registered($user = $this->create($request->all())));
 
-//        $user->notify(new UserRegistered($codeActivation));
+        $user->notify(new UserRegistered($codeActivation));
 //
 //        Nexmo::message()->send([
 //            'to'   => $request->get('phone'),
