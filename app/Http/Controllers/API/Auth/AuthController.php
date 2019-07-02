@@ -168,7 +168,6 @@ class AuthController extends Controller
             'password'       => 'required|min:6|max:18|confirmed',
             'first_name'     => 'required|max:191',
             'last_name'      => 'required|max:191',
-            'birth_date'     => 'required|date_format:d/m/Y',
             'phone'          => 'required|max:191|unique:users',
             'ruc'            => 'required|max:191|unique:users',
             'direction'      => 'nullable|max:191',
@@ -181,7 +180,6 @@ class AuthController extends Controller
             'password'       => 'Contraseña',
             'first_name'     => 'Nombre ',
             'last_name'      => 'Apellido ',
-            'birth_date'     => 'Fecha de nacimiento',
             'phone'          => 'Teléfono',
             'ruc'            => 'RUC',
             'direction'      => 'Dirección',
@@ -200,6 +198,7 @@ class AuthController extends Controller
             ];
         } elseif ((int) request()->get('type') === \UserTypes::TRANSPORTATION) {
             $rules += [
+                'birth_date'                   => 'required|date_format:d/m/Y',
                 'license_types_id'             => 'required|integer',
                 'photo'                        => 'required|image|max:100000',
                 'image_driver_license'         => 'required|image|max:100000',
@@ -208,6 +207,7 @@ class AuthController extends Controller
             ];
 
             $customAttributes += [
+                'birth_date'                   => 'Fecha de nacimiento',
                 'license_types_id'             => 'Tipo de licencia de conducir',
                 'photo'                        => 'Foto',
                 'image_driver_license'         => 'Foto de la licencia de conducir',
@@ -227,6 +227,8 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
+        $birthDate = $data['birth_date'] ? convert_us_date_to_db($data['birth_date'].' 00:00:00') : null;
+
         return User::create([
             'type'                         => $data['type'],
             'name'                         => $data['name'],
@@ -234,7 +236,7 @@ class AuthController extends Controller
             'password'                     => bcrypt($data['password']),
             'first_name'                   => $data['first_name'],
             'last_name'                    => $data['last_name'],
-            'birth_date'                   => convert_us_date_to_db($data['birth_date'].' 00:00:00'),
+            'birth_date'                   => $birthDate,
             'phone'                        => $data['phone'],
             'ruc'                          => $data['ruc'],
             'direction'                    => $data['direction'],
