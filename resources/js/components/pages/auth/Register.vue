@@ -242,7 +242,7 @@
                                 <div class="form-group">
                                     <div class="col">
                                         <div class="custom-file">
-                                            <input v-validate="'required|image'" data-vv-as="Foto"
+                                            <input v-validate="'required|image'" data-vv-as="Foto" accept="image/*"
                                                    @change="onPhotoSelected" ref="Photo" type="file" name="photo"
                                                    id="photo" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('photo') }"/>
@@ -261,7 +261,7 @@
                                 <div class="form-group">
                                     <div class="col">
                                         <div class="custom-file">
-                                            <input v-validate="'required|image'" data-vv-as="Foto"
+                                            <input v-validate="'required|image'" data-vv-as="Foto" accept="image/*"
                                                    @change="onImageDriveLicenseSelected" ref="ImageDriveLicense"
                                                    type="file" name="image_driver_license"
                                                    id="image_driver_license" class="custom-file-input"
@@ -281,7 +281,7 @@
                                 <div class="form-group">
                                     <div class="col">
                                         <div class="custom-file">
-                                            <input v-validate="'required|image'"
+                                            <input v-validate="'required|image'" accept="image/*"
                                                    data-vv-as="Imagen del Permiso de circulación"
                                                    @change="onImagePermitCirculationSelected"
                                                    ref="ImagePermitCirculation" type="file"
@@ -307,7 +307,7 @@
                                                    data-vv-as="Imagen de Certificado de Antecedentes"
                                                    @change="onImageCertificateBackgroundSelected"
                                                    ref="ImageCertificateBackground" type="file"
-                                                   name="image_certificate_background"
+                                                   name="image_certificate_background" accept="image/*"
                                                    id="image_certificate_background" class="custom-file-input"
                                                    :class="{ 'is-invalid': submitted && errors.has('image_certificate_background') }"/>
                                             <label for="image_certificate_background" class="custom-file-label">
@@ -349,10 +349,12 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-start">
-                                    <router-link :to="{ name: 'login' }" tag="button" type="button" class="btn btn-cancel">
+                                    <router-link :to="{ name: 'login' }" tag="button" type="button"
+                                                 class="btn btn-cancel">
                                         Cancelar
                                     </router-link>
-                                    <button  @keyup.enter="onSubmit" type="submit" class="btn btn-accept ml-4" :disabled="loading">
+                                    <button @keyup.enter="onSubmit" type="submit" class="btn btn-accept ml-4"
+                                            :disabled="loading">
                                         Registrarse
                                     </button>
                                     <spinner v-if="loading" size="medium" class="ml-2"></spinner>
@@ -467,7 +469,7 @@
                         if (!this.isClient()) {
                             formData = new FormData()
                             for (key in this.form) {
-                                formData.append(key, this.form[key] !== null ? this.form[key] : '')
+                                formData.append(key, this.form[key])
                             }
                             formData.append('photo', this.selectedPhoto, this.selectedPhoto.name)
                             formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense.name)
