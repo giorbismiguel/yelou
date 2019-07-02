@@ -5960,7 +5960,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             formData = new FormData();
 
             for (key in _this.form) {
-              formData.append(key, _this.form[key] !== null ? _this.form[key] : '');
+              formData.append(key, _this.form[key]);
             }
 
             formData.append('photo', _this.selectedPhoto, _this.selectedPhoto.name);
@@ -7268,6 +7268,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -7349,7 +7354,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this.form.birth_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.birth_date), 'DD/MM/YYYY');
 
           for (key in _this.form) {
-            formData.append(key, _this.form[key] !== null ? _this.form[key] : '');
+            formData.append(key, _this.form[key]);
           }
 
           if (!_this.isClient()) {
@@ -72556,17 +72561,19 @@ var render = function() {
                                       "\n                                    "
                                   )
                                 ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "rounded float-right mt-2 mb-2",
-                            staticStyle: { width: "200px", height: "200px" },
-                            attrs: {
-                              src: "/storage/" + _vm.form.photo,
-                              alt: "Foto"
-                            }
-                          })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "rounded float-right mt-2 mb-2",
+                              staticStyle: { width: "200px", height: "200px" },
+                              attrs: {
+                                src: _vm.form.photo
+                                  ? "/storage/" + _vm.form.photo
+                                  : "/img/default-image.png",
+                                alt: "Foto"
+                              }
+                            })
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -72629,17 +72636,19 @@ var render = function() {
                                       "\n                                    "
                                   )
                                 ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "rounded float-right mt-2 mb-2",
-                            staticStyle: { width: "200px", height: "200px" },
-                            attrs: {
-                              src: "/storage/" + _vm.form.image_driver_license,
-                              alt: "Foto"
-                            }
-                          })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "rounded float-right mt-2 mb-2",
+                              staticStyle: { width: "200px", height: "200px" },
+                              attrs: {
+                                src: _vm.form.image_driver_license
+                                  ? "/storage/" + _vm.form.image_driver_license
+                                  : "/img/default-image.png",
+                                alt: "Foto"
+                              }
+                            })
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -72706,18 +72715,20 @@ var render = function() {
                                       "\n                                    "
                                   )
                                 ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "rounded float-right mt-2 mb-2",
-                            staticStyle: { width: "200px", height: "200px" },
-                            attrs: {
-                              src:
-                                "/storage/" + _vm.form.image_permit_circulation,
-                              alt: "Foto"
-                            }
-                          })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "rounded float-right mt-2 mb-2",
+                              staticStyle: { width: "200px", height: "200px" },
+                              attrs: {
+                                src: _vm.form.image_permit_circulation
+                                  ? "/storage/" +
+                                    _vm.form.image_permit_circulation
+                                  : "/img/default-image.png",
+                                alt: "Foto"
+                              }
+                            })
+                          ])
                         ]),
                         _vm._v(" "),
                         _c("div", { staticClass: "form-group" }, [
@@ -72786,19 +72797,20 @@ var render = function() {
                                       "\n                                    "
                                   )
                                 ])
-                              : _vm._e()
-                          ]),
-                          _vm._v(" "),
-                          _c("img", {
-                            staticClass: "rounded float-right mt-2 mb-2",
-                            staticStyle: { width: "200px", height: "200px" },
-                            attrs: {
-                              src:
-                                "/storage/" +
-                                _vm.form.image_certificate_background,
-                              alt: "Foto"
-                            }
-                          })
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _c("img", {
+                              staticClass: "rounded float-right mt-2 mb-2",
+                              staticStyle: { width: "200px", height: "200px" },
+                              attrs: {
+                                src: _vm.form.image_certificate_background
+                                  ? "/storage/" +
+                                    _vm.form.image_certificate_background
+                                  : "/img/default-image.png",
+                                alt: "Foto"
+                              }
+                            })
+                          ])
                         ])
                       ],
                   _vm._v(" "),

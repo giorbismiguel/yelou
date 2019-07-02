@@ -224,9 +224,11 @@
                                              class="invalid-feedback">
                                             {{ errors.first('photo') }}
                                         </div>
+
+                                        <img :src="(form.photo ? '/storage/' + form.photo : '/img/default-image.png')"
+                                             class="rounded float-right mt-2 mb-2"
+                                             alt="Foto" style="width: 200px; height: 200px;"/>
                                     </div>
-                                    <img :src="'/storage/' + form.photo" class="rounded float-right mt-2 mb-2"
-                                         alt="Foto" style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -246,10 +248,11 @@
                                              class="invalid-feedback">
                                             {{ errors.first('image_driver_license') }}
                                         </div>
+
+                                        <img :src="form.image_driver_license ? '/storage/' + form.image_driver_license : '/img/default-image.png'"
+                                             class="rounded float-right mt-2 mb-2" alt="Foto"
+                                             style="width: 200px; height: 200px;"/>
                                     </div>
-                                    <img :src="'/storage/' + form.image_driver_license"
-                                         class="rounded float-right mt-2 mb-2" alt="Foto"
-                                         style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -271,10 +274,11 @@
                                              class="invalid-feedback">
                                             {{ errors.first('image_permit_circulation') }}
                                         </div>
+
+                                        <img :src="form.image_permit_circulation ? '/storage/' + form.image_permit_circulation : '/img/default-image.png'"
+                                             class="rounded float-right mt-2 mb-2" alt="Foto"
+                                             style="width: 200px; height: 200px;"/>
                                     </div>
-                                    <img :src="'/storage/' + form.image_permit_circulation"
-                                         class="rounded float-right mt-2 mb-2" alt="Foto"
-                                         style="width: 200px; height: 200px;"/>
                                 </div>
 
                                 <div class="form-group">
@@ -296,10 +300,11 @@
                                              class="invalid-feedback">
                                             {{ errors.first('image_certificate_background') }}
                                         </div>
+
+                                        <img :src="form.image_certificate_background ? '/storage/' + form.image_certificate_background : '/img/default-image.png'"
+                                             class="rounded float-right mt-2 mb-2" alt="Foto"
+                                             style="width: 200px; height: 200px;"/>
                                     </div>
-                                    <img :src="'/storage/' + form.image_certificate_background"
-                                         class="rounded float-right mt-2 mb-2" alt="Foto"
-                                         style="width: 200px; height: 200px;"/>
                                 </div>
                             </template>
 
