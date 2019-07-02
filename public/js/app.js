@@ -5866,6 +5866,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -6938,6 +6940,8 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
+//
 //
 //
 //
@@ -69485,6 +69489,7 @@ var render = function() {
                               },
                               attrs: {
                                 "data-vv-as": "Foto",
+                                accept: "image/*",
                                 type: "file",
                                 name: "photo",
                                 id: "photo"
@@ -69544,6 +69549,7 @@ var render = function() {
                               },
                               attrs: {
                                 "data-vv-as": "Foto",
+                                accept: "image/*",
                                 type: "file",
                                 name: "image_driver_license",
                                 id: "image_driver_license"
@@ -69605,6 +69611,7 @@ var render = function() {
                                   _vm.errors.has("image_permit_circulation")
                               },
                               attrs: {
+                                accept: "image/*",
                                 "data-vv-as":
                                   "Imagen del Permiso de circulación",
                                 type: "file",
@@ -69676,6 +69683,7 @@ var render = function() {
                                   "Imagen de Certificado de Antecedentes",
                                 type: "file",
                                 name: "image_certificate_background",
+                                accept: "image/*",
                                 id: "image_certificate_background"
                               },
                               on: {
@@ -72515,7 +72523,8 @@ var render = function() {
                                   "data-vv-as": "Foto",
                                   type: "file",
                                   name: "photo",
-                                  id: "photo"
+                                  id: "photo",
+                                  accept: "image/*"
                                 },
                                 on: { change: _vm.onPhotoSelected }
                               }),
@@ -72584,6 +72593,7 @@ var render = function() {
                                     "Imagen de la licencia de conducir",
                                   type: "file",
                                   name: "image_driver_license",
+                                  accept: "image/*",
                                   id: "image_driver_license"
                                 },
                                 on: { change: _vm.onImageDriveLicenseSelected }
@@ -72652,6 +72662,7 @@ var render = function() {
                                     _vm.errors.has("image_permit_circulation")
                                 },
                                 attrs: {
+                                  accept: "image/*",
                                   "data-vv-as":
                                     "Imagen del Permiso de circulación",
                                   type: "file",
@@ -72731,6 +72742,7 @@ var render = function() {
                                     )
                                 },
                                 attrs: {
+                                  accept: "image/*",
                                   "data-vv-as":
                                     "Imagen de Certificado de Antecedentes",
                                   type: "file",
