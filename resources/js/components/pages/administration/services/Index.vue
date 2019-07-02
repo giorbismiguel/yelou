@@ -41,7 +41,7 @@
 
                         <li>
                             <a href="#" class="dropdown-item" title="Eliminar" @click="cancelService(row.id)">
-                                <i class="fas fa-trash-alt"></i>
+                                <i class="fas fa-ban"></i>
                                 Cancelar
                             </a>
                         </li>

@@ -3,7 +3,7 @@
         <div class="row justify-content-center">
             <div class="col-8">
                 <div class="card app_card m-4">
-                    <div class="card-header">Registrarse</div>
+                    <div class="card-header">Registrarse como {{ form.type === 1 ? 'Cliente' : 'Chofer' }}</div>
                     <div class="card-body">
                         <form class="form-horizontal" id="register_form" role="form" autocomplete="off"
                               @submit.prevent="onSubmit" novalidate>
@@ -106,30 +106,32 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="birth_date" class="col control-label">
-                                    Fecha de Nacimiento <span class="text-danger">*</span>
-                                </label>
+                            <template v-if="form.type === 2">
+                                <div class="form-group">
+                                    <label for="birth_date" class="col control-label">
+                                        Fecha de Nacimiento <span class="text-danger">*</span>
+                                    </label>
+                                    <div class="col">
+                                        <date-picker id="birth_date" name="birth_date" v-model="form.birth_date"
+                                                     style="width: 300px; display: block;" value-type="date"
+                                                     :lang="timePicker.lang" type="date" :format="timePicker.date"
+                                                     confirm
+                                                     confirm-text="Confirmar" v-validate="'required'"
+                                                     data-vv-as="Fecha de Nacimiento"
+                                                     :input-class="[ 'form-control', submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': '']">
+                                        </date-picker>
 
-                                <div class="col">
-                                    <date-picker id="birth_date" name="birth_date" v-model="form.birth_date"
-                                                 style="width: 300px; display: block;" value-type="date"
-                                                 :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
-                                                 confirm-text="Confirmar" v-validate="'required'"
-                                                 data-vv-as="Fecha de Nacimiento"
-                                                 :input-class="[ 'form-control', submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': '']">
-                                    </date-picker>
+                                        <input type="text" class="form-control" v-show="false"
+                                               :class="submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': ''"/>
 
-                                    <input type="text" class="form-control" v-show="false"
-                                           :class="submitted && (serverErrors.birth_date || errors.has('birth_date')) ? 'is-invalid': ''"/>
-
-                                    <div v-if="submitted && (serverErrors.birth_date || errors.has('birth_date'))"
-                                         class="invalid-feedback">
-                                        {{ errors.first('birth_date') }}
-                                        <template v-for="error in serverErrors.birth_date">{{ error }}</template>
+                                        <div v-if="submitted && (serverErrors.birth_date || errors.has('birth_date'))"
+                                             class="invalid-feedback">
+                                            {{ errors.first('birth_date') }}
+                                            <template v-for="error in serverErrors.birth_date">{{ error }}</template>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </template>
 
                             <div class="form-group">
                                 <label for="phone" class="col control-label">
@@ -463,7 +465,10 @@
                     if (valid) {
                         this.loading = true
                         let formData, key
-                        this.form.birth_date = DatePicker.fecha.format(new Date(this.form.birth_date), 'DD/MM/YYYY')
+
+                        if (this.form.type === 2) {
+                            this.form.birth_date = DatePicker.fecha.format(new Date(this.form.birth_date), 'DD/MM/YYYY')
+                        }
                         this.form.term_condition = this.form.term_condition ? 1 : 0
 
                         if (!this.isClient()) {
@@ -481,7 +486,6 @@
                         this.register(formData ? formData : this.form)
                             .then(() => {
                                 this.loading = false
-
                                 Swal.fire({
                                     text: 'Para la activación  de su cuenta se enviará un código al celular, por favor verifique los datos para registrarse.',
                                     type: 'success',

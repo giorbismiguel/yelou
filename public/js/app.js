@@ -5868,6 +5868,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -5953,7 +5955,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         if (valid) {
           _this.loading = true;
           var formData, key;
-          _this.form.birth_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.form.birth_date), 'DD/MM/YYYY');
+
+          if (_this.form.type === 2) {
+            _this.form.birth_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.form.birth_date), 'DD/MM/YYYY');
+          }
+
           _this.form.term_condition = _this.form.term_condition ? 1 : 0;
 
           if (!_this.isClient()) {
@@ -67758,7 +67764,7 @@ var render = function() {
                               }
                             },
                             [
-                              _c("i", { staticClass: "fas fa-trash-alt" }),
+                              _c("i", { staticClass: "fas fa-ban" }),
                               _vm._v(
                                 "\n                            Cancelar\n                        "
                               )
@@ -68630,7 +68636,12 @@ var render = function() {
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-8" }, [
         _c("div", { staticClass: "card app_card m-4" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Registrarse")]),
+          _c("div", { staticClass: "card-header" }, [
+            _vm._v(
+              "Registrarse como " +
+                _vm._s(_vm.form.type === 1 ? "Cliente" : "Chofer")
+            )
+          ]),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c(
@@ -68987,95 +68998,100 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _vm._m(6),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    { staticClass: "col" },
-                    [
-                      _c("date-picker", {
-                        directives: [
-                          {
-                            name: "validate",
-                            rawName: "v-validate",
-                            value: "required",
-                            expression: "'required'"
-                          }
-                        ],
-                        staticStyle: { width: "300px", display: "block" },
-                        attrs: {
-                          id: "birth_date",
-                          name: "birth_date",
-                          "value-type": "date",
-                          lang: _vm.timePicker.lang,
-                          type: "date",
-                          format: _vm.timePicker.date,
-                          confirm: "",
-                          "confirm-text": "Confirmar",
-                          "data-vv-as": "Fecha de Nacimiento",
-                          "input-class": [
-                            "form-control",
+                _vm.form.type === 2
+                  ? [
+                      _c("div", { staticClass: "form-group" }, [
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          { staticClass: "col" },
+                          [
+                            _c("date-picker", {
+                              directives: [
+                                {
+                                  name: "validate",
+                                  rawName: "v-validate",
+                                  value: "required",
+                                  expression: "'required'"
+                                }
+                              ],
+                              staticStyle: { width: "300px", display: "block" },
+                              attrs: {
+                                id: "birth_date",
+                                name: "birth_date",
+                                "value-type": "date",
+                                lang: _vm.timePicker.lang,
+                                type: "date",
+                                format: _vm.timePicker.date,
+                                confirm: "",
+                                "confirm-text": "Confirmar",
+                                "data-vv-as": "Fecha de Nacimiento",
+                                "input-class": [
+                                  "form-control",
+                                  _vm.submitted &&
+                                  (_vm.serverErrors.birth_date ||
+                                    _vm.errors.has("birth_date"))
+                                    ? "is-invalid"
+                                    : ""
+                                ]
+                              },
+                              model: {
+                                value: _vm.form.birth_date,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.form, "birth_date", $$v)
+                                },
+                                expression: "form.birth_date"
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "show",
+                                  rawName: "v-show",
+                                  value: false,
+                                  expression: "false"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class:
+                                _vm.submitted &&
+                                (_vm.serverErrors.birth_date ||
+                                  _vm.errors.has("birth_date"))
+                                  ? "is-invalid"
+                                  : "",
+                              attrs: { type: "text" }
+                            }),
+                            _vm._v(" "),
                             _vm.submitted &&
                             (_vm.serverErrors.birth_date ||
                               _vm.errors.has("birth_date"))
-                              ? "is-invalid"
-                              : ""
-                          ]
-                        },
-                        model: {
-                          value: _vm.form.birth_date,
-                          callback: function($$v) {
-                            _vm.$set(_vm.form, "birth_date", $$v)
-                          },
-                          expression: "form.birth_date"
-                        }
-                      }),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: false,
-                            expression: "false"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class:
-                          _vm.submitted &&
-                          (_vm.serverErrors.birth_date ||
-                            _vm.errors.has("birth_date"))
-                            ? "is-invalid"
-                            : "",
-                        attrs: { type: "text" }
-                      }),
-                      _vm._v(" "),
-                      _vm.submitted &&
-                      (_vm.serverErrors.birth_date ||
-                        _vm.errors.has("birth_date"))
-                        ? _c(
-                            "div",
-                            { staticClass: "invalid-feedback" },
-                            [
-                              _vm._v(
-                                "\n                                    " +
-                                  _vm._s(_vm.errors.first("birth_date")) +
-                                  "\n                                    "
-                              ),
-                              _vm._l(_vm.serverErrors.birth_date, function(
-                                error
-                              ) {
-                                return [_vm._v(_vm._s(error))]
-                              })
-                            ],
-                            2
-                          )
-                        : _vm._e()
-                    ],
-                    1
-                  )
-                ]),
+                              ? _c(
+                                  "div",
+                                  { staticClass: "invalid-feedback" },
+                                  [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(_vm.errors.first("birth_date")) +
+                                        "\n                                        "
+                                    ),
+                                    _vm._l(
+                                      _vm.serverErrors.birth_date,
+                                      function(error) {
+                                        return [_vm._v(_vm._s(error))]
+                                      }
+                                    )
+                                  ],
+                                  2
+                                )
+                              : _vm._e()
+                          ],
+                          1
+                        )
+                      ])
+                    ]
+                  : _vm._e(),
                 _vm._v(" "),
                 _c("div", { staticClass: "form-group" }, [
                   _vm._m(7),
@@ -70024,7 +70040,7 @@ var staticRenderFns = [
       "label",
       { staticClass: "col control-label", attrs: { for: "birth_date" } },
       [
-        _vm._v("\n                                Fecha de Nacimiento "),
+        _vm._v("\n                                    Fecha de Nacimiento "),
         _c("span", { staticClass: "text-danger" }, [_vm._v("*")])
       ]
     )

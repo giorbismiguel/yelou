@@ -38,13 +38,12 @@ class UpdateUserAPIRequest extends APIRequest
             ],
             'first_name' => 'required|max:191',
             'last_name'  => 'required|max:191',
-            'birth_date' => 'required|date_format:d/m/Y',
             'phone'      => [
                 'required',
                 'max:191',
                 Rule::unique('users')->ignore((int) $this->route('user'))
             ],
-            'ruc'      => [
+            'ruc'        => [
                 'required',
                 'max:191',
                 Rule::unique('users')->ignore((int) $this->route('user'))
@@ -60,6 +59,7 @@ class UpdateUserAPIRequest extends APIRequest
 
         } elseif ((int) request()->get('type') === \UserTypes::TRANSPORTATION) {
             $rules += [
+                'birth_date'                   => 'required|date_format:d/m/Y',
                 'license_types_id'             => 'required|integer',
                 'photo'                        => 'nullable|image|max:100000',
                 'image_driver_license'         => 'nullable|image|max:100000',
