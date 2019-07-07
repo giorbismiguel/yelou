@@ -39,7 +39,16 @@ class RouteAPIController extends AppBaseController
             $inputs,
             $request->get('page'),
             $request->get('per_page'),
-            ['id', 'name', 'formatted_address_start', 'formatted_address_end'],
+            [
+                'id',
+                'name',
+                'formatted_address_start',
+                'formatted_address_end',
+                'lat_start',
+                'lat_end',
+                'lng_start',
+                'lng_end',
+            ],
             $request->get('order_by'),
             $request->get('sort_by')
         );
