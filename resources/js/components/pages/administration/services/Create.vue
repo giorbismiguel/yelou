@@ -79,7 +79,7 @@
 
                                 <date-picker id="start_date" name="start_date" v-model="defaultDate"
                                              style="width: 300px; display: block;" value-type="date"
-                                             :not-before="new Date()"
+                                             :not-before="timePicker.notBefore"
                                              :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
                                              confirm-text="Confirmar"
                                              :input-class="[ 'form-control', submitted && serverErrors.start_date ? 'is-invalid': '']">
@@ -99,7 +99,7 @@
 
                                 <date-picker id="start_time" name="start_time" v-model="defaultTime"
                                              style="width: 300px; display: block;" :lang="timePicker.langTime"
-                                             type="time"
+                                             type="time" :time-picker-options="timePicker.timePickerOption"
                                              :format="timePicker.time" confirm confirm-text="Confirmar">
                                 </date-picker>
 
@@ -125,7 +125,8 @@
 
                             <div class="form-group">
                                 <div class="col d-flex justify-content-start">
-                                    <router-link :to="{ name: 'services' }" tag="button" type="button" class="btn btn-cancel mr-4">
+                                    <router-link :to="{ name: 'services' }" tag="button" type="button"
+                                                 class="btn btn-cancel mr-4">
                                         Cancelar
                                     </router-link>
 
@@ -239,7 +240,13 @@
                         }
                     },
                     date: 'DD/MM/YYYY',
-                    time: 'hh:mm:ss'
+                    time: 'hh:mm:ss',
+                    notBefore: new Date(),
+                    timePickerOption: {
+                        start: DatePicker.fecha.format(new Date(), 'HH:mm:ss'),
+                        step: DatePicker.fecha.format(new Date(), '00:01'),
+                        end: '23:59:59'
+                    }
                 },
                 submitted: false,
                 loading: false,

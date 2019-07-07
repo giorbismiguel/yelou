@@ -4399,6 +4399,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 
@@ -4455,7 +4456,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           }
         },
         date: 'DD/MM/YYYY',
-        time: 'hh:mm:ss'
+        time: 'hh:mm:ss',
+        notBefore: new Date(),
+        timePickerOption: {
+          start: vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(), 'HH:mm:ss'),
+          step: vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(), '00:01'),
+          end: '23:59:59'
+        }
       },
       submitted: false,
       loading: false,
@@ -67298,7 +67305,7 @@ var render = function() {
                               id: "start_date",
                               name: "start_date",
                               "value-type": "date",
-                              "not-before": new Date(),
+                              "not-before": _vm.timePicker.notBefore,
                               lang: _vm.timePicker.lang,
                               type: "date",
                               format: _vm.timePicker.date,
@@ -67370,6 +67377,8 @@ var render = function() {
                               name: "start_time",
                               lang: _vm.timePicker.langTime,
                               type: "time",
+                              "time-picker-options":
+                                _vm.timePicker.timePickerOption,
                               format: _vm.timePicker.time,
                               confirm: "",
                               "confirm-text": "Confirmar"
