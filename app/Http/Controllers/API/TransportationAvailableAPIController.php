@@ -104,15 +104,15 @@ class TransportationAvailableAPIController extends AppBaseController
     {
         $input = $request->all();
 
-        $transportationAvailable = $this->transportationAvailableRepository->makeModel()->updateOrInsert(
+        $this->transportationAvailableRepository->makeModel()->updateOrInsert(
             ['user_id' => $input['user_id']],
             ['lat' => $input['lat'], 'lng' => $input['lng'], 'active' => $input['active']]
         );
 
-        return $this->sendResponse(
-            $transportationAvailable,
-            'Punto de disponibilidad del transportista actualizado'
-        );
+        return $this->sendResponse([
+            'active'    => $input['active'],
+            'driver_id' => $input['user_id'],
+        ], 'Punto de disponibilidad del transportista actualizado');
     }
 
     /**
@@ -158,8 +158,10 @@ class TransportationAvailableAPIController extends AppBaseController
 
         $transportationAvailable = $this->transportationAvailableRepository->update($input, $id);
 
-        return $this->sendResponse($transportationAvailable->toArray(),
-            'Punto de disponibilidad del transportista actualizado');
+        return $this->sendResponse(
+            $transportationAvailable->toArray(),
+            'Punto de disponibilidad del transportista actualizado'
+        );
     }
 
     /**
