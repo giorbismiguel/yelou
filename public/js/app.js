@@ -4497,7 +4497,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     }
   }), {
     originAndSourceActive: function originAndSourceActive() {
-      return this.coordinatesOrigin && !this.route && !this.originRequestService && this.destinationRequestService || this.originRequestService && this.destinationRequestService;
+      return this.coordinatesOrigin && !this.route && !this.originRequestService && this.destinationRequestService || this.originRequestService && this.destinationRequestService || this.coordinatesOrigin && this.coordinatesDestiny;
     }
   }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['nomenclatorsRequestServices', 'createRequestService', 'calculateRate']), {

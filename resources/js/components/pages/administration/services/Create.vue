@@ -286,6 +286,8 @@
                     this.destinationRequestService)
                     ||
                     (this.originRequestService && this.destinationRequestService)
+                    ||
+                    (this.coordinatesOrigin && this.coordinatesDestiny)
             }
         },
 
