@@ -92,6 +92,12 @@ $fa-font-path: "../webfonts";
   font-size: 16px;
   color: #2089C0;
   text-align: center;
+  border: 1px solid #2089C0;
+}
+
+.btn-cancel:hover {
+  color: #2089C0;
+  border: 2px solid #2089C0;
 }
 
 .btn-accept {
@@ -103,11 +109,8 @@ $fa-font-path: "../webfonts";
   text-align: center;
 }
 
-.btn-cancel:hover {
-  color: #2089C0;
-}
-
 .btn-accept:hover {
+  border: 2px solid #2089C0;
   color: #FFFDE9;
 }
 
