@@ -13,7 +13,7 @@
                           :filters="filters"
                           @clearFilters="clearFilter">
 
-                    <template slot="table-title">Todos sus recorridos solicitados</template>
+                    <template slot="table-title">Todos sus recorridos</template>
 
                     <template slot="client_id" slot-scope="{row}">
                         {{ row.client.name }}
@@ -36,13 +36,6 @@
                     </template>
 
                     <ye-actions slot="actions" slot-scope="{row}" class="text-center">
-                        <li v-if="false">
-                            <router-link :to="{name: 'services_edit', params: { id: row.id } }" class="dropdown-item"
-                                         title="Edit">
-                                <i class="fas fa-pen-square"></i>
-                                Editar
-                            </router-link>
-                        </li>
                         <li>
                             <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)">
                                 <i class="fas fa-trash-alt"></i>
@@ -65,7 +58,6 @@
     import {cloneDeep} from '../../../modules/query-string'
     import {mapState, mapActions} from 'vuex'
     import Swal from 'sweetalert2'
-    import DatePicker from 'vue2-datepicker'
 
     export default {
         name: "Tours",
@@ -123,13 +115,13 @@
 
         methods: {
             ...mapActions([
-                'deleteRoute',
+                'deleteRequestedService',
             ]),
 
             onDelete(id) {
                 this.serverErrors = {}
                 Swal.fire({
-                    title: 'Esta seguro que desea eliminar el ?',
+                    title: 'Esta seguro que desea eliminar el servicio?',
                     text: 'Puedes cancelar la operación',
                     type: 'warning',
                     showCancelButton: true,
@@ -139,14 +131,14 @@
                     showLoaderOnConfirm: true
                 }).then((result) => {
                     if (result.value) {
-                        this.deleteRoute(id)
+                        this.deleteRequestedService(id)
                             .then(() => {
                                 this.loading = false
                                 this.$notify({
                                     type: 'success',
                                     group: 'index_route',
                                     title: 'Ruta',
-                                    text: 'Se ha eliminado la ruta correctamente'
+                                    text: 'Se ha eliminado el servicio'
                                 });
 
                                 this.reloadTable()

@@ -35,7 +35,7 @@ const actions = {
         })
     },
 
-    deleteRequestedService({commit, dispatch}, id) {
+    deleteRequestService({commit, dispatch}, id) {
         return new Promise((resolve, reject) => {
             axios.delete(route('api.request_services.destroy', id))
                 .then((data) => {

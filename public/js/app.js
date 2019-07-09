@@ -4934,7 +4934,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return route('api.requested_services.index');
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRequestedService', 'acceptDriverService']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRequestService', 'acceptDriverService']), {
     hideDriverModel: function hideDriverModel() {
       this.modal.showDriver = false;
     },
@@ -4956,7 +4956,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         showLoaderOnConfirm: true
       }).then(function (result) {
         if (result.value) {
-          _this.deleteRequestedService(id).then(function () {
+          _this.deleteRequestService(id).then(function () {
             _this.loading = false;
 
             _this.$notify({
@@ -4965,6 +4965,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               title: 'Ruta',
               text: 'Se ha eliminado el servicio'
             });
+
+            _this.reloadTable();
           })["catch"](function (data) {
             _this.loading = false;
 
@@ -5048,8 +5050,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2/dist/sweetalert2.all.js");
 /* harmony import */ var sweetalert2__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(sweetalert2__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue2-datepicker */ "./node_modules/vue2-datepicker/lib/index.js");
-/* harmony import */ var vue2_datepicker__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue2_datepicker__WEBPACK_IMPORTED_MODULE_4__);
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -5120,7 +5120,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Tours",
   data: function data() {
@@ -5156,13 +5155,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return route('api.requested_services.index');
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRoute']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRequestedService']), {
     onDelete: function onDelete(id) {
       var _this = this;
 
       this.serverErrors = {};
       sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
-        title: 'Esta seguro que desea eliminar el ?',
+        title: 'Esta seguro que desea eliminar el servicio?',
         text: 'Puedes cancelar la operación',
         type: 'warning',
         showCancelButton: true,
@@ -5172,14 +5171,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         showLoaderOnConfirm: true
       }).then(function (result) {
         if (result.value) {
-          _this.deleteRoute(id).then(function () {
+          _this.deleteRequestedService(id).then(function () {
             _this.loading = false;
 
             _this.$notify({
               type: 'success',
               group: 'index_route',
               title: 'Ruta',
-              text: 'Se ha eliminado la ruta correctamente'
+              text: 'Se ha eliminado el servicio'
             });
 
             _this.reloadTable();
@@ -107290,7 +107289,7 @@ var actions = {
       });
     });
   },
-  deleteRequestedService: function deleteRequestedService(_ref4, id) {
+  deleteRequestService: function deleteRequestService(_ref4, id) {
     var commit = _ref4.commit,
         dispatch = _ref4.dispatch;
     return new Promise(function (resolve, reject) {
@@ -107322,6 +107321,52 @@ var mutations = {
   },
   CREATE_REQUESTED_SERVICES_FAIL: function CREATE_REQUESTED_SERVICES_FAIL(state, data) {
     state.responseRequested = data;
+  }
+};
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: state,
+  actions: actions,
+  mutations: mutations
+});
+
+/***/ }),
+
+/***/ "./resources/js/vuex/modules/requested_services.js":
+/*!*********************************************************!*\
+  !*** ./resources/js/vuex/modules/requested_services.js ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+
+var state = {
+  responseDeleteRequestedService: null
+};
+var actions = {
+  deleteRequestedService: function deleteRequestedService(_ref, id) {
+    var commit = _ref.commit,
+        dispatch = _ref.dispatch;
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route('api.requested_services.destroy', id)).then(function (data) {
+        commit('DELETE_REQUESTED_SERVICES_OK', data);
+        resolve();
+      })["catch"](function (error) {
+        commit('DELETE_REQUESTED_SERVICES_FAIL', error);
+        reject(error.response.data);
+      });
+    });
+  }
+};
+var mutations = {
+  DELETE_REQUESTED_SERVICES_OK: function DELETE_REQUESTED_SERVICES_OK(state, data) {
+    state.responseDeleteRequestedService = data;
+  },
+  DELETE_REQUESTED_SERVICES_FAIL: function DELETE_REQUESTED_SERVICES_FAIL(state, error) {
+    state.responseDeleteRequestedService = error;
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -107458,6 +107503,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_routes__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/routes */ "./resources/js/vuex/modules/routes.js");
 /* harmony import */ var _modules_request_services__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./modules/request_services */ "./resources/js/vuex/modules/request_services.js");
 /* harmony import */ var _modules_drivers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./modules/drivers */ "./resources/js/vuex/modules/drivers.js");
+/* harmony import */ var _modules_requested_services__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./modules/requested_services */ "./resources/js/vuex/modules/requested_services.js");
+
 
 
 
@@ -107478,7 +107525,8 @@ var debug = "development" !== 'production'; // console.log(process.env.NODE_ENV)
     general: _modules_general__WEBPACK_IMPORTED_MODULE_5__["default"],
     routes: _modules_routes__WEBPACK_IMPORTED_MODULE_6__["default"],
     requestServices: _modules_request_services__WEBPACK_IMPORTED_MODULE_7__["default"],
-    driversAvailables: _modules_drivers__WEBPACK_IMPORTED_MODULE_8__["default"]
+    driversAvailables: _modules_drivers__WEBPACK_IMPORTED_MODULE_8__["default"],
+    requestedService: _modules_requested_services__WEBPACK_IMPORTED_MODULE_9__["default"]
   }
 }));
 
