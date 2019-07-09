@@ -26,7 +26,7 @@ class RequestedService extends Model
 
     protected $with = [
         'client:id,name,phone',
-        'service:id,name_start,name_end',
+        'service:id,name_start,name_end,start_date,start_time',
         'status:id,name',
         'transporter:id,name',
     ];
@@ -39,7 +39,8 @@ class RequestedService extends Model
     ];
 
     protected $hidden = [
-        'updated_at'
+        'created_at',
+        'updated_at',
     ];
 
     /**
