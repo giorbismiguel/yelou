@@ -64,6 +64,7 @@ Route::prefix('v1')->group(function () {
                 ->name('drivers.available');
             Route::resource('requested_services', 'RequestedServiceAPIController');
             Route::resource('register_gps', 'RegisterGpsAPIController');
+            Route::resource('driver_qualifications', 'DriverQualificationAPIController');
 
             /*
              * Admin Area
