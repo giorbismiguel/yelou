@@ -239,6 +239,8 @@
                                     title: 'Ruta',
                                     text: 'Se ha eliminado el servicio'
                                 });
+
+                                this.reloadTable()
                             })
                             .catch((data) => {
                                 this.loading = false

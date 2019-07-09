@@ -41,11 +41,11 @@ class RequestedServiceAPIController extends AppBaseController
             'sort_by'
         ]);
 
-        if ($user->type === 2) {
+        if ($user->type === 2) { // Driver
             $inputs['transporter_id'] = $user->id;
-        } elseif ($user->type === 1) {
+        } elseif ($user->type === 1) { // Client
             $inputs['client_id'] = $user->id;
-            $inputs['status_id'] = 1;
+            $inputs['status_id'] = 1; // Pendiente
         }
 
         $requestedServices = $this->requestedServiceRepository->allPagination(

@@ -4965,6 +4965,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
               title: 'Ruta',
               text: 'Se ha eliminado el servicio'
             });
+
+            _this.reloadTable();
           })["catch"](function (data) {
             _this.loading = false;
 
