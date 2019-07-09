@@ -7,6 +7,7 @@ import general from './modules/general'
 import routes from './modules/routes'
 import requestServices from './modules/request_services'
 import driversAvailables from './modules/drivers'
+import requestedService from './modules/requested_services'
 
 Vue.use(Vuex)
 
@@ -23,5 +24,6 @@ export default new Vuex.Store({
         routes,
         requestServices,
         driversAvailables,
+        requestedService,
     }
 })

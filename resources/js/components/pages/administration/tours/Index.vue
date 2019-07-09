@@ -65,7 +65,6 @@
     import {cloneDeep} from '../../../modules/query-string'
     import {mapState, mapActions} from 'vuex'
     import Swal from 'sweetalert2'
-    import DatePicker from 'vue2-datepicker'
 
     export default {
         name: "Tours",
@@ -123,13 +122,13 @@
 
         methods: {
             ...mapActions([
-                'deleteRoute',
+                'deleteRequestedService',
             ]),
 
             onDelete(id) {
                 this.serverErrors = {}
                 Swal.fire({
-                    title: 'Esta seguro que desea eliminar el ?',
+                    title: 'Esta seguro que desea eliminar el servicio?',
                     text: 'Puedes cancelar la operación',
                     type: 'warning',
                     showCancelButton: true,
@@ -139,14 +138,14 @@
                     showLoaderOnConfirm: true
                 }).then((result) => {
                     if (result.value) {
-                        this.deleteRoute(id)
+                        this.deleteRequestedService(id)
                             .then(() => {
                                 this.loading = false
                                 this.$notify({
                                     type: 'success',
                                     group: 'index_route',
                                     title: 'Ruta',
-                                    text: 'Se ha eliminado la ruta correctamente'
+                                    text: 'Se ha eliminado el servicio'
                                 });
 
                                 this.reloadTable()
