@@ -1,7 +1,7 @@
 <?php namespace Tests\Traits;
 
 use Faker\Factory as Faker;
-use App\Models\DriverQualification;
+use App\DriverQualification;
 use App\Repositories\DriverQualificationRepository;
 
 trait MakeDriverQualificationTrait

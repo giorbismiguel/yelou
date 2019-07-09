@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\API;
 
-use App\Models\DriverQualification;
+use App\DriverQualification;
 use InfyOm\Generator\Request\APIRequest;
 
 class UpdateDriverQualificationAPIRequest extends APIRequest

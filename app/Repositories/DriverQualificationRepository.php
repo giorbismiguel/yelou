@@ -2,8 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\DriverQualification;
-use App\Repositories\BaseRepository;
+use App\DriverQualification;
 
 /**
  * Class DriverQualificationRepository

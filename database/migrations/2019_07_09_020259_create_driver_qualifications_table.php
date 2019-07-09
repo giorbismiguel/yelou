@@ -14,9 +14,16 @@ class CreateDriverQualificationsTable extends Migration
     public function up()
     {
         Schema::create('driver_qualifications', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('driver_id');
             $table->integer('qualification');
+
+            $table->foreign('driver_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('no action')
+                ->onUpdate('no action');
+
             $table->timestamps();
             $table->softDeletes();
         });

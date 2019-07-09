@@ -1,6 +1,6 @@
 <?php namespace Tests\Repositories;
 
-use App\Models\DriverQualification;
+use App\DriverQualification;
 use App\Repositories\DriverQualificationRepository;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Tests\TestCase;

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateDriverQualificationAPIRequest;
-use App\Http\Requests\API\UpdateDriverQualificationAPIRequest;
-use App\Models\DriverQualification;
+use App\DriverQualification;
 use App\Repositories\DriverQualificationRepository;
+use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
@@ -14,15 +14,18 @@ use Response;
  * Class DriverQualificationController
  * @package App\Http\Controllers\API
  */
-
 class DriverQualificationAPIController extends AppBaseController
 {
     /** @var  DriverQualificationRepository */
     private $driverQualificationRepository;
 
-    public function __construct(DriverQualificationRepository $driverQualificationRepo)
+    /** @var UserRepository */
+    private $userRepository;
+
+    public function __construct(DriverQualificationRepository $driverQualificationRepo, UserRepository $userRepository)
     {
         $this->driverQualificationRepository = $driverQualificationRepo;
+        $this->userRepository = $userRepository;
     }
 
     /**
@@ -40,7 +43,10 @@ class DriverQualificationAPIController extends AppBaseController
             $request->get('limit')
         );
 
-        return $this->sendResponse($driverQualifications->toArray(), 'Driver Qualifications retrieved successfully');
+        return $this->sendResponse(
+            $driverQualifications->toArray(),
+            'Driver Qualifications retrieved successfully'
+        );
     }
 
     /**
@@ -55,9 +61,32 @@ class DriverQualificationAPIController extends AppBaseController
     {
         $input = $request->all();
 
+        $user = $this->userRepository->find($input['driver_id']);
+        if ($user && $user->type === 1) {
+            return $this->sendError('No puede calificar a un cliente');
+        }
+
+        $driverQualification = $this->driverQualificationRepository->allQuery(
+            ['driver_id' => $input['driver_id']]
+        )->first();
+
+        if ($driverQualification) {
+            $input['qualification'] = ($input['qualification'] + $driverQualification->qualification) / 2;
+
+            $driverQualification = $this->driverQualificationRepository->update($input, $driverQualification->id);
+
+            return $this->sendResponse(
+                $driverQualification->toArray(),
+                'La calificación del chofer ha sido actualizada'
+            );
+        }
+
         $driverQualification = $this->driverQualificationRepository->create($input);
 
-        return $this->sendResponse($driverQualification->toArray(), 'Driver Qualification saved successfully');
+        return $this->sendResponse(
+            $driverQualification->toArray(),
+            'La calificación del chofer ha sido creada'
+        );
     }
 
     /**
@@ -74,35 +103,10 @@ class DriverQualificationAPIController extends AppBaseController
         $driverQualification = $this->driverQualificationRepository->find($id);
 
         if (empty($driverQualification)) {
-            return $this->sendError('Driver Qualification not found');
+            return $this->sendError('Calificación del chofer no encontrada');
         }
 
-        return $this->sendResponse($driverQualification->toArray(), 'Driver Qualification retrieved successfully');
-    }
-
-    /**
-     * Update the specified DriverQualification in storage.
-     * PUT/PATCH /driverQualifications/{id}
-     *
-     * @param int $id
-     * @param UpdateDriverQualificationAPIRequest $request
-     *
-     * @return Response
-     */
-    public function update($id, UpdateDriverQualificationAPIRequest $request)
-    {
-        $input = $request->all();
-
-        /** @var DriverQualification $driverQualification */
-        $driverQualification = $this->driverQualificationRepository->find($id);
-
-        if (empty($driverQualification)) {
-            return $this->sendError('Driver Qualification not found');
-        }
-
-        $driverQualification = $this->driverQualificationRepository->update($input, $id);
-
-        return $this->sendResponse($driverQualification->toArray(), 'DriverQualification updated successfully');
+        return $this->sendResponse($driverQualification->toArray(), 'Calificación del chofer');
     }
 
     /**
@@ -121,11 +125,12 @@ class DriverQualificationAPIController extends AppBaseController
         $driverQualification = $this->driverQualificationRepository->find($id);
 
         if (empty($driverQualification)) {
-            return $this->sendError('Driver Qualification not found');
+            return $this->sendError('Calificación del chofer no encontrada');
         }
 
         $driverQualification->delete();
 
-        return $this->sendResponse($id, 'Driver Qualification deleted successfully');
+        return $this->sendResponse($id, 'Calificación del chofer eliminada');
     }
+
 }
