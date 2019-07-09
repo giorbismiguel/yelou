@@ -20,22 +20,27 @@ class RequestedService extends Model
 {
     use SoftDeletes;
 
-    public $table = 'requested_services';
+    protected $table = 'requested_services';
 
     protected $dates = ['deleted_at'];
 
     protected $with = [
         'client:id,name,phone',
-        'service:id,name_start,name_end',
+        'service:id,name_start,name_end,start_date,start_time',
         'status:id,name',
         'transporter:id,name',
     ];
 
-    public $fillable = [
+    protected $fillable = [
         'client_id',
         'transporter_id',
         'service_id',
         'status_id',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
     ];
 
     /**
