@@ -138,11 +138,15 @@ class RequestedServiceAPIController extends AppBaseController
         $requestedService = $this->requestedServiceRepository->find($id);
 
         if (empty($requestedService)) {
-            return $this->sendError('Requested Service not found');
+            return $this->sendError('No se ha encontrado el recorrido que desea eliminar.');
+        }
+
+        if ($requestedService->status_id === 1) { // 1 Pendiente
+            return $this->sendError('No puede eliminar un recorrido con estado pendiente.');
         }
 
         $requestedService->delete();
 
-        return $this->sendResponse($id, 'Requested Service deleted successfully');
+        return $this->sendResponse($id, 'El recorrido ha sido eliminado.');
     }
 }

@@ -13,7 +13,7 @@
                           :filters="filters"
                           @clearFilters="clearFilter">
 
-                    <template slot="table-title">Todos sus recorridos solicitados</template>
+                    <template slot="table-title">Todos sus recorridos</template>
 
                     <template slot="client_id" slot-scope="{row}">
                         {{ row.client.name }}
@@ -36,13 +36,6 @@
                     </template>
 
                     <ye-actions slot="actions" slot-scope="{row}" class="text-center">
-                        <li v-if="false">
-                            <router-link :to="{name: 'services_edit', params: { id: row.id } }" class="dropdown-item"
-                                         title="Edit">
-                                <i class="fas fa-pen-square"></i>
-                                Editar
-                            </router-link>
-                        </li>
                         <li>
                             <a href="#" class="dropdown-item" title="Eliminar" @click="onDelete(row.id)">
                                 <i class="fas fa-trash-alt"></i>
