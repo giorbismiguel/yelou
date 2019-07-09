@@ -204,7 +204,7 @@
 
         methods: {
             ...mapActions([
-                'deleteRequestedService',
+                'deleteRequestService',
                 'acceptDriverService'
             ]),
 
@@ -230,7 +230,7 @@
                     showLoaderOnConfirm: true
                 }).then((result) => {
                     if (result.value) {
-                        this.deleteRequestedService(id)
+                        this.deleteRequestService(id)
                             .then(() => {
                                 this.loading = false
                                 this.$notify({
