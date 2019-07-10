@@ -22,7 +22,11 @@ class RequestedService extends Model
 
     protected $table = 'requested_services';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'deleted_at',
+        'start_at',
+        'end_at',
+    ];
 
     protected $with = [
         'client:id,name,phone',
@@ -36,10 +40,13 @@ class RequestedService extends Model
         'transporter_id',
         'service_id',
         'status_id',
+        'created_at',
+        'updated_at',
+        'start_at',
+        'end_at',
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
     ];
 
@@ -51,6 +58,8 @@ class RequestedService extends Model
     protected $casts = [
         'id'         => 'integer',
         'created_at' => 'datetime:d/m/Y H:i:s',
+        'start_at'   => 'datetime:d/m/Y H:i:s',
+        'end_at'     => 'datetime:d/m/Y H:i:s',
     ];
 
     /**
@@ -59,10 +68,12 @@ class RequestedService extends Model
      * @var array
      */
     public static $rules = [
-        'client_id'      => 'required|integer',
-        'transporter_id' => 'required|integer',
-        'service_id'     => 'required|integer',
-        'status_id'      => 'required|integer',
+        'client_id'      => 'nullable|integer',
+        'transporter_id' => 'nullable|integer',
+        'service_id'     => 'nullable|integer',
+        'status_id'      => 'nullable|integer',
+        'start_at'       => 'nullable|date_format:d/m/Y H:i:s',
+        'end_at'         => 'nullable|date_format:d/m/Y H:i:s',
     ];
 
     /* ========================================================================= *\

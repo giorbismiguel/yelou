@@ -91,10 +91,10 @@ class RequestedServiceAPIController extends AppBaseController
         $requestedService = $this->requestedServiceRepository->find($id);
 
         if (empty($requestedService)) {
-            return $this->sendError('Requested Service not found');
+            return $this->sendError('Recorrido no encontrado');
         }
 
-        return $this->sendResponse($requestedService->toArray(), 'Requested Service retrieved successfully');
+        return $this->sendResponse($requestedService->toArray(), 'Recorrido encontrado satisfactoriamente');
     }
 
     /**
@@ -114,12 +114,22 @@ class RequestedServiceAPIController extends AppBaseController
         $requestedService = $this->requestedServiceRepository->find($id);
 
         if (empty($requestedService)) {
-            return $this->sendError('Requested Service not found');
+            return $this->sendError('Recorrido no encontrado');
+        }
+
+        if ($request->has('start_at') && $input['start_at']) {
+            $input['start_at'] = convert_us_date_to_db($input['start_at']);
+            $input['updated_at'] = now();
+        }
+
+        if ($request->has('end_at') && $input['end_at']) {
+            $input['end_at'] = convert_us_date_to_db($input['end_at']);
+            $input['updated_at'] = now();
         }
 
         $requestedService = $this->requestedServiceRepository->update($input, $id);
 
-        return $this->sendResponse($requestedService->toArray(), 'RequestedService updated successfully');
+        return $this->sendResponse($requestedService->toArray(), 'El recorrido ha sido actualizado');
     }
 
     /**
@@ -138,7 +148,7 @@ class RequestedServiceAPIController extends AppBaseController
         $requestedService = $this->requestedServiceRepository->find($id);
 
         if (empty($requestedService)) {
-            return $this->sendError('No se ha encontrado el recorrido que desea eliminar.');
+            return $this->sendError('Recorrido no encontrado');
         }
 
         if ($requestedService->status_id === 1) { // 1 Pendiente

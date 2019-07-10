@@ -3,7 +3,6 @@
 namespace App;
 
 use App\Models\Admin\PaymentMethod;
-use Carbon\Carbon;
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
