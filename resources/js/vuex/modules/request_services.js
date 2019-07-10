@@ -30,7 +30,7 @@ const actions = {
                 })
                 .catch(error => {
                     commit('CREATE_REQUESTED_SERVICES_FAIL', error)
-                    reject(data)
+                    reject(error)
                 })
         })
     },
