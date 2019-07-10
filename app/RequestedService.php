@@ -22,7 +22,11 @@ class RequestedService extends Model
 
     protected $table = 'requested_services';
 
-    protected $dates = ['deleted_at'];
+    protected $dates = [
+        'deleted_at',
+        'start_at',
+        'end_at',
+    ];
 
     protected $with = [
         'client:id,name,phone',
@@ -36,10 +40,11 @@ class RequestedService extends Model
         'transporter_id',
         'service_id',
         'status_id',
+        'start_at',
+        'end_at',
     ];
 
     protected $hidden = [
-        'created_at',
         'updated_at',
     ];
 
@@ -51,6 +56,8 @@ class RequestedService extends Model
     protected $casts = [
         'id'         => 'integer',
         'created_at' => 'datetime:d/m/Y H:i:s',
+        'start_at'   => 'datetime:d/m/Y H:i:s',
+        'end_at'     => 'datetime:d/m/Y H:i:s',
     ];
 
     /**
