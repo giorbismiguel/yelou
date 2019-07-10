@@ -39,15 +39,26 @@ class ProcessRequestedServicesAPIController extends AppBaseController
 
     public function accept(Request $request)
     {
+        $service = $this->requestServiceRepository->find($request->service_id);
+
         if ($this->requestedServiceRepository->allQuery([
+            'client_id'  => $service->user_id,
             'service_id' => $request->service_id,
             'status_id'  => 3, // Accept
         ])->exists()) {
 
-            return $this->sendError('Esta solicitud ya fue antendida');
+            return $this->sendError('Esta solicitud ya fue aceptada por el cliente');
         }
 
-        $service = $this->requestServiceRepository->find($request->service_id);
+        if ($this->requestedServiceRepository->allQuery([
+            'client_id'      => $service->user_id,
+            'transporter_id' => $request->driver_id,
+            'service_id'     => $request->service_id,
+        ])->exists()) {
+
+            return $this->sendError('Ya usted respondio a esta solicitud');
+        }
+
         $input = [
             'client_id'      => $service->user_id,
             'transporter_id' => $request->driver_id,
@@ -55,14 +66,11 @@ class ProcessRequestedServicesAPIController extends AppBaseController
             'status_id'      => 1, // Pending
         ];
 
-        if ($this->requestedServiceRepository->allQuery($input)->exists()) {
-
-            return $this->sendError('Ya usted respondio a esta solicitud');
-        }
+        $input['created_at'] = now();
 
         $requestedService = $this->requestedServiceRepository->create($input);
 
-        return $this->sendResponse($requestedService->toArray(), 'Solicitud aceptada');
+        return $this->sendResponse($requestedService->toArray(), 'Su Solicitud ha sido aceptada');
     }
 
     public function acceptClient(Request $request)
