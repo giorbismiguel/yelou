@@ -4158,6 +4158,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.loadingView = false;
 
         if (!data.success) {
+          alert(data.success);
           sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
             text: data.message,
             type: 'info',
@@ -4169,6 +4170,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return;
         }
 
+        alert('rtyrtyt');
         sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
           text: data.message,
           type: 'error',
@@ -5054,13 +5056,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -68060,10 +68055,6 @@ var render = function() {
                     fn: function(ref) {
                       var row = ref.row
                       return _c("ye-actions", { staticClass: "text-center" }, [
-                        false
-                          ? undefined
-                          : _vm._e(),
-                        _vm._v(" "),
                         _c("li", [
                           _c(
                             "a",
@@ -68091,7 +68082,7 @@ var render = function() {
               },
               [
                 _c("template", { slot: "table-title" }, [
-                  _vm._v("Todos sus recorridos solicitados")
+                  _vm._v("Todos sus recorridos")
                 ]),
                 _vm._v(" "),
                 _vm._v(" "),
@@ -107283,15 +107274,16 @@ var actions = {
       })).then(function (data) {
         commit('CREATE_REQUESTED_SERVICES_OK', data);
         resolve();
-      })["catch"](function (error) {
-        commit('CREATE_REQUESTED_SERVICES_FAIL', error);
+      })["catch"](function (_ref4) {
+        var data = _ref4.response.data;
+        commit('CREATE_REQUESTED_SERVICES_FAIL', data);
         reject(data);
       });
     });
   },
-  deleteRequestService: function deleteRequestService(_ref4, id) {
-    var commit = _ref4.commit,
-        dispatch = _ref4.dispatch;
+  deleteRequestService: function deleteRequestService(_ref5, id) {
+    var commit = _ref5.commit,
+        dispatch = _ref5.dispatch;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route('api.request_services.destroy', id)).then(function (data) {
         commit('DELETE_REQUEST_SERVICES_OK', data);

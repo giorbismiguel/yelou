@@ -28,9 +28,9 @@ const actions = {
                     commit('CREATE_REQUESTED_SERVICES_OK', data)
                     resolve()
                 })
-                .catch(error => {
-                    commit('CREATE_REQUESTED_SERVICES_FAIL', error)
-                    reject(error)
+                .catch(({response: {data}}) => {
+                    commit('CREATE_REQUESTED_SERVICES_FAIL', data)
+                    reject(data)
                 })
         })
     },

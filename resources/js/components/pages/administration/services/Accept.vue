@@ -49,7 +49,7 @@
                             text: 'La solicitud del servicio ha sido exitosa'
                         });
                     })
-                    .catch((data) => {
+                    .catch(data => {
                         this.loadingView = false
                         if (!data.success) {
                             Swal.fire({
