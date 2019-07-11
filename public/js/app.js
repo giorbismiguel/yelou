@@ -4158,7 +4158,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         _this.loadingView = false;
 
         if (!data.success) {
-          alert(data.success);
           sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
             text: data.message,
             type: 'info',
@@ -4170,7 +4169,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           return;
         }
 
-        alert('rtyrtyt');
         sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
           text: data.message,
           type: 'error',
@@ -4906,10 +4904,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       defaultFilters: {},
       filtersDrivers: {
-        start_date: null,
-        name_start: null,
-        name_end: null,
-        payment_method_id: null
+        client_id: null,
+        status_id: 1,
+        service_id: null
       },
       columnsDrivers: ['transporter_id', 'actions'],
       optionsDrivers: {
@@ -4921,7 +4918,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'actions': 'Acciones'
         }
       },
-      defaultFiltersDrivers: {}
+      defaultFiltersDrivers: {},
+      apiEndpointDrivers: ''
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
@@ -4931,17 +4929,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {
     apiEndpoint: function apiEndpoint() {
       return route('api.request_services.index');
-    },
-    apiEndpointDrivers: function apiEndpointDrivers() {
-      return route('api.requested_services.index');
     }
   }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRequestService', 'acceptDriverService']), {
     hideDriverModel: function hideDriverModel() {
       this.modal.showDriver = false;
     },
-    showDriverModal: function showDriverModal() {
+    showDriverModal: function showDriverModal(row) {
+      this.getEndpointDrivers(row);
+      this.filtersDrivers.client_id = this.me.id;
+      this.filtersDrivers.service_id = row.id;
       this.modal.showDriver = true;
+      this.reloadTableDrivers();
     },
     onDeleteService: function onDeleteService(id) {
       var _this = this;
@@ -5025,6 +5024,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this2.reloadTableDrivers();
       });
+    },
+    getEndpointDrivers: function getEndpointDrivers() {
+      this.apiEndpointDrivers = "".concat(route('api.requested_services.index'));
     }
   }),
   mounted: function mounted() {
@@ -67781,7 +67783,11 @@ var render = function() {
                             {
                               staticClass: "dropdown-item",
                               attrs: { href: "#", title: "Eliminar" },
-                              on: { click: _vm.showDriverModal }
+                              on: {
+                                click: function($event) {
+                                  return _vm.showDriverModal(row)
+                                }
+                              }
                             },
                             [
                               _c("i", { staticClass: "fas fa-users" }),
