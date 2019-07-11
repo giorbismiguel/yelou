@@ -210,11 +210,11 @@
             },
 
             showDriverModal(row) {
-                this.getEndpointDrivers(row);
+                this.getEndpointDrivers();
                 this.filtersDrivers.client_id = this.me.id
                 this.filtersDrivers.service_id = row.id
-                this.modal.showDriver = true
                 this.reloadTableDrivers()
+                this.modal.showDriver = true
             },
 
             onDeleteService(id) {

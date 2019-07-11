@@ -4119,8 +4119,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -4147,12 +4145,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.acceptRequestedService(this.form).then(function () {
         _this.loadingView = false;
-
-        _this.$notify({
+        sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
+          text: 'La solicitud del servicio ha sido exitosa',
           type: 'success',
-          group: 'create_request_accept',
-          title: 'Aceptar Servicio',
-          text: 'La solicitud del servicio ha sido exitosa'
+          showCancelButton: false,
+          confirmButtonText: 'Aceptar'
+        }).then(function () {
+          _this.$router.replace('/administracion');
         });
       })["catch"](function (data) {
         _this.loadingView = false;
@@ -4936,11 +4935,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.modal.showDriver = false;
     },
     showDriverModal: function showDriverModal(row) {
-      this.getEndpointDrivers(row);
+      this.getEndpointDrivers();
       this.filtersDrivers.client_id = this.me.id;
       this.filtersDrivers.service_id = row.id;
-      this.modal.showDriver = true;
       this.reloadTableDrivers();
+      this.modal.showDriver = true;
     },
     onDeleteService: function onDeleteService(id) {
       var _this = this;
@@ -66945,24 +66944,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "box-user",
-    [
-      _vm.loadingView
-        ? _c(
-            "div",
-            { staticClass: "d-flex justify-content-center mt-5" },
-            [_c("spinner", { attrs: { size: "large" } })],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("notifications", {
-        attrs: { group: "create_request_accept", position: "bottom right" }
-      })
-    ],
-    1
-  )
+  return _c("box-user", [
+    _vm.loadingView
+      ? _c(
+          "div",
+          { staticClass: "d-flex justify-content-center mt-5" },
+          [_c("spinner", { attrs: { size: "large" } })],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true

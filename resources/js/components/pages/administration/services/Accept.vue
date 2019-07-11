@@ -3,8 +3,6 @@
         <div v-if="loadingView" class="d-flex justify-content-center mt-5">
             <spinner size="large"></spinner>
         </div>
-
-        <notifications group="create_request_accept" position="bottom right"/>
     </box-user>
 </template>
 
@@ -42,12 +40,14 @@
                 this.acceptRequestedService(this.form)
                     .then(() => {
                         this.loadingView = false
-                        this.$notify({
+                        Swal.fire({
+                            text: 'La solicitud del servicio ha sido exitosa',
                             type: 'success',
-                            group: 'create_request_accept',
-                            title: 'Aceptar Servicio',
-                            text: 'La solicitud del servicio ha sido exitosa'
-                        });
+                            showCancelButton: false,
+                            confirmButtonText: 'Aceptar',
+                        }).then(() => {
+                            this.$router.replace('/administracion')
+                        })
                     })
                     .catch(data => {
                         this.loadingView = false
