@@ -47,7 +47,7 @@
                         </li>
 
                         <li>
-                            <a href="#" class="dropdown-item" title="Eliminar" @click="showDriverModal">
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="showDriverModal(row)">
                                 <i class="fas fa-users"></i>
                                 Choferes disponibles
                             </a>
@@ -162,10 +162,9 @@
                 defaultFilters: {},
 
                 filtersDrivers: {
-                    start_date: null,
-                    name_start: null,
-                    name_end: null,
-                    payment_method_id: null
+                    client_id: null,
+                    status_id: 1,
+                    service_id: null,
                 },
 
                 columnsDrivers: [
@@ -185,6 +184,8 @@
                 },
 
                 defaultFiltersDrivers: {},
+
+                apiEndpointDrivers: ''
             };
         },
 
@@ -195,10 +196,6 @@
 
             apiEndpoint() {
                 return route('api.request_services.index');
-            },
-
-            apiEndpointDrivers() {
-                return route('api.requested_services.index');
             }
         },
 
@@ -212,7 +209,11 @@
                 this.modal.showDriver = false
             },
 
-            showDriverModal() {
+            showDriverModal(row) {
+                this.getEndpointDrivers();
+                this.filtersDrivers.client_id = this.me.id
+                this.filtersDrivers.service_id = row.id
+                this.reloadTableDrivers()
                 this.modal.showDriver = true
             },
 
@@ -301,6 +302,10 @@
                         });
                         this.reloadTableDrivers()
                     })
+            },
+
+            getEndpointDrivers() {
+                this.apiEndpointDrivers = `${route('api.requested_services.index')}`;
             }
         },
 

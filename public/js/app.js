@@ -4119,8 +4119,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -4147,12 +4145,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.acceptRequestedService(this.form).then(function () {
         _this.loadingView = false;
-
-        _this.$notify({
+        sweetalert2__WEBPACK_IMPORTED_MODULE_3___default.a.fire({
+          text: 'La solicitud del servicio ha sido exitosa',
           type: 'success',
-          group: 'create_request_accept',
-          title: 'Aceptar Servicio',
-          text: 'La solicitud del servicio ha sido exitosa'
+          showCancelButton: false,
+          confirmButtonText: 'Aceptar'
+        }).then(function () {
+          _this.$router.replace('/administracion');
         });
       })["catch"](function (data) {
         _this.loadingView = false;
@@ -4904,10 +4903,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       },
       defaultFilters: {},
       filtersDrivers: {
-        start_date: null,
-        name_start: null,
-        name_end: null,
-        payment_method_id: null
+        client_id: null,
+        status_id: 1,
+        service_id: null
       },
       columnsDrivers: ['transporter_id', 'actions'],
       optionsDrivers: {
@@ -4919,7 +4917,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           'actions': 'Acciones'
         }
       },
-      defaultFiltersDrivers: {}
+      defaultFiltersDrivers: {},
+      apiEndpointDrivers: ''
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapState"])({
@@ -4929,16 +4928,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   }), {
     apiEndpoint: function apiEndpoint() {
       return route('api.request_services.index');
-    },
-    apiEndpointDrivers: function apiEndpointDrivers() {
-      return route('api.requested_services.index');
     }
   }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['deleteRequestService', 'acceptDriverService']), {
     hideDriverModel: function hideDriverModel() {
       this.modal.showDriver = false;
     },
-    showDriverModal: function showDriverModal() {
+    showDriverModal: function showDriverModal(row) {
+      this.getEndpointDrivers();
+      this.filtersDrivers.client_id = this.me.id;
+      this.filtersDrivers.service_id = row.id;
+      this.reloadTableDrivers();
       this.modal.showDriver = true;
     },
     onDeleteService: function onDeleteService(id) {
@@ -5023,6 +5023,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
         _this2.reloadTableDrivers();
       });
+    },
+    getEndpointDrivers: function getEndpointDrivers() {
+      this.apiEndpointDrivers = "".concat(route('api.requested_services.index'));
     }
   }),
   mounted: function mounted() {
@@ -5054,13 +5057,6 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -66948,24 +66944,16 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "box-user",
-    [
-      _vm.loadingView
-        ? _c(
-            "div",
-            { staticClass: "d-flex justify-content-center mt-5" },
-            [_c("spinner", { attrs: { size: "large" } })],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("notifications", {
-        attrs: { group: "create_request_accept", position: "bottom right" }
-      })
-    ],
-    1
-  )
+  return _c("box-user", [
+    _vm.loadingView
+      ? _c(
+          "div",
+          { staticClass: "d-flex justify-content-center mt-5" },
+          [_c("spinner", { attrs: { size: "large" } })],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -67786,7 +67774,11 @@ var render = function() {
                             {
                               staticClass: "dropdown-item",
                               attrs: { href: "#", title: "Eliminar" },
-                              on: { click: _vm.showDriverModal }
+                              on: {
+                                click: function($event) {
+                                  return _vm.showDriverModal(row)
+                                }
+                              }
                             },
                             [
                               _c("i", { staticClass: "fas fa-users" }),
@@ -68060,10 +68052,6 @@ var render = function() {
                     fn: function(ref) {
                       var row = ref.row
                       return _c("ye-actions", { staticClass: "text-center" }, [
-                        false
-                          ? undefined
-                          : _vm._e(),
-                        _vm._v(" "),
                         _c("li", [
                           _c(
                             "a",
@@ -68091,7 +68079,7 @@ var render = function() {
               },
               [
                 _c("template", { slot: "table-title" }, [
-                  _vm._v("Todos sus recorridos solicitados")
+                  _vm._v("Todos sus recorridos")
                 ]),
                 _vm._v(" "),
                 _vm._v(" "),
@@ -107283,15 +107271,16 @@ var actions = {
       })).then(function (data) {
         commit('CREATE_REQUESTED_SERVICES_OK', data);
         resolve();
-      })["catch"](function (error) {
-        commit('CREATE_REQUESTED_SERVICES_FAIL', error);
+      })["catch"](function (_ref4) {
+        var data = _ref4.response.data;
+        commit('CREATE_REQUESTED_SERVICES_FAIL', data);
         reject(data);
       });
     });
   },
-  deleteRequestService: function deleteRequestService(_ref4, id) {
-    var commit = _ref4.commit,
-        dispatch = _ref4.dispatch;
+  deleteRequestService: function deleteRequestService(_ref5, id) {
+    var commit = _ref5.commit,
+        dispatch = _ref5.dispatch;
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route('api.request_services.destroy', id)).then(function (data) {
         commit('DELETE_REQUEST_SERVICES_OK', data);

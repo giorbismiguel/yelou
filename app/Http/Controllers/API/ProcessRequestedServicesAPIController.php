@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers\API;
 
-
 use App\Notifications\RequestedDriverAccepted;
+use App\Notifications\RequestedDriverRejected;
 use App\Repositories\RequestedServiceRepository;
 use App\Repositories\RequestServicesRepository;
 use App\Repositories\UserRepository;
 use App\RequestedService;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-
 
 /**
  * Class RequestServicesController
@@ -47,7 +46,7 @@ class ProcessRequestedServicesAPIController extends AppBaseController
             'status_id'  => 3, // Accept
         ])->exists()) {
 
-            return $this->sendError('Esta solicitud ya fue aceptada por el cliente');
+            return $this->sendError('Esta solicitud ya fue aceptada por el cliente', 429);
         }
 
         if ($this->requestedServiceRepository->allQuery([
@@ -56,7 +55,7 @@ class ProcessRequestedServicesAPIController extends AppBaseController
             'service_id'     => $request->service_id,
         ])->exists()) {
 
-            return $this->sendError('Ya usted respondio a esta solicitud');
+            return $this->sendError('Ya usted respondio a esta solicitud', 429);
         }
 
         $input = [
@@ -80,17 +79,54 @@ class ProcessRequestedServicesAPIController extends AppBaseController
 
         $requestedService->load('service.route');
 
-        $requestedService->update(['status_id' => 2]); // Accept
+       $requestedService->update(['status_id' => 2]); // Accept
 
+        $this->sendNotificationRejectedDrivers($requestedService);
+
+        $this->rejectOtherOffer($requestedService);
+
+        $this->sendNotificationAcceptedDriver($requestedService);
+
+        return $this->sendResponse($requestedService->toArray(), 'Solicitud aceptada por el cliente');
+    }
+
+    /**
+     * @param RequestedService $requestedService
+     */
+    private function rejectOtherOffer(RequestedService $requestedService): void
+    {
         $requestedService
             ->where('id', '!=', $requestedService->id)
             ->where('service_id', '=', $requestedService->service_id)
             ->update(['status_id' => 3]); // Reject
+    }
 
+    /**
+     * @param RequestedService $requestedService
+     */
+    private function sendNotificationRejectedDrivers(RequestedService $requestedService): void
+    {
+        $driversIds = $requestedService
+            ->select('transporter_id')
+            ->where('id', '!=', $requestedService->id)
+            ->where('service_id', '=', $requestedService->service_id)
+            ->get();
+
+        if ($driversIds->count() > 0) {
+            $users = $this->userRepository->find($driversIds->pluck('transporter_id')->toArray());
+
+            foreach ($users as $user) {
+                $user->notify(new RequestedDriverRejected($requestedService));
+            }
+        }
+    }
+
+    /**
+     * @param RequestedService $requestedService
+     */
+    private function sendNotificationAcceptedDriver(RequestedService $requestedService): void
+    {
         $user = $this->userRepository->find($requestedService->transporter_id);
-
         $user->notify(new RequestedDriverAccepted($requestedService));
-
-        return $this->sendResponse($requestedService->toArray(), 'Solicitud aceptada por el cliente');
     }
 }
