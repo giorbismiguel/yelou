@@ -75,7 +75,7 @@ class RequestServices extends Model
      */
     public static $rules = [
         'route_id'          => 'nullable|integer',
-        'start_date'        => 'required|date_format:d/m/Y',
+        'start_date'        => 'nullable|date_format:d/m/Y',
         'start_time'        => 'nullable|date_format:H:i:s',
         'name_start'        => 'required|min:1|max:191',
         'lat_start'         => 'required|numeric',

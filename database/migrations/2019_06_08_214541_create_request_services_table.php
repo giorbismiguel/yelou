@@ -24,7 +24,7 @@ class CreateRequestServicesTable extends Migration
             $table->double('lat_end');
             $table->double('lng_end');
 
-            $table->date('start_date');
+            $table->date('start_date')->nullable();
             $table->time('start_time')->nullable();
 
             $table->unsignedBigInteger('payment_method_id');

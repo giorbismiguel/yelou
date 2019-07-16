@@ -78,7 +78,10 @@ class RequestServicesAPIController extends AppBaseController
             return $this->sendError('No se ha encontrado ningún chofer disponible para anteder su servicio.');
         }
 
-        $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
+        if ($input['start_date']) {
+            $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
+        }
+
         if ($request->filled('route_id')) {
             if (!$this->routeRepository->allQuery([
                 'id'      => $input['route_id'],

@@ -74,38 +74,44 @@
                                 </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="start_date">Día<span class="text-primary">*</span></label>
+                            <p class="font-weight-light app_color_blue">
+                                <a href="javascript:void(0);" @click="toggleCalendar">Planificar Horario</a>
+                            </p>
 
-                                <date-picker id="start_date" name="start_date" v-model="defaultDate"
-                                             style="width: 300px; display: block;" value-type="date"
-                                             :not-before="timePicker.notBefore"
-                                             :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
-                                             confirm-text="Confirmar"
-                                             :input-class="[ 'form-control', submitted && serverErrors.start_date ? 'is-invalid': '']">
-                                </date-picker>
+                            <div v-show="showCalendar">
+                                <div class="form-group">
+                                    <label for="start_date">Día</label>
 
-                                <input type="text" class="form-control" v-show="false"
-                                       :class="submitted && serverErrors.start_date ? 'is-invalid': ''"/>
+                                    <date-picker id="start_date" name="start_date" v-model="defaultDate"
+                                                 style="width: 300px; display: block;" value-type="date"
+                                                 :not-before="timePicker.notBefore"
+                                                 :lang="timePicker.lang" type="date" :format="timePicker.date" confirm
+                                                 confirm-text="Confirmar"
+                                                 :input-class="[ 'form-control', submitted && serverErrors.start_date ? 'is-invalid': '']">
+                                    </date-picker>
 
-                                <div v-if="submitted && serverErrors.start_date"
-                                     class="invalid-feedback">
-                                    <template v-for="error in serverErrors.start_date">{{ error }}</template>
+                                    <input type="text" class="form-control" v-show="false"
+                                           :class="submitted && serverErrors.start_date ? 'is-invalid': ''"/>
+
+                                    <div v-if="submitted && serverErrors.start_date"
+                                         class="invalid-feedback">
+                                        <template v-for="error in serverErrors.start_date">{{ error }}</template>
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="start_time">Hora de Inicio</label>
+                                <div class="form-group">
+                                    <label for="start_time">Hora de Inicio</label>
 
-                                <date-picker id="start_time" name="start_time" v-model="defaultTime"
-                                             style="width: 300px; display: block;" :lang="timePicker.langTime"
-                                             type="time" :time-picker-options="timePicker.timePickerOption"
-                                             :format="timePicker.time" confirm confirm-text="Confirmar">
-                                </date-picker>
+                                    <date-picker id="start_time" name="start_time" v-model="defaultTime"
+                                                 style="width: 300px; display: block;" :lang="timePicker.langTime"
+                                                 type="time" :time-picker-options="timePicker.timePickerOption"
+                                                 :format="timePicker.time" confirm confirm-text="Confirmar">
+                                    </date-picker>
 
-                                <div v-if="submitted && serverErrors.start_time"
-                                     class="invalid-feedback">
-                                    <template v-for="error in serverErrors.start_time">{{ error }}</template>
+                                    <div v-if="submitted && serverErrors.start_time"
+                                         class="invalid-feedback">
+                                        <template v-for="error in serverErrors.start_time">{{ error }}</template>
+                                    </div>
                                 </div>
                             </div>
 
@@ -265,7 +271,8 @@
                 originRequestService: null,
                 destinationRequestService: null,
                 serverErrors: {},
-                route: null
+                route: null,
+                showCalendar: false
             }
         },
 
@@ -325,8 +332,11 @@
                                 this.form.name_end = this.destinationRequestService.formatted_address
                             }
 
-                            this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
-                            if (this.defaultTime) {
+                            if (this.showCalendar) {
+                                this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
+                            }
+
+                            if (this.showCalendar && this.defaultTime) {
                                 this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
                             }
 
@@ -468,6 +478,10 @@
                         this.formatAddress = result[0].formatted_address
                     }
                 })
+            },
+
+            toggleCalendar() {
+                this.showCalendar = !this.showCalendar
             }
         },
 
