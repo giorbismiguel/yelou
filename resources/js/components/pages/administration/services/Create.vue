@@ -164,7 +164,7 @@
                     </GmapMap>
 
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">{
+                        <div class="input-group-prepend">
                             <span class="input-group-text" id="adddresFormat">
                                 <i class="fas fa-search-location"></i>
                             </span>
