@@ -32,7 +32,7 @@ class RequestedService extends Model
         'client:id,name,phone',
         'service:id,name_start,name_end,start_date,start_time',
         'status:id,name',
-        'transporter:id,name',
+        'transporter:id,first_name,last_name,phone,photo',
     ];
 
     protected $fillable = [

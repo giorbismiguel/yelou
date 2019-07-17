@@ -4879,6 +4879,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4919,13 +4928,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         status_id: 1,
         service_id: null
       },
-      columnsDrivers: ['transporter_id', 'actions'],
+      columnsDrivers: ['transporter_id', 'phone', 'photo', 'actions'],
       optionsDrivers: {
         columnsClasses: {
           'actions': 'action-col'
         },
         headings: {
           'transporter_id': 'Nombre',
+          'phone': 'Teléfono',
+          'photo': 'Foto',
           'actions': 'Acciones'
         }
       },
@@ -67915,9 +67926,43 @@ var render = function() {
                           return [
                             _vm._v(
                               "\n                        " +
-                                _vm._s(row.transporter.name) +
+                                _vm._s(
+                                  row.transporter.first_name +
+                                    " " +
+                                    row.transporter.last_name
+                                ) +
                                 "\n                    "
                             )
+                          ]
+                        }
+                      },
+                      {
+                        key: "phone",
+                        fn: function(ref) {
+                          var row = ref.row
+                          return [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(row.transporter.phone) +
+                                "\n                    "
+                            )
+                          ]
+                        }
+                      },
+                      {
+                        key: "photo",
+                        fn: function(ref) {
+                          var row = ref.row
+                          return [
+                            _c("img", {
+                              staticStyle: { width: "200px", height: "200px" },
+                              attrs: {
+                                src: row.transporter.photo
+                                  ? "/storage/" + row.transporter.photo
+                                  : "/img/default-image.png",
+                                alt: "Foto del Chofer"
+                              }
+                            })
                           ]
                         }
                       },
@@ -67962,6 +68007,8 @@ var render = function() {
                     _c("template", { slot: "table-title" }, [
                       _vm._v("Todas las solicitudes para prestarle el servicio")
                     ]),
+                    _vm._v(" "),
+                    _vm._v(" "),
                     _vm._v(" "),
                     _vm._v(" "),
                     _vm._v(" "),
