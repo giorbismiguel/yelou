@@ -111,4 +111,22 @@ class RequestedService extends Model
     {
         return $this->belongsTo(RequestedServiceStatus::class, 'status_id');
     }
+
+    /* ========================================================================= *\
+     * Methods
+    \* ========================================================================= */
+
+    public function setStatusStarted()
+    {
+        $this->update([
+            'status_id' => 4,
+        ]);
+    }
+
+    public function setStatusCompleted()
+    {
+        $this->update([
+            'status_id' => 5,
+        ]);
+    }
 }

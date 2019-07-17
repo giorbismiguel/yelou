@@ -14,17 +14,27 @@ class RequestedServiceStatusSeeder extends Seeder
     {
         factory(RequestedServiceStatus::class)->create([
             'name'        => 'Pendiente',
-            'description' => 'El estado esta pendiente de aprobar por el cliente',
+            'description' => 'El viaje tiene este estado cuando esta pendiente de aprobar por el cliente.',
         ]);
 
         factory(RequestedServiceStatus::class)->create([
             'name'        => 'Aceptado',
-            'description' => 'El estado ha sido aceptado por el cliente',
+            'description' => 'El viaje tiene este estado cuando el cliente aprueba el recorrido.',
         ]);
 
         factory(RequestedServiceStatus::class)->create([
             'name'        => 'Rechazado',
-            'description' => 'El estado ha sido rechazado por el cliente',
+            'description' => 'El viaje tiene este estado cuando el transportista rechaza el recorrido.',
+        ]);
+
+        factory(RequestedServiceStatus::class)->create([
+            'name'        => 'Iniciado',
+            'description' => 'El viaje tiene este estado cuando el transportista inicia el recorrido',
+        ]);
+
+        factory(RequestedServiceStatus::class)->create([
+            'name'        => 'Finalizado',
+            'description' => 'El viaje tiene este estado cuando el transportista culmina el recorrido.',
         ]);
     }
 }
