@@ -13,7 +13,7 @@ class DistanceController extends AppBaseController
      */
     public function calculateRate(Request $request)
     {
-        $price = 4;
+        $price = 4; // From admin
         $result = [
             'distance' => get_distance(
                 $request->latitude_from,
@@ -24,7 +24,7 @@ class DistanceController extends AppBaseController
             'tariff'   => $price,
         ];
 
-        $rate = $result['distance'] / $price;
+        $rate = format_money($result['distance'] / $price);
 
         return $this->sendResponse($result, 'La tarifa es: $'.$rate);
     }

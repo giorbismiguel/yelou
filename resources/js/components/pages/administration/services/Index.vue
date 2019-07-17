@@ -82,7 +82,16 @@
                         <template slot="table-title">Todas las solicitudes para prestarle el servicio</template>
 
                         <template slot="transporter_id" slot-scope="{row}">
-                            {{ row.transporter.name }}
+                            {{ row.transporter.first_name + ' ' + row.transporter.last_name }}
+                        </template>
+
+                        <template slot="phone" slot-scope="{row}">
+                            {{ row.transporter.phone }}
+                        </template>
+
+                        <template slot="photo" slot-scope="{row}">
+                            <img :src="(row.transporter.photo ? '/storage/' + row.transporter.photo : '/img/default-image.png')"
+                                 alt="Foto del Chofer" style="width: 200px; height: 200px;">
                         </template>
 
                         <ye-actions slot="actions" slot-scope="{row}" class="text-center">
@@ -169,6 +178,8 @@
 
                 columnsDrivers: [
                     'transporter_id',
+                    'phone',
+                    'photo',
                     'actions',
                 ],
 
@@ -179,6 +190,8 @@
 
                     headings: {
                         'transporter_id': 'Nombre',
+                        'phone': 'Teléfono',
+                        'photo': 'Foto',
                         'actions': 'Acciones',
                     }
                 },

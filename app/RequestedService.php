@@ -32,7 +32,7 @@ class RequestedService extends Model
         'client:id,name,phone',
         'service:id,name_start,name_end,start_date,start_time',
         'status:id,name',
-        'transporter:id,name',
+        'transporter:id,first_name,last_name,phone,photo',
     ];
 
     protected $fillable = [
@@ -110,5 +110,23 @@ class RequestedService extends Model
     public function status(): BelongsTo
     {
         return $this->belongsTo(RequestedServiceStatus::class, 'status_id');
+    }
+
+    /* ========================================================================= *\
+     * Methods
+    \* ========================================================================= */
+
+    public function setStatusStarted()
+    {
+        $this->update([
+            'status_id' => 4,
+        ]);
+    }
+
+    public function setStatusCompleted()
+    {
+        $this->update([
+            'status_id' => 5,
+        ]);
     }
 }

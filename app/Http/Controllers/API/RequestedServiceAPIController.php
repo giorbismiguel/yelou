@@ -120,11 +120,13 @@ class RequestedServiceAPIController extends AppBaseController
         if ($request->has('start_at') && $input['start_at']) {
             $input['start_at'] = convert_us_date_to_db($input['start_at']);
             $input['updated_at'] = now();
+            $requestedService->setStatusStarted();
         }
 
         if ($request->has('end_at') && $input['end_at']) {
             $input['end_at'] = convert_us_date_to_db($input['end_at']);
             $input['updated_at'] = now();
+            $requestedService->setStatusCompleted();
         }
 
         $requestedService = $this->requestedServiceRepository->update($input, $id);

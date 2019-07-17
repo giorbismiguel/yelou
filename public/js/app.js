@@ -4399,6 +4399,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4478,7 +4484,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       originRequestService: null,
       destinationRequestService: null,
       serverErrors: {},
-      route: null
+      route: null,
+      showCalendar: false
     };
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapState"])({
@@ -4529,9 +4536,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
             _this.form.name_end = _this.destinationRequestService.formatted_address;
           }
 
-          _this.form.start_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultDate), 'DD/MM/YYYY');
+          if (_this.showCalendar) {
+            _this.form.start_date = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultDate), 'DD/MM/YYYY');
+          }
 
-          if (_this.defaultTime) {
+          if (_this.showCalendar && _this.defaultTime) {
             _this.form.start_time = vue2_datepicker__WEBPACK_IMPORTED_MODULE_3___default.a.fecha.format(new Date(_this.defaultTime), 'HH:mm:ss');
           }
 
@@ -4668,6 +4677,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           _this3.formatAddress = result[0].formatted_address;
         }
       });
+    },
+    toggleCalendar: function toggleCalendar() {
+      this.showCalendar = !this.showCalendar;
     }
   }),
   watch: {
@@ -4867,6 +4879,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4907,13 +4928,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         status_id: 1,
         service_id: null
       },
-      columnsDrivers: ['transporter_id', 'actions'],
+      columnsDrivers: ['transporter_id', 'phone', 'photo', 'actions'],
       optionsDrivers: {
         columnsClasses: {
           'actions': 'action-col'
         },
         headings: {
           'transporter_id': 'Nombre',
+          'phone': 'Teléfono',
+          'photo': 'Foto',
           'actions': 'Acciones'
         }
       },
@@ -67276,125 +67299,160 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _c(
-                        "div",
-                        { staticClass: "form-group" },
+                        "p",
+                        { staticClass: "font-weight-light app_color_blue" },
                         [
-                          _c("label", { attrs: { for: "start_date" } }, [
-                            _vm._v("Día"),
-                            _c("span", { staticClass: "text-primary" }, [
-                              _vm._v("*")
-                            ])
-                          ]),
-                          _vm._v(" "),
-                          _c("date-picker", {
-                            staticStyle: { width: "300px", display: "block" },
-                            attrs: {
-                              id: "start_date",
-                              name: "start_date",
-                              "value-type": "date",
-                              "not-before": _vm.timePicker.notBefore,
-                              lang: _vm.timePicker.lang,
-                              type: "date",
-                              format: _vm.timePicker.date,
-                              confirm: "",
-                              "confirm-text": "Confirmar",
-                              "input-class": [
-                                "form-control",
-                                _vm.submitted && _vm.serverErrors.start_date
-                                  ? "is-invalid"
-                                  : ""
-                              ]
+                          _c(
+                            "a",
+                            {
+                              attrs: { href: "javascript:void(0);" },
+                              on: { click: _vm.toggleCalendar }
                             },
-                            model: {
-                              value: _vm.defaultDate,
-                              callback: function($$v) {
-                                _vm.defaultDate = $$v
-                              },
-                              expression: "defaultDate"
-                            }
-                          }),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: false,
-                                expression: "false"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class:
-                              _vm.submitted && _vm.serverErrors.start_date
-                                ? "is-invalid"
-                                : "",
-                            attrs: { type: "text" }
-                          }),
-                          _vm._v(" "),
-                          _vm.submitted && _vm.serverErrors.start_date
-                            ? _c(
-                                "div",
-                                { staticClass: "invalid-feedback" },
-                                [
-                                  _vm._l(_vm.serverErrors.start_date, function(
-                                    error
-                                  ) {
-                                    return [_vm._v(_vm._s(error))]
-                                  })
-                                ],
-                                2
-                              )
-                            : _vm._e()
-                        ],
-                        1
+                            [_vm._v("Planificar Horario")]
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
                         "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("label", { attrs: { for: "start_time" } }, [
-                            _vm._v("Hora de Inicio")
-                          ]),
-                          _vm._v(" "),
-                          _c("date-picker", {
-                            staticStyle: { width: "300px", display: "block" },
-                            attrs: {
-                              id: "start_time",
-                              name: "start_time",
-                              lang: _vm.timePicker.langTime,
-                              type: "time",
-                              "time-picker-options":
-                                _vm.timePicker.timePickerOption,
-                              format: _vm.timePicker.time,
-                              confirm: "",
-                              "confirm-text": "Confirmar"
-                            },
-                            model: {
-                              value: _vm.defaultTime,
-                              callback: function($$v) {
-                                _vm.defaultTime = $$v
-                              },
-                              expression: "defaultTime"
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.showCalendar,
+                              expression: "showCalendar"
                             }
-                          }),
-                          _vm._v(" "),
-                          _vm.submitted && _vm.serverErrors.start_time
-                            ? _c(
-                                "div",
-                                { staticClass: "invalid-feedback" },
-                                [
-                                  _vm._l(_vm.serverErrors.start_time, function(
-                                    error
-                                  ) {
-                                    return [_vm._v(_vm._s(error))]
-                                  })
+                          ]
+                        },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "form-group" },
+                            [
+                              _c("label", { attrs: { for: "start_date" } }, [
+                                _vm._v("Día")
+                              ]),
+                              _vm._v(" "),
+                              _c("date-picker", {
+                                staticStyle: {
+                                  width: "300px",
+                                  display: "block"
+                                },
+                                attrs: {
+                                  id: "start_date",
+                                  name: "start_date",
+                                  "value-type": "date",
+                                  "not-before": _vm.timePicker.notBefore,
+                                  lang: _vm.timePicker.lang,
+                                  type: "date",
+                                  format: _vm.timePicker.date,
+                                  confirm: "",
+                                  "confirm-text": "Confirmar",
+                                  "input-class": [
+                                    "form-control",
+                                    _vm.submitted && _vm.serverErrors.start_date
+                                      ? "is-invalid"
+                                      : ""
+                                  ]
+                                },
+                                model: {
+                                  value: _vm.defaultDate,
+                                  callback: function($$v) {
+                                    _vm.defaultDate = $$v
+                                  },
+                                  expression: "defaultDate"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value: false,
+                                    expression: "false"
+                                  }
                                 ],
-                                2
-                              )
-                            : _vm._e()
-                        ],
-                        1
+                                staticClass: "form-control",
+                                class:
+                                  _vm.submitted && _vm.serverErrors.start_date
+                                    ? "is-invalid"
+                                    : "",
+                                attrs: { type: "text" }
+                              }),
+                              _vm._v(" "),
+                              _vm.submitted && _vm.serverErrors.start_date
+                                ? _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm._l(
+                                        _vm.serverErrors.start_date,
+                                        function(error) {
+                                          return [_vm._v(_vm._s(error))]
+                                        }
+                                      )
+                                    ],
+                                    2
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "form-group" },
+                            [
+                              _c("label", { attrs: { for: "start_time" } }, [
+                                _vm._v("Hora de Inicio")
+                              ]),
+                              _vm._v(" "),
+                              _c("date-picker", {
+                                staticStyle: {
+                                  width: "300px",
+                                  display: "block"
+                                },
+                                attrs: {
+                                  id: "start_time",
+                                  name: "start_time",
+                                  lang: _vm.timePicker.langTime,
+                                  type: "time",
+                                  "time-picker-options":
+                                    _vm.timePicker.timePickerOption,
+                                  format: _vm.timePicker.time,
+                                  confirm: "",
+                                  "confirm-text": "Confirmar"
+                                },
+                                model: {
+                                  value: _vm.defaultTime,
+                                  callback: function($$v) {
+                                    _vm.defaultTime = $$v
+                                  },
+                                  expression: "defaultTime"
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.submitted && _vm.serverErrors.start_time
+                                ? _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm._l(
+                                        _vm.serverErrors.start_time,
+                                        function(error) {
+                                          return [_vm._v(_vm._s(error))]
+                                        }
+                                      )
+                                    ],
+                                    2
+                                  )
+                                : _vm._e()
+                            ],
+                            1
+                          )
+                        ]
                       ),
                       _vm._v(" "),
                       _c(
@@ -67591,7 +67649,6 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "input-group mb-3" }, [
                   _c("div", { staticClass: "input-group-prepend" }, [
-                    _vm._v("{\n                        "),
                     _c(
                       "span",
                       {
@@ -67869,9 +67926,43 @@ var render = function() {
                           return [
                             _vm._v(
                               "\n                        " +
-                                _vm._s(row.transporter.name) +
+                                _vm._s(
+                                  row.transporter.first_name +
+                                    " " +
+                                    row.transporter.last_name
+                                ) +
                                 "\n                    "
                             )
+                          ]
+                        }
+                      },
+                      {
+                        key: "phone",
+                        fn: function(ref) {
+                          var row = ref.row
+                          return [
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(row.transporter.phone) +
+                                "\n                    "
+                            )
+                          ]
+                        }
+                      },
+                      {
+                        key: "photo",
+                        fn: function(ref) {
+                          var row = ref.row
+                          return [
+                            _c("img", {
+                              staticStyle: { width: "200px", height: "200px" },
+                              attrs: {
+                                src: row.transporter.photo
+                                  ? "/storage/" + row.transporter.photo
+                                  : "/img/default-image.png",
+                                alt: "Foto del Chofer"
+                              }
+                            })
                           ]
                         }
                       },
@@ -67916,6 +68007,8 @@ var render = function() {
                     _c("template", { slot: "table-title" }, [
                       _vm._v("Todas las solicitudes para prestarle el servicio")
                     ]),
+                    _vm._v(" "),
+                    _vm._v(" "),
                     _vm._v(" "),
                     _vm._v(" "),
                     _vm._v(" "),

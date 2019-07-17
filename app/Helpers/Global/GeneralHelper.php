@@ -72,3 +72,10 @@ if (!function_exists('convert_us_date_to_db')) {
         return Carbon::createFromFormat($format, $date)->format($newFormat);
     }
 }
+
+if (!function_exists('format_money')) {
+    function format_money($value)
+    {
+        return number_format($value, 2, '.', ',');
+    }
+}
