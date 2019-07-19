@@ -39,9 +39,10 @@
 
                         <GmapMarker
                                 :key="index"
-                                v-for="(m, index) in markers"
+                                v-for="(m, index) in drivers"
                                 :position="m.position"
                                 :clickable="true"
+                                :title="m.infoText"
                                 @click="toggleInfoWindow(m,index)"
                         />
                     </GmapMap>
@@ -86,7 +87,7 @@
                     }
                 },
                 latLngClient: {lat: -0.180653, lng: -78.467834},
-                stateDriver: false
+                stateDriver: false,
             }
         },
 
@@ -94,7 +95,17 @@
             ...mapState({
                 markers: drivers => drivers.driversAvailables.markers,
                 me: state => state.auth.me
-            })
+            }),
+
+            drivers() {
+                let client = {
+                    position: this.latLngClient,
+                    infoText: this.me.name
+                }
+
+                this.markers.push(client)
+                return this.markers
+            }
         },
 
         methods: {
@@ -143,8 +154,11 @@
             HeaderForm
         },
 
-        created() {
-            this.latLngClient = this.getCurrentPositionUser()
+        async created() {
+            const {coords} = await this.getCurrentPositionUser()
+            if (coords.latitude && coords.longitude) {
+                this.latLngClient = {lat: coords.latitude, lng: coords.longitude}
+            }
         },
 
         mounted() {

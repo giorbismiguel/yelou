@@ -226,7 +226,7 @@
                 defaultDate: new Date(),
                 defaultTime: null,
                 markers: [],
-                centerMarker: null,
+                centerMarker: {lat: -0.180653, lng: -78.467834},
                 modal: {
                     title: '',
                     show: false
@@ -546,9 +546,13 @@
             HeaderForm
         },
 
-        created() {
+        async created() {
+            const {coords} = await this.getCurrentPositionUser()
+            if (coords.latitude && coords.longitude) {
+                this.centerMarker = {lat: coords.latitude, lng: coords.longitude}
+            }
+
             let address = this.geocodedAddress(this.centerMarker)
-            this.centerMarker = this.getCurrentPositionUser()
             this.coordinatesOrigin = this.centerMarker
             this.form.name_start = address ? address : ''
 
