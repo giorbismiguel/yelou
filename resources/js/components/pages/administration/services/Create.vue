@@ -176,7 +176,7 @@
                             </span>
                         </div>
                         <input v-model="formatAddress" type="text" class="form-control" :placeholder="modal.title"
-                               aria-describedby="adddresFormat">
+                               aria-describedby="adddresFormat" readonly>
                     </div>
                 </div>
             </div>
@@ -226,7 +226,7 @@
                 defaultDate: new Date(),
                 defaultTime: null,
                 markers: [],
-                centerMarker: null,
+                centerMarker: {lat: -0.180653, lng: -78.467834},
                 modal: {
                     title: '',
                     show: false
@@ -468,7 +468,7 @@
                     }
                 }
 
-                this.formatAddress = this.geocodedAddress(this.isSelectingOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+                this.geocodedAddress(this.isSelectingOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
             },
 
             geocodedAddress(coordinates) {
@@ -476,6 +476,15 @@
                 geocoder.geocode({'latLng': coordinates}, (result, status) => {
                     if (status === google.maps.GeocoderStatus.OK) {
                         this.formatAddress = result[0].formatted_address
+                    }
+                })
+            },
+
+            geocodeAddressStart(coordinates) {
+                let geocoder = new google.maps.Geocoder()
+                geocoder.geocode({'latLng': coordinates}, (result, status) => {
+                    if (status === google.maps.GeocoderStatus.OK) {
+                        this.form.name_start = result[0].formatted_address
                     }
                 })
             },
@@ -546,17 +555,26 @@
             HeaderForm
         },
 
-        created() {
-            let address = this.geocodedAddress(this.centerMarker)
-            this.centerMarker = this.getCurrentPositionUser()
-            this.coordinatesOrigin = this.centerMarker
-            this.form.name_start = address ? address : ''
+        async created() {
+            this.nomenclatorsRequestServices()
+
+            const {coords} = await this.getCurrentPositionUser()
+            if (coords.latitude && coords.longitude) {
+                this.centerMarker = {lat: coords.latitude, lng: coords.longitude}
+                this.geocodeAddressStart(this.centerMarker)
+                this.coordinatesOrigin = this.centerMarker
+                this.markers.push({
+                    position: this.centerMarker
+                })
+
+                return;
+            }
 
             this.markers.push({
                 position: this.centerMarker
             })
-
-            this.nomenclatorsRequestServices()
+            this.coordinatesOrigin = this.centerMarker
+            this.geocodeAddressStart(this.centerMarker)
         },
 
         mounted() {
