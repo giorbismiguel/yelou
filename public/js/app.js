@@ -4740,7 +4740,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         };
       }
 
-      this.formatAddress = this.geocodedAddress(this.isSelectingOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
+      this.geocodedAddress(this.isSelectingOrigin ? this.coordinatesOrigin : this.coordinatesDestiny);
     },
     geocodedAddress: function geocodedAddress(coordinates) {
       var _this3 = this;
@@ -4751,6 +4751,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, function (result, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           _this3.formatAddress = result[0].formatted_address;
+        }
+      });
+    },
+    geocodeAddressStart: function geocodeAddressStart(coordinates) {
+      var _this4 = this;
+
+      var geocoder = new google.maps.Geocoder();
+      geocoder.geocode({
+        'latLng': coordinates
+      }, function (result, status) {
+        if (status === google.maps.GeocoderStatus.OK) {
+          _this4.form.name_start = result[0].formatted_address;
         }
       });
     },
@@ -4816,35 +4828,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _created = _asyncToGenerator(
     /*#__PURE__*/
     _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-      var _ref, coords, address;
+      var _ref, coords;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              this.nomenclatorsRequestServices();
+              _context.next = 3;
               return this.getCurrentPositionUser();
 
-            case 2:
+            case 3:
               _ref = _context.sent;
               coords = _ref.coords;
 
-              if (coords.latitude && coords.longitude) {
-                this.centerMarker = {
-                  lat: coords.latitude,
-                  lng: coords.longitude
-                };
+              if (!(coords.latitude && coords.longitude)) {
+                _context.next = 11;
+                break;
               }
 
-              address = this.geocodedAddress(this.centerMarker);
+              this.centerMarker = {
+                lat: coords.latitude,
+                lng: coords.longitude
+              };
+              this.geocodeAddressStart(this.centerMarker);
               this.coordinatesOrigin = this.centerMarker;
-              this.form.name_start = address ? address : '';
               this.markers.push({
                 position: this.centerMarker
               });
-              this.nomenclatorsRequestServices();
+              return _context.abrupt("return");
 
-            case 10:
+            case 11:
+              this.markers.push({
+                position: this.centerMarker
+              });
+              this.coordinatesOrigin = this.centerMarker;
+              this.geocodeAddressStart(this.centerMarker);
+
+            case 14:
             case "end":
               return _context.stop();
           }
@@ -68525,7 +68546,8 @@ var render = function() {
                     attrs: {
                       type: "text",
                       placeholder: _vm.modal.title,
-                      "aria-describedby": "adddresFormat"
+                      "aria-describedby": "adddresFormat",
+                      readonly: ""
                     },
                     domProps: { value: _vm.formatAddress },
                     on: {
