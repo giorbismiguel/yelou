@@ -558,23 +558,23 @@
         async created() {
             this.nomenclatorsRequestServices()
 
-            const {coords} = await this.getCurrentPositionUser()
-            if (coords.latitude && coords.longitude) {
-                this.centerMarker = {lat: coords.latitude, lng: coords.longitude}
+            try {
+                const {coords} = await this.getCurrentPositionUser()
+                if (coords.latitude && coords.longitude) {
+                    this.centerMarker = {lat: coords.latitude, lng: coords.longitude}
+                    this.geocodeAddressStart(this.centerMarker)
+                    this.coordinatesOrigin = this.centerMarker
+                    this.markers.push({
+                        position: this.centerMarker
+                    })
+                }
+            } catch (e) {
                 this.geocodeAddressStart(this.centerMarker)
                 this.coordinatesOrigin = this.centerMarker
                 this.markers.push({
                     position: this.centerMarker
                 })
-
-                return;
             }
-
-            this.markers.push({
-                position: this.centerMarker
-            })
-            this.coordinatesOrigin = this.centerMarker
-            this.geocodeAddressStart(this.centerMarker)
         },
 
         mounted() {

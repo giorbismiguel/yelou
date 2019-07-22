@@ -155,9 +155,13 @@
         },
 
         async created() {
-            const {coords} = await this.getCurrentPositionUser()
-            if (coords.latitude && coords.longitude) {
-                this.latLngClient = {lat: coords.latitude, lng: coords.longitude}
+            try {
+                const {coords} = await this.getCurrentPositionUser()
+                if (coords.latitude && coords.longitude) {
+                    this.latLngClient = {lat: coords.latitude, lng: coords.longitude}
+                }
+            } catch (e) {
+
             }
         },
 

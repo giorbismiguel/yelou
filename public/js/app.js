@@ -3547,10 +3547,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
+              _context.prev = 0;
+              _context.next = 3;
               return this.getCurrentPositionUser();
 
-            case 2:
+            case 3:
               _ref = _context.sent;
               coords = _ref.coords;
 
@@ -3561,12 +3562,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                 };
               }
 
-            case 5:
+              _context.next = 10;
+              break;
+
+            case 8:
+              _context.prev = 8;
+              _context.t0 = _context["catch"](0);
+
+            case 10:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this);
+      }, _callee, this, [[0, 8]]);
     }));
 
     function created() {
@@ -4835,42 +4843,44 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           switch (_context.prev = _context.next) {
             case 0:
               this.nomenclatorsRequestServices();
-              _context.next = 3;
+              _context.prev = 1;
+              _context.next = 4;
               return this.getCurrentPositionUser();
 
-            case 3:
+            case 4:
               _ref = _context.sent;
               coords = _ref.coords;
 
-              if (!(coords.latitude && coords.longitude)) {
-                _context.next = 11;
-                break;
+              if (coords.latitude && coords.longitude) {
+                this.centerMarker = {
+                  lat: coords.latitude,
+                  lng: coords.longitude
+                };
+                this.geocodeAddressStart(this.centerMarker);
+                this.coordinatesOrigin = this.centerMarker;
+                this.markers.push({
+                  position: this.centerMarker
+                });
               }
 
-              this.centerMarker = {
-                lat: coords.latitude,
-                lng: coords.longitude
-              };
-              this.geocodeAddressStart(this.centerMarker);
-              this.coordinatesOrigin = this.centerMarker;
-              this.markers.push({
-                position: this.centerMarker
-              });
-              return _context.abrupt("return");
+              _context.next = 14;
+              break;
 
-            case 11:
+            case 9:
+              _context.prev = 9;
+              _context.t0 = _context["catch"](1);
+              this.geocodeAddressStart(this.centerMarker);
+              this.coordinatesOrigin = this.centerMarker;
               this.markers.push({
                 position: this.centerMarker
               });
-              this.coordinatesOrigin = this.centerMarker;
-              this.geocodeAddressStart(this.centerMarker);
 
             case 14:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, this);
+      }, _callee, this, [[1, 9]]);
     }));
 
     function created() {
