@@ -227,7 +227,9 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        $birthDate = $data['birth_date'] ? convert_us_date_to_db($data['birth_date'].' 00:00:00') : null;
+        $birthDate = isset($data['birth_date']) && $data['birth_date']
+            ? convert_us_date_to_db($data['birth_date'].' 00:00:00')
+            : null;
 
         return User::create([
             'type'                         => $data['type'],
