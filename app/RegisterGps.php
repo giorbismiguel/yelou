@@ -34,6 +34,17 @@ class RegisterGps extends Model
     ];
 
     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        '"deleted_at',
+    ];
+
+    /**
      * The attributes that should be casted to native types.
      *
      * @var array

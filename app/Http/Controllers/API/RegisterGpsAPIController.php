@@ -6,6 +6,8 @@ use App\Http\Requests\API\CreateRegisterGpsAPIRequest;
 use App\Http\Requests\API\UpdateRegisterGpsAPIRequest;
 use App\RegisterGps;
 use App\Repositories\RegisterGpsRepository;
+use App\Repositories\TransportationAvailableRepository;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
@@ -19,9 +21,15 @@ class RegisterGpsAPIController extends AppBaseController
     /** @var  RegisterGpsRepository */
     private $registerGpsRepository;
 
-    public function __construct(RegisterGpsRepository $registerGpsRepo)
-    {
+    /** @var TransportationAvailableRepository */
+    private $transportationAvailableRepo;
+
+    public function __construct(
+        RegisterGpsRepository $registerGpsRepo,
+        TransportationAvailableRepository $transportationAvailableRepo
+    ) {
         $this->registerGpsRepository = $registerGpsRepo;
+        $this->transportationAvailableRepo = $transportationAvailableRepo;
     }
 
     /**
@@ -47,18 +55,27 @@ class RegisterGpsAPIController extends AppBaseController
      * POST /registerGps
      *
      * @param CreateRegisterGpsAPIRequest $request
-     *
-     * @return Response
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Exception
      */
     public function store(CreateRegisterGpsAPIRequest $request)
     {
-        $registersGps = [];
+        /** @var Collection $registersGps */
+        $registersGps = collect([]);
         foreach ($request->coordinates as $coordinate) {
             $coordinate['registered_at'] = convert_us_date_to_db($coordinate['registered_at']);
-            $registersGps[] = $this->registerGpsRepository->create($coordinate);
+            $registersGps->push($this->registerGpsRepository->create($coordinate));
         }
 
-        return $this->sendResponse($registersGps, 'Se ha registrado correctamente la coordenada');
+        if ($registersGps->isNotEmpty()) {
+            $lastRegisterGps = $registersGps->last();
+            $this->transportationAvailableRepo->makeModel()->updateOrInsert(
+                ['user_id' => $lastRegisterGps['driver_id']],
+                ['lat' => $lastRegisterGps['lat'], 'lng' => $lastRegisterGps['lng']]
+            );
+        }
+
+        return $this->sendResponse($registersGps->toArray(), 'Se ha registrado correctamente la coordenada');
     }
 
     /**
