@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateRequestServicesAPIRequest;
 use App\Http\Requests\API\UpdateRequestServicesAPIRequest;
-use App\Notifications\RequestServiceNotification;
 use App\Repositories\RouteRepository;
 use App\Repositories\TransportationAvailableRepository;
 use App\Repositories\UserRepository;
@@ -13,7 +12,6 @@ use App\Repositories\RequestServicesRepository;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
-use Illuminate\Support\Facades\Notification;
 use Response;
 
 /**
@@ -117,18 +115,18 @@ class RequestServicesAPIController extends AppBaseController
         }
 
         $requestServices = $this->requestServicesRepository->create($input);
-        $distanceToTravel = get_distance(
-            $requestServices->lat_start,
-            $requestServices->lng_start,
-            $requestServices->lat_end,
-            $requestServices->lng_end
-        );
-
-        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
-
-        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-        });
+//        $distanceToTravel = get_distance(
+//            $requestServices->lat_start,
+//            $requestServices->lng_start,
+//            $requestServices->lat_end,
+//            $requestServices->lng_end
+//        );
+//
+//        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
+//
+//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+//        });
 
         return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
     }
@@ -223,5 +221,10 @@ class RequestServicesAPIController extends AppBaseController
             ->pluck('user_id');
 
         return $availableNerbyDrivers;
+    }
+
+    public function requestServices()
+    {
+
     }
 }

@@ -57,11 +57,17 @@ Route::prefix('v1')->group(function () {
             Route::resource('request_services', 'RequestServicesAPIController');
 
             /*
-             * Driver Area
+             * Driver Personalize Area
              */
-            Route::resource('transportation_availables', 'TransportationAvailableAPIController');
+            Route::get('/drivers/request_services', 'DriverRequestServicesAPIController@index')
+                ->name('drivers.request_services');
             Route::post('/drivers/availables', 'TransportationAvailableAPIController@driversAvailable')
                 ->name('drivers.available');
+
+            /*
+             * Drivers Resource Area
+             */
+            Route::resource('transportation_availables', 'TransportationAvailableAPIController');
             Route::resource('requested_services', 'RequestedServiceAPIController');
             Route::resource('register_gps', 'RegisterGpsAPIController');
             Route::resource('driver_qualifications', 'DriverQualificationAPIController');

@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\RequestServices;
-use App\Repositories\BaseRepository;
 
 /**
  * Class RequestServicesRepository
@@ -45,5 +44,29 @@ class RequestServicesRepository extends BaseRepository
     public function model()
     {
         return RequestServices::class;
+    }
+
+    public function allRequestServices(
+        $search = [],
+        $skip = null,
+        $limit = null,
+        $columns = ['*'],
+        $orderBy = null,
+        $sortBy = null
+    ) {
+        /**@var $query \Illuminate\Database\Eloquent\Builder */
+        $query = $this->allQuery($search, $skip, $limit);
+
+        if ($orderBy) {
+            $query->orderBy($orderBy, $sortBy);
+        } else {
+            $query->latest();
+        }
+
+        if (isset($search['date_init']) && $search['date_init'] && isset($search['date_end']) && $search['date_end']) {
+            $query->whereBetween('created_at', [$search['date_init'], $search['date_end']]);
+        }
+
+        return $query->doesntHave('requestedServices')->get($columns);
     }
 }
