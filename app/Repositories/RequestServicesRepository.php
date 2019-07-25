@@ -63,6 +63,10 @@ class RequestServicesRepository extends BaseRepository
             $query->latest();
         }
 
+        if (isset($search['date_init']) && $search['date_init'] && isset($search['date_end']) && $search['date_end']) {
+            $query->whereBetween('created_at', [$search['date_init'], $search['date_end']]);
+        }
+
         return $query->doesntHave('requestedServices')->get($columns);
     }
 }
