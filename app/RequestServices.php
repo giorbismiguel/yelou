@@ -35,6 +35,7 @@ class RequestServices extends Model
     protected $with = [
         'route:id,name',
         'paymentMethod:id,name',
+        'user:id,first_name,last_name,phone,email',
     ];
 
     public $fillable = [
@@ -49,6 +50,12 @@ class RequestServices extends Model
         'start_time',
         'payment_method_id',
         'user_id',
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**
@@ -104,5 +111,21 @@ class RequestServices extends Model
     public function paymentMethod(): BelongsTo
     {
         return $this->belongsTo(PaymentMethod::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function requestedServices()
+    {
+        return $this->hasMany(RequestedService::class, 'service_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

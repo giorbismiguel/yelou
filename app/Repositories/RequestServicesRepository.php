@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\RequestServices;
-use App\Repositories\BaseRepository;
 
 /**
  * Class RequestServicesRepository
@@ -45,5 +44,25 @@ class RequestServicesRepository extends BaseRepository
     public function model()
     {
         return RequestServices::class;
+    }
+
+    public function allRequestServices(
+        $search = [],
+        $skip = null,
+        $limit = null,
+        $columns = ['*'],
+        $orderBy = null,
+        $sortBy = null
+    ) {
+        /**@var $query \Illuminate\Database\Eloquent\Builder */
+        $query = $this->allQuery($search, $skip, $limit);
+
+        if ($orderBy) {
+            $query->orderBy($orderBy, $sortBy);
+        } else {
+            $query->latest();
+        }
+
+        return $query->doesntHave('requestedServices')->get($columns);
     }
 }
