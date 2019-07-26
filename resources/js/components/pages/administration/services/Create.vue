@@ -194,7 +194,6 @@
     import HeaderForm from '../layout/header_form'
     import Swal from 'sweetalert2'
     import navigator from '../../../../mixins/navigator'
-    import geocoder from '../../../../mixins/geocoder'
 
     export default {
         name: "CreateService",

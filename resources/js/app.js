@@ -10,6 +10,7 @@ import VuePhoneNumberInput from 'vue-phone-number-input';
 Vue.component('vue-phone-number-input', VuePhoneNumberInput);
 import 'vue-phone-number-input/dist/vue-phone-number-input.css';
 import { ToggleButton } from 'vue-js-toggle-button'
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 Vue.use(VueGoogleMaps, {
     load: {
