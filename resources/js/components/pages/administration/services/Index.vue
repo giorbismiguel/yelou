@@ -1,5 +1,9 @@
 <template>
     <box-user>
+        <loading :active.sync="isLoading"
+                 :can-cancel="true"
+                 :is-full-page="true"></loading>
+
         <h3>Servicios</h3>
         <hr>
 
@@ -119,6 +123,8 @@
     import {cloneDeep} from '../../../modules/query-string'
     import {mapState, mapActions} from 'vuex'
     import Swal from 'sweetalert2'
+    import Spinner from 'vue-simple-spinner'
+    import Loading from 'vue-loading-overlay';
 
     export default {
         name: "Services",
@@ -139,31 +145,31 @@
                 },
 
                 columns: [
-                    'start_date',
-                    'start_time',
                     'name_start',
                     'name_end',
                     'payment_method_id',
+                    'start_date',
+                    'start_time',
                     'actions',
                 ],
 
                 options: {
                     sortable: [
-                        'start_date',
-                        'start_time',
                         'name_start',
                         'name_end',
                         'payment_method_id',
+                        'start_date',
+                        'start_time',
                     ],
                     columnsClasses: {
                         'actions': 'action-col'
                     },
                     headings: {
-                        'start_date': 'Día',
-                        'start_time': 'Hora de Inicio',
                         'name_start': 'Origen',
                         'name_end': 'Destino',
                         'payment_method_id': 'Medio de pago',
+                        'start_date': 'Día',
+                        'start_time': 'Hora de Inicio',
                         'actions': 'Acciones',
                     }
                 },
@@ -198,7 +204,9 @@
 
                 defaultFiltersDrivers: {},
 
-                apiEndpointDrivers: ''
+                apiEndpointDrivers: route('api.requested_services.index'),
+
+                isLoading: false
             };
         },
 
@@ -246,7 +254,6 @@
                     if (result.value) {
                         this.deleteRequestService(id)
                             .then(() => {
-                                this.loading = false
                                 this.$notify({
                                     type: 'success',
                                     group: 'index_requested_services',
@@ -257,7 +264,6 @@
                                 this.reloadTable()
                             })
                             .catch((data) => {
-                                this.loading = false
                                 this.$notify({
                                     type: 'error',
                                     group: 'index_requested_services',
@@ -293,27 +299,27 @@
             },
 
             acceptService(id) {
+                this.hideDriverModel()
+                this.isLoading = true
                 this.acceptDriverService(id)
                     .then(() => {
-                        this.hideDriverModel()
+                        this.isLoading = false
                         this.$notify({
                             type: 'success',
                             group: 'index_requested_services',
                             title: 'Servicios',
                             text: 'Se le ha enviado una notificación al chofer'
                         })
-
                         this.reloadTableDrivers()
                     })
-                    .catch((data) => {
-                        this.hideDriverModel()
+                    .catch(() => {
+                        this.isLoading = false
                         this.$notify({
                             type: 'error',
                             group: 'index_requested_services',
                             title: 'Servicios',
                             text: 'Ha ocurrido un error al enviar la notificacion chofer'
                         });
-                        this.reloadTableDrivers()
                     })
             },
 
@@ -327,7 +333,9 @@
         },
 
         components: {
-            BoxUser
+            BoxUser,
+            Spinner,
+            Loading
         }
     }
 </script>

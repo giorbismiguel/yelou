@@ -115,18 +115,18 @@ class RequestServicesAPIController extends AppBaseController
         }
 
         $requestServices = $this->requestServicesRepository->create($input);
-//        $distanceToTravel = get_distance(
-//            $requestServices->lat_start,
-//            $requestServices->lng_start,
-//            $requestServices->lat_end,
-//            $requestServices->lng_end
-//        );
-//
-//        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
-//
-//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-//        });
+        $distanceToTravel = get_distance(
+            $requestServices->lat_start,
+            $requestServices->lng_start,
+            $requestServices->lat_end,
+            $requestServices->lng_end
+        );
+
+        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
+
+        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+        });
 
         return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
     }
