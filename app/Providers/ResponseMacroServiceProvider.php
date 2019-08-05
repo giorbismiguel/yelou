@@ -54,5 +54,39 @@ class ResponseMacroServiceProvider extends ServiceProvider
                 'message' => $message,
             ], (int) $status ? $status : 500);
         });
+
+        Response::macro('report', function ($view, $data = [], $type = 'portrait', $pageType = 'a4') {
+            if (app('request')->get('format') === 'view') {
+                return reports_view_pdf($view, $data, true);
+            }
+
+            return reports_view_pdf($view, $data)
+                ->setPaper($pageType, $type)
+                ->stream();
+        });
+
+        Response::macro('reportLandscape', function ($view, $data = [], $pageType = 'a4', $filename = 'document.pdf') {
+            if (app('request')->get('format') === 'view') {
+                return reports_view_pdf($view, $data, true);
+            }
+
+            return reports_view_pdf($view, $data)
+                ->setPaper($pageType, 'landscape')
+                ->stream($filename);
+        });
+
+        Response::macro('reportAsView', function ($view, $data = []) {
+            return reports_view_pdf($view, $data, true);
+        });
+
+        Response::macro('reportCustomDimensions', function ($view, $data = [], $dimensions = [0, 0, 500, 500]) {
+            if (app('request')->get('format') === 'view') {
+                return reports_view_pdf($view, $data, true);
+            }
+
+            return reports_view_pdf($view, $data)
+                ->setPaper($dimensions)
+                ->stream();
+        });
     }
 }

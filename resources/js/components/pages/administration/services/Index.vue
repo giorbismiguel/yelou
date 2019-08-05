@@ -56,6 +56,13 @@
                                 Choferes disponibles
                             </a>
                         </li>
+
+                        <li>
+                            <a :href="urlPrintInvoice(row.id)" class="dropdown-item" title="Imprimir Factura" target="_blank">
+                                <i class="fas fa-print"></i>
+                                Imprimir Factura
+                            </a>
+                        </li>
                     </ye-actions>
 
                     <template slot="pre-header-buttons">
@@ -325,6 +332,10 @@
 
             getEndpointDrivers() {
                 this.apiEndpointDrivers = `${route('api.requested_services.index')}`;
+            },
+
+            urlPrintInvoice(id) {
+                return route('invoice.client.print', id);
             }
         },
 

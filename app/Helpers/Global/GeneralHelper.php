@@ -1,6 +1,8 @@
 <?php
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\View;
 
 if (!function_exists('app_name')) {
     /**
@@ -78,4 +80,41 @@ if (!function_exists('format_money')) {
     {
         return number_format($value, 2, '.', ',');
     }
+}
+
+function reports_view_pdf($view, array $data = [], $returnView = false)
+{
+    $viewPath = 'reports.'.$view;
+
+    if ($returnView) {
+        return response()->view($viewPath, $data);
+    }
+
+    $view = View::make($viewPath, $data)->render();
+    $view = preg_replace('/>\s+</', '><', $view);
+
+    $pdf = App::make('dompdf.wrapper');
+    $pdf->loadHTML($view);
+
+    return $pdf;
+}
+
+function reports_view($view, $data)
+{
+    return reports_view_pdf($view, $data)
+        ->stream();
+}
+
+function reports_view_landscape($view, $data)
+{
+    return reports_view_pdf($view, $data)
+        ->setPaper('a4', 'landscape')
+        ->stream();
+}
+
+function reports_view_portrait($view, $data)
+{
+    return reports_view_pdf($view, $data)
+        ->setPaper('a4', 'portrait')
+        ->stream();
 }

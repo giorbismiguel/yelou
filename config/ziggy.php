@@ -4,6 +4,8 @@ return [
         'api.*',
         'admin.*',
         'passport.*',
-        'swaggervel.*'
-        ]
+        'swaggervel.*',
+        'invoice.client.print',
+        'invoice.driver.print',
+    ],
 ];

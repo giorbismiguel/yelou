@@ -5037,6 +5037,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -5197,6 +5204,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     getEndpointDrivers: function getEndpointDrivers() {
       this.apiEndpointDrivers = "".concat(route('api.requested_services.index'));
+    },
+    urlPrintInvoice: function urlPrintInvoice(id) {
+      return route('invoice.client.print', id);
     }
   }),
   mounted: function mounted() {
@@ -68765,6 +68775,26 @@ var render = function() {
                               _c("i", { staticClass: "fas fa-users" }),
                               _vm._v(
                                 "\n                            Choferes disponibles\n                        "
+                              )
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("li", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: {
+                                href: _vm.urlPrintInvoice(row.id),
+                                title: "Imprimir Factura",
+                                target: "_blank"
+                              }
+                            },
+                            [
+                              _c("i", { staticClass: "fas fa-print" }),
+                              _vm._v(
+                                "\n                            Imprimir Factura\n                        "
                               )
                             ]
                           )
