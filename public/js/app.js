@@ -4728,19 +4728,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     showOrigin: function showOrigin() {
-      if (!this.form.name_start) {
-        this.formatAddress = null;
-      }
-
+      this.formatAddress = this.form.name_start ? this.form.name_start : null;
       this.modal.title = 'Punto de Origen';
       this.modal.show = true;
       this.isSelectingOrigin = true;
     },
     showDestiny: function showDestiny() {
-      if (!this.form.name_end) {
-        this.formatAddress = null;
-      }
-
+      this.formatAddress = this.form.name_end ? this.form.name_end : null;
       this.modal.title = 'Punto de Destino';
       this.modal.show = true;
       this.isSelectingDestiny = true;
