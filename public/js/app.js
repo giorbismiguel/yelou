@@ -4483,8 +4483,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 
@@ -4667,13 +4665,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         }
       });
     },
-    setOrigenRequestServices: function setOrigenRequestServices(place) {
+    setDestinationToMap: function setDestinationToMap(place) {
+      this.formatAddress = place.formatted_address;
+      this.centerMarker = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      };
+      this.markers[0] = {
+        position: this.centerMarker
+      };
+
+      if (this.isSelectingOrigin) {
+        this.form.name_start = place.formatted_address;
+        this.originRequestService = place;
+      } else {
+        this.form.name_end = place.formatted_address;
+        this.destinationRequestService = place;
+      }
+    },
+    setOriginRequestServices: function setOriginRequestServices(place) {
       this.originRequestService = place;
       this.form.name_start = place.formatted_address;
+      this.formatAddress = place.formatted_address;
+      this.centerMarker = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      };
+      this.markers[0] = {
+        position: this.centerMarker
+      };
     },
     setDestinationRequestServices: function setDestinationRequestServices(place) {
       this.destinationRequestService = place;
       this.form.name_end = place.formatted_address;
+      this.formatAddress = place.formatted_address;
+      this.centerMarker = {
+        lat: place.geometry.location.lat(),
+        lng: place.geometry.location.lng()
+      };
+      this.markers[0] = {
+        position: this.centerMarker
+      };
     },
     changeCurrentLocation: function changeCurrentLocation() {
       this.currentLocation = !this.currentLocation;
@@ -4696,13 +4728,19 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       });
     },
     showOrigin: function showOrigin() {
-      this.formatAddress = null;
+      if (!this.form.name_start) {
+        this.formatAddress = null;
+      }
+
       this.modal.title = 'Punto de Origen';
       this.modal.show = true;
       this.isSelectingOrigin = true;
     },
     showDestiny: function showDestiny() {
-      this.formatAddress = null;
+      if (!this.form.name_end) {
+        this.formatAddress = null;
+      }
+
       this.modal.title = 'Punto de Destino';
       this.modal.show = true;
       this.isSelectingDestiny = true;
@@ -4735,11 +4773,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     updateCoordinates: function updateCoordinates(location) {
       if (this.isSelectingOrigin) {
+        this.originRequestService = null;
         this.coordinatesOrigin = {
           lat: location.latLng.lat(),
           lng: location.latLng.lng()
         };
       } else {
+        this.destinationRequestService = null;
         this.coordinatesDestiny = {
           lat: location.latLng.lat(),
           lng: location.latLng.lng()
@@ -4769,6 +4809,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, function (result, status) {
         if (status === google.maps.GeocoderStatus.OK) {
           _this4.form.name_start = result[0].formatted_address;
+          _this4.formatAddress = result[0].formatted_address;
         }
       });
     },
@@ -68013,7 +68054,7 @@ var render = function() {
                               placeholder: _vm.writeLocationText
                             },
                             on: {
-                              place_changed: _vm.setOrigenRequestServices,
+                              place_changed: _vm.setOriginRequestServices,
                               keypress: function($event) {
                                 if (
                                   !$event.type.indexOf("key") &&
@@ -68567,45 +68608,41 @@ var render = function() {
                   1
                 ),
                 _vm._v(" "),
-                _c("div", { staticClass: "input-group mb-3" }, [
-                  _c("div", { staticClass: "input-group-prepend" }, [
-                    _c(
-                      "span",
-                      {
-                        staticClass: "input-group-text",
-                        attrs: { id: "adddresFormat" }
-                      },
-                      [_c("i", { staticClass: "fas fa-search-location" })]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
+                _c(
+                  "div",
+                  { staticClass: "input-group mb-3" },
+                  [
+                    _c("gmap-autocomplete", {
+                      ref: "address",
+                      staticClass: "form-control",
+                      attrs: {
+                        id: "address",
+                        name: "address",
                         value: _vm.formatAddress,
-                        expression: "formatAddress"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: _vm.modal.title,
-                      "aria-describedby": "adddresFormat",
-                      readonly: ""
-                    },
-                    domProps: { value: _vm.formatAddress },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                        placeholder: "¿ A dónde vas?"
+                      },
+                      on: {
+                        place_changed: _vm.setDestinationToMap,
+                        keypress: function($event) {
+                          if (
+                            !$event.type.indexOf("key") &&
+                            _vm._k(
+                              $event.keyCode,
+                              "enter",
+                              13,
+                              $event.key,
+                              "Enter"
+                            )
+                          ) {
+                            return null
+                          }
+                          return $event.preventDefault()
                         }
-                        _vm.formatAddress = $event.target.value
                       }
-                    }
-                  })
-                ])
+                    })
+                  ],
+                  1
+                )
               ],
               1
             )

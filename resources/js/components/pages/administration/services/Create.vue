@@ -27,7 +27,7 @@
                             <div class="input-group form-group">
                                 <gmap-autocomplete class="form-control" id="origen_request_services" ref="origen"
                                                    name="origen_request_services" :value="form.name_start"
-                                                   @place_changed="setOrigenRequestServices"
+                                                   @place_changed="setOriginRequestServices"
                                                    :placeholder="writeLocationText"
                                                    @keypress.enter="$event.preventDefault()"
                                                    :class="{ 'is-invalid': submitted && (serverErrors.lat_start || serverErrors.lng_start) }">
@@ -170,13 +170,11 @@
                     </GmapMap>
 
                     <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="adddresFormat">
-                                <i class="fas fa-search-location"></i>
-                            </span>
-                        </div>
-                        <input v-model="formatAddress" type="text" class="form-control" :placeholder="modal.title"
-                               aria-describedby="adddresFormat" readonly>
+                        <gmap-autocomplete class="form-control" id="address" name="address"
+                                           ref="address" :value="formatAddress"
+                                           @place_changed="setDestinationToMap" placeholder="¿ A dónde vas?"
+                                           @keypress.enter="$event.preventDefault()">
+                        </gmap-autocomplete>
                     </div>
                 </div>
             </div>
@@ -382,14 +380,36 @@
                 );
             },
 
-            setOrigenRequestServices(place) {
+            setDestinationToMap(place) {
+                this.formatAddress = place.formatted_address
+
+                this.centerMarker = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
+                this.markers[0] = {position: this.centerMarker}
+
+                if (this.isSelectingOrigin) {
+                    this.form.name_start = place.formatted_address
+                    this.originRequestService = place
+                } else {
+                    this.form.name_end = place.formatted_address
+                    this.destinationRequestService = place
+                }
+            },
+
+            setOriginRequestServices(place) {
                 this.originRequestService = place
                 this.form.name_start = place.formatted_address
+                this.formatAddress = place.formatted_address
+
+                this.centerMarker = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
+                this.markers[0] = {position: this.centerMarker}
             },
 
             setDestinationRequestServices(place) {
                 this.destinationRequestService = place
                 this.form.name_end = place.formatted_address
+                this.formatAddress = place.formatted_address
+                this.centerMarker = {lat: place.geometry.location.lat(), lng: place.geometry.location.lng()}
+                this.markers[0] = {position: this.centerMarker}
             },
 
             changeCurrentLocation() {
@@ -415,14 +435,20 @@
             },
 
             showOrigin() {
-                this.formatAddress = null
+                if (!this.form.name_start) {
+                    this.formatAddress = null
+                }
+
                 this.modal.title = 'Punto de Origen'
                 this.modal.show = true
                 this.isSelectingOrigin = true
             },
 
             showDestiny() {
-                this.formatAddress = null
+                if (!this.form.name_end) {
+                    this.formatAddress = null
+                }
+
                 this.modal.title = 'Punto de Destino'
                 this.modal.show = true
                 this.isSelectingDestiny = true
@@ -456,11 +482,13 @@
 
             updateCoordinates(location) {
                 if (this.isSelectingOrigin) {
+                    this.originRequestService = null;
                     this.coordinatesOrigin = {
                         lat: location.latLng.lat(),
                         lng: location.latLng.lng(),
                     }
                 } else {
+                    this.destinationRequestService = null
                     this.coordinatesDestiny = {
                         lat: location.latLng.lat(),
                         lng: location.latLng.lng(),
@@ -484,6 +512,7 @@
                 geocoder.geocode({'latLng': coordinates}, (result, status) => {
                     if (status === google.maps.GeocoderStatus.OK) {
                         this.form.name_start = result[0].formatted_address
+                        this.formatAddress = result[0].formatted_address
                     }
                 })
             },
