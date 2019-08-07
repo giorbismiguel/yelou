@@ -72,6 +72,8 @@ class RequestServices extends Model
         'lng_end'    => 'double',
         'start_date' => 'date:d/m/Y',
         'start_time' => 'time',
+        'created_at' => 'datetime:d/m/Y H:i:s',
+        'updated_at' => 'datetime:d/m/Y H:i:s',
     ];
 
     /**

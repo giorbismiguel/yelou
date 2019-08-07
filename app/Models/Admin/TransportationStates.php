@@ -18,7 +18,7 @@ class TransportationStates extends Model
     use SoftDeletes;
 
     public $table = 'transportation_states';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -34,9 +34,11 @@ class TransportationStates extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'name' => 'string',
-        'description' => 'string'
+        'id'          => 'integer',
+        'name'        => 'string',
+        'description' => 'string',
+        'created_at'  => 'datetime:d/m/Y H:i:s',
+        'updated_at'  => 'datetime:d/m/Y H:i:s',
     ];
 
     /**
@@ -45,9 +47,9 @@ class TransportationStates extends Model
      * @var array
      */
     public static $rules = [
-        'name' => 'required|max:191',
+        'name'        => 'required|max:191',
         'description' => 'required'
     ];
 
-    
+
 }

@@ -36,11 +36,13 @@ class TransportationAvailable extends Model
      * @var array
      */
     protected $casts = [
-        'id'      => 'integer',
-        'lat'     => 'double',
-        'lng'     => 'double',
-        'active'  => 'boolean',
-        'user_id' => 'integer'
+        'id'         => 'integer',
+        'lat'        => 'double',
+        'lng'        => 'double',
+        'active'     => 'boolean',
+        'user_id'    => 'integer',
+        'created_at' => 'datetime:d/m/Y H:i:s',
+        'updated_at' => 'datetime:d/m/Y H:i:s',
     ];
 
     /**

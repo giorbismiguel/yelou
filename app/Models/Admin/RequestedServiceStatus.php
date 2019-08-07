@@ -34,7 +34,9 @@ class RequestedServiceStatus extends Model
     protected $casts = [
         'id'          => 'integer',
         'name'        => 'string',
-        'description' => 'string'
+        'description' => 'string',
+        'created_at'  => 'datetime:d/m/Y H:i:s',
+        'updated_at'  => 'datetime:d/m/Y H:i:s',
     ];
 
     /**
@@ -46,6 +48,5 @@ class RequestedServiceStatus extends Model
         'name'        => 'required|min:1|max:191',
         'description' => 'required|min:1'
     ];
-
 
 }

@@ -50,6 +50,8 @@ class Route extends Model
         'lng_end'                 => 'double',
         'formatted_address_end'   => 'string',
         'favourite'               => 'integer',
+        'created_at'              => 'datetime:d/m/Y H:i:s',
+        'updated_at'              => 'datetime:d/m/Y H:i:s',
     ];
 
     /**

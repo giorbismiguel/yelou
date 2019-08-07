@@ -57,9 +57,10 @@ class RequestedService extends Model
      */
     protected $casts = [
         'id'         => 'integer',
-        'created_at' => 'datetime:d/m/Y H:i:s',
         'start_at'   => 'datetime:d/m/Y H:i:s',
         'end_at'     => 'datetime:d/m/Y H:i:s',
+        'created_at' => 'datetime:d/m/Y H:i:s',
+        'updated_at' => 'datetime:d/m/Y H:i:s',
     ];
 
     /**
@@ -72,8 +73,8 @@ class RequestedService extends Model
         'transporter_id' => 'nullable|integer',
         'service_id'     => 'nullable|integer',
         'status_id'      => 'nullable|integer',
-        'start_at'       => 'nullable|date_format:d/m/Y H:i:s',
-        'end_at'         => 'nullable|date_format:d/m/Y H:i:s',
+        'start_at'       => 'nullable|datetime:d/m/Y H:i:s',
+        'end_at'         => 'nullable|datetime:d/m/Y H:i:s',
     ];
 
     /* ========================================================================= *\

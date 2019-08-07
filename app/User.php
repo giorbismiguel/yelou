@@ -58,10 +58,12 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'phone_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime:d/m/Y H:i:s',
+        'phone_verified_at' => 'datetime:d/m/Y H:i:s',
         'type'              => 'integer',
         'birth_date'        => 'date',
+        'created_at'        => 'datetime:d/m/Y H:i:s',
+        'updated_at'        => 'datetime:d/m/Y H:i:s',
     ];
 
     protected $with = [

@@ -55,7 +55,9 @@ class RegisterGps extends Model
         'lng'           => 'double',
         'driver_id'     => 'integer',
         'service_id'    => 'integer',
-        'registered_at' => 'datetime:d/m/Y H:i:s'
+        'registered_at' => 'datetime:d/m/Y H:i:s',
+        'created_at'    => 'datetime:d/m/Y H:i:s',
+        'updated_at'    => 'datetime:d/m/Y H:i:s',
     ];
 
     /**

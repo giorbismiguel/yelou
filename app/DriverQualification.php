@@ -39,8 +39,8 @@ class DriverQualification extends Model
     protected $casts = [
         'id'            => 'integer',
         'qualification' => 'integer',
-        'created_at'    => 'date_format:d/m/Y H:i:s',
-        'updated_at'    => 'date_format:d/m/Y H:i:s',
+        'created_at'    => 'datetime:d/m/Y H:i:s',
+        'updated_at'    => 'datetime:d/m/Y H:i:s',
     ];
 
     /**

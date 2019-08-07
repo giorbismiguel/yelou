@@ -18,7 +18,7 @@ class LicenseTypes extends Model
     use SoftDeletes;
 
     public $table = 'license_types';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -34,9 +34,11 @@ class LicenseTypes extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'type' => 'string',
-        'description' => 'string'
+        'id'          => 'integer',
+        'type'        => 'string',
+        'description' => 'string',
+        'created_at'  => 'datetime:d/m/Y H:i:s',
+        'updated_at'  => 'datetime:d/m/Y H:i:s',
     ];
 
     /**
@@ -45,7 +47,7 @@ class LicenseTypes extends Model
      * @var array
      */
     public static $rules = [
-        'type' => 'required|max:5',
+        'type'        => 'required|max:5',
         'description' => 'required|max:191'
     ];
 

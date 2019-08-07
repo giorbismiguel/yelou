@@ -17,7 +17,7 @@ class PaymentMethod extends Model
     use SoftDeletes;
 
     public $table = 'payment_methods';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -32,8 +32,10 @@ class PaymentMethod extends Model
      * @var array
      */
     protected $casts = [
-        'id' => 'integer',
-        'name' => 'string'
+        'id'         => 'integer',
+        'name'       => 'string',
+        'created_at' => 'datetime:d/m/Y H:i:s',
+        'updated_at' => 'datetime:d/m/Y H:i:s',
     ];
 
     /**
@@ -45,5 +47,5 @@ class PaymentMethod extends Model
         'name' => 'required|min:1|max:191'
     ];
 
-    
+
 }
