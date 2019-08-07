@@ -51,23 +51,21 @@ class TransportationAvailableAPIController extends AppBaseController
 
     public function driversAvailable(Request $request)
     {
-        $availables = Cache::remember('drivers-lists', 300, function () {
-            return $this
-                ->transportationAvailableRepository
-                ->makeModel()
-                ->where('active', '=', 1)
-                ->with('user:id,first_name,last_name')
-                ->get();
-        });
+        $available = $this
+            ->transportationAvailableRepository
+            ->makeModel()
+            ->where('active', '=', 1)
+            ->with('user:id,first_name,last_name')
+            ->get();
 
-        if (!$availables->count()) {
+        if (!$available->count()) {
             return [];
         }
 
         $input = ['lat_start' => $request->get('lat'), 'lng_start' => $request->get('lng')];
 
         if ($input['lat_start'] && $input['lng_start']) {
-            $availables = $availables
+            $available = $available
                 ->filter(function ($available) use ($input) {
                     return get_distance(
                             $input['lat_start'],
@@ -78,7 +76,7 @@ class TransportationAvailableAPIController extends AppBaseController
                 });
         }
 
-        $drivers = $availables
+        $drivers = $available
             ->map(function ($available) {
                 return [
                     'position' => [
