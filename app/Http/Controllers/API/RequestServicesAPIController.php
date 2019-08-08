@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateRequestServicesAPIRequest;
 use App\Http\Requests\API\UpdateRequestServicesAPIRequest;
+use App\Notifications\RequestServiceNotification;
 use App\Repositories\RouteRepository;
 use App\Repositories\TransportationAvailableRepository;
 use App\Repositories\UserRepository;
