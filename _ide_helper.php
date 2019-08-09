@@ -3,7 +3,7 @@
 
 /**
  * A helper file for Laravel 5, to provide autocomplete information to your IDE
- * Generated for Laravel 5.8.17 on 2019-07-25 20:30:54.
+ * Generated for Laravel 5.8.17 on 2019-08-08 23:12:04.
  *
  * This file should not be included in your code, only analyzed by your IDE!
  *
@@ -10568,6 +10568,46 @@ namespace Illuminate\Support\Facades {
         public static function error($message = null, $status = 500)
         {
                         return \Illuminate\Routing\ResponseFactory::error($message, $status);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function report($view, $data = array(), $type = 'portrait', $pageType = 'a4')
+        {
+                        return \Illuminate\Routing\ResponseFactory::report($view, $data, $type, $pageType);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function reportLandscape($view, $data = array(), $pageType = 'a4', $filename = 'document.pdf')
+        {
+                        return \Illuminate\Routing\ResponseFactory::reportLandscape($view, $data, $pageType, $filename);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function reportAsView($view, $data = array())
+        {
+                        return \Illuminate\Routing\ResponseFactory::reportAsView($view, $data);
+        }
+        
+        /**
+         * 
+         *
+         * @static 
+         */ 
+        public static function reportCustomDimensions($view, $data = array(), $dimensions = array())
+        {
+                        return \Illuminate\Routing\ResponseFactory::reportCustomDimensions($view, $data, $dimensions);
         }
          
     }
