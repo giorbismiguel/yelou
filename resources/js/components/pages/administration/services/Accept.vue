@@ -38,7 +38,7 @@
 
             processRequestedService() {
                 this.acceptRequestedService(this.form)
-                    .then(() => {
+                    .then((data) => {
                         this.loadingView = false
                         Swal.fire({
                             text: 'La solicitud del servicio ha sido exitosa',

@@ -294,6 +294,8 @@
                     (this.originRequestService && this.destinationRequestService)
                     ||
                     (this.coordinatesOrigin && this.coordinatesDestiny)
+                    ||
+                    this.route
             }
         },
 
@@ -568,6 +570,7 @@
 
                     return;
                 }
+
 
                 this.route = null;
                 this.form.name_start = null

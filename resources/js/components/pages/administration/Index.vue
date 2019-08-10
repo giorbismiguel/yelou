@@ -58,8 +58,32 @@
                 <toggle-button @change="onChangeStatusDriver" :labels="{checked: 'Activo', unchecked: 'Inactivo'}"
                                :width="85" :height="30" :value="stateDriver" :sync="stateDriver"/>
             </div>
+
+            <ye-table id="table_requested_services"
+                      :columns="columns"
+                      :options="options"
+                      :data="requestServices"
+                      :url="''"
+                      :client-pagination="true"
+                      ref="table">
+
+                <template slot="table-title">Solicitudes para prestarle el servicio</template>
+
+                <ye-actions slot="actions" slot-scope="{row}" class="text-center">
+                    <li>
+                        <a :href="`/servicios/aceptar/${row.id}/${me.id}`" class="dropdown-item"
+                           title="Aceptar Servicio" target="_blank">
+                            <i class="fas fa-car-alt"></i>
+                            Aceptar el servicio
+                        </a>
+                    </li>
+                </ye-actions>
+
+                <template slot="filters-form"></template>
+            </ye-table>
         </template>
 
+        <notifications group="dashboard_request_service" position="center center"/>
     </box-user>
 </template>
 
@@ -68,6 +92,7 @@
     import {mapState, mapActions} from 'vuex'
     import HeaderForm from './layout/header_form'
     import navigator from '../../../mixins/navigator'
+    import Spinner from 'vue-simple-spinner'
 
     export default {
         name: "Administration",
@@ -86,8 +111,38 @@
                         height: -35
                     }
                 },
+
                 latLngClient: {lat: -0.180653, lng: -78.467834},
+
                 stateDriver: false,
+
+                requestServices: [],
+
+                columns: [
+                    'name',
+                    'origin',
+                    'destiny',
+                    'payment',
+                    'date',
+                    'time',
+                    'actions',
+                ],
+
+                options: {
+                    columnsClasses: {
+                        'actions': 'action-col'
+                    },
+
+                    headings: {
+                        'name': 'Nombre',
+                        'origin': 'Origen',
+                        'destiny': 'Destino',
+                        'payment': 'Medio de pago',
+                        'date': 'Día',
+                        'time': 'Hora de Inicio',
+                        'actions': 'Acciones',
+                    }
+                }
             }
         },
 
@@ -150,24 +205,17 @@
 
             listenForRequestServices() {
                 Echo.channel('requestServices')
-                    .listen('ServiceRequested', post => {
-                        console.log(post);
+                    .listen('ServiceRequested', data => {
+                        this.requestServices.push(data);
 
-                        if (!('Notification' in window)) {
-                            alert('Web Notification is not supported');
-                            return;
-                        }
+                        let name = data.name;
 
-                        Notification.requestPermission(permission => {
-                            let notification = new Notification('New post alert!', {
-                                body: post.title, // content for the alert
-                                icon: "https://pusher.com/static_logos/320x320.png" // optional image url
-                            });
-
-                            // link to page on clicking the notification
-                            notification.onclick = () => {
-                                window.open(window.location.href);
-                            };
+                        this.$notify({
+                            type: 'info',
+                            group: 'dashboard_request_service',
+                            title: 'Servicio Solicitado',
+                            text: `El cliente: ${name} ha realizado una solicitud de taxi.`,
+                            duration: 10000
                         });
                     })
             }
@@ -175,7 +223,8 @@
 
         components: {
             BoxUser,
-            HeaderForm
+            HeaderForm,
+            Spinner
         },
 
         async created() {

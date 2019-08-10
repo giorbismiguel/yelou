@@ -131,7 +131,7 @@ class RequestServicesAPIController extends AppBaseController
 //            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
 //        });
 
-        event(new ServiceRequested($requestServices));
+        event(new ServiceRequested($requestServices, $distanceToTravel));
 
         return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
     }

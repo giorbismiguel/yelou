@@ -264,7 +264,6 @@
                     this.fetchData()
                 }
             },
-
         },
 
         computed: {
@@ -481,7 +480,11 @@
             // If initial url has been set then fetch data
             if (this.isValidUrl) {
                 this.fetchData()
+
+                return;
             }
+
+            this.isLoading = false
         },
 
         components: {

@@ -15,15 +15,21 @@ class ServiceRequested implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    /** @var RequestServices RequestServices */
     private $requestServices;
+
+    /** @var float */
+    private $distanceToTravel;
 
     /**
      * ServiceRequested constructor.
      * @param RequestServices $requestServices
+     * @param float           $distanceToTravel
      */
-    public function __construct(RequestServices $requestServices)
+    public function __construct(RequestServices $requestServices, float $distanceToTravel)
     {
         $this->requestServices = $requestServices;
+        $this->distanceToTravel = $distanceToTravel;
     }
 
     /**
@@ -38,8 +44,17 @@ class ServiceRequested implements ShouldBroadcast
 
     public function broadcastWith()
     {
+        $name = $this->requestServices->user->first_name.' '.$this->requestServices->user->last_name;
+
         return [
-            'title' => $this->requestServices->id,
+            'id'       => $this->requestServices->id,
+            'name'     => $name,
+            'origin'   => $this->requestServices->name_start,
+            'destiny'  => $this->requestServices->name_end,
+            'payment'  => $this->requestServices->paymentMethod->name,
+            'date'     => $this->requestServices->start_date,
+            'time'     => $this->requestServices->start_time,
+            'distance' => $this->distanceToTravel,
         ];
     }
 }
