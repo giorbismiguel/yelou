@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\ServiceRequested;
 use App\Http\Requests\API\CreateRequestServicesAPIRequest;
 use App\Http\Requests\API\UpdateRequestServicesAPIRequest;
 use App\Notifications\RequestServiceNotification;
@@ -115,6 +116,7 @@ class RequestServicesAPIController extends AppBaseController
             $input['route_id'] = $route->id;
         }
 
+        /** @var RequestServices $requestServices */
         $requestServices = $this->requestServicesRepository->create($input);
         $distanceToTravel = get_distance(
             $requestServices->lat_start,
@@ -125,9 +127,11 @@ class RequestServicesAPIController extends AppBaseController
 
         $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
 
-        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-        });
+//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+//        });
+
+        event(new ServiceRequested($requestServices));
 
         return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
     }

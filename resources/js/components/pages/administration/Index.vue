@@ -146,6 +146,30 @@
                 }
 
                 this.activeDriverService(form)
+            },
+
+            listenForRequestServices() {
+                Echo.channel('requestServices')
+                    .listen('ServiceRequested', post => {
+                        console.log(post);
+
+                        if (!('Notification' in window)) {
+                            alert('Web Notification is not supported');
+                            return;
+                        }
+
+                        Notification.requestPermission(permission => {
+                            let notification = new Notification('New post alert!', {
+                                body: post.title, // content for the alert
+                                icon: "https://pusher.com/static_logos/320x320.png" // optional image url
+                            });
+
+                            // link to page on clicking the notification
+                            notification.onclick = () => {
+                                window.open(window.location.href);
+                            };
+                        });
+                    })
             }
         },
 
@@ -155,13 +179,17 @@
         },
 
         async created() {
-            try {
-                const {coords} = await this.getCurrentPositionUser()
-                if (coords.latitude && coords.longitude) {
-                    this.latLngClient = {lat: coords.latitude, lng: coords.longitude}
-                }
-            } catch (e) {
+            if (this.me.type === 1) {
+                try {
+                    const {coords} = await this.getCurrentPositionUser()
+                    if (coords.latitude && coords.longitude) {
+                        this.latLngClient = {lat: coords.latitude, lng: coords.longitude}
+                    }
+                } catch (e) {
 
+                }
+            } else {
+                this.listenForRequestServices();
             }
         },
 

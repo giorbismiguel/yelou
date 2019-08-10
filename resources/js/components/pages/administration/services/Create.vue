@@ -1,7 +1,7 @@
 <template>
     <box-user>
-        <div v-if="loadingView" class="d-flex justify-content-center mt-5">
-            <spinner size="large"></spinner>
+        <div v-if="loadingView" class="d-flex flex-column justify-content-center h-100">
+            <spinner size="large" class=""></spinner>
         </div>
 
         <div v-else class="row">
@@ -202,6 +202,7 @@
             return {
                 loadingView: true,
                 form: {
+                    id: null,
                     route_id: null,
                     name_start: null,
                     lat_start: null,
@@ -279,7 +280,8 @@
                 lists: state => state.nomenclators.listsRequestServices
                     ? state.nomenclators.listsRequestServices
                     : {'paymentMethods': [], 'userRoutes': []},
-                rate: state => state.general.rate
+                rate: state => state.general.rate,
+                requestService: state => state.requestServices.requestService
             }),
 
             originAndSourceActive() {
@@ -306,75 +308,101 @@
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                         if (valid) {
-                            this.loading = true
-                            this.serverErrors = {}
+                            Swal.fire({
+                                title: 'Esta en el punto de partida?',
+                                text: "",
+                                type: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                confirmButtonText: 'Si, Continuar',
+                                cancelButtonText: 'No, volver a definirlo'
+                            }).then((result) => {
+                                if (result.value) {
+                                    this.loadingView = true
+                                    this.serverErrors = {}
 
-                            if (this.coordinatesOrigin && !this.route && !this.originRequestService) {
-                                this.form.lat_start = this.coordinatesOrigin.lat
-                                this.form.lng_start = this.coordinatesOrigin.lng
-                                this.form.name_start = this.form.name_start ? this.form.name_start : this.defaultNameOrigin
-                            } else if (this.originRequestService) {
-                                this.form.lat_start = this.originRequestService.geometry.location.lat()
-                                this.form.lng_start = this.originRequestService.geometry.location.lng()
-                                this.form.name_start = this.originRequestService.formatted_address
-                            }
-
-                            if (this.coordinatesDestiny && !this.route && !this.originRequestService) {
-                                this.form.lat_end = this.coordinatesDestiny.lat
-                                this.form.lng_end = this.coordinatesDestiny.lng
-                                this.form.coordinatesDestiny = this.form.name_end ? this.form.name_end : this.defaultNameDestiny
-                            } else if (this.destinationRequestService) {
-                                this.form.lat_end = this.destinationRequestService.geometry.location.lat()
-                                this.form.lng_end = this.destinationRequestService.geometry.location.lng()
-                                this.form.name_end = this.destinationRequestService.formatted_address
-                            }
-
-                            if (this.showCalendar) {
-                                this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
-                            }
-
-                            if (this.showCalendar && this.defaultTime) {
-                                this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
-                            }
-
-                            this.form.favourite = this.form.favourite ? 1 : 0;
-                            this.createRequestService(this.form)
-                                .then(() => {
-                                    this.loading = false
-                                    this.$notify({
-                                        type: 'success',
-                                        group: 'create_request_service',
-                                        title: 'Ruta',
-                                        text: 'La solicitud del servicio ha sido exitosa'
-                                    });
-
-                                    this.$router.replace('/servicios')
-                                })
-                                .catch((data) => {
-                                    if (data.success === false) {
-                                        Swal.fire({
-                                            text: data.message,
-                                            type: 'info',
-                                            showCancelButton: false,
-                                            confirmButtonText: 'Aceptar',
-                                        }).then(() => {
-                                            this.$router.replace('/servicios')
-                                        })
-
-                                        this.serverErrors = data.errors || {}
-
-                                        return;
+                                    if (this.coordinatesOrigin && !this.route && !this.originRequestService) {
+                                        this.form.lat_start = this.coordinatesOrigin.lat
+                                        this.form.lng_start = this.coordinatesOrigin.lng
+                                        this.form.name_start = this.form.name_start ? this.form.name_start : this.defaultNameOrigin
+                                    } else if (this.originRequestService) {
+                                        this.form.lat_start = this.originRequestService.geometry.location.lat()
+                                        this.form.lng_start = this.originRequestService.geometry.location.lng()
+                                        this.form.name_start = this.originRequestService.formatted_address
                                     }
 
-                                    this.loading = false
-                                    this.$notify({
-                                        type: 'error',
-                                        group: 'create_request_service',
-                                        title: 'Ruta',
-                                        text: 'Ha ocurrido un error al realizar la solicitud del servicio.'
-                                    });
-                                    this.serverErrors = data.errors || {}
-                                })
+                                    if (this.coordinatesDestiny && !this.route && !this.originRequestService) {
+                                        this.form.lat_end = this.coordinatesDestiny.lat
+                                        this.form.lng_end = this.coordinatesDestiny.lng
+                                        this.form.coordinatesDestiny = this.form.name_end ? this.form.name_end : this.defaultNameDestiny
+                                    } else if (this.destinationRequestService) {
+                                        this.form.lat_end = this.destinationRequestService.geometry.location.lat()
+                                        this.form.lng_end = this.destinationRequestService.geometry.location.lng()
+                                        this.form.name_end = this.destinationRequestService.formatted_address
+                                    }
+
+                                    if (this.showCalendar) {
+                                        this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
+                                    }
+
+                                    if (this.showCalendar && this.defaultTime) {
+                                        this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
+                                    }
+
+                                    this.form.favourite = this.form.favourite ? 1 : 0;
+                                    this.createRequestService(this.form)
+                                        .then(() => {
+                                            this.form.id = this.requestService.id
+
+                                            setTimeout(() => {
+                                                this.loadingView = false
+                                            }, 30000);
+
+                                            this.$notify({
+                                                type: 'success',
+                                                group: 'create_request_service',
+                                                title: 'Ruta',
+                                                text: 'La solicitud del servicio ha sido exitosa'
+                                            });
+                                        })
+                                        .catch((data) => {
+                                            this.loadingView = false
+
+                                            if (data.success === false) {
+                                                Swal.fire({
+                                                    text: data.message,
+                                                    type: 'info',
+                                                    showCancelButton: false,
+                                                    confirmButtonText: 'Aceptar',
+                                                }).then(() => {
+                                                    this.$router.replace('/servicios')
+                                                })
+
+                                                this.serverErrors = data.errors || {}
+
+                                                return;
+                                            }
+
+
+                                            if (data.errors) {
+                                                this.serverErrors = data.errors || {}
+
+                                                return;
+                                            }
+
+                                            this.$notify({
+                                                type: 'error',
+                                                group: 'create_request_service',
+                                                title: 'Ruta',
+                                                text: 'Ha ocurrido un error al realizar la solicitud del servicio.'
+                                            });
+                                        })
+
+                                    return;
+                                }
+
+                                this.showOrigin()
+                            })
                         }
                     }
                 );

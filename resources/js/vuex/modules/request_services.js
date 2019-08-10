@@ -26,10 +26,10 @@ const actions = {
             axios.get(route('api.requested_services.accept', {service_id: form.service_id, driver_id: form.driver_id}))
                 .then((data) => {
                     commit('CREATE_REQUESTED_SERVICES_OK', data)
-                    resolve()
+                    resolve(data)
                 })
                 .catch(({response: {data}}) => {
-                    commit('CREATE_REQUESTED_SERVICES_FAIL', data)
+                    commit('CREATE_REQUESTED_SERVICES_FAIL')
                     reject(data)
                 })
         })
@@ -52,7 +52,7 @@ const actions = {
 
 const mutations = {
     CREATE_REQUEST_SERVICES_OK(state, data) {
-        state.requestService = data
+        state.requestService = data.data
     },
 
     CREATE_REQUEST_SERVICES_FAIL(state) {
