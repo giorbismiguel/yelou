@@ -11,12 +11,21 @@
 |
 */
 
-use App\RequestServices;
+use App\TransportationAvailable;
 
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('requestServices.{requestServicesId}', function ($user, $requestServicesId) {
-    return $user->id === RequestServices::findOrNew($requestServicesId)->user_id;
+Broadcast::channel('requestServices', function ($user) {
+    $isAvailable = (bool) TransportationAvailable::where([
+        'user_id' => $user->id,
+        'active'  => 1
+    ])->exists();
+
+    return $isAvailable;
+});
+
+Broadcast::channel('servicesAccepted.{clientId}', function ($user, $clientId) {
+    return $user->id === $clientId;
 });

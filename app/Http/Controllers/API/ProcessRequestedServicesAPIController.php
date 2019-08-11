@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Events\RequestedServicesAccepted;
 use App\Notifications\RequestedDriverAccepted;
 use App\Notifications\RequestedDriverRejected;
 use App\Repositories\RequestedServiceRepository;
@@ -45,7 +46,6 @@ class ProcessRequestedServicesAPIController extends AppBaseController
             'service_id' => $request->service_id,
             'status_id'  => 3, // Accept
         ])->exists()) {
-
             return $this->sendError('Esta solicitud ya fue aceptada por el cliente', 429);
         }
 
@@ -54,7 +54,6 @@ class ProcessRequestedServicesAPIController extends AppBaseController
             'transporter_id' => $request->driver_id,
             'service_id'     => $request->service_id,
         ])->exists()) {
-
             return $this->sendError('Ya usted respondio a esta solicitud', 429);
         }
 
@@ -67,7 +66,10 @@ class ProcessRequestedServicesAPIController extends AppBaseController
 
         $input['created_at'] = now();
 
+        /** @var RequestedService $requestedService */
         $requestedService = $this->requestedServiceRepository->create($input);
+
+        event(new RequestedServicesAccepted($requestedService));
 
         return $this->sendResponse($requestedService->toArray(), 'Su Solicitud ha sido aceptada');
     }
@@ -79,7 +81,7 @@ class ProcessRequestedServicesAPIController extends AppBaseController
 
         $requestedService->load('service.route');
 
-       $requestedService->update(['status_id' => 2]); // Accept
+        $requestedService->update(['status_id' => 2]); // Accept
 
         $this->sendNotificationRejectedDrivers($requestedService);
 

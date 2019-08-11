@@ -545,6 +545,23 @@
 
             toggleCalendar() {
                 this.showCalendar = !this.showCalendar
+            },
+
+            listenForRequestedServicesAccepted() {
+                Echo.channel(`servicesAccepted.${this.me.id}`)
+                    .listen('RequestedServicesAccepted', (e) => {
+                        this.loadingView = false
+
+                        Swal.fire({
+                            title: 'Choferes disponibles',
+                            text: 'El servicio tiene choferes disponibles',
+                            type: 'info',
+                            showCancelButton: false,
+                            confirmButtonText: 'Ir a listado de servicio',
+                        }).then(() => {
+                            this.$router.replace('/servicios')
+                        })
+                    });
             }
         },
 
@@ -634,6 +651,8 @@
 
         mounted() {
             this.loadingView = false
+
+            this.listenForRequestedServicesAccepted()
         }
     }
 </script>

@@ -74,7 +74,7 @@
                         <a :href="`/servicios/aceptar/${row.id}/${me.id}`" class="dropdown-item"
                            title="Aceptar Servicio" target="_blank">
                             <i class="fas fa-car-alt"></i>
-                            Aceptar el servicio
+                            Quiero prestar el servicio
                         </a>
                     </li>
                 </ye-actions>
@@ -200,6 +200,12 @@
                     active: event.value ? 1 : 0
                 }
 
+                if (event.value) {
+                    this.listenForRequestServices()
+                } else {
+                    this.leaveForRequestServices();
+                }
+
                 this.activeDriverService(form)
             },
 
@@ -218,6 +224,10 @@
                             duration: 10000
                         });
                     })
+            },
+
+            leaveForRequestServices() {
+                Echo.leave('requestServices')
             }
         },
 
@@ -228,7 +238,7 @@
         },
 
         async created() {
-            if (this.me.type === 1) {
+            if (this.me.type === 1) { // 1- Client
                 try {
                     const {coords} = await this.getCurrentPositionUser()
                     if (coords.latitude && coords.longitude) {
@@ -237,16 +247,17 @@
                 } catch (e) {
 
                 }
-            } else {
-                this.listenForRequestServices();
             }
         },
 
         mounted() {
-            if (this.me.type === 1) {
+            if (this.me.type === 1) { // 1- Client
                 this.getDriversAvailable();
             } else {
                 this.stateDriver = this.me && this.me.transportation_available ? this.me.transportation_available.active : false
+                if (this.me.transportation_available.active) {
+                    this.listenForRequestServices();
+                }
             }
         }
     }

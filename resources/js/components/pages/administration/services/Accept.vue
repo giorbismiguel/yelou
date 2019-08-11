@@ -38,7 +38,7 @@
 
             processRequestedService() {
                 this.acceptRequestedService(this.form)
-                    .then((data) => {
+                    .then(() => {
                         this.loadingView = false
                         Swal.fire({
                             text: 'La solicitud del servicio ha sido exitosa',
@@ -46,7 +46,7 @@
                             showCancelButton: false,
                             confirmButtonText: 'Aceptar',
                         }).then(() => {
-                            this.$router.replace('/administracion')
+                            window.close()
                         })
                     })
                     .catch(data => {
