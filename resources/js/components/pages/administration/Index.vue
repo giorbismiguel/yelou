@@ -78,11 +78,11 @@
 
                 <ye-actions slot="actions" slot-scope="{row}" class="text-center">
                     <li>
-                        <a @click="acceptService(row)" class="dropdown-item" v-if="!servicesAccepted"
+                        <button @click="acceptService(row)" class="dropdown-item" v-if="!servicesAccepted"
                            title="Quiero prestar el servicio" target="_blank">
                             <i class="fas fa-car-alt"></i>
                             Quiero prestar el servicio
-                        </a>
+                        </button>
 
                         <button @click="cancelService" class="dropdown-item" v-if="servicesAccepted"
                            title="Quiero prestar el servicio" target="_blank">
