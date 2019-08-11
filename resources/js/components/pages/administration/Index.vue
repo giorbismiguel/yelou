@@ -84,11 +84,11 @@
                             Quiero prestar el servicio
                         </a>
 
-                        <a @click="cancelService" class="dropdown-item" v-if="servicesAccepted"
+                        <button @click="cancelService" class="dropdown-item" v-if="servicesAccepted"
                            title="Quiero prestar el servicio" target="_blank">
                             <i class="fas fa-car-alt"></i>
                             Cancelar el servicio
-                        </a>
+                        </button>
                     </li>
                 </ye-actions>
 
