@@ -59,6 +59,13 @@
                                :width="85" :height="30" :value="stateDriver" :sync="stateDriver"/>
             </div>
 
+            <div class="alert alert-success" role="alert" v-if="messageServiceAcceptedByClient">
+                <h4 class="alert-heading">Servicio Aceptado</h4>
+                <p>{{ messageServiceAcceptedByClient }}</p>
+                <hr>
+                <p class="mb-0">Consulte el mapa para el punto de inicio</p>
+            </div>
+
             <ye-table id="table_requested_services"
                       :columns="columns"
                       :options="options"
@@ -71,10 +78,16 @@
 
                 <ye-actions slot="actions" slot-scope="{row}" class="text-center">
                     <li>
-                        <a :href="`/servicios/aceptar/${row.id}/${me.id}`" class="dropdown-item"
-                           title="Aceptar Servicio" target="_blank">
+                        <a @click="acceptService(row)" class="dropdown-item" v-if="!servicesAccepted"
+                           title="Quiero prestar el servicio" target="_blank">
                             <i class="fas fa-car-alt"></i>
                             Quiero prestar el servicio
+                        </a>
+
+                        <a @click="cancelService" class="dropdown-item" v-if="servicesAccepted"
+                           title="Quiero prestar el servicio" target="_blank">
+                            <i class="fas fa-car-alt"></i>
+                            Cancelar el servicio
                         </a>
                     </li>
                 </ye-actions>
@@ -93,6 +106,7 @@
     import HeaderForm from './layout/header_form'
     import navigator from '../../../mixins/navigator'
     import Spinner from 'vue-simple-spinner'
+    import Swal from 'sweetalert2'
 
     export default {
         name: "Administration",
@@ -111,13 +125,11 @@
                         height: -35
                     }
                 },
-
+                messageServiceAcceptedByClient: null,
+                servicesAccepted: false,
                 latLngClient: {lat: -0.180653, lng: -78.467834},
-
                 stateDriver: false,
-
                 requestServices: [],
-
                 columns: [
                     'name',
                     'origin',
@@ -170,11 +182,11 @@
             ]),
 
             toggleInfoWindow: function (marker, idx) {
-                this.infoWindowPos = marker.position;
-                this.infoContent = marker.infoText;
+                this.infoWindowPos = marker.position
+                this.infoContent = marker.infoText
                 // Check if its the same marker that was selected if yes toggle
                 if (this.currentMidx == idx) {
-                    this.infoWinOpen = !this.infoWinOpen;
+                    this.infoWinOpen = !this.infoWinOpen
                 }
                 // If different marker set infowindow to open and reset current marker index
                 else {
@@ -188,7 +200,7 @@
                 let lng = place.geometry.location.lng()
                 let location = {lat: lat, lng: lng}
 
-                this.getDriversAvailable(location);
+                this.getDriversAvailable(location)
                 this.latLngClient = location
             },
 
@@ -203,7 +215,7 @@
                 if (event.value) {
                     this.listenForRequestServices()
                 } else {
-                    this.leaveForRequestServices();
+                    this.leaveForRequestServices()
                 }
 
                 this.activeDriverService(form)
@@ -228,6 +240,37 @@
 
             leaveForRequestServices() {
                 Echo.leave('requestServices')
+                this.leaveForRequestedServicesAcceptByClient()
+            },
+
+            listenForRequestedServicesAcceptByClient() {
+                Echo.channel(`serviceAcceptedByClient.${this.me.id}`)
+                    .listen('RequestedServicesAcceptedByClient', data => {
+                        if (data.driver_id === this.me.id) {
+                            this.messageServiceAcceptedByClient = data.message
+                            Swal.fire({
+                                title: 'Servicio Aceptado',
+                                text: data.message,
+                                type: 'info',
+                                showCancelButton: false,
+                                confirmButtonText: 'Aceptar',
+                            })
+                        }
+                    })
+            },
+
+            leaveForRequestedServicesAcceptByClient() {
+                Echo.leave(`serviceAcceptedByClient.${this.me.id}`)
+            },
+
+            acceptService(row) {
+                this.servicesAccepted = true
+                window.open(`/servicios/aceptar/${row.id}/${this.me.id}`, '_blank');
+            },
+
+            cancelService() {
+                this.servicesAccepted = false
+                this.leaveForRequestedServicesAcceptByClient()
             }
         },
 
@@ -252,11 +295,12 @@
 
         mounted() {
             if (this.me.type === 1) { // 1- Client
-                this.getDriversAvailable();
+                this.getDriversAvailable()
             } else {
                 this.stateDriver = this.me && this.me.transportation_available ? this.me.transportation_available.active : false
                 if (this.me.transportation_available.active) {
                     this.listenForRequestServices();
+                    this.listenForRequestedServicesAcceptByClient()
                 }
             }
         }

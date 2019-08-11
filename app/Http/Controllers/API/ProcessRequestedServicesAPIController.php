@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Events\RequestedServicesAccepted;
+use App\Events\RequestedServicesAcceptedByClient;
 use App\Notifications\RequestedDriverAccepted;
 use App\Notifications\RequestedDriverRejected;
 use App\Repositories\RequestedServiceRepository;
@@ -129,6 +130,8 @@ class ProcessRequestedServicesAPIController extends AppBaseController
     private function sendNotificationAcceptedDriver(RequestedService $requestedService): void
     {
         $user = $this->userRepository->find($requestedService->transporter_id);
-        $user->notify(new RequestedDriverAccepted($requestedService));
+        event(new RequestedServicesAcceptedByClient($requestedService, $user->id));
+
+        // $user->notify(new RequestedDriverAccepted($requestedService));
     }
 }

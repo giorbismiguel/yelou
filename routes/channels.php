@@ -29,3 +29,7 @@ Broadcast::channel('requestServices', function ($user) {
 Broadcast::channel('servicesAccepted.{clientId}', function ($user, $clientId) {
     return $user->id === $clientId;
 });
+
+Broadcast::channel('serviceAcceptedByClient.{driverId}', function ($user, $driverId) {
+    return $user->id === $driverId;
+});
