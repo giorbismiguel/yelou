@@ -132,6 +132,6 @@ class ProcessRequestedServicesAPIController extends AppBaseController
         $user = $this->userRepository->find($requestedService->transporter_id);
         event(new RequestedServicesAcceptedByClient($requestedService, $user->id));
 
-        // $user->notify(new RequestedDriverAccepted($requestedService));
+         $user->notify(new RequestedDriverAccepted($requestedService));
     }
 }

@@ -479,7 +479,11 @@
                             formData.append('photo', this.selectedPhoto, this.selectedPhoto.name)
                             formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense.name)
                             formData.append('image_permit_circulation', this.imagePermitCirculation, this.imagePermitCirculation.name)
-                            formData.append('image_certificate_background', this.imageCertificateBackground, this.imageCertificateBackground ? this.imageCertificateBackground.name : '')
+                            if (this.imageCertificateBackground) {
+                                formData.append('image_certificate_background', this.imageCertificateBackground, this.imageCertificateBackground.name)
+                            } else{
+                                formData.append('image_certificate_background', null);
+                            }
                         }
 
                         this.serverErrors = {}

@@ -127,9 +127,9 @@ class RequestServicesAPIController extends AppBaseController
 
         $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
 
-//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-//        });
+        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+        });
 
         event(new ServiceRequested($requestServices, $distanceToTravel));
 
