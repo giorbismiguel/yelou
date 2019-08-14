@@ -60,12 +60,17 @@ class RequestServicesRepository extends BaseRepository
         if ($orderBy) {
             $query->orderBy($orderBy, $sortBy);
         } else {
-            $query->latest();
+            $query->latest('request_services.created_at');
         }
 
         if (isset($search['date_init']) && $search['date_init'] && isset($search['date_end']) && $search['date_end']) {
-            $query->whereBetween('created_at', [$search['date_init'], $search['date_end']]);
+            $query->whereBetween('request_services.created_at', [$search['date_init'], $search['date_end']]);
         }
+
+        $query->leftJoin('requested_services', function ($join) {
+            $join->on('request_services.id', '=', 'requested_services.service_id')
+                ->where('requested_services.transporter_id', '!=', \Auth::id());
+        });
 
         return $query->doesntHave('requestedServices')->get($columns);
     }
