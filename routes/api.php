@@ -59,7 +59,7 @@ Route::prefix('v1')->group(function () {
             /*
              * Driver Personalize Area
              */
-            Route::get('/drivers/request_services', 'DriverRequestServicesAPIController@index')
+            Route::post('/drivers/request_services', 'DriverRequestServicesAPIController@index')
                 ->name('drivers.request_services');
             Route::post('/drivers/availables', 'TransportationAvailableAPIController@driversAvailable')
                 ->name('drivers.available');
