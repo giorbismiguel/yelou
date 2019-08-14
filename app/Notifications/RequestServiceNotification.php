@@ -60,7 +60,7 @@ class RequestServiceNotification extends Notification
             ->subject(__('app.customer_request_transportation'))
             ->line(__('app.the_distance_travel', [
                 'distance' => $this->distanceToTravel,
-                'time'     => $this->distanceToTravel / 50
+                'time'     => $this->distanceToTravel, // 50 Km
             ]))
             ->action(__('app.want_accept_request'), $url)
             ->line(__('app.click_ok_provide_transportation_service_client'));

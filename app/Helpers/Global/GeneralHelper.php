@@ -82,6 +82,15 @@ if (!function_exists('format_money')) {
     }
 }
 
+if (!function_exists('get_tariff')) {
+    function get_tariff($distance)
+    {
+        $price = 4; // From admin Cost for KM
+
+        return format_money($distance * $price);
+    }
+}
+
 function reports_view_pdf($view, array $data = [], $returnView = false)
 {
     $viewPath = 'reports.'.$view;

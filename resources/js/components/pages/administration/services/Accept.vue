@@ -46,7 +46,7 @@
                             showCancelButton: false,
                             confirmButtonText: 'Aceptar',
                         }).then(() => {
-                            window.close()
+                            this.$router.replace('/administracion')
                         })
                     })
                     .catch(data => {

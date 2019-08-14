@@ -1,10 +1,10 @@
 <template>
     <box-user>
-        <div v-if="loadingView" class="d-flex flex-column justify-content-center h-100">
-            <spinner size="large" class=""></spinner>
-        </div>
+        <loading :active.sync="loadingView"
+                 :can-cancel="true"
+                 :is-full-page="true"></loading>
 
-        <div v-else class="row">
+        <div class="row">
             <div class="col-12">
                 <header-form>Servicio</header-form>
             </div>
@@ -192,6 +192,7 @@
     import HeaderForm from '../layout/header_form'
     import Swal from 'sweetalert2'
     import navigator from '../../../../mixins/navigator'
+    import Loading from 'vue-loading-overlay';
 
     export default {
         name: "CreateService",
@@ -311,7 +312,7 @@
                 this.$validator.validate().then(valid => {
                         if (valid) {
                             Swal.fire({
-                                title: 'Esta en el punto de partida?',
+                                title: 'Se encuentra en el punto de partida?',
                                 text: "",
                                 type: 'warning',
                                 showCancelButton: true,
@@ -357,15 +358,15 @@
                                             this.form.id = this.requestService.id
 
                                             setTimeout(() => {
+                                                this.$notify({
+                                                    group: 'create_request_service',
+                                                    title: 'Ruta',
+                                                    text: 'No ha recibido ninguna respuesta para atender su servicio, vuelva intentarlo por favor.',
+                                                    duration: 10000
+                                                });
+
                                                 this.loadingView = false
                                             }, 30000);
-
-                                            this.$notify({
-                                                type: 'success',
-                                                group: 'create_request_service',
-                                                title: 'Ruta',
-                                                text: 'La solicitud del servicio ha sido exitosa'
-                                            });
                                         })
                                         .catch((data) => {
                                             this.loadingView = false
@@ -554,10 +555,10 @@
 
                         Swal.fire({
                             title: 'Choferes disponibles',
-                            text: 'El servicio tiene choferes disponibles',
+                            text: 'Su petición de servicio tiene choferes disponibles',
                             type: 'info',
                             showCancelButton: false,
-                            confirmButtonText: 'Ir a listado de servicio',
+                            confirmButtonText: 'Ir a listado de los servicios',
                         }).then(() => {
                             this.$router.replace('/servicios')
                         })
@@ -624,7 +625,8 @@
             DatePicker,
             Spinner,
             BoxUser,
-            HeaderForm
+            HeaderForm,
+            Loading
         },
 
         async created() {

@@ -9,6 +9,18 @@
 
         <div class="row justify-content-center">
             <div class="col">
+                <div class="row justify-content-center">
+                    <div class="col-5">
+                        <div class="alert alert-info" role="alert" v-if="messageServiceAcceptedForClient">
+                            <h4 class="alert-heading">Servicio Aceptado</h4>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <p v-html="messageServiceAcceptedForClient"></p>
+                        </div>
+                    </div>
+                </div>
+
                 <ye-table id="table_routes"
                           :columns="columns"
                           :options="options"
@@ -37,7 +49,7 @@
                         </li>
 
                         <li>
-                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDeleteService(row.id)">
+                            <a href="#" class="dropdown-item" title="Eliminar" @click="onDeleteService(row)">
                                 <i class="fas fa-trash-alt"></i>
                                 Eliminar
                             </a>
@@ -58,7 +70,8 @@
                         </li>
 
                         <li>
-                            <a :href="urlPrintInvoice(row.id)" class="dropdown-item" title="Imprimir Factura" target="_blank">
+                            <a :href="urlPrintInvoice(row.id)" class="dropdown-item" title="Imprimir Factura"
+                               target="_blank">
                                 <i class="fas fa-print"></i>
                                 Imprimir Factura
                             </a>
@@ -71,9 +84,7 @@
                         </router-link>
                     </template>
 
-                    <template slot="filters-form">
-
-                    </template>
+                    <template slot="filters-form"></template>
                 </ye-table>
             </div>
         </div>
@@ -108,9 +119,9 @@
                         <ye-actions slot="actions" slot-scope="{row}" class="text-center">
                             <li>
                                 <a href="#" class="dropdown-item" title="Aceptar Servicio"
-                                   @click="acceptService(row.id)">
+                                   @click="acceptService(row)">
                                     <i class="fas fa-car-alt"></i>
-                                    Aceptar
+                                    Aceptar Servicio
                                 </a>
                             </li>
                         </ye-actions>
@@ -134,7 +145,7 @@
     import Loading from 'vue-loading-overlay';
 
     export default {
-        name: "Services",
+        name: "ServiceListings",
 
         data() {
             return {
@@ -210,10 +221,10 @@
                 },
 
                 defaultFiltersDrivers: {},
-
                 apiEndpointDrivers: route('api.requested_services.index'),
-
-                isLoading: false
+                isLoading: false,
+                driverAccepted: null,
+                messageServiceAcceptedForClient: null
             };
         },
 
@@ -250,7 +261,7 @@
 
                 Swal.fire({
                     title: 'Esta seguro que desea eliminar el servicio?',
-                    text: 'Puedes cancelar la operación',
+                    text: 'Puede cancelar la operación',
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Eliminar',
@@ -305,18 +316,25 @@
                 return this.$refs['tableDrivers'].applyFiltersAndReload()
             },
 
-            acceptService(id) {
+            acceptService(row) {
                 this.hideDriverModel()
                 this.isLoading = true
-                this.acceptDriverService(id)
+                this.acceptDriverService(row.id)
                     .then(() => {
                         this.isLoading = false
-                        this.$notify({
-                            type: 'success',
-                            group: 'index_requested_services',
-                            title: 'Servicios',
-                            text: 'Se le ha enviado una notificación al chofer'
+                        this.messageServiceAcceptedForClient = `<div class="text-left font-weight-normal">
+                                <strong style="color: #3fc3ee;">Chofer:</strong> ${row.transporter.first_name + ' ' + row.transporter.last_name} <br />
+                                <strong style="color: #3fc3ee;">Teléfono:</strong> ${row.transporter.phone}
+                            </div>`;
+
+                        Swal.fire({
+                            title: 'Notificación enviada al chofer',
+                            html: this.messageServiceAcceptedForClient,
+                            type: 'info',
+                            showCancelButton: false,
+                            confirmButtonText: 'Aceptar',
                         })
+
                         this.reloadTableDrivers()
                     })
                     .catch(() => {
@@ -346,7 +364,8 @@
         components: {
             BoxUser,
             Spinner,
-            Loading
+            Loading,
+            Swal
         }
     }
 </script>

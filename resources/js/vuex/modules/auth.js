@@ -9,6 +9,7 @@ const state = {
     send_email: null,
     find_token_data: null,
     password_reset_data: null,
+    errors: null
 }
 
 const actions = {
@@ -179,7 +180,7 @@ const actions = {
                     resolve()
                 })
                 .catch(error => {
-                    commit('UPDATE_PROFILE_FAIL')
+                    commit('UPDATE_PROFILE_FAIL', error)
                     reject(error.response.data)
                 })
         })
@@ -214,6 +215,10 @@ const mutations = {
 
     UPDATE_PROFILE_OK(state, data) {
         state.me = data.user
+    },
+
+    UPDATE_PROFILE_FAIL(errors) {
+        state.errors = errors
     },
 
     ACTIVE_ACCOUNT(state, user) {

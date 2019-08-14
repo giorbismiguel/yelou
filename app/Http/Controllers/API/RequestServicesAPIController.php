@@ -12,6 +12,7 @@ use App\Repositories\UserRepository;
 use App\RequestServices;
 use App\Repositories\RequestServicesRepository;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use Response;
@@ -70,70 +71,77 @@ class RequestServicesAPIController extends AppBaseController
      */
     public function store(CreateRequestServicesAPIRequest $request)
     {
-        $input = $request->all();
-        $input['user_id'] = \Auth::id();
+        try {
+            $input = $request->all();
+            $input['user_id'] = \Auth::id();
 
-        $availableNerbyDrivers = $this->getDriversToSendNotification($input);
-        if ($availableNerbyDrivers->count() === 0) {
-            return $this->sendError('No se ha encontrado ningún chofer disponible para anteder su servicio.');
-        }
-
-        if ($input['start_date']) {
-            $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
-        }
-
-        if ($request->filled('route_id')) {
-            if (!$this->routeRepository->allQuery([
-                'id'      => $input['route_id'],
-                'user_id' => $input['user_id'],
-            ])->exists()) {
-                throw new AuthorizationException('No puede actualizar esta ruta, no es el propietario');
+            $availableNerbyDrivers = $this->getDriversToSendNotification($input);
+            if ($availableNerbyDrivers->count() === 0) {
+                return $this->sendError('No se ha encontrado ningún chofer disponible para anteder su servicio.');
             }
 
-            $this->routeRepository
-                ->find($input['route_id'], ['id'])
-                ->update([
+            if ($input['start_date']) {
+                $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
+            }
+
+            if ($request->filled('route_id')) {
+                if (!$this->routeRepository->allQuery([
+                    'id'      => $input['route_id'],
+                    'user_id' => $input['user_id'],
+                ])->exists()) {
+                    throw new AuthorizationException('No puede actualizar esta ruta, no es el propietario');
+                }
+
+                $this->routeRepository
+                    ->find($input['route_id'], ['id'])
+                    ->update([
+                        'formatted_address_start' => $input['name_start'],
+                        'lat_start'               => $input['lat_start'],
+                        'lng_start'               => $input['lng_start'],
+                        'formatted_address_end'   => $input['name_end'],
+                        'lat_end'                 => $input['lat_end'],
+                        'lng_end'                 => $input['lng_end'],
+                    ]);
+            } elseif ($request->get('favourite') === 1) {
+                $route = $this->routeRepository->create([
+                    'name'                    => 'Origen: '.$input['name_start'].' y Destino: '.$input['name_end'],
                     'formatted_address_start' => $input['name_start'],
                     'lat_start'               => $input['lat_start'],
                     'lng_start'               => $input['lng_start'],
                     'formatted_address_end'   => $input['name_end'],
                     'lat_end'                 => $input['lat_end'],
                     'lng_end'                 => $input['lng_end'],
+                    'user_id'                 => $input['user_id'],
+                    'favourite'               => 1,
                 ]);
-        } elseif ($request->get('favourite') === 1) {
-            $route = $this->routeRepository->create([
-                'name'                    => 'Origen: '.$input['name_start'].' y Destino: '.$input['name_end'],
-                'formatted_address_start' => $input['name_start'],
-                'lat_start'               => $input['lat_start'],
-                'lng_start'               => $input['lng_start'],
-                'formatted_address_end'   => $input['name_end'],
-                'lat_end'                 => $input['lat_end'],
-                'lng_end'                 => $input['lng_end'],
-                'user_id'                 => $input['user_id'],
-                'favourite'               => 1,
-            ]);
 
-            $input['route_id'] = $route->id;
+                $input['route_id'] = $route->id;
+            }
+
+            /** @var RequestServices $requestServices */
+            $requestServices = $this->requestServicesRepository->create($input);
+            $distanceToTravel = get_distance(
+                $requestServices->lat_start,
+                $requestServices->lng_start,
+                $requestServices->lat_end,
+                $requestServices->lng_end
+            );
+
+            $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
+
+//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+//        });
+
+            event(new ServiceRequested($requestServices, $distanceToTravel));
+
+            return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
+
+        } catch (BroadcastException $e) {
+            return $this->sendError($e->getMessage());
+        } catch (\Exception $e) {
+            return $this->sendError($e->getMessage());
         }
-
-        /** @var RequestServices $requestServices */
-        $requestServices = $this->requestServicesRepository->create($input);
-        $distanceToTravel = get_distance(
-            $requestServices->lat_start,
-            $requestServices->lng_start,
-            $requestServices->lat_end,
-            $requestServices->lng_end
-        );
-
-        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
-
-        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-        });
-
-        event(new ServiceRequested($requestServices, $distanceToTravel));
-
-        return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
     }
 
     /**

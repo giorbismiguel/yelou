@@ -43,13 +43,22 @@ class RequestedServicesAcceptedByClient implements ShouldBroadcast
 
     public function broadcastWith()
     {
-        $line = 'El cliente: '.$this->requestedService->client->name.' ha aceptado su servicio, la ruta es: ';
-        $line .= $this->requestedService->service->name_start.' hasta '.$this->requestedService->service->name_end;
-        $line .= ' y el telefono de contacto es: '.$this->requestedService->client->phone;
+        $distance = get_distance(
+            $this->requestedService->service->lat_start,
+            $this->requestedService->service->lng_start,
+            $this->requestedService->service->lat_end,
+            $this->requestedService->service->lng_end
+        );
+        $name = $this->requestedService->client->first_name.' '.$this->requestedService->client->last_name;
 
         return [
             'driver_id' => $this->driverId,
-            'message'   => $line
+            'name'      => $name,
+            'origin'    => $this->requestedService->service->name_start,
+            'destiny'   => $this->requestedService->service->name_end,
+            'phone'     => $this->requestedService->client->phone,
+            'distance'  => $distance,
+            'tariff'    => $tariff = format_money($distance),
         ];
     }
 }

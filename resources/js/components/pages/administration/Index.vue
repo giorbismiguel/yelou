@@ -52,18 +52,23 @@
 
         <template v-else>
             <h3>Administración</h3>
-            <hr>
+            <hr/>
 
             <div class="d-flex justify-content-end">
                 <toggle-button @change="onChangeStatusDriver" :labels="{checked: 'Activo', unchecked: 'Inactivo'}"
                                :width="85" :height="30" :value="stateDriver" :sync="stateDriver"/>
             </div>
 
-            <div class="alert alert-success" role="alert" v-if="messageServiceAcceptedByClient">
-                <h4 class="alert-heading">Servicio Aceptado</h4>
-                <p>{{ messageServiceAcceptedByClient }}</p>
-                <hr>
-                <p class="mb-0">Consulte el mapa para el punto de inicio</p>
+            <div class="row justify-content-center">
+                <div class="col-5">
+                    <div class="alert alert-info" role="alert" v-if="messageServiceAcceptedByClient">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="alert-heading">Servicio Aceptado</h4>
+                        <div v-html="messageServiceAcceptedByClient"></div>
+                    </div>
+                </div>
             </div>
 
             <ye-table id="table_requested_services"
@@ -79,13 +84,13 @@
                 <ye-actions slot="actions" slot-scope="{row}" class="text-center">
                     <li>
                         <button @click="acceptService(row)" class="dropdown-item" v-if="!servicesAccepted"
-                           title="Quiero prestar el servicio" target="_blank">
+                                title="Quiero prestar el servicio">
                             <i class="fas fa-car-alt"></i>
                             Quiero prestar el servicio
                         </button>
 
                         <button @click="cancelService" class="dropdown-item" v-if="servicesAccepted"
-                           title="Quiero prestar el servicio" target="_blank">
+                                title="Quiero prestar el servicio" target="_blank">
                             <i class="fas fa-car-alt"></i>
                             Cancelar el servicio
                         </button>
@@ -154,6 +159,10 @@
                         'time': 'Hora de Inicio',
                         'actions': 'Acciones',
                     }
+                },
+                formAcceptService: {
+                    service_id: null,
+                    driver_id: null,
                 }
             }
         },
@@ -178,7 +187,8 @@
         methods: {
             ...mapActions([
                 'getDriversAvailable',
-                'activeDriverService'
+                'activeDriverService',
+                'acceptRequestedService'
             ]),
 
             toggleInfoWindow: function (marker, idx) {
@@ -188,6 +198,7 @@
                 if (this.currentMidx == idx) {
                     this.infoWinOpen = !this.infoWinOpen
                 }
+
                 // If different marker set infowindow to open and reset current marker index
                 else {
                     this.infoWinOpen = true;
@@ -232,8 +243,9 @@
                             type: 'info',
                             group: 'dashboard_request_service',
                             title: 'Servicio Solicitado',
-                            text: `El cliente: ${name} ha realizado una solicitud de taxi.`,
-                            duration: 10000
+                            text: `El cliente: ${name}, ha realizado una solicitud de taxi.`,
+                            duration: 10000,
+                            width: 500,
                         });
                     })
             },
@@ -247,10 +259,18 @@
                 Echo.channel(`serviceAcceptedByClient.${this.me.id}`)
                     .listen('RequestedServicesAcceptedByClient', data => {
                         if (data.driver_id === this.me.id) {
-                            this.messageServiceAcceptedByClient = data.message
+                            this.messageServiceAcceptedByClient = `<div class="text-left font-weight-normal row">
+                                <div class="col-3"><strong style="color: #3fc3ee;">Nombre:</strong></div><div class="col-9"> ${data.name}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Teléfono:</strong></div><div class="col-9"> ${data.phone}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Origen:</strong></div><div class="col-9"> ${data.origin}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Destino:</strong></div><div class="col-9"> ${data.destiny}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Distancia:</strong></div><div class="col-9"> ${data.distance}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Tarifa:</strong></div><div class="col-9"> ${data.tariff}</div>
+                            </div>`;
+
                             Swal.fire({
                                 title: 'Servicio Aceptado',
-                                text: data.message,
+                                html: this.messageServiceAcceptedByClient,
                                 type: 'info',
                                 showCancelButton: false,
                                 confirmButtonText: 'Aceptar',
@@ -265,19 +285,47 @@
 
             acceptService(row) {
                 this.servicesAccepted = true
-                window.open(`/servicios/aceptar/${row.id}/${this.me.id}`, '_blank');
+                this.formAcceptService.service_id = row.id
+                this.formAcceptService.driver_id = this.me.id
+
+                this.acceptRequestedService(this.formAcceptService)
+                    .then(() => {
+                        this.loadingView = false
+                        Swal.fire({
+                            text: 'La solicitud del servicio ha sido exitosa',
+                            type: 'success',
+                            showCancelButton: false,
+                            confirmButtonText: 'Aceptar',
+                        }).then(() => {
+                            window.close()
+                        })
+                    })
+                    .catch(data => {
+                        this.loadingView = false
+                        if (!data.success) {
+                            Swal.fire({
+                                text: data.message,
+                                type: 'info',
+                                showCancelButton: false,
+                                confirmButtonText: 'Aceptar',
+                            })
+
+                            return;
+                        }
+
+                        Swal.fire({
+                            text: data.message,
+                            type: 'error',
+                            showCancelButton: false,
+                            confirmButtonText: 'Aceptar',
+                        })
+                    })
             },
 
             cancelService() {
                 this.servicesAccepted = false
                 this.leaveForRequestedServicesAcceptByClient()
             }
-        },
-
-        components: {
-            BoxUser,
-            HeaderForm,
-            Spinner
         },
 
         async created() {
@@ -303,6 +351,12 @@
                     this.listenForRequestedServicesAcceptByClient()
                 }
             }
+        },
+
+        components: {
+            BoxUser,
+            HeaderForm,
+            Spinner
         }
     }
 </script>

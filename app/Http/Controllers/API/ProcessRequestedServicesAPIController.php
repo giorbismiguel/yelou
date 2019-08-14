@@ -119,7 +119,7 @@ class ProcessRequestedServicesAPIController extends AppBaseController
             $users = $this->userRepository->find($driversIds->pluck('transporter_id')->toArray());
 
             foreach ($users as $user) {
-                $user->notify(new RequestedDriverRejected($requestedService));
+                // $user->notify(new RequestedDriverRejected($requestedService));
             }
         }
     }
@@ -132,6 +132,6 @@ class ProcessRequestedServicesAPIController extends AppBaseController
         $user = $this->userRepository->find($requestedService->transporter_id);
         event(new RequestedServicesAcceptedByClient($requestedService, $user->id));
 
-         $user->notify(new RequestedDriverAccepted($requestedService));
+        // $user->notify(new RequestedDriverAccepted($requestedService));
     }
 }
