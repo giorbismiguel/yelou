@@ -114,10 +114,21 @@ class UserAPIController extends AppBaseController
         }
 
         $input['birth_date'] = convert_us_date_to_db($input['birth_date'].' 00:00:00');
-        $input['photo'] = $input['photo_name'] ?? null;
-        $input['image_driver_license'] = $input['image_driver_license_name'] ?? null;
-        $input['image_permit_circulation'] = $input['image_permit_circulation_name'] ?? null;
-        $input['image_certificate_background'] = $input['image_certificate_background_name'] ?? null;
+        if (isset($input['photo_name'])) {
+            $input['photo'] = $input['photo_name'];
+        }
+
+        if (isset($input['image_driver_license_name'])) {
+            $input['image_driver_license'] = $input['image_driver_license_name'];
+        }
+
+        if (isset($input['image_permit_circulation_name'])) {
+            $input['image_permit_circulation'] = $input['image_permit_circulation_name'];
+        }
+
+        if (isset($input['image_certificate_background_name'])) {
+            $input['image_certificate_background'] = $input['image_certificate_background_name'];
+        }
         $user = $this->userRepository->update($input, $id);
 
         return $this->sendResponse(['user' => get_type_user($user->toArray())], 'Usuario actualizado exitosamente');

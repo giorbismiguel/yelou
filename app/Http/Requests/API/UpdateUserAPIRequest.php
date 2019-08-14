@@ -61,10 +61,10 @@ class UpdateUserAPIRequest extends APIRequest
             $rules += [
                 'birth_date'                   => 'required|date_format:d/m/Y',
                 'license_types_id'             => 'required|integer',
-                'photo'                        => 'nullable|image|max:100000',
-                'image_driver_license'         => 'nullable|image|max:100000',
-                'image_permit_circulation'     => 'nullable|image|max:100000',
-                'image_certificate_background' => 'nullable|image|max:100000',
+                'photo'                        => 'sometimes|image|max:100000',
+                'image_driver_license'         => 'sometimes|image|max:100000',
+                'image_permit_circulation'     => 'sometimes|image|max:100000',
+                'image_certificate_background' => 'sometimes|image|max:100000',
             ];
         }
 

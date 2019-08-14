@@ -127,7 +127,7 @@
                                            name="ruc" type="text" class="form-control" v-model="form.ruc"
                                            :class="{ 'is-invalid': submitted && (serverErrors.ruc || errors.has('ruc')) }">
 
-                                    <div v-if="submitted && (serverErrors.ruc || errors.has('ruc'))"
+                                    <div v-if="submitted && (errors.has('ruc') || serverErrors.ruc)"
                                          class="invalid-feedback">
                                         {{ errors.first('ruc') }}
                                         <template v-for="error in serverErrors.ruc">{{ error }}</template>
@@ -139,14 +139,15 @@
                                 <label for="direction" class="col control-label">Dirección</label>
                                 <div class="col">
                                     <gmap-autocomplete class="form-control" id="direction" name="direction"
-                                                       @place_changed="setDirection"
+                                                       @place_changed="setDirection" :value="form.direction"
                                                        @keypress.enter="$event.preventDefault()"
                                                        placeholder="Escriba su dirección"
                                                        :class="{ 'is-invalid': submitted && serverErrors.direction }">
                                     </gmap-autocomplete>
 
-                                    <div v-if="submitted && (serverErrors.direction || serverErrors.direction)"
+                                    <div v-if="submitted && (errors.has('direction') || serverErrors.direction)"
                                          class="invalid-feedback">
+                                        {{ errors.first('direction') }}
                                         <template v-for="error in serverErrors.direction">{{ error }}</template>
                                     </div>
                                 </div>
@@ -162,9 +163,10 @@
                                                name="city" type="text" class="form-control" v-model="form.city"
                                                :class="{ 'is-invalid': submitted && errors.has('city') }">
 
-                                        <div v-if="submitted && errors.has('city')"
+                                        <div v-if="submitted && (errors.has('city') || serverErrors.city)"
                                              class="invalid-feedback">
                                             {{ errors.first('city') }}
+                                            <template v-for="error in serverErrors.city">{{ error }}</template>
                                         </div>
                                     </div>
                                 </div>
@@ -177,9 +179,10 @@
                                                v-model="form.postal_code"
                                                :class="{ 'is-invalid': submitted && errors.has('postal_code') }">
 
-                                        <div v-if="submitted && errors.has('postal_code')"
+                                        <div v-if="submitted && (errors.has('postal_code') || serverErrors.postal_code)"
                                              class="invalid-feedback">
                                             {{ errors.first('postal_code') }}
+                                            <template v-for="error in serverErrors.postal_code">{{ error }}</template>
                                         </div>
                                     </div>
                                 </div>
@@ -201,9 +204,12 @@
                                             </option>
                                         </select>
 
-                                        <div v-if="submitted && errors.has('license_types_id')"
+                                        <div v-if="submitted && (errors.has('license_types_id') || serverErrors.license_types_id)"
                                              class="invalid-feedback">
                                             {{ errors.first('license_types_id') }}
+                                            <template v-for="error in serverErrors.license_types_id">
+                                                {{ error }}
+                                            </template>
                                         </div>
                                     </div>
                                 </div>
@@ -220,9 +226,12 @@
                                             </label>
                                         </div>
 
-                                        <div v-if="submitted && errors.has('photo')"
+                                        <div v-if="submitted && (errors.has('photo') || serverErrors.photo)"
                                              class="invalid-feedback">
                                             {{ errors.first('photo') }}
+                                            <template v-for="error in serverErrors.photo">
+                                                {{ error }}
+                                            </template>
                                         </div>
 
                                         <img :src="(form.photo ? '/storage/' + form.photo : '/img/default-image.png')"
@@ -244,9 +253,12 @@
                                             </label>
                                         </div>
 
-                                        <div v-if="submitted && errors.has('image_driver_license')"
+                                        <div v-if="submitted && (errors.has('image_driver_license') || serverErrors.image_driver_license)"
                                              class="invalid-feedback">
                                             {{ errors.first('image_driver_license') }}
+                                            <template v-for="error in serverErrors.image_driver_license">
+                                                {{ error }}
+                                            </template>
                                         </div>
 
                                         <img :src="form.image_driver_license ? '/storage/' + form.image_driver_license : '/img/default-image.png'"
@@ -270,9 +282,12 @@
                                             </label>
                                         </div>
 
-                                        <div v-if="submitted && errors.has('image_permit_circulation')"
+                                        <div v-if="submitted && (errors.has('image_permit_circulation') || serverErrors.image_permit_circulation)"
                                              class="invalid-feedback">
                                             {{ errors.first('image_permit_circulation') }}
+                                            <template v-for="error in serverErrors.image_permit_circulation">
+                                                {{ error }}
+                                            </template>
                                         </div>
 
                                         <img :src="form.image_permit_circulation ? '/storage/' + form.image_permit_circulation : '/img/default-image.png'"
@@ -296,9 +311,12 @@
                                             </label>
                                         </div>
 
-                                        <div v-if="submitted && errors.has('image_certificate_background')"
+                                        <div v-if="submitted && (errors.has('image_certificate_background') || serverErrors.image_certificate_background)"
                                              class="invalid-feedback">
                                             {{ errors.first('image_certificate_background') }}
+                                            <template v-for="error in serverErrors.image_certificate_background">
+                                                {{ error }}
+                                            </template>
                                         </div>
 
                                         <img :src="form.image_certificate_background ? '/storage/' + form.image_certificate_background : '/img/default-image.png'"
@@ -338,6 +356,7 @@
     import DatePicker from 'vue2-datepicker'
 
     export default {
+        name: "Profile",
 
         data() {
             return {
@@ -422,10 +441,29 @@
                         }
 
                         if (!this.isClient()) {
-                            formData.append('photo', this.selectedPhoto, this.selectedPhoto ? this.selectedPhoto.name : null)
-                            formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense ? this.imageDriveLicense.name : null)
-                            formData.append('image_permit_circulation', this.imagePermitCirculation, this.imagePermitCirculation ? this.imagePermitCirculation.name : null)
-                            formData.append('image_certificate_background', this.imageCertificateBackground, this.imageCertificateBackground ? this.imageCertificateBackground.name : null)
+                            if (this.selectedPhoto) {
+                                formData.append('photo', this.selectedPhoto, this.selectedPhoto.name)
+                            } else {
+                                formData.delete('photo');
+                            }
+
+                            if (this.imageDriveLicense) {
+                                formData.append('image_driver_license', this.imageDriveLicense, this.imageDriveLicense.name)
+                            } else {
+                                formData.delete('image_driver_license');
+                            }
+
+                            if (this.imagePermitCirculation) {
+                                formData.append('image_permit_circulation', this.imagePermitCirculation, this.imagePermitCirculation.name)
+                            } else {
+                                formData.delete('image_permit_circulation');
+                            }
+
+                            if (this.imageCertificateBackground) {
+                                formData.append('image_certificate_background', this.imageCertificateBackground, this.imageCertificateBackground.name)
+                            } else {
+                                formData.delete('image_certificate_background');
+                            }
                         } else {
                             formData.delete('license_types_id')
                             formData.delete('photo')
@@ -481,9 +519,9 @@
 
             setDirection(place) {
                 let that = this
-                this.form.direction = null
                 this.form.city = null
                 this.form.postal_code = null
+                this.form.direction = place.formatted_address
 
                 for (let address  of place.address_components) {
                     Object.keys(address).forEach(function (prop) {
