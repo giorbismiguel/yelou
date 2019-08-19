@@ -32,18 +32,17 @@ class DriverRequestServicesAPIController extends AppBaseController
     {
         $columns = [
             'request_services.id',
-            'name_start',
-            'lat_start',
-            'lng_start',
-            'name_end',
-            'lat_end',
-            'lng_end',
-            'start_date',
-            'start_time',
-            'payment_method_id',
+            'request_services.name_start',
+            'request_services.lat_start',
+            'request_services.lng_start',
+            'request_services.name_end',
+            'request_services.lat_end',
+            'request_services.lng_end',
+            'request_services.start_date',
+            'request_services.start_time',
+            'request_services.payment_method_id',
             'requested_services.transporter_id',
-            'requested_services.transporter_id',
-            'route_id',
+            'request_services.route_id',
             'request_services.created_at',
         ];
 
