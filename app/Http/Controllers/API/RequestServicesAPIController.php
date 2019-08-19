@@ -84,6 +84,13 @@ class RequestServicesAPIController extends AppBaseController
                 $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
             }
 
+            if ($input['id']) {
+                $requestServices = $this->requestServicesRepository->find($input['id']);
+                $this->sendNotificationToDriver($requestServices, $availableNerbyDrivers);
+
+                return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
+            }
+
             if ($request->filled('route_id')) {
                 if (!$this->routeRepository->allQuery([
                     'id'      => $input['route_id'],
@@ -120,20 +127,7 @@ class RequestServicesAPIController extends AppBaseController
 
             /** @var RequestServices $requestServices */
             $requestServices = $this->requestServicesRepository->create($input);
-            $distanceToTravel = get_distance(
-                $requestServices->lat_start,
-                $requestServices->lng_start,
-                $requestServices->lat_end,
-                $requestServices->lng_end
-            );
-
-            $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
-
-//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-//        });
-
-            event(new ServiceRequested($requestServices, $distanceToTravel));
+            $this->sendNotificationToDriver($requestServices, $availableNerbyDrivers);
 
             return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
 
@@ -239,5 +233,30 @@ class RequestServicesAPIController extends AppBaseController
     public function requestServices()
     {
         // TEst
+    }
+
+    /**
+     * @param                                $requestServices
+     * @param \Illuminate\Support\Collection $availableNerbyDrivers
+     * @throws \Exception
+     */
+    private function sendNotificationToDriver(
+        $requestServices,
+        \Illuminate\Support\Collection $availableNerbyDrivers
+    ): void {
+        $distanceToTravel = get_distance(
+            $requestServices->lat_start,
+            $requestServices->lng_start,
+            $requestServices->lat_end,
+            $requestServices->lng_end
+        );
+
+        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
+
+        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+        });
+
+        event(new ServiceRequested($requestServices, $distanceToTravel));
     }
 }

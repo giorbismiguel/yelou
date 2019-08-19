@@ -235,18 +235,24 @@
             listenForRequestServices() {
                 Echo.channel('requestServices')
                     .listen('ServiceRequested', data => {
-                        this.requestServices.push(data);
-
-                        let name = data.name;
-
-                        this.$notify({
-                            type: 'info',
-                            group: 'dashboard_request_service',
-                            title: 'Servicio Solicitado',
-                            text: `El cliente: ${name}, ha realizado una solicitud de taxi.`,
-                            duration: 10000,
-                            width: 500,
+                        const exist = this.requestServices.some(requestService => {
+                            return requestService.id === data.id
                         });
+
+                        if (!exist) {
+                            this.requestServices.push(data);
+
+                            let name = data.name;
+
+                            this.$notify({
+                                type: 'info',
+                                group: 'dashboard_request_service',
+                                title: 'Servicio Solicitado',
+                                text: `El cliente: ${name}, ha realizado una solicitud de taxi.`,
+                                duration: 10000,
+                                width: 500,
+                            });
+                        }
                     })
             },
 

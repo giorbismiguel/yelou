@@ -311,104 +311,111 @@
                 this.submitted = true;
                 this.$validator.validate().then(valid => {
                         if (valid) {
-                            Swal.fire({
-                                title: 'Se encuentra en el punto de partida?',
-                                text: "",
-                                type: 'warning',
-                                showCancelButton: true,
-                                confirmButtonColor: '#3085d6',
-                                confirmButtonText: 'Si, Continuar',
-                                cancelButtonText: 'No, volver a definirlo'
-                            }).then((result) => {
-                                if (result.value) {
-                                    this.loadingView = true
-                                    this.serverErrors = {}
+                            if (this.form.id) {
+                                this.createOrResendService();
+                            } else {
+                                Swal.fire({
+                                    title: 'Se encuentra en el punto de partida?',
+                                    type: 'warning',
+                                    showCancelButton: true,
+                                    confirmButtonColor: '#3085d6',
+                                    confirmButtonText: 'Si, Continuar',
+                                    cancelButtonText: 'No, volver a definirlo'
+                                }).then((result) => {
+                                    if (result.value) {
+                                        this.createOrResendService();
 
-                                    if (this.coordinatesOrigin && !this.route && !this.originRequestService) {
-                                        this.form.lat_start = this.coordinatesOrigin.lat
-                                        this.form.lng_start = this.coordinatesOrigin.lng
-                                        this.form.name_start = this.form.name_start ? this.form.name_start : this.defaultNameOrigin
-                                    } else if (this.originRequestService) {
-                                        this.form.lat_start = this.originRequestService.geometry.location.lat()
-                                        this.form.lng_start = this.originRequestService.geometry.location.lng()
-                                        this.form.name_start = this.originRequestService.formatted_address
+                                        return;
                                     }
 
-                                    if (this.coordinatesDestiny && !this.route && !this.originRequestService) {
-                                        this.form.lat_end = this.coordinatesDestiny.lat
-                                        this.form.lng_end = this.coordinatesDestiny.lng
-                                        this.form.coordinatesDestiny = this.form.name_end ? this.form.name_end : this.defaultNameDestiny
-                                    } else if (this.destinationRequestService) {
-                                        this.form.lat_end = this.destinationRequestService.geometry.location.lat()
-                                        this.form.lng_end = this.destinationRequestService.geometry.location.lng()
-                                        this.form.name_end = this.destinationRequestService.formatted_address
-                                    }
-
-                                    if (this.showCalendar) {
-                                        this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
-                                    }
-
-                                    if (this.showCalendar && this.defaultTime) {
-                                        this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
-                                    }
-
-                                    this.form.favourite = this.form.favourite ? 1 : 0;
-                                    this.createRequestService(this.form)
-                                        .then(() => {
-                                            this.form.id = this.requestService.id
-
-                                            setTimeout(() => {
-                                                this.$notify({
-                                                    group: 'create_request_service',
-                                                    title: 'Ruta',
-                                                    text: 'No ha recibido ninguna respuesta para atender su servicio, vuelva intentarlo por favor.',
-                                                    duration: 10000
-                                                });
-
-                                                this.loadingView = false
-                                            }, 30000);
-                                        })
-                                        .catch((data) => {
-                                            this.loadingView = false
-
-                                            if (data.success === false) {
-                                                Swal.fire({
-                                                    text: data.message,
-                                                    type: 'info',
-                                                    showCancelButton: false,
-                                                    confirmButtonText: 'Aceptar',
-                                                }).then(() => {
-                                                    this.$router.replace('/servicios')
-                                                })
-
-                                                this.serverErrors = data.errors || {}
-
-                                                return;
-                                            }
-
-
-                                            if (data.errors) {
-                                                this.serverErrors = data.errors || {}
-
-                                                return;
-                                            }
-
-                                            this.$notify({
-                                                type: 'error',
-                                                group: 'create_request_service',
-                                                title: 'Ruta',
-                                                text: 'Ha ocurrido un error al realizar la solicitud del servicio.'
-                                            });
-                                        })
-
-                                    return;
-                                }
-
-                                this.showOrigin()
-                            })
+                                    this.showOrigin()
+                                })
+                            }
                         }
                     }
                 );
+            },
+
+            createOrResendService() {
+                this.loadingView = true
+                this.serverErrors = {}
+
+                if (this.coordinatesOrigin && !this.route && !this.originRequestService) {
+                    this.form.lat_start = this.coordinatesOrigin.lat
+                    this.form.lng_start = this.coordinatesOrigin.lng
+                    this.form.name_start = this.form.name_start ? this.form.name_start : this.defaultNameOrigin
+                } else if (this.originRequestService) {
+                    this.form.lat_start = this.originRequestService.geometry.location.lat()
+                    this.form.lng_start = this.originRequestService.geometry.location.lng()
+                    this.form.name_start = this.originRequestService.formatted_address
+                }
+
+                if (this.coordinatesDestiny && !this.route && !this.originRequestService) {
+                    this.form.lat_end = this.coordinatesDestiny.lat
+                    this.form.lng_end = this.coordinatesDestiny.lng
+                    this.form.coordinatesDestiny = this.form.name_end ? this.form.name_end : this.defaultNameDestiny
+                } else if (this.destinationRequestService) {
+                    this.form.lat_end = this.destinationRequestService.geometry.location.lat()
+                    this.form.lng_end = this.destinationRequestService.geometry.location.lng()
+                    this.form.name_end = this.destinationRequestService.formatted_address
+                }
+
+                if (this.showCalendar) {
+                    this.form.start_date = DatePicker.fecha.format(new Date(this.defaultDate), 'DD/MM/YYYY')
+                }
+
+                if (this.showCalendar && this.defaultTime) {
+                    this.form.start_time = DatePicker.fecha.format(new Date(this.defaultTime), 'HH:mm:ss')
+                }
+
+                this.form.favourite = this.form.favourite ? 1 : 0;
+                this.createRequestService(this.form)
+                    .then(() => {
+                        this.form.id = this.requestService.id
+
+                        setTimeout(() => {
+                            this.$notify({
+                                group: 'create_request_service',
+                                title: 'Ruta',
+                                text: 'El servicio ha sido creado pero no ha recibido ninguna respuesta, vuelva intentarlo por favor.',
+                                duration: 10000
+                            });
+
+                            this.loadingView = false
+                        }, 30000);
+                    })
+                    .catch((data) => {
+                        this.loadingView = false
+
+                        if (data.success === false) {
+                            Swal.fire({
+                                text: data.message,
+                                type: 'info',
+                                showCancelButton: false,
+                                confirmButtonText: 'Aceptar',
+                            }).then(() => {
+                                this.$router.replace('/servicios')
+                            })
+
+                            this.serverErrors = data.errors || {}
+
+                            return;
+                        }
+
+
+                        if (data.errors) {
+                            this.serverErrors = data.errors || {}
+
+                            return;
+                        }
+
+                        this.$notify({
+                            type: 'error',
+                            group: 'create_request_service',
+                            title: 'Ruta',
+                            text: 'Ha ocurrido un error al realizar la solicitud del servicio.'
+                        });
+                    })
             },
 
             setDestinationToMap(place) {
@@ -554,11 +561,11 @@
                         this.loadingView = false
 
                         Swal.fire({
-                            title: 'Choferes disponibles',
-                            text: 'Su petición de servicio tiene choferes disponibles',
+                            title: 'Tiene choferes disponibles',
+                            text: 'Vaya al listado de servicios y consulte los choferes que desean atender su solicitud.',
                             type: 'info',
                             showCancelButton: false,
-                            confirmButtonText: 'Ir a listado de los servicios',
+                            confirmButtonText: 'Ir a listado',
                         }).then(() => {
                             this.$router.replace('/servicios')
                         })
