@@ -89,7 +89,7 @@
                             Quiero prestar el servicio
                         </button>
 
-                        <button @click="cancelService" class="dropdown-item" v-if="servicesAccepted"
+                        <button @click="cancelService" class="dropdown-item" v-if="false"
                                 title="Quiero prestar el servicio" target="_blank">
                             <i class="fas fa-car-alt"></i>
                             Cancelar el servicio
