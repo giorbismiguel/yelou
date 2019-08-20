@@ -112,10 +112,16 @@ Route::prefix('v1')->group(function () {
     Route::prefix('requested_services')
         ->name('requested_services.')
         ->group(function () {
-            Route::get('/request/{service_id}/{driver_id}', 'ProcessRequestedServicesAPIController@accept')
-                ->name('accept');
-            Route::post('/request/{requested_service_id}', 'ProcessRequestedServicesAPIController@acceptClient')
-                ->name('accept.client');
+            Route::match(
+                ['get', 'post'],
+                '/request/{service_id}/{driver_id}',
+                'ProcessRequestedServicesAPIController@accept'
+            )->name('accept');
+
+            Route::post(
+                '/request/{requested_service_id}',
+                'ProcessRequestedServicesAPIController@acceptClient'
+            )->name('accept.client');
         });
 
     Route::namespace('Lists')
