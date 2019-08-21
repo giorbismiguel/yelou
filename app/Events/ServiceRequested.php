@@ -47,14 +47,15 @@ class ServiceRequested implements ShouldBroadcast
         $name = $this->requestServices->user->first_name.' '.$this->requestServices->user->last_name;
 
         return [
-            'id'       => $this->requestServices->id,
-            'name'     => $name,
-            'origin'   => $this->requestServices->name_start,
-            'destiny'  => $this->requestServices->name_end,
-            'payment'  => $this->requestServices->paymentMethod->name,
-            'date'     => $this->requestServices->start_date,
-            'time'     => $this->requestServices->start_time,
-            'distance' => $this->distanceToTravel,
+            'id'                => $this->requestServices->id,
+            'name'              => $name,
+            'origin'            => $this->requestServices->name_start,
+            'destiny'           => $this->requestServices->name_end,
+            'payment'           => $this->requestServices->paymentMethod->name,
+            'date'              => $this->requestServices->start_date,
+            'time'              => $this->requestServices->start_time,
+            'distance'          => $this->distanceToTravel,
+            'services_accepted' => false,
         ];
     }
 }

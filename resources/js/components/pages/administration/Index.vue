@@ -83,13 +83,13 @@
 
                 <ye-actions slot="actions" slot-scope="{row}" class="text-center">
                     <li>
-                        <button @click="acceptService(row)" class="dropdown-item" v-if="!servicesAccepted"
+                        <button @click="acceptService(row)" class="dropdown-item" v-if="!row.services_accepted"
                                 title="Quiero prestar el servicio">
                             <i class="fas fa-car-alt"></i>
                             Quiero prestar el servicio
                         </button>
 
-                        <button @click="cancelService" class="dropdown-item" v-if="false"
+                        <button @click="cancelService(row)" class="dropdown-item" v-if="row.services_accepted"
                                 title="Quiero prestar el servicio" target="_blank">
                             <i class="fas fa-car-alt"></i>
                             Cancelar el servicio
@@ -290,7 +290,7 @@
             },
 
             acceptService(row) {
-                this.servicesAccepted = true
+                row.services_accepted = true
                 this.formAcceptService.service_id = row.id
                 this.formAcceptService.driver_id = this.me.id
 
@@ -328,8 +328,8 @@
                     })
             },
 
-            cancelService() {
-                this.servicesAccepted = false
+            cancelService(row) {
+                row.services_accepted = false
                 this.leaveForRequestedServicesAcceptByClient()
             }
         },
