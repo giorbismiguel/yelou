@@ -84,7 +84,7 @@ class RequestServicesAPIController extends AppBaseController
                 $input['start_date'] = convert_us_date_to_db($input['start_date'].' '.'00:00:00');
             }
 
-            if ($input['id']) {
+            if (isset($input['id']) && $input['id']) {
                 $requestServices = $this->requestServicesRepository->find($input['id']);
                 $this->sendNotificationToDriver($requestServices, $availableNerbyDrivers);
 
