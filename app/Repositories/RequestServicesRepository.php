@@ -72,6 +72,6 @@ class RequestServicesRepository extends BaseRepository
                 ->where('requested_services.transporter_id', '!=', \Auth::id());
         });
 
-        return $query->doesntHave('requestedServices')->get($columns);
+        return $query->get($columns);
     }
 }
