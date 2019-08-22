@@ -43,6 +43,7 @@ class DriverRequestServicesAPIController extends AppBaseController
             'request_services.payment_method_id',
             'requested_services.transporter_id',
             'request_services.route_id',
+            'request_services.user_id',
             'request_services.created_at',
         ];
 
