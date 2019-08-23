@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\RequestServices;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * Class RequestServicesRepository
@@ -67,9 +68,11 @@ class RequestServicesRepository extends BaseRepository
             $query->whereBetween('request_services.created_at', [$search['date_init'], $search['date_end']]);
         }
 
-        $query->leftJoin('requested_services', function ($join) {
-            $join->on('request_services.id', '=', 'requested_services.service_id')
-                ->where('requested_services.transporter_id', '!=', \Auth::id());
+        $query->whereDoesntHave('requestedServices', function (Builder $query) {
+            $query->where('transporter_id', '=', \Auth::id())
+                ->orWhere('status_id', '=', 2)// 2- Accepted
+                ->orWhere('status_id', '=', 4)// 4- Initialized
+                ->orWhere('status_id', '=', 5); // 5- Ended
         });
 
         return $query->get($columns);

@@ -41,7 +41,6 @@ class DriverRequestServicesAPIController extends AppBaseController
             'request_services.start_date',
             'request_services.start_time',
             'request_services.payment_method_id',
-            'requested_services.transporter_id',
             'request_services.route_id',
             'request_services.user_id',
             'request_services.created_at',
@@ -56,6 +55,6 @@ class DriverRequestServicesAPIController extends AppBaseController
             $request->get('sort_by')
         );
 
-        return $this->sendResponse($driverRequestServices->toArray(), 'Todos los servicios disponibles');
+        return $this->sendResponse($driverRequestServices, 'Todos los servicios disponibles');
     }
 }
