@@ -20,7 +20,7 @@ class DistanceController extends AppBaseController
             $request->longitude_to
         );
 
-        $tariff = format_money($distance);
+        $tariff = get_tariff($distance);
         $result = [
             'distance' => $distance,
             'tariff'   => $tariff,
