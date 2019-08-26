@@ -42,6 +42,10 @@ class ProcessRequestedServicesAPIController extends AppBaseController
     {
         $service = $this->requestServiceRepository->find($request->service_id);
 
+        if (empty($service)) {
+            return $this->sendError('No se ha encontrado esta solicituda');
+        }
+
         if ($this->requestedServiceRepository->allQuery([
             'client_id'  => $service->user_id,
             'service_id' => $request->service_id,
@@ -79,6 +83,10 @@ class ProcessRequestedServicesAPIController extends AppBaseController
     {
         /** @var RequestedService $requestedService */
         $requestedService = $this->requestedServiceRepository->find($request->requested_service_id);
+
+        if (empty($service)) {
+            return $this->sendError('Chofer no aceptado, solicitud para recibir el servicio no encontrada');
+        }
 
         $requestedService->load('service.route');
 
@@ -119,7 +127,7 @@ class ProcessRequestedServicesAPIController extends AppBaseController
             $users = $this->userRepository->find($driversIds->pluck('transporter_id')->toArray());
 
             foreach ($users as $user) {
-                // $user->notify(new RequestedDriverRejected($requestedService));
+                 $user->notify(new RequestedDriverRejected($requestedService));
             }
         }
     }
@@ -132,6 +140,6 @@ class ProcessRequestedServicesAPIController extends AppBaseController
         $user = $this->userRepository->find($requestedService->transporter_id);
         event(new RequestedServicesAcceptedByClient($requestedService, $user->id));
 
-        // $user->notify(new RequestedDriverAccepted($requestedService));
+         $user->notify(new RequestedDriverAccepted($requestedService));
     }
 }

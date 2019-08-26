@@ -91,6 +91,27 @@ if (!function_exists('get_tariff')) {
     }
 }
 
+if (!function_exists('calculate_time')) {
+    /**
+     * @param float $dist
+     * @param float $speed
+     * @return array
+     */
+    function calculate_time(float $dist, float $speed): string
+    {
+        //  Calculate time in seconds
+        $second = ($dist * 1000) / ($speed * 0.277777777777777777777777777777777777);
+
+        //  convert to hours, minutes, seconds
+        $hour = $second / 3600;
+        $second = $second - ($hour * 3600);
+        $minute = $second / 60;
+        $second = $second - ($minute * 60);
+
+        return "$hour:$minute:$second";
+    }
+}
+
 function reports_view_pdf($view, array $data = [], $returnView = false)
 {
     $viewPath = 'reports.'.$view;
