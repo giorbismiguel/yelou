@@ -58,7 +58,8 @@ class RequestedServicesAcceptedByClient implements ShouldBroadcast
             'destiny'   => $this->requestedService->service->name_end,
             'phone'     => $this->requestedService->client->phone,
             'distance'  => $distance,
-            'tariff'    => $tariff = format_money($distance),
+            'tariff'    => get_tariff($distance),
+            'time'      => calculate_time($distance, 50), // 50 Km,
         ];
     }
 }

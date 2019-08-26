@@ -84,7 +84,7 @@ class ProcessRequestedServicesAPIController extends AppBaseController
         /** @var RequestedService $requestedService */
         $requestedService = $this->requestedServiceRepository->find($request->requested_service_id);
 
-        if (empty($service)) {
+        if (empty($requestedService)) {
             return $this->sendError('Chofer no aceptado, solicitud para recibir el servicio no encontrada');
         }
 
