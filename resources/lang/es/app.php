@@ -4,6 +4,10 @@ $theDistanceTravel .= '</strong>, la distancia a recorrer es <strong>:distance</
 $theDistanceTravel .= ' en un tiempo aproximado de <strong>:time</strong> horas a una velocidad de <strong>';
 $theDistanceTravel .= ':velocity</strong>. La tarifa es <strong>:tariff</strong>.';
 
+$textAcceptServiceTransportation = <<<EOF
+De clic en Aceptar para prestar el servicio de transportación al cliente.
+EOF;
+
 return [
     'message_code_activation'                        => 'Yelou le informa que su código de activación para su cuenta es :code',
     'message_code_activation_subject'                => 'Código de activación para Yelou',
@@ -12,7 +16,5 @@ return [
     'customer_request_transportation'                => 'Un cliente a realizado una solicitud de taxi',
     'the_distance_travel'                            => $theDistanceTravel,
     'want_accept_request'                            => 'Aceptar el servicio',
-    'click_ok_provide_transportation_service_client' => <<<EOF
-De clic en Aceptar para prestar el servicio de transportación al cliente.
-EOF,
+    'click_ok_provide_transportation_service_client' => $textAcceptServiceTransportation,
 ];
