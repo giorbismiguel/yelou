@@ -177,6 +177,7 @@ return [
         App\Providers\AppServiceProvider::class,
         App\Providers\AuthServiceProvider::class,
         Nexmo\Laravel\NexmoServiceProvider::class,
+        Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
 
         App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,

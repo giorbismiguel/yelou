@@ -1,4 +1,5 @@
 <?php
+Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::name('invoice.')
     ->namespace('Reports')
@@ -22,4 +23,4 @@ Route::prefix('admin')
         Route::resource('requestedServiceStatuses', 'Admin\RequestedServiceStatusController', ['as' => 'admin']);
     });
 
-Route::get('/{any?}', 'SpaController')->where('any', '.*');
+Route::get('/{any?}', 'SpaController')->where('any', '[^logs.*]');
