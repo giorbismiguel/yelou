@@ -1,8 +1,8 @@
 <?php
-$theDistanceTravel = 'El cliente desea trasladarse desde <strong> :init_address</strong> hasta <strong>:end_address';
-$theDistanceTravel .= '</strong>, la distancia a recorrer es <strong>:distance</strong>';
-$theDistanceTravel .= ' en un tiempo aproximado de <strong>:time</strong> horas a una velocidad de <strong>';
-$theDistanceTravel .= ':velocity</strong>. La tarifa es <strong>:tariff</strong>.';
+$theDistanceTravel = 'El cliente desea trasladarse desde :init_address hasta :end_address';
+$theDistanceTravel .= ', la distancia a recorrer es :distance';
+$theDistanceTravel .= ' en un tiempo aproximado de :time horas a una velocidad de ';
+$theDistanceTravel .= ':velocity. La tarifa es :tariff.';
 
 $textAcceptServiceTransportation = <<<EOF
 De clic en Aceptar para prestar el servicio de transportación al cliente.
