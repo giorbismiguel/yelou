@@ -23,4 +23,4 @@ Route::prefix('admin')
         Route::resource('requestedServiceStatuses', 'Admin\RequestedServiceStatusController', ['as' => 'admin']);
     });
 
-Route::get('/{any?}', 'SpaController')->where('any', '[^logs.*]');
+Route::get('/{any?}', 'SpaController')->where('any', '^[logs].*');
