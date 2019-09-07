@@ -1,5 +1,5 @@
 <?php
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+Route::get('/admin/logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
 
 Route::name('invoice.')
     ->namespace('Reports')
@@ -12,7 +12,8 @@ Route::name('invoice.')
             ->name('driver.print');
     });
 
-Route::get('/admin', 'HomeController@index');
+
+Route::redirect('/admin', '/admin/login');
 
 Route::prefix('admin')
     ->group(function () {
@@ -23,4 +24,4 @@ Route::prefix('admin')
         Route::resource('requestedServiceStatuses', 'Admin\RequestedServiceStatusController', ['as' => 'admin']);
     });
 
-Route::get('/{any?}', 'SpaController')->where('any', '^[logs].*');
+Route::get('/{any?}', 'SpaController')->where('any', '.*');

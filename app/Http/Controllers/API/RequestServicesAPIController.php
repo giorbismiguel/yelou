@@ -65,6 +65,8 @@ class RequestServicesAPIController extends AppBaseController
     }
 
     /**
+     * Create Request Services and send notification to the drivers available
+     *
      * @param CreateRequestServicesAPIRequest $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
@@ -130,11 +132,10 @@ class RequestServicesAPIController extends AppBaseController
             $this->sendNotificationToDriver($requestServices, $availableNerbyDrivers);
 
             return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
-
         } catch (BroadcastException $e) {
-            return $this->sendError($e->getMessage());
+            return $this->sendError('No se ha podido enviar la solicitud.', 500);
         } catch (\Exception $e) {
-            return $this->sendError($e->getMessage());
+            return $this->sendError('El servicio no se ha podido crear', 500);
         }
     }
 
@@ -152,10 +153,10 @@ class RequestServicesAPIController extends AppBaseController
         $requestServices = $this->requestServicesRepository->find($id);
 
         if (empty($requestServices)) {
-            return $this->sendError('Request Services not found');
+            return $this->sendError('Servicio no encontrado.', 422);
         }
 
-        return $this->sendResponse($requestServices->toArray(), 'Request Services retrieved successfully');
+        return $this->sendResponse($requestServices->toArray(), 'Servicio encontrado');
     }
 
     /**
@@ -175,12 +176,12 @@ class RequestServicesAPIController extends AppBaseController
         $requestServices = $this->requestServicesRepository->find($id);
 
         if (empty($requestServices)) {
-            return $this->sendError('Request Services not found');
+            return $this->sendError('Servicio no encontrado', 422);
         }
 
         $requestServices = $this->requestServicesRepository->update($input, $id);
 
-        return $this->sendResponse($requestServices->toArray(), 'RequestServices updated successfully');
+        return $this->sendResponse($requestServices->toArray(), 'Servicio actualizado');
     }
 
     /**
@@ -200,12 +201,12 @@ class RequestServicesAPIController extends AppBaseController
 
         // Tener en cuenta cuando se puede eliminar
         if (empty($requestServices)) {
-            return $this->sendError('Request Services not found');
+            return $this->sendError('Servicio no encontrado', 422);
         }
 
         $requestServices->delete();
 
-        return $this->sendResponse($id, 'Request Services deleted successfully');
+        return $this->sendResponse($id, 'Servicio eliminado.');
     }
 
     /**

@@ -132,3 +132,8 @@ Route::prefix('v1')->group(function () {
                 ->name('get');
         });
 });
+
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Pagina no encontrado. Si el error persiste, contacte con info@yelou.com'], 404);
+});

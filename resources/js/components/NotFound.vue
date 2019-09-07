@@ -1,19 +1,29 @@
 <template>
-  <div class="container">
-    <h3>Error 404</h3>
-    <hr>
-
-    Pagina no encontrada
-  </div>
+    <box-user>
+        <div class="row text-center">
+            <div class="col-12">
+                <header-form>Error 404</header-form>
+            </div>
+            <div class="col-12">
+                Página no encontrada
+            </div>
+        </div>
+    </box-user>
 </template>
 
 <script>
-  export default {
+    import BoxUser from './layout/BoxUser'
+    import HeaderForm from './pages/administration/layout/header_form'
 
-    data () {
-      return {}
-    },
+    export default {
 
-    methods: {}
-  }
+        data() {
+            return {}
+        },
+
+        components: {
+            BoxUser,
+            HeaderForm
+        }
+    }
 </script>

@@ -234,15 +234,15 @@
 
             listenForRequestServices() {
                 Echo.channel('requestServices')
-                    .listen('ServiceRequested', data => {
+                    .listen('ServiceRequested', serviceRequested => {
                         const exist = this.requestServices.some(requestService => {
-                            return requestService.id === data.id
+                            return requestService.id === serviceRequested.id
                         });
 
                         if (!exist) {
-                            this.requestServices.push(data);
-
-                            let name = data.name;
+                            this.messageServiceAcceptedByClient = null
+                            let name = serviceRequested.name
+                            this.requestServices.push(serviceRequested)
 
                             this.$notify({
                                 type: 'info',

@@ -320,11 +320,16 @@
                 this.hideDriverModel()
                 this.isLoading = true
                 this.acceptDriverService(row.id)
-                    .then(() => {
+                    .then(({data: {data}}) => {
+                        console.log(data);
                         this.isLoading = false
-                        this.messageServiceAcceptedForClient = `<div class="text-left font-weight-normal">
-                                <strong style="color: #3fc3ee;">Chofer:</strong> ${row.transporter.first_name + ' ' + row.transporter.last_name} <br />
-                                <strong style="color: #3fc3ee;">Teléfono:</strong> ${row.transporter.phone}
+                        this.messageServiceAcceptedForClient = `<div class="text-left font-weight-normal row">
+                                <div class="col-3"><strong style="color: #3fc3ee;">Chofer:</strong></div><div class="col-9"> ${row.transporter.first_name + ' ' + row.transporter.last_name}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee;">Teléfono:</strong></div><div class="col-9"> ${row.transporter.phone}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Origen:</strong></div><div class="col-9"> ${row.service.name_start}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Destino:</strong></div><div class="col-9"> ${row.service.name_end}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Distancia:</strong></div><div class="col-9"> ${data.distance}</div>
+                                <div class="col-3"><strong style="color: #3fc3ee">Tarifa:</strong></div><div class="col-9"> ${data.tariff}</div>
                             </div>`;
 
                         Swal.fire({
