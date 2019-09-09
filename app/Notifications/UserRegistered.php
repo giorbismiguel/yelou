@@ -13,14 +13,20 @@ class UserRegistered extends Notification
 
     protected $code;
 
+    protected $newActivationCode;
+
     /**
      * Create a new notification instance.
      *
+     * UserRegistered constructor.
+     * @param      $code
+     * @param bool $newActivationCode
      * @return void
      */
-    public function __construct($code)
+    public function __construct($code, $newActivationCode = false)
     {
         $this->code = $code;
+        $this->newActivationCode = $newActivationCode;
     }
 
     /**
@@ -47,7 +53,9 @@ class UserRegistered extends Notification
         return (new MailMessage)
             ->subject(__('app.message_code_activation_subject'))
             ->line(__('app.message_code_activation', ['code' => $this->code]))
-            ->action(__('app.message_code_activation_action'), $url)
+            ->action(__(
+                !$this->newActivationCode ? 'app.message_code_activation_action' : 'message_code_activation_new'
+            ), $url)
             ->line(__('app.message_code_activation_line2'));
     }
 

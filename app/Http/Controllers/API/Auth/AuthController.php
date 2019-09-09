@@ -89,7 +89,9 @@ class AuthController extends Controller
 
         $codeActivation = generate_code();
         $request = $request->merge(['code_activation' => $codeActivation]);
-        event(new Registered($user = $this->create($request->all())));
+        $user = $this->create($request->all());
+
+        event(new Registered($user));
 
         $user->notify(new UserRegistered($codeActivation));
 //
@@ -101,6 +103,7 @@ class AuthController extends Controller
 
         $message = 'Para la activación  de su cuenta se enviará un código';
         $message .= ' al celular, por favor verifique los datos para registrarse.';
+
         return [
             'success' => true,
             'message' => $message,
@@ -115,8 +118,7 @@ class AuthController extends Controller
     public function active(Request $request)
     {
         // Validate phone
-        $query = User::where('code_activation', '=', $request->code_activation)
-            ->where('phone', '=', $request->phone);
+        $query = User::where('code_activation', '=', $request->code_activation)->where('phone', '=', $request->phone);
 
         if (!$query->exists()) {
             throw new AuthenticationException('Código de activación inválido');
@@ -128,6 +130,7 @@ class AuthController extends Controller
 
         return [
             'success' => true,
+            'message' => 'La cuenta de usuario ha sido activada.',
             'active'  => true,
         ];
     }
@@ -141,17 +144,21 @@ class AuthController extends Controller
         }
 
         $codeActivation = generate_code();
+        /** @var User $user */
         $user = $query->first();
         $user->update(['code_activation' => $codeActivation]);
 
-        Nexmo::message()->send([
-            'to'   => $request->get('phone'),
-            'from' => 'YElOU',
-            'text' => __('app.message_code_activation', ['code' => $codeActivation])
-        ]);
+//        Nexmo::message()->send([
+//            'to'   => $request->get('phone'),
+//            'from' => 'YElOU',
+//            'text' => __('app.message_code_activation', ['code' => $codeActivation])
+//        ]);
+
+        $user->notify(new UserRegistered($codeActivation, true));
 
         return [
             'success'      => true,
+            'message'      => 'Se ha enviado un nuevo codigo.',
             'message_send' => true
         ];
     }
@@ -267,5 +274,20 @@ class AuthController extends Controller
         }
 
         return $request->only($this->username(), 'password');
+    }
+
+    /**
+     * Logout user (Revoke the token)
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function logout(Request $request)
+    {
+        $request->user()->token()->revoke();
+
+        return response()->json([
+            'message' => __('auth.logout_success')
+        ]);
     }
 }

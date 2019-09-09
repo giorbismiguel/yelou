@@ -37,11 +37,19 @@ Route::prefix('v1')->group(function () {
                 ->name('reset');
         });
 
+    Route::middleware('auth:api')
+        ->namespace('Auth')
+        ->prefix('auth')
+        ->name('auth.')
+        ->group(function () {
+            Route::get('logout', 'AuthController@logout');
+        });
     /*
      * Authenticated area
      */
     Route::middleware('auth:api')
         ->group(function () {
+            Route::get('logout', 'AuthController@logout');
             /*
              * User Area
              */
@@ -133,7 +141,8 @@ Route::prefix('v1')->group(function () {
         });
 });
 
-Route::fallback(function(){
+Route::fallback(function () {
     return response()->json([
-        'message' => 'Pagina no encontrado. Si el error persiste, contacte con info@yelou.com'], 404);
+        'message' => 'Pagina no encontrado. Si el error persiste, contacte con info@yelou.com'
+    ], 404);
 });

@@ -13,6 +13,7 @@ return [
     'message_code_activation_subject'                => 'Código de activación para Yelou',
     'message_code_activation_action'                 => 'Ir a Yelou para autenticarse e introducir el código de activación',
     'message_code_activation_line2'                  => 'Si no se registro en Yelou, no es necesario realizar ninguna otra acción.',
+    'message_code_activation_new'                    => 'Si no pidio, renovar el codigo de activación, no es necesario realizar esta operación.',
     'customer_request_transportation'                => 'Un cliente a realizado una solicitud de taxi',
     'the_distance_travel'                            => $theDistanceTravel,
     'want_accept_request'                            => 'Aceptar el servicio',

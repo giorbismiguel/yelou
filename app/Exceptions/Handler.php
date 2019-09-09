@@ -50,7 +50,8 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof ModelNotFoundException) {
             return response()->json([
-                'error' => 'Entrada '.str_replace('App\\', '', $exception->getModel()).' no encontrada'], 404);
+                'error' => 'Entrada '.str_replace('App\\', '', $exception->getModel()).' no encontrada'
+            ], 404);
         }
 
         return parent::render($request, $exception);
@@ -66,8 +67,8 @@ class Handler extends ExceptionHandler
         return $request->expectsJson()
             ? response()->json([
                 'error'   => 'invalid_request',
-                'message' => 'The access token is invalid.',
-                'hint'    => 'Token has expired'
+                'message' => 'Autenticación fallida.',
+                'hint'    => 'El token ha expirado'
             ], 401)
 
             : redirect()->guest('/');
