@@ -73,8 +73,8 @@ class RequestedService extends Model
         'transporter_id' => 'nullable|integer',
         'service_id'     => 'nullable|integer',
         'status_id'      => 'nullable|integer',
-        'start_at'       => 'nullable|datetime:d/m/Y H:i:s',
-        'end_at'         => 'nullable|datetime:d/m/Y H:i:s',
+        'start_at'       => 'nullable|date_format:d/m/Y H:i:s',
+        'end_at'         => 'nullable|date_format:d/m/Y H:i:s',
     ];
 
     /* ========================================================================= *\

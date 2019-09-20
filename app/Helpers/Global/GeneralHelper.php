@@ -95,7 +95,7 @@ if (!function_exists('calculate_time')) {
     /**
      * @param float $dist
      * @param float $speed
-     * @return array
+     * @return string
      */
     function calculate_time(float $dist, float $speed): string
     {
