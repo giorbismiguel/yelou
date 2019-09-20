@@ -131,6 +131,8 @@ class RequestedServiceAPIController extends AppBaseController
 
         $requestedService = $this->requestedServiceRepository->update($input, $id);
 
+        $requestedService->load('service.paymentMethod');
+
         return $this->sendResponse($requestedService->toArray(), 'El recorrido ha sido actualizado');
     }
 
