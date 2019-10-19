@@ -1,17 +1,20 @@
 <template>
-    <section>
+    <div v-cloak>
         <div v-if="generalLoading" class="d-flex justify-content-center mt-5">
             <spinner size="large"></spinner>
         </div>
 
-        <template v-else v-cloak>
-            <navbar></navbar>
+        <template v-else>
+            <header>
+                <navbar></navbar>
+            </header>
+            <main role="main">
+                <router-view></router-view>
 
-            <router-view></router-view>
-
-            <feet></feet>
+                <feet></feet>
+            </main>
         </template>
-    </section>
+    </div>
 </template>
 
 <script>

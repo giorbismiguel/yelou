@@ -1,7 +1,7 @@
 <template>
-    <div class="row">
-        <router-link :to="{ name: 'register', params: { type: 'chofer' } }">
-            <div class="col d-flex">
+    <div class="row justify-content-center">
+        <div class="col">
+            <router-link :to="{ name: 'register', params: { type: 'chofer' } }">
                 <div class="card-register d-flex align-items-center justify-content-around flex-colum">
                     <div class="d-flex flex-column card-register-header">
                         <span>Quieres conducir?</span>
@@ -11,24 +11,21 @@
                         <i class="fas fa-3x fa-car"></i>
                     </div>
                 </div>
-            </div>
-        </router-link>
-
-        <router-link :to="{ name: 'register', params: { type: 'cliente' }  }">
-            <a href="">
-                <div class="col">
-                    <div class="card-register d-flex align-items-center justify-content-around flex-colum">
-                        <div class="d-flex flex-column card-register-header">
-                            <span>Viajar seguro?</span>
-                            <strong>Regístrate</strong>
-                        </div>
-                        <div class="card-register-footer">
-                            <i class="fas fa-3x fa-route"></i>
-                        </div>
+            </router-link>
+        </div>
+        <div class="col">
+            <router-link :to="{ name: 'register', params: { type: 'cliente' }  }">
+                <div class="card-register d-flex align-items-center justify-content-around flex-colum">
+                    <div class="d-flex flex-column card-register-header">
+                        <span>Viajar seguro?</span>
+                        <strong>Regístrate</strong>
+                    </div>
+                    <div class="card-register-footer">
+                        <i class="fas fa-3x fa-route"></i>
                     </div>
                 </div>
-            </a>
-        </router-link>
+            </router-link>
+        </div>
     </div>
 </template>
 
@@ -43,14 +40,14 @@
         border-radius: 8px 8px 8px 8px;
         border: 1px solid rgb(0, 66, 100);
         height: 116px;
-        width: 447px;
         margin: 40px;
     }
 
     .card-register-header {
-        width: 311px;
+        min-width: 250px;
         color: rgb(0, 66, 100);
         font-weight: normal;
+        padding: .5em;
     }
 
     .card-register-header span {

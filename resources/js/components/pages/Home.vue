@@ -1,15 +1,17 @@
 <template>
-    <section class="container">
-
+    <div>
         <carousel></carousel>
 
-        <services></services>
+        <div class="container">
 
-        <professional></professional>
+            <services></services>
 
-        <register-as v-if="!me"></register-as>
+            <professional></professional>
 
-    </section>
+            <register-as v-if="!me"></register-as>
+
+        </div>
+    </div>
 </template>
 
 <script>

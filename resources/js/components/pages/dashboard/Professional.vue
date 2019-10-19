@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="row">
         <div class="thumbnail">
             <img src="/img/slide_inferior.png" alt="La profesionalidad es nuestra maxima a diario" class="img-fluid">
             <div class="caption">
@@ -23,7 +23,6 @@
 <style scoped>
     section {
         width: 100%;
-        height: 428px;
     }
 
     .thumbnail {

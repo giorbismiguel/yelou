@@ -1,35 +1,28 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-light ">
+    <nav class="navbar navbar-expand-md navbar-light">
         <div class="container">
             <a class="navbar-brand" href="#">
-                <router-link class="nav-link" :to="{ name: 'home' }">
-                    <img src="/img/logo.png" alt="Logo">
-                </router-link>
+                <router-link :to="{ name: 'home' }"><img src="/img/logo.png" alt="Logo"></router-link>
             </a>
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            <button class="navbar-toggler navbar-toggler-left" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul v-if="!me" class="navbar-nav w-100 justify-content-center font-weight-bold">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Productos</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Empresa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Seguridad</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Ayuda</a>
-                    </li>
-                </ul>
+                <div v-if="!me" class="navbar-nav w-100 justify-content-center font-weight-bold">
+                    <a class="nav-link" href="#">Productos</a>
 
-                <ul v-if="me" class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
-                    <li class="nav-item dropdown">
+                    <a class="nav-link" href="#">Empresa</a>
+
+                    <a class="nav-link" href="#">Seguridad</a>
+
+                    <a class="nav-link" href="#">Ayuda</a>
+                </div>
+
+                <div v-if="me" class="navbar-nav w-100 justify-content-end app_font-family">
+                    <div class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
                            aria-haspopup="true" aria-expanded="false">
                             <img class="img-avatar" width="80" height="50" src="/img/person-icon-1680.png" alt="Avatar">
@@ -47,28 +40,23 @@
                                 <i class="fas fa-key"></i> Cambiar contraseña
                             </router-link>
 
-                            <a class="dropdown-item" href="#"  @click.prevent="closeSession">
+                            <a class="dropdown-item" href="#" @click.prevent="closeSession">
                                 <i class="fas fa-sign-out-alt"></i> Cerrar sesión
                             </a>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
 
-                <ul v-if="!me" class="nav navbar-nav ml-auto w-100 justify-content-end app_font-family">
-                    <li class="nav-item">
+                <div v-if="!me" class="navbar-nav w-100 justify-content-end app_font-family">
                         <a class="nav-link" href="#"><i class="fas fa-globe"></i> Es</a>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="nav-link" :to="{ name: 'login' }"><i class="far fa-user-circle"></i>
+                        <router-link class="nav-link" :to="{ name: 'login' }" tag="a">
+                            <i class="far fa-user-circle"></i>
                             Iniciar sesión
                         </router-link>
-                    </li>
-                    <li class="nav-item">
-                        <router-link class="btn my-2 my-sm-0 app_btn-primary app_font-family app_color"
-                                     :to="{ name: 'register_as' }">Registrarse
+                        <router-link class="nav-link btn my-2 my-sm-0 app_btn-primary app_font-family app_color"
+                                     :to="{ name: 'register_as' }" tag="a">Registrarse
                         </router-link>
-                    </li>
-                </ul>
+                </div>
             </div>
         </div>
     </nav>
@@ -105,7 +93,7 @@
 
 <style scoped>
     nav.navbar {
-        height: 84px;
+        min-height: 84px;
         background: rgb(33, 61, 94);
     }
 

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="row">
         <div class="caption text-center">
             <h3>Más de 230 ciudades <br/> disfrutan de nuestros servicios</h3>
 
@@ -18,7 +18,6 @@
 
 <style scoped>
     section {
-        width: 1116px;
         height: 406px;
         background: rgb(245, 252, 255);
         border-radius: 0px 0px 0px 0px;
