@@ -7,21 +7,21 @@
                 </router-link>
             </div>
 
-            <div class="d-flex justify-content-between mt-5" style="padding: 0 40px;">
+            <div class="d-flex justify-content-between mt-5 text-center" style="padding: 0 40px;">
                 <div class="app_font-family_sm app_color">© 2019 Yelou</div>
 
-                <div class="d-flex justify-content-between app_font-family_sm other_pages">
+                <div class="app_font-family_sm other_pages">
                     <a href="">Privacidad</a>
                     <a href="">Accesibilidad</a>
                     <a href="">Condiciones</a>
                 </div>
 
-                <div class="d-flex justify-content-between social_networks">
-                    <a href=""><i class="fab fa-facebook-f"></i></a>
-                    <a href=""><i class="fab fa-twitter"></i></a>
-                    <a href=""><i class="fab fa-youtube"></i></a>
-                    <a href=""><i class="fab fa-linkedin"></i></a>
-                    <a href=""><i class="fab fa-instagram"></i></a>
+                <div class="social_networks">
+                    <a href="" class="m-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="" class="m-2"><i class="fab fa-twitter"></i></a>
+                    <a href="" class="m-2"><i class="fab fa-youtube"></i></a>
+                    <a href="" class="m-2"><i class="fab fa-linkedin"></i></a>
+                    <a href="" class="m-2"><i class="fab fa-instagram"></i></a>
                 </div>
             </div>
         </div>
