@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row justify-content-center mt-4">
-            <div class="col-6">
+            <div class="col-12 col-md-6">
                 <div class="card app_card m-4">
                     <div class="card-header">Autenticarse</div>
                     <div class="card-body">

@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-12 col-md-6">
                 <div class="card app_card m-4">
                     <div class="card-header">Registrarse como {{ form.type === 1 ? 'Cliente' : 'Chofer' }}</div>
                     <div class="card-body">
