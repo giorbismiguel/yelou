@@ -44,7 +44,7 @@
     }
 
     .card-register-header {
-        min-width: 250px;
+        min-width: 160px;
         color: rgb(0, 66, 100);
         font-weight: normal;
         padding: .5em;
@@ -61,5 +61,11 @@
 
     a:hover {
         text-decoration: none;
+    }
+
+    @media (max-width: 991.98px) {
+        .card-register-header span {
+            font-size: 28px;
+        }
     }
 </style>
