@@ -1,13 +1,15 @@
 <template>
-    <section class="row">
-        <div class="caption text-center">
-            <h3>Más de 230 ciudades <br/> disfrutan de nuestros servicios</h3>
+    <div class="services row">
+        <div class="col">
+            <div class="caption text-center">
+                <h3>Más de 230 ciudades <br/> disfrutan de nuestros servicios</h3>
 
-            <button class="btn app_btn-info">
-                <img src="/img/city.png" alt="Ciudad" /> Explorar
-            </button>
+                <button class="btn app_btn-info">
+                    <img src="/img/city.png" alt="Ciudad"/> Explorar
+                </button>
+            </div>
         </div>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -17,7 +19,7 @@
 </script>
 
 <style scoped>
-    section {
+    .services {
         height: 406px;
         background: rgb(245, 252, 255);
         border-radius: 0px 0px 0px 0px;

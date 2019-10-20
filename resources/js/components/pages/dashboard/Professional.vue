@@ -1,16 +1,20 @@
 <template>
-    <section class="row">
-        <div class="thumbnail">
-            <img src="/img/slide_inferior.png" alt="La profesionalidad es nuestra maxima a diario" class="img-fluid">
-            <div class="caption">
-                <div class="header">La profesionalidad es nuestra máxima a diario</div>
+    <div class="professional row">
+        <div class="col">
+            <div class="thumbnail">
+                <img src="/img/slide_inferior.png" alt="La profesionalidad es nuestra maxima a diario"
+                     class="img-fluid">
+                <div class="caption">
+                    <div class="header">La profesionalidad es nuestra máxima a diario</div>
 
-                <div class="body">
-                    La seguridad de nuestros clientes es el principal objetivo de nuestra empresa. Ellos lo agradecen confiando en la calidad del servicio.
+                    <div class="body">
+                        La seguridad de nuestros clientes es el principal objetivo de nuestra empresa. Ellos lo
+                        agradecen confiando en la calidad del servicio.
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -20,10 +24,6 @@
 </script>
 
 <style scoped>
-    section {
-        width: 100%;
-    }
-
     .thumbnail {
         position: relative;
     }
@@ -41,8 +41,6 @@
         font-size: 2.2em;
         font-weight: bold;
         text-align: center;
-        height: 78px;
-        width: 453px;
     }
 
     .caption .body {
@@ -52,12 +50,10 @@
         font-weight: normal;
         text-align: center;
         margin-left: .5em;
-        width: 356px;
-        height: 76px;
     }
 
     @media (max-width: 991.98px) {
-        .caption .header{
+        .caption .header {
             font-size: 1rem;
             height: 8vh;
             width: 90vw;
