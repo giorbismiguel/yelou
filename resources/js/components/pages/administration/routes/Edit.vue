@@ -5,7 +5,7 @@
                 <header-form>Servicio</header-form>
             </div>
 
-            <div class="col-10">
+            <div class="col-12 col-md-6">
                 <spinner v-if="loadingToShow" size="medium"></spinner>
                 <template v-else>
                     <div class="card app_card">

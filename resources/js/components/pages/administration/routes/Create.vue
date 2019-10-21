@@ -5,7 +5,7 @@
                 <header-form>Servicio</header-form>
             </div>
 
-            <div class="col-10">
+            <div class="col-12 col-md-6">
                 <div class="card app_card">
                     <div class="card-header">Nueva Ruta</div>
                     <div class="card-body">
