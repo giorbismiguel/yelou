@@ -1,8 +1,7 @@
 <template>
     <div class="wrapper">
-
         <!-- Sidebar -->
-        <nav id="sidebar" v-if="me">
+        <nav id="sidebar" v-if="me" :class="{'active' : activeSideBar}">
             <div class="sidebar-header">
                 <h3>
                     <router-link :to="{ name: 'administration' }">Administración</router-link>
@@ -11,13 +10,13 @@
 
             <ul class="list-unstyled components">
                 <template v-if="me && me.type === 2">
-                    <li>
+                    <li class="active">
                         <router-link :to="{ name: 'tours' }">Recorridos</router-link>
                     </li>
                 </template>
 
                 <template v-if="me && me.type === 1">
-                    <li>
+                    <li class="active">
                         <router-link :to="{ name: 'services' }"><img src="/img/icons/services.png" alt="Servicios"
                                                                      width="21" height="21"/> Servicios
                         </router-link>
@@ -33,6 +32,14 @@
 
         <!-- Page Content -->
         <div id="content">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="container-fluid">
+                    <button type="button" id="sidebarCollapse" class="btn btn-info" @click="toggleSidebar">
+                        <i class="fas fa-align-left"></i>
+                        <span>Toggle Sidebar</span>
+                    </button>
+                </div>
+            </nav>
             <slot></slot>
         </div>
 
@@ -45,6 +52,12 @@
     export default {
         name: "BoxUser",
 
+        data() {
+            return {
+                activeSideBar: false
+            }
+        },
+
         computed: {
             ...mapState({
                 me: state => state.auth.me,
@@ -56,6 +69,12 @@
 
             isDriver() {
                 return this.me && this.me.type === 2;
+            }
+        },
+
+        methods: {
+            toggleSidebar() {
+                this.activeSideBar = !this.activeSideBar
             }
         }
     }
@@ -97,6 +116,10 @@
         background: #2089C0;
     }
 
+    #sidebar.active {
+        margin-left: -250px;
+    }
+
     #sidebar .sidebar-header {
         padding: 20px;
         background: #005E8F;
@@ -127,12 +150,21 @@
 
     #sidebar ul li.active > a, a[aria-expanded="true"] {
         color: #fff;
-        background: #6d7fcc;
     }
 
     ul ul a {
         font-size: 0.9em !important;
         padding-left: 30px !important;
         background: #6d7fcc;
+    }
+
+    @media (max-width: 768px) {
+        #sidebar {
+            margin-left: -250px;
+        }
+
+        #sidebar.active {
+            margin-left: 0;
+        }
     }
 </style>
