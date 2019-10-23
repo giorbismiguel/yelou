@@ -37,61 +37,65 @@
             </transition>
             <div class="row no-gutters">
                 <div class="col">
-                    <table class="table table-borderless table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th v-if="hasChildren" style="width: 25px;">
-                                <i class="fal"/>
-                            </th>
-                            <th v-for="column in columns"
-                                :class="getHeaderClass(column)"
-                                :data-col="column"
-                                @click="setOrderBy(column)">
+                    <div class="table-responsive-md">
+                        <table class="table table-borderless table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th v-if="hasChildren" style="width: 25px;">
+                                    <i class="fal"/>
+                                </th>
+                                <th v-for="column in columns"
+                                    :class="getHeaderClass(column)"
+                                    :data-col="column"
+                                    @click="setOrderBy(column)">
                                 <span class="simple-table__heading --no-select">
                                     <slot :name="`header-${column}`" v-bind:column="column">
                                         {{ get(options.headings, column, prepareHeading(column)) }}
                                     </slot>
                                 </span>
-                                <span v-if="isSorteable(column)"
-                                      class="simple-table__sort-icon --no-select float-right d-flex">
+                                    <span v-if="isSorteable(column)"
+                                          class="simple-table__sort-icon --no-select float-right d-flex">
                                     <i class="fas fa-long-arrow-alt-up mr-1"
                                        :class="{'active': isOrderAndSortBy(column, 'asc')}"></i>
                                     <i class="fas fa-long-arrow-alt-down"
                                        :class="{'active': isOrderAndSortBy(column, 'desc')}"></i>
                                 </span>
-                            </th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr v-show="showLoadingProgress" data-loading>
-                            <td :colspan="columnsLength+1">
-                                <spinner></spinner>
-                            </td>
-                        </tr>
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-show="showLoadingProgress" data-loading>
+                                <td :colspan="columnsLength+1">
+                                    <spinner></spinner>
+                                </td>
+                            </tr>
 
-                        <template v-for="(row, index) in rows">
-                            <simple-table-row :row="row" :position="index" :child="getChildren"
-                                              v-bind="getRowDataAttrs(row)"
-                                              v-show="!showLoadingProgress">
-                                <td v-for="column in columns" :class="getColumnClass(column)" :data-col="column">
-                                    <slot :name="column" v-bind:row="row">
-                                        {{ get(row, column) }}
+                            <template v-for="(row, index) in rows">
+                                <simple-table-row :row="row" :position="index" :child="getChildren"
+                                                  v-bind="getRowDataAttrs(row)"
+                                                  v-show="!showLoadingProgress">
+                                    <td v-for="column in columns" :class="getColumnClass(column)" :data-col="column">
+                                        <slot :name="column" v-bind:row="row">
+                                            {{ get(row, column) }}
+                                        </slot>
+                                    </td>
+
+                                    <slot slot="header.extra-columns" name="children.extra-headers"
+                                          v-bind:row="row"></slot>
+                                    <slot slot="body.extra-columns" name="children.extra-columns"
+                                          v-bind:row="row"></slot>
+                                </simple-table-row>
+                            </template>
+                            <tr v-if="!showLoadingProgress && rows.length === 0">
+                                <td :colspan="columnsLength" class="text-center">
+                                    <slot name="empty_table">
+                                        <div class="simple-table__no_data">No hay datos para mostrar</div>
                                     </slot>
                                 </td>
-
-                                <slot slot="header.extra-columns" name="children.extra-headers" v-bind:row="row"></slot>
-                                <slot slot="body.extra-columns" name="children.extra-columns" v-bind:row="row"></slot>
-                            </simple-table-row>
-                        </template>
-                        <tr v-if="!showLoadingProgress && rows.length === 0">
-                            <td :colspan="columnsLength" class="text-center">
-                                <slot name="empty_table">
-                                    <div class="simple-table__no_data">No hay datos para mostrar</div>
-                                </slot>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
@@ -237,7 +241,7 @@
             },
 
             localOrderBy(value) {
-              this.$emit('changed-order-by', this.options.sortable.indexOf(value))
+                this.$emit('changed-order-by', this.options.sortable.indexOf(value))
             },
 
             perPage(newValue) {
@@ -268,7 +272,7 @@
 
         computed: {
             sortingData() {
-                return { orderBy: this.localOrderBy, sortBy: this.localSortBy }
+                return {orderBy: this.localOrderBy, sortBy: this.localSortBy}
             },
 
             isValidUrl() {
@@ -379,7 +383,7 @@
                     : ''
 
                 axios.get(url + extraQueryString)
-                    .then(({ data }) => {
+                    .then(({data}) => {
                         this.localData = data.data
 
                         if (this.clientPagination) {
