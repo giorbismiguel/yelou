@@ -16950,3 +16950,7 @@ footer a {
   z-index: 1060;
 }
 
+.mx-datepicker {
+  width: 100% !important;
+}
+

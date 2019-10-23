@@ -166,7 +166,6 @@ footer a {
   z-index: 1060;
 }
 
-// Medium devices (tablets, less than 992px)
-@media (max-width: 991.98px) {
-
+.mx-datepicker {
+  width: 100% !important;
 }

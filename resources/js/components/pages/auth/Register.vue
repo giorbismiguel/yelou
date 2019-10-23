@@ -284,7 +284,7 @@
                                     <div class="col">
                                         <div class="custom-file">
                                             <input v-validate="'required|image'" accept="image/*"
-                                                   data-vv-as="Imagen del Permiso de circulación"
+                                                   data-vv-as="Permiso de circulación"
                                                    @change="onImagePermitCirculationSelected"
                                                    ref="ImagePermitCirculation" type="file"
                                                    name="image_permit_circulation"
@@ -306,7 +306,7 @@
                                     <div class="col">
                                         <div class="custom-file">
                                             <input v-validate="'image'"
-                                                   data-vv-as="Imagen de Certificado de Antecedentes"
+                                                   data-vv-as="Certificado de Antecedentes"
                                                    @change="onImageCertificateBackgroundSelected"
                                                    ref="ImageCertificateBackground" type="file"
                                                    name="image_certificate_background" accept="image/*"
@@ -440,15 +440,15 @@
             },
 
             imageDriveLicenseLabel() {
-                return this.imageDriveLicense ? this.imageDriveLicense.name : 'Imagen de la licencia de conducir'
+                return this.imageDriveLicense ? this.imageDriveLicense.name : 'Licencia de conducir'
             },
 
             imagePermitCirculationLabel() {
-                return this.imagePermitCirculation ? this.imagePermitCirculation.name : 'Imagen del Permiso de circulación'
+                return this.imagePermitCirculation ? this.imagePermitCirculation.name : 'Permiso de circulación'
             },
 
             imageCertificateBackgroundLabel() {
-                return this.imageCertificateBackground ? this.imageCertificateBackground.name : 'Imagen de Certificado de Antecedentes'
+                return this.imageCertificateBackground ? this.imageCertificateBackground.name : 'Certificado de Antecedentes'
             },
         },
 
