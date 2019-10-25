@@ -97,20 +97,40 @@ if (!function_exists('calculate_time')) {
      * @param float $speed
      * @return string
      */
-    function calculate_time(float $dist, float $speed): string
+    function calculate_time(float $dist, float $speed)
     {
-        //  Calculate time in seconds
-        $second = ($dist * 1000) / ($speed * 0.277777777777777777777777777777777777);
+        // Calculate time in seconds
+        $second = ($dist * 1) / ($speed * 0.277777777777777777777777777777777777);
 
-        //  convert to hours, minutes, seconds
-        $hour = $second / 3600;
+        // convert to hours, minutes, seconds
+        $hour = (int)($second / 3600);
         $second = $second - ($hour * 3600);
-        $minute = $second / 60;
-        $second = $second - ($minute * 60);
+        $minute = (int)($second / 60);
+        $second = (int)($second - ($minute * 60));
+
+        $hour = format_time($hour);
+        $minute = format_time($minute);
+        $second = format_time($second);
 
         return "$hour:$minute:$second";
     }
 }
+
+if (!function_exists('format_time')) {
+    /**
+     * @param int $number
+     * @return int|string
+     */
+    function format_time(int $number)
+    {
+        if ($number < 9) {
+            return '0'.$number;
+        }
+
+        return $number;
+    }
+}
+
 
 function reports_view_pdf($view, array $data = [], $returnView = false)
 {
