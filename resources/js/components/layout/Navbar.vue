@@ -33,7 +33,7 @@
                             </router-link>
 
                             <router-link :to="{ name: 'account' }" class="dropdown-item">
-                                <i class="fas fa-user"></i> Su perfil {{ me.name }}
+                                <i class="fas fa-user"></i> {{ me.name }}
                             </router-link>
 
                             <router-link :to="{ name: 'reset_password' }" class="dropdown-item">
