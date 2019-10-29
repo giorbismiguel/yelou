@@ -39,9 +39,11 @@
                                     </span>
                                 </div>
 
-                                <div v-if="submitted && (serverErrors.lat_start || serverErrors.lng_start)"
+                                <div v-if="submitted && (serverErrors.lat_start || serverErrors.lng_start || serverErrors.name_start)"
                                      class="invalid-feedback">
-                                    <template v-for="error in serverErrors.lat_start">{{ error }}</template>
+                                    <template v-if="serverErrors.lat_end" v-for="error in serverErrors.lat_start">{{ error }}</template>
+                                    <template v-else-if="serverErrors.lat_end" v-for="error in serverErrors.lng_start">{{ error }}</template>
+                                    <template v-else="serverErrors.lat_end" v-for="error in serverErrors.name_start">{{ error }}</template>
                                 </div>
                             </div>
 
@@ -60,9 +62,11 @@
                                     </span>
                                 </div>
 
-                                <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end)"
+                                <div v-if="submitted && (serverErrors.lat_end || serverErrors.lng_end || serverErrors.name_end)"
                                      class="invalid-feedback">
-                                    <template v-for="error in serverErrors.lat_end">{{ error }}</template>
+                                    <template v-if="serverErrors.lat_end" v-for="error in serverErrors.lat_end">{{ error }}</template>
+                                    <template v-else-if="serverErrors.lng_end" v-for="error in serverErrors.lng_end">{{ error }}</template>
+                                    <template v-else="serverErrors.name_end" v-for="error in serverErrors.name_end">{{ error }}</template>
                                 </div>
                             </div>
 
