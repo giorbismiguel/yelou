@@ -15,6 +15,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Broadcasting\BroadcastException;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
+use Illuminate\Support\Facades\DB;
 use Response;
 
 /**
@@ -74,6 +75,8 @@ class RequestServicesAPIController extends AppBaseController
     public function store(CreateRequestServicesAPIRequest $request)
     {
         try {
+            DB::beginTransaction();
+
             $input = $request->all();
             $input['user_id'] = \Auth::id();
 
@@ -129,12 +132,19 @@ class RequestServicesAPIController extends AppBaseController
 
             /** @var RequestServices $requestServices */
             $requestServices = $this->requestServicesRepository->create($input);
+
             $this->sendNotificationToDriver($requestServices, $availableNerbyDrivers);
+
+            DB::commit();
 
             return $this->sendResponse($requestServices->toArray(), 'Solicitud del servicio enviada');
         } catch (BroadcastException $e) {
+            DB::rollBack();
+
             return $this->sendError('No se ha podido enviar la solicitud.', 500);
         } catch (\Exception $e) {
+            DB::rollBack();
+
             return $this->sendError('El servicio no se ha podido crear', 500);
         }
     }
