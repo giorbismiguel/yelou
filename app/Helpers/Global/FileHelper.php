@@ -15,7 +15,7 @@ function get_file(Request $request, string $nameField): Request
         $name = strtolower(uniqid($request->input('name').'_img_', true));
         $fileName = $name.'.'.$image->getClientOriginalExtension();
         $path = $request->file($nameField)->storeAs('public/photos', $fileName);
-        $request->merge([$nameField.'_name' => str_replace('public/', '', 'public/photos/' . $fileName)]);
+        $request->merge([$nameField.'_name' => str_replace('public/', '', $path)]);
     }
 
     return $request;
