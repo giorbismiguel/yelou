@@ -12,7 +12,8 @@
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
         <link rel="icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
         <!--  Script  -->
-        <script>
+        @if(app()->environment() === 'dev')
+            <script>
             window['_fs_debug'] = false;
             window['_fs_host'] = 'fullstory.com';
             window['_fs_script'] = 'edge.fullstory.com/s/fs.js';
@@ -31,6 +32,7 @@
                 g.clearUserCookie=function(){};
             })(window,document,window['_fs_namespace'],'script','user');
         </script>
+        @endif
         <title>{{ config('app.name', 'Yelou') }}</title>
     </head>
     <body>
