@@ -145,7 +145,7 @@ class RequestServicesAPIController extends AppBaseController
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return $this->sendError('El servicio no se ha podido crear', 500);
+            return $this->sendError($e->getMessage(), 500);
         }
     }
 
