@@ -321,7 +321,6 @@
                 this.isLoading = true
                 this.acceptDriverService(row.id)
                     .then(({data: {data}}) => {
-                        console.log(data);
                         this.isLoading = false
                         this.messageServiceAcceptedForClient = `<div class="text-left font-weight-normal row">
                                 <div class="col-3"><strong style="color: #3fc3ee;">Chofer:</strong></div><div class="col-9"> ${row.transporter.first_name + ' ' + row.transporter.last_name}</div>
