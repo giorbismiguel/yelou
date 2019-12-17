@@ -264,10 +264,10 @@ class RequestServicesAPIController extends AppBaseController
 
         event(new ServiceRequested($requestServices, $distanceToTravel));
 
-//        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
-//
-//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-//        });
+        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
+
+        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+        });
     }
 }
