@@ -145,7 +145,7 @@ class RequestServicesAPIController extends AppBaseController
         } catch (\Exception $e) {
             DB::rollBack();
 
-            return $this->sendError($e->getMessage(), 500);
+            return $this->sendError('El servicio no se ha podido crear', 500);
         }
     }
 
@@ -262,12 +262,12 @@ class RequestServicesAPIController extends AppBaseController
             $requestServices->lng_end
         );
 
-        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
-
-        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
-            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
-        });
-
         event(new ServiceRequested($requestServices, $distanceToTravel));
+
+//        $drivers = $this->userRepository->makeModel()->find($availableNerbyDrivers->toArray());
+//
+//        $drivers->each(function ($driver) use ($distanceToTravel, $requestServices) {
+//            $driver->notify(new RequestServiceNotification($driver, $requestServices, $distanceToTravel));
+//        });
     }
 }

@@ -188,7 +188,9 @@
             ...mapActions([
                 'getDriversAvailable',
                 'activeDriverService',
-                'acceptRequestedService'
+                'acceptRequestedService',
+                'beginTravel',
+                'endTravel',
             ]),
 
             toggleInfoWindow: function (marker, idx) {
