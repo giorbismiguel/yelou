@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class RequestedDriverAccepted extends Notification
+class RequestedDriverAccepted extends Notification implements ShouldQueue
 {
     use Queueable;
 

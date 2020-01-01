@@ -74,9 +74,9 @@ class RequestServicesAPIController extends AppBaseController
      */
     public function store(CreateRequestServicesAPIRequest $request)
     {
-        try {
-            DB::beginTransaction();
+        DB::beginTransaction();
 
+        try {
             $input = $request->all();
             $input['user_id'] = \Auth::id();
 
@@ -209,7 +209,7 @@ class RequestServicesAPIController extends AppBaseController
         /** @var RequestServices $requestServices */
         $requestServices = $this->requestServicesRepository->find($id);
 
-        // Tener en cuenta cuando se puede eliminar
+        // TODO Tener en cuenta cuando se puede eliminar
         if (empty($requestServices)) {
             return $this->sendError('Servicio no encontrado', 422);
         }
